@@ -1,0 +1,27 @@
+var annotated =
+[
+    [ "BandedMatrix", "bandedmatrix_8h.html#struct_banded_matrix", "bandedmatrix_8h_struct_banded_matrix" ],
+    [ "DomainBoundary", "struct_domain_boundary.html", "struct_domain_boundary" ],
+    [ "Euler1D", "struct_euler1_d.html", "struct_euler1_d" ],
+    [ "Euler2D", "euler2d_8h.html#struct_euler2_d", "euler2d_8h_struct_euler2_d" ],
+    [ "ExplicitRKParameters", "timeintegration_8h.html#struct_explicit_r_k_parameters", "timeintegration_8h_struct_explicit_r_k_parameters" ],
+    [ "FPDoubleWell", "fpdoublewell_8h.html#struct_f_p_double_well", "fpdoublewell_8h_struct_f_p_double_well" ],
+    [ "FPPowerSystem", "fppowersystem_8h.html#struct_f_p_power_system", "fppowersystem_8h_struct_f_p_power_system" ],
+    [ "FPPowerSystem1Bus", "fppowersystem1bus_8h.html#struct_f_p_power_system1_bus", "fppowersystem1bus_8h_struct_f_p_power_system1_bus" ],
+    [ "FPPowerSystem3Bus", "fppowersystem3bus_8h.html#struct_f_p_power_system3_bus", "fppowersystem3bus_8h_struct_f_p_power_system3_bus" ],
+    [ "GLMGEEParameters", "timeintegration_8h.html#struct_g_l_m_g_e_e_parameters", "timeintegration_8h_struct_g_l_m_g_e_e_parameters" ],
+    [ "HyPar", "struct_hy_par.html", "struct_hy_par" ],
+    [ "LinearADR", "linearadr_8h.html#struct_linear_a_d_r", "linearadr_8h_struct_linear_a_d_r" ],
+    [ "MPIVariables", "mpivars_8h.html#struct_m_p_i_variables", "mpivars_8h_struct_m_p_i_variables" ],
+    [ "MUSCLParameters", "interpolation_8h.html#struct_m_u_s_c_l_parameters", "interpolation_8h_struct_m_u_s_c_l_parameters" ],
+    [ "NavierStokes2D", "navierstokes2d_8h.html#struct_navier_stokes2_d", "navierstokes2d_8h_struct_navier_stokes2_d" ],
+    [ "NavierStokes3D", "navierstokes3d_8h.html#struct_navier_stokes3_d", "navierstokes3d_8h_struct_navier_stokes3_d" ],
+    [ "Numa2D", "struct_numa2_d.html", "struct_numa2_d" ],
+    [ "Numa3D", "struct_numa3_d.html", "struct_numa3_d" ],
+    [ "PETScContext", "petscinterface_8h.html#struct_p_e_t_sc_context", "petscinterface_8h_struct_p_e_t_sc_context" ],
+    [ "ShallowWater1D", "struct_shallow_water1_d.html", "struct_shallow_water1_d" ],
+    [ "ShallowWater2D", "struct_shallow_water2_d.html", "struct_shallow_water2_d" ],
+    [ "TimeIntegration", "struct_time_integration.html", "struct_time_integration" ],
+    [ "TridiagLU", "tridiag_l_u_8h.html#struct_tridiag_l_u", "tridiag_l_u_8h_struct_tridiag_l_u" ],
+    [ "WENOParameters", "interpolation_8h.html#struct_w_e_n_o_parameters", "interpolation_8h_struct_w_e_n_o_parameters" ]
+];

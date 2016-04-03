@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['n',['N',['../fppowersystem3bus_8h.html#a7722c8ecbb62d99aee7ce68b1752f337',1,'FPPowerSystem3Bus']]],
+  ['n_5fbv',['N_bv',['../navierstokes2d_8h.html#aa79c64518f6e9127d9b201bacd398174',1,'NavierStokes2D']]],
+  ['n_5fioranks',['N_IORanks',['../mpivars_8h.html#a297fca986fa3aa27de07a0c746ffaaa8',1,'MPIVariables']]],
+  ['n_5fiter',['n_iter',['../struct_hy_par.html#af0d8e0d5d3de3869b941b66b6caaf964',1,'HyPar::n_iter()'],['../struct_time_integration.html#af0d8e0d5d3de3869b941b66b6caaf964',1,'TimeIntegration::n_iter()']]],
+  ['nbands',['nbands',['../bandedmatrix_8h.html#a30165df2b4e7a3d2b24bfd0963c16172',1,'BandedMatrix']]],
+  ['nboundaryzones',['nBoundaryZones',['../struct_hy_par.html#a3f9a55664d1c8f058828ae9f4de11906',1,'HyPar']]],
+  ['ncol',['ncol',['../bandedmatrix_8h.html#a6db648ed09c7736e77e2c79f2a4514fd',1,'BandedMatrix']]],
+  ['ndims',['ndims',['../struct_hy_par.html#a484873c74138512e41bc50d17b7d955a',1,'HyPar']]],
+  ['no_5flimiting',['no_limiting',['../interpolation_8h.html#a20e793c98bd33aef1cbbafcf3df48a55',1,'WENOParameters']]],
+  ['nonlinearinterp',['NonlinearInterp',['../struct_hy_par.html#abfb95b26a10515a77c736845f2c173cc',1,'HyPar']]],
+  ['norm',['norm',['../struct_time_integration.html#a7e8f00a437ef8fd856bc83c9a763d6cc',1,'TimeIntegration']]],
+  ['npoints_5fglobal',['npoints_global',['../struct_hy_par.html#a4e67f54563a3c4ff005dfaf0130f957c',1,'HyPar']]],
+  ['npoints_5flocal',['npoints_local',['../struct_hy_par.html#afae6319baba315ac1f0c56505610ed85',1,'HyPar']]],
+  ['npoints_5flocal_5fwghosts',['npoints_local_wghosts',['../struct_hy_par.html#a20ee1fd00a220b98513127884a5558cf',1,'HyPar']]],
+  ['nproc',['nproc',['../mpivars_8h.html#ae68326adc3b3862f1162832f70727b06',1,'MPIVariables']]],
+  ['nrow',['nrow',['../bandedmatrix_8h.html#a0a58ae803aa8c0ef7cf86577919f205e',1,'BandedMatrix']]],
+  ['nrows_5flocal',['nrows_local',['../bandedmatrix_8h.html#ac2b596b16037450673a77da1080b8707',1,'BandedMatrix']]],
+  ['nstages',['nstages',['../timeintegration_8h.html#ae11575eb42a4ab3934cf6278c93010e1',1,'ExplicitRKParameters::nstages()'],['../timeintegration_8h.html#ae11575eb42a4ab3934cf6278c93010e1',1,'GLMGEEParameters::nstages()']]],
+  ['nvars',['nvars',['../struct_hy_par.html#ae8f6d2fd6490d3153cb4133bf183a404',1,'HyPar']]]
+];

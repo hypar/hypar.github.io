@@ -1,0 +1,25 @@
+var md_doc__examples =
+[
+    [ "1D Linear Advection - Sine Wave", "linear_adv_sine.html", null ],
+    [ "1D Linear Advection - Discontinuous Waves", "linear_adv_disc.html", null ],
+    [ "1D Linear Diffusion - Sine Wave", "linear_diff_sine.html", null ],
+    [ "1D Euler Equations - Sod Shock Tube", "sod_shock_tube.html", null ],
+    [ "1D Euler Equations - Lax Shock Tube", "lax_shock_tube.html", null ],
+    [ "1D Euler Equations - Shu-Osher Problem", "shu_osher.html", null ],
+    [ "1D Euler Equations - Sod Shock Tube with Gravitational Force", "sod_shock_tube_wgrav.html", null ],
+    [ "1D Shallow Water Equations - Dam Breaking over Rectangular Bump", "sw_dambreak.html", null ],
+    [ "2D Linear Advection - Gaussian Pulse", "linear_adv_gauss.html", null ],
+    [ "2D Linear Diffusion - Sine Wave", "linear_diff_sine2d.html", null ],
+    [ "2D Euler Equations - Riemann Problem Case 4", "euler2d_riemann4.html", null ],
+    [ "2D Euler Equations - Riemann Problem Case 6", "euler2d_riemann6.html", null ],
+    [ "2D Euler Equations - Radial Expansion Wave", "euler2d_radexp.html", null ],
+    [ "2D Euler Equations - Isentropic Vortex Convection", "euler2d_vortex.html", null ],
+    [ "2D Euler Equations (with gravitational force) - Inertia-Gravity Waves", "euler2d_igwave.html", null ],
+    [ "2D Euler Equations (with gravitational force) - Rising Thermal Bubble", "euler2d_rtb.html", null ],
+    [ "2D Navier-Stokes Equations -  Laminar Flow over Flat Plate", "navstok2d_flatplate.html", null ],
+    [ "2D Shallow Water Equations - Circular Dam Break", "sw_circdambreak.html", null ],
+    [ "2D Shallow Water Equations - Latitude Belt Flow", "sw_latbelt.html", null ],
+    [ "3D Linear Advection - Gaussian Pulse", "linear_adv_3dgauss.html", null ],
+    [ "3D Navier-Stokes Equations - Isotropic Turbulence Decay", "ns3d_isoturb.html", null ],
+    [ "3D NUMA (Nonhydrostatic Unified Model of the Atmosphere) Equations - Rising Thermal Bubble", "numa3d_bubble.html", null ]
+];
