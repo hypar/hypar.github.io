@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['mpivariables',['MPIVariables',['../mpivars_8h.html#struct_m_p_i_variables',1,'']]],
-  ['musclparameters',['MUSCLParameters',['../interpolation_8h.html#struct_m_u_s_c_l_parameters',1,'']]]
+  ['mpivariables',['MPIVariables',['../a00064.html#a00363',1,'']]],
+  ['musclparameters',['MUSCLParameters',['../a00065.html#a00364',1,'']]]
 ];

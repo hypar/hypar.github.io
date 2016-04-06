@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wenoparameters',['WENOParameters',['../interpolation_8h.html#struct_w_e_n_o_parameters',1,'']]]
+  ['wenoparameters',['WENOParameters',['../a00065.html#a00369',1,'']]]
 ];

@@ -1,10 +1,10 @@
 var dir_157cc1c95f06aeb8b741f2bc7fe7cc3f =
 [
-    [ "blocktridiagIterJacobi.c", "blocktridiag_iter_jacobi_8c.html", "blocktridiag_iter_jacobi_8c" ],
-    [ "blocktridiagLU.c", "blocktridiag_l_u_8c.html", "blocktridiag_l_u_8c" ],
-    [ "tridiagIterJacobi.c", "tridiag_iter_jacobi_8c.html", "tridiag_iter_jacobi_8c" ],
-    [ "tridiagLU.c", "tridiag_l_u_8c.html", "tridiag_l_u_8c" ],
-    [ "tridiagLUGS.c", "tridiag_l_u_g_s_8c.html", "tridiag_l_u_g_s_8c" ],
-    [ "tridiagLUInit.c", "tridiag_l_u_init_8c.html", "tridiag_l_u_init_8c" ],
-    [ "tridiagScaLPK.c", "tridiag_sca_l_p_k_8c.html", null ]
+    [ "blocktridiagIterJacobi.c", "a00347.html", "a00347" ],
+    [ "blocktridiagLU.c", "a00348.html", "a00348" ],
+    [ "tridiagIterJacobi.c", "a00349.html", "a00349" ],
+    [ "tridiagLU.c", "a00350.html", "a00350" ],
+    [ "tridiagLUGS.c", "a00351.html", "a00351" ],
+    [ "tridiagLUInit.c", "a00352.html", "a00352" ],
+    [ "tridiagScaLPK.c", "a00353.html", null ]
 ];

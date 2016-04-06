@@ -1,17 +1,17 @@
 var NAVTREE =
 [
   [ "HyPar", "index.html", [
-    [ "Examples", "md_doc__examples.html", "md_doc__examples" ],
-    [ "Input Files", "md_doc__input__files.html", [
-      [ "solver.inp", "md_doc__input__files.html#solver_inp", null ],
-      [ "boundary.inp", "md_doc__input__files.html#boundary_inp", null ],
-      [ "initial.inp", "md_doc__input__files.html#initial_inp", null ],
-      [ "lusolver.inp", "md_doc__input__files.html#lusolver_inp", null ],
-      [ "weno.inp", "md_doc__input__files.html#weno_inp", null ],
-      [ "physics.inp", "md_doc__input__files.html#physics_inp", null ]
+    [ "Examples", "a00002.html", "a00002" ],
+    [ "Input Files", "a00048.html", [
+      [ "solver.inp", "a00048.html#solver_inp", null ],
+      [ "boundary.inp", "a00048.html#boundary_inp", null ],
+      [ "initial.inp", "a00048.html#initial_inp", null ],
+      [ "lusolver.inp", "a00048.html#lusolver_inp", null ],
+      [ "weno.inp", "a00048.html#weno_inp", null ],
+      [ "physics.inp", "a00048.html#physics_inp", null ]
     ] ],
-    [ "Numerical Method", "md_doc__numerical__method.html", null ],
-    [ "README", "md__r_e_a_d_m_e.html", null ],
+    [ "Numerical Method", "a00050.html", null ],
+    [ "README", "a00052.html", null ],
     [ "Data Structures", null, [
       [ "Data Structures", "annotated.html", "annotated" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -35,15 +35,15 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_apply_boundary_conditions_8c.html",
-"_f_p_power_system1_bus_compute_diff_number_8c.html#acac5cf39f57e55707b4239333dd7a3a2",
-"_linear_a_d_r_upwind_8c.html",
-"_numa3_d_initialize_8c.html#a9358277e880397dd427213488fe25007",
-"_time_explicit_r_k_cleanup_8c_source.html",
-"euler1d_8h.html#a98a6bcc1b69abface4bef84cf0d51955",
-"interpolation_8h.html#a22e0ae19117192cae9978a7a741d15a5",
-"numa2d_8h_source.html",
-"struct_numa2_d.html#a228eb5e837a644887ac6e7bab3f42485"
+"a00002.html",
+"a00062.html#a2d62ab02e21f9c436002b4a5ec3c973d",
+"a00066.html#af0f6e03342b9eb912e25f94ce0249a2c",
+"a00082.html#a1eaea8a114ef1dad09df700d03e735e9",
+"a00119.html",
+"a00182.html#a5eb76d97a1620a8446043bba3a8adfe3",
+"a00236.html#a96cbaf60dc6d571d119165e0acf1f6d3",
+"a00286_source.html",
+"a00347.html#a574db4476c265fecbd9fc5b041806f23"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
