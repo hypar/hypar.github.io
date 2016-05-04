@@ -1,19 +1,26 @@
 var a00090 =
 [
-    [ "ShallowWater2D", "a00072.html", "a00072" ],
-    [ "_SHALLOW_WATER_2D_", "a00090.html#aebe5d4a29761b0784c3d3e67e325105b", null ],
-    [ "_MODEL_NDIMS_", "a00090.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00090.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "_ROE_", "a00090.html#abffeadaaee7a3a2baeeb28e395411d73", null ],
-    [ "_LLF_", "a00090.html#a98a6bcc1b69abface4bef84cf0d51955", null ],
-    [ "_XDIR_", "a00090.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
-    [ "_YDIR_", "a00090.html#a7fd32e06617f4489079bc50ce9bfc00c", null ],
-    [ "_ShallowWater2DGetFlowVar_", "a00090.html#a66b88d6a05555a192a0e455ed99341a4", null ],
-    [ "_ShallowWater2DSetFlux_", "a00090.html#a54eddcc3639c7d46da043d04165fc67c", null ],
-    [ "_ShallowWater2DRoeAverage_", "a00090.html#aa3a68e66edc692ac67a2026121be2927", null ],
-    [ "_ShallowWater2DEigenvalues_", "a00090.html#ab51465579037455f044ab58f387caf15", null ],
-    [ "_ShallowWater2DLeftEigenvectors_", "a00090.html#a9fedf0f1165028b0f256b59e72fc5e9a", null ],
-    [ "_ShallowWater2DRightEigenvectors_", "a00090.html#ac2a20407c8e10d3f59b52281ae4e0f39", null ],
-    [ "ShallowWater2DInitialize", "a00090.html#a9182e40f0c923b05a4280c768bb5a1f6", null ],
-    [ "ShallowWater2DCleanup", "a00090.html#a5cfeeae3a3729d15543d8954060a48d4", null ]
+    [ "TridiagLU", "a00090.html#a00389", [
+      [ "reducedsolvetype", "a00090.html#ae50ec60868beaab2cb84897adefda09f", null ],
+      [ "evaluate_norm", "a00090.html#a584c0fc0b1e845800ad511dffc60e032", null ],
+      [ "maxiter", "a00090.html#a274519264a28477940f161ddb4b61feb", null ],
+      [ "atol", "a00090.html#a60c6dfc476dd9596072f61c2ec8d58ed", null ],
+      [ "rtol", "a00090.html#a4587afeee8941ba7c208b3690a3eeaa7", null ],
+      [ "exititer", "a00090.html#a846172807b19cf19a2587ede74b06828", null ],
+      [ "exitnorm", "a00090.html#a0a20107c06f29ce4d4ac23a4e7cfb17a", null ],
+      [ "verbose", "a00090.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ],
+      [ "total_time", "a00090.html#abc276e47b85df9dd59f248e663b3b971", null ],
+      [ "stage1_time", "a00090.html#a8cd56611f6cd8c71a991c9ed2b97ca29", null ],
+      [ "stage2_time", "a00090.html#ab956b3ef566ffdd35d9ddc39c2662875", null ],
+      [ "stage3_time", "a00090.html#a45e5bf315927ed87c57bcf220ec49861", null ],
+      [ "stage4_time", "a00090.html#ac7df4fddfc5aa2827b346dcfd80346fb", null ]
+    ] ],
+    [ "_TRIDIAG_JACOBI_", "a00090.html#a79ddfe354b89d113b72db4b5ae6c6e3d", null ],
+    [ "_TRIDIAG_GS_", "a00090.html#adf756eb923ab79f911e38a82da7a6cab", null ],
+    [ "tridiagLU", "a00090.html#a83b53dedf034d67bf2dde46eebf492ee", null ],
+    [ "tridiagLUGS", "a00090.html#a3d43d79472727ef201c8a48f3073decd", null ],
+    [ "tridiagIterJacobi", "a00090.html#a1b0ccd6fb49ee8efe7c87a78e1bbe0ec", null ],
+    [ "tridiagLUInit", "a00090.html#a52d21dfe1d76916811879bf0d7a29d72", null ],
+    [ "blocktridiagLU", "a00090.html#ad2c404dd44e760ee729740176b186bd0", null ],
+    [ "blocktridiagIterJacobi", "a00090.html#a8c48f135943fe35da85072714d4b1b23", null ]
 ];

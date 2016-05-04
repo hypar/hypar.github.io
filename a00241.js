@@ -1,4 +1,4 @@
 var a00241 =
 [
-    [ "FPPowerSystem1BusCleanup", "a00241.html#a8c9cdf60c2e48f10d3d5c07febffb46e", null ]
+    [ "FPDoubleWellDiffusion", "a00241.html#a923f14d1d7321a84a65695f0c5c0f7d0", null ]
 ];

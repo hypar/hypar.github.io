@@ -1,4 +1,5 @@
 var a00348 =
 [
-    [ "blocktridiagLU", "a00348.html#a55888a62483c0754cf6e4e030ffe2023", null ]
+    [ "ShallowWater2DUpwindRoe", "a00348.html#a0e7ae51d13b353863d26192dc37573f7", null ],
+    [ "ShallowWater2DUpwindLLF", "a00348.html#a82a4bea512a2584e39a96945d1855225", null ]
 ];

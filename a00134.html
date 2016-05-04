@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/HyParFunctions/ParabolicFunctionNC1Stage.c File Reference</title>
+<title>HyPar: src/HyParFunctions/CalculateConservationError.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,50 +115,38 @@ $(document).ready(function(){initNavTree('a00134.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">ParabolicFunctionNC1Stage.c File Reference</div>  </div>
+<div class="title">CalculateConservationError.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Evaluate the parabolic term using a 1-stage finite-difference discretization.  
+<p>Compute the conservation error.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00079_source.html">basic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00078_source.html">arrayfunctions.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00064_source.html">mpivars.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00082_source.html">hypar.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00095_source.html">basic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00100_source.html">mathfunctions.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00080_source.html">mpivars.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00098_source.html">hypar.h</a>&gt;</code><br />
 </div>
 <p><a href="a00134_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2faa78314e07ca739b7652ceb22ef083"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a2faa78314e07ca739b7652ceb22ef083">ParabolicFunctionNC1Stage</a> (double *par, double *u, void *s, void *m, double t)</td></tr>
-<tr class="separator:a2faa78314e07ca739b7652ceb22ef083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef9a903e2e2870dbadbae56ab1b62eb7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#aef9a903e2e2870dbadbae56ab1b62eb7">CalculateConservationError</a> (void *s, void *m)</td></tr>
+<tr class="separator:aef9a903e2e2870dbadbae56ab1b62eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Evaluate the parabolic term using a 1-stage finite-difference discretization. </p>
+<div class="textblock"><p>Compute the conservation error. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00134_source.html">ParabolicFunctionNC1Stage.c</a>.</p>
+<p>Definition in file <a class="el" href="a00134_source.html">CalculateConservationError.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a2faa78314e07ca739b7652ceb22ef083"></a>
+<a class="anchor" id="aef9a903e2e2870dbadbae56ab1b62eb7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ParabolicFunctionNC1Stage </td>
+          <td class="memname">int CalculateConservationError </td>
           <td>(</td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>par</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>u</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
@@ -166,13 +154,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
+          <td class="paramname"><em>m</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -181,95 +163,43 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Evaluate the parabolic term using a conservative finite-difference spatial discretization: The parabolic term is assumed to be of the form: </p><p class="formulaDsp">
-\begin{equation} {\bf P}\left({\bf u}\right) = \sum_{d=0}^{D-1} \frac {\partial^2 {\bf g}_d\left(\bf u\right)} {\partial x_d^2}, \end{equation}
-</p>
-<p> which is discretized at a grid point as: </p><p class="formulaDsp">
-\begin{equation} \left.{\bf P}\left({\bf u}\right)\right|_j = \sum_{d=0}^{D-1} \frac { \mathcal{L}_d \left[ {\bf g}_d \right] } {\Delta x_d^2}, \end{equation}
-</p>
-<p> where \(d\) is the spatial dimension index, \(D\) is the total number of spatial dimensions (<a class="el" href="a00062.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a>), and \(j\) is the grid index along \(d\). \(\mathcal{L}_d\) represents the finite-difference approximation to the Laplacian along the \(d\) spatial dimension, computed using <a class="el" href="a00062.html#ad620f41c8df5d995ba6304fa21079103">HyPar::SecondDerivativePar</a>.</p>
-<p><b>Note:</b> this form of the parabolic term <b>does</b> <b>not</b> allow for cross-derivatives.</p>
-<p>To use this form of the parabolic term:</p><ul>
-<li>specify <b>"par_space_type"</b> in solver.inp as <b>"nonconservative-1stage"</b> (<a class="el" href="a00062.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a>).</li>
-<li>the physical model must specify \({\bf g}_d\left({\bf u}\right)\) through <a class="el" href="a00062.html#a3ac9d2c5e617ff6d5029c40e46c0fba3">HyPar::GFunction</a>. </li>
-</ul>
+<p>Calculates the error (L2) in conservation by computing the difference between the initial volume integral of the solution, and the sum of the current volume integral and the time integral of the boundary flux from the start of the simulation to the current simulation time. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">par</td><td>array to hold the computed parabolic term </td></tr>
-    <tr><td class="paramname">u</td><td>solution </td></tr>
-    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00062.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
-    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00064.html#a00363" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
-    <tr><td class="paramname">t</td><td>Current simulation time </td></tr>
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00078.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00080.html#a00384" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00134_source.html#l00031">31</a> of file <a class="el" href="a00134_source.html">ParabolicFunctionNC1Stage.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00062.html">HyPar</a>         *solver = (<a class="code" href="a00062.html">HyPar</a>*)        s;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="a00064.html#a00363">MPIVariables</a>  *mpi    = (<a class="code" href="a00064.html#a00363">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordtype">double</span>        *Func   = solver-&gt;<a class="code" href="a00062.html#aee7ff3b51db01ee6ed4038ff5311ed24">fluxC</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">double</span>        *Deriv2 = solver-&gt;<a class="code" href="a00062.html#a31bc6f5b337e72aa281a1ea5ad5d6832">Deriv2</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">int</span>           d, v, i, done;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="a00079.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">int</span>     ndims   = solver-&gt;<a class="code" href="a00062.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span>     nvars   = solver-&gt;<a class="code" href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">int</span>     ghosts  = solver-&gt;<a class="code" href="a00062.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">int</span>     *dim    = solver-&gt;<a class="code" href="a00062.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">double</span>  *dxinv  = solver-&gt;<a class="code" href="a00062.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">if</span> (!solver-&gt;<a class="code" href="a00062.html#a3ac9d2c5e617ff6d5029c40e46c0fba3">GFunction</a>) <span class="keywordflow">return</span>(0); <span class="comment">/* zero parabolic terms */</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  solver-&gt;<a class="code" href="a00062.html#a6e3288a129bfd334448fbf3089338b69">count_par</a>++;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordtype">int</span> index[ndims];</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">int</span> size = 1;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">for</span> (d=0; d&lt;ndims; d++) size *= (dim[d] + 2*ghosts);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="a00078.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(par,size*nvars,0.0);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">int</span> offset = 0;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">int</span> size_deriv = 1; <span class="keywordflow">for</span> (i=0; i&lt;ndims; i++) size_deriv *= dim[i];</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">/* calculate the diffusion function */</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00062.html#a3ac9d2c5e617ff6d5029c40e46c0fba3">GFunction</a>(Func,u,d,solver,t); <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00062.html#ad620f41c8df5d995ba6304fa21079103">SecondDerivativePar</a>(Deriv2,Func,d,solver,mpi); <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">/* calculate the final term - second derivative of the diffusion function */</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    done = 0; <a class="code" href="a00078.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">int</span> p;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      <a class="code" href="a00078.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++)</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        par[nvars*p+v] += (   dxinv[offset+ghosts+index[d]]*dxinv[offset+ghosts+index[d]] </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                            * Deriv2[nvars*p+v] );</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <a class="code" href="a00078.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    offset += dim[d] + 2*ghosts;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
-<div class="ttc" id="a00062_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00062.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00041">hypar.h:41</a></div></div>
-<div class="ttc" id="a00062_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00062.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00085">hypar.h:85</a></div></div>
-<div class="ttc" id="a00062_html"><div class="ttname"><a href="a00062.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00078_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00078.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00122">arrayfunctions.h:122</a></div></div>
-<div class="ttc" id="a00062_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00062.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00062_html_a3ac9d2c5e617ff6d5029c40e46c0fba3"><div class="ttname"><a href="a00062.html#a3ac9d2c5e617ff6d5029c40e46c0fba3">HyPar::GFunction</a></div><div class="ttdeci">int(* GFunction)(double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00266">hypar.h:266</a></div></div>
-<div class="ttc" id="a00079_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00011">basic.h:11</a></div></div>
-<div class="ttc" id="a00062_html_a31bc6f5b337e72aa281a1ea5ad5d6832"><div class="ttname"><a href="a00062.html#a31bc6f5b337e72aa281a1ea5ad5d6832">HyPar::Deriv2</a></div><div class="ttdeci">double * Deriv2</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00126">hypar.h:126</a></div></div>
-<div class="ttc" id="a00062_html_aee7ff3b51db01ee6ed4038ff5311ed24"><div class="ttname"><a href="a00062.html#aee7ff3b51db01ee6ed4038ff5311ed24">HyPar::fluxC</a></div><div class="ttdeci">double * fluxC</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00103">hypar.h:103</a></div></div>
-<div class="ttc" id="a00078_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00078.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00036">arrayfunctions.h:36</a></div></div>
-<div class="ttc" id="a00062_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00079_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00009">basic.h:9</a></div></div>
-<div class="ttc" id="a00062_html_a6e3288a129bfd334448fbf3089338b69"><div class="ttname"><a href="a00062.html#a6e3288a129bfd334448fbf3089338b69">HyPar::count_par</a></div><div class="ttdeci">int count_par</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00351">hypar.h:351</a></div></div>
-<div class="ttc" id="a00062_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00062.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00032">hypar.h:32</a></div></div>
-<div class="ttc" id="a00078_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00078.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00142">arrayfunctions.h:142</a></div></div>
-<div class="ttc" id="a00079_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00079.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00010">basic.h:10</a></div></div>
-<div class="ttc" id="a00064_html_a00363"><div class="ttname"><a href="a00064.html#a00363">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00064_source.html#l00021">mpivars.h:21</a></div></div>
-<div class="ttc" id="a00062_html_ad620f41c8df5d995ba6304fa21079103"><div class="ttname"><a href="a00062.html#ad620f41c8df5d995ba6304fa21079103">HyPar::SecondDerivativePar</a></div><div class="ttdeci">int(* SecondDerivativePar)(double *, double *, int, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00206">hypar.h:206</a></div></div>
+<p>Definition at line <a class="el" href="a00134_source.html#l00016">16</a> of file <a class="el" href="a00134_source.html">CalculateConservationError.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="a00078.html">HyPar</a>         *solver = (<a class="code" href="a00078.html">HyPar</a>*) s;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">int</span>           v,nvars = solver-&gt;<a class="code" href="a00078.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordtype">double</span>        error;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">double</span> base[nvars];</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(solver-&gt;<a class="code" href="a00078.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]) &gt; 1.0)</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      base[v] = <a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(solver-&gt;<a class="code" href="a00078.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">else</span> base[v] = 1.0;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    error =  (solver-&gt;<a class="code" href="a00078.html#a57f7bff1d8bf27f2ca5c00270da00d05">VolumeIntegral</a>[v]+solver-&gt;<a class="code" href="a00078.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>[v]-solver-&gt;<a class="code" href="a00078.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]) </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;           * (solver-&gt;<a class="code" href="a00078.html#a57f7bff1d8bf27f2ca5c00270da00d05">VolumeIntegral</a>[v]+solver-&gt;<a class="code" href="a00078.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>[v]-solver-&gt;<a class="code" href="a00078.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    solver-&gt;<a class="code" href="a00078.html#a965363cd64ce50ae17705dfb285dd0ab">ConservationError</a>[v] = sqrt(error)/base[v];</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="ttc" id="a00078_html_a965363cd64ce50ae17705dfb285dd0ab"><div class="ttname"><a href="a00078.html#a965363cd64ce50ae17705dfb285dd0ab">HyPar::ConservationError</a></div><div class="ttdeci">double * ConservationError</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00316">hypar.h:316</a></div></div>
+<div class="ttc" id="a00100_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00033">mathfunctions.h:33</a></div></div>
+<div class="ttc" id="a00078_html"><div class="ttname"><a href="a00078.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00078_html_a57f7bff1d8bf27f2ca5c00270da00d05"><div class="ttname"><a href="a00078.html#a57f7bff1d8bf27f2ca5c00270da00d05">HyPar::VolumeIntegral</a></div><div class="ttdeci">double * VolumeIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00320">hypar.h:320</a></div></div>
+<div class="ttc" id="a00078_html_a644ed0ed36ed4af1c396c0af6aca043d"><div class="ttname"><a href="a00078.html#a644ed0ed36ed4af1c396c0af6aca043d">HyPar::TotalBoundaryIntegral</a></div><div class="ttdeci">double * TotalBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00328">hypar.h:328</a></div></div>
+<div class="ttc" id="a00078_html_a3aec36aeb5caac1e87f5b4f5f75d5a23"><div class="ttname"><a href="a00078.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">HyPar::VolumeIntegralInitial</a></div><div class="ttdeci">double * VolumeIntegralInitial</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00322">hypar.h:322</a></div></div>
+<div class="ttc" id="a00078_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00078.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00026">hypar.h:26</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

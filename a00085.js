@@ -1,10 +1,12 @@
 var a00085 =
 [
-    [ "_MatrixZero_", "a00085.html#ac7d8b887f87e447fc24749ba3eea95e4", null ],
-    [ "_MatrixMultiply_", "a00085.html#ab6aa501e79620e67e647017307e412f5", null ],
-    [ "_MatrixMultiplyNonSquare_", "a00085.html#a59be919c16cf4ca2fbba0b0370f7f320", null ],
-    [ "_MatrixMultiplySubtract_", "a00085.html#a625c8dc5d5de2ed16dc1a211fc998d36", null ],
-    [ "_MatVecMultiply_", "a00085.html#a1318a4facf7b30129d0509f524a1eb3b", null ],
-    [ "_MatVecMultiplySubtract_", "a00085.html#a41e1094e8869844c3e7bf9d8818b8276", null ],
-    [ "_MatrixInvert_", "a00085.html#a2fc4a6b3bc38a4c6e804076ca1e94de0", null ]
+    [ "gamma", "a00085.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "R", "a00085.html#a228eb5e837a644887ac6e7bab3f42485", null ],
+    [ "Omega", "a00085.html#a1b5bf6735b7465aec5c931281d240737", null ],
+    [ "g", "a00085.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
+    [ "init_atmos", "a00085.html#a8033c1255ef443c5e72e120e7519ff6a", null ],
+    [ "Pref", "a00085.html#ad2988f8045b70fe0950d361d8814faa6", null ],
+    [ "Tref", "a00085.html#abfc9a78d9685d39295be4f8cfefed2f2", null ],
+    [ "StandardAtmosphere", "a00085.html#af6fea8fadacd5d3da0d55b76f94d8874", null ],
+    [ "upwind", "a00085.html#aea473d706c30accecfe35e5d76d4b50a", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/TimeIntegration/TimeGLMGEE.c File Reference</title>
+<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DCleanup.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,154 +115,57 @@ $(document).ready(function(){initNavTree('a00337.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">TimeGLMGEE.c File Reference</div>  </div>
+<div class="title">ShallowWater2DCleanup.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>General Linear Methods with Global Error Estimators.  
+<p>Contains the function to clean up the 2D shallow water physics module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00079_source.html">basic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00078_source.html">arrayfunctions.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00064_source.html">mpivars.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00082_source.html">hypar.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00057_source.html">timeintegration.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00106_source.html">physicalmodels/shallowwater2d.h</a>&gt;</code><br />
 </div>
 <p><a href="a00337_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aaf72199adf7d99a25cfbe26a1456cdd3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00337.html#aaf72199adf7d99a25cfbe26a1456cdd3">TimeGLMGEE</a> (void *ts)</td></tr>
-<tr class="separator:aaf72199adf7d99a25cfbe26a1456cdd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ce86b097b5c5bf69087ba54e89e2acc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00337.html#a8ce86b097b5c5bf69087ba54e89e2acc">ShallowWater2DCleanup</a> (void *s)</td></tr>
+<tr class="separator:a8ce86b097b5c5bf69087ba54e89e2acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>General Linear Methods with Global Error Estimators. </p>
+<div class="textblock"><p>Contains the function to clean up the 2D shallow water physics module. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00337_source.html">TimeGLMGEE.c</a>.</p>
+<p>Definition in file <a class="el" href="a00337_source.html">ShallowWater2DCleanup.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aaf72199adf7d99a25cfbe26a1456cdd3"></a>
+<a class="anchor" id="a8ce86b097b5c5bf69087ba54e89e2acc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int TimeGLMGEE </td>
+          <td class="memname">int ShallowWater2DCleanup </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>ts</em></td><td>)</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Advance the ODE given by </p><p class="formulaDsp">
-\begin{equation} \frac{d{\bf u}}{dt} = {\bf F} \left({\bf u}\right) \end{equation}
-</p>
-<p> by one time step of size <a class="el" href="a00062.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a> using the \(s\)-stage General Linear Method with Global Error Estimation (GLM-GEE), given by </p><p class="formulaDsp">
-\begin{align} {\bf U}^{\left(i\right)} &amp;= c_{i0}{\bf u}_n + \sum_{j=1}^{r-1} c_{ij} \tilde{\bf u}_n^j + \Delta t \sum_{j=1}^{i-1} a_{ij} {\bf F}\left({\bf U}^{\left(j\right)}\right), i=1,\cdots,s\\ {\bf u}_{n+1} &amp;= d_{00} {\bf u}_n + \sum_{j=1}^{r-1} d_{0j} \tilde{\bf u}_n^j + \Delta t \sum_{j=1}^s b_{0j} {\bf F}\left({\bf U}^{\left(j\right)}\right), \\ \tilde{\bf u}_{n+1}^i &amp;= d_{i0} {\bf u}_n + \sum_{j=1}^{r-1} d_{ij} \tilde{\bf u}_n^j + \Delta t \sum_{j=1}^s b_{ij} {\bf F}\left({\bf U}^{\left(j\right)}\right), i=1,\cdots,r-1 \end{align}
-</p>
-<p> where the superscripts in parentheses represent stages, the subscripts represent the time level, the superscripts without parentheses represent auxiliary solutions, \(\Delta t\) is the time step size <a class="el" href="a00062.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>, \(\tilde{\bf u}^i, i=1,\cdots,r-1\) are the auxiliary solutions, and \({\bf F}\left({\bf u}\right)\) is computed by <a class="el" href="a00073.html#a0339c3e521ebb08df7edc73dbf78dc2d">TimeIntegration::RHSFunction</a>. The coefficients defining this methods are:</p><ul>
-<li>\(a_{ij}, i=1,\cdots,s, j=1,\cdots,s\) (<a class="el" href="a00057.html#ac900805a486cbb8489e3c176ed6e0d8e">GLMGEEParameters::A</a>)</li>
-<li>\(b_{ij}, i=0,\cdots,r-1, j=1,\cdots,s\) (<a class="el" href="a00057.html#ad36954709307649365515214a02ab06d">GLMGEEParameters::B</a>)</li>
-<li>\(c_{ij}, i=1,\cdots,s, j=0,\cdots,r-1\) (<a class="el" href="a00057.html#a0a26ce8d1878aac6ddc87e3f6290e039">GLMGEEParameters::C</a>)</li>
-<li>\(d_{ij}, i=0,\cdots,r-1, j=0,\cdots,r-1\) (<a class="el" href="a00057.html#aacc5d334e4f5520afa40200d0a4dda41">GLMGEEParameters::D</a>)</li>
-</ul>
-<p>where \(s\) is the number of stages (<a class="el" href="a00057.html#ae11575eb42a4ab3934cf6278c93010e1">GLMGEEParameters::nstages</a>) and \(r\) is the number of auxiliary solutions propagated with the solution (<a class="el" href="a00057.html#acab531abaa74a7e664e3986f2522b33a">GLMGEEParameters::r</a>).</p>
-<p>Note: In the code <a class="el" href="a00073.html#a3d433839a0290dacbbd609e1f60b0b1d">TimeIntegration::Udot</a> is equivalent to \({\bf F}\left({\bf u}\right)\).</p>
-<p>References:</p><ul>
-<li>Constantinescu, E. M., "Estimating Global Errors in Time Stepping.", Submitted, 2015 (<a href="http://arxiv.org/abs/1503.05166">http://arxiv.org/abs/1503.05166</a>). </li>
-</ul>
+<p>Function to clean up all physics-related allocations for the 2D shallow water equations </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ts</td><td>Object of type <a class="el" href="a00073.html" title="Structure of variables/parameters and function pointers for time integration. ">TimeIntegration</a> </td></tr>
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00078.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00337_source.html#l00046">46</a> of file <a class="el" href="a00337_source.html">TimeGLMGEE.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <a class="code" href="a00073.html">TimeIntegration</a>   *TS     = (<a class="code" href="a00073.html">TimeIntegration</a>*) ts;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="a00062.html">HyPar</a>             *solver = (<a class="code" href="a00062.html">HyPar</a>*)           TS-&gt;<a class="code" href="a00073.html#ade1bc5cad8c6735a891a28f637cbfb06">solver</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="a00064.html#a00363">MPIVariables</a>      *mpi    = (<a class="code" href="a00064.html#a00363">MPIVariables</a>*)    TS-&gt;<a class="code" href="a00073.html#abaa15763a88d05dc68ff230ce570eee9">mpi</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <a class="code" href="a00057.html#a00361">GLMGEEParameters</a>  *params = (<a class="code" href="a00057.html#a00361">GLMGEEParameters</a>*)solver-&gt;<a class="code" href="a00062.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordtype">int</span>               i, j;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="a00079.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordtype">int</span>    s      = params-&gt;<a class="code" href="a00057.html#ae11575eb42a4ab3934cf6278c93010e1">nstages</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">int</span>    r      = params-&gt;<a class="code" href="a00057.html#acab531abaa74a7e664e3986f2522b33a">r</a>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordtype">int</span>    ndims  = solver-&gt;<a class="code" href="a00062.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordtype">int</span>    nvars  = solver-&gt;<a class="code" href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordtype">int</span>    size   = nvars * solver-&gt;<a class="code" href="a00062.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">double</span> dt     = TS-&gt;<a class="code" href="a00073.html#a03e28be41881b703c836edbfe9b51b17">dt</a>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">double</span> *A=params-&gt;<a class="code" href="a00057.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>, *B=params-&gt;<a class="code" href="a00057.html#ad36954709307649365515214a02ab06d">B</a>, *C=params-&gt;<a class="code" href="a00057.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a>, *D=params-&gt;<a class="code" href="a00057.html#aacc5d334e4f5520afa40200d0a4dda41">D</a>, *c=params-&gt;<a class="code" href="a00057.html#a9699d746362160261a64e9447767c8d0">c</a>,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;         **U = TS-&gt;<a class="code" href="a00073.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>, **Udot = TS-&gt;<a class="code" href="a00073.html#a3d433839a0290dacbbd609e1f60b0b1d">Udot</a>, **Uaux = &amp;TS-&gt;<a class="code" href="a00073.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[r];</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="comment">/* Calculate stage values */</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  for (j=0; j&lt;s; j++) {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">double</span> stagetime = TS-&gt;<a class="code" href="a00073.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a> + c[j]*dt;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="a00078.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a>(solver-&gt;<a class="code" href="a00062.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,C[j*r+0],U[0],size);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">for</span> (i=1;i&lt;r;i++) <a class="code" href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(Uaux[i-1],C[j*r+i]   ,U[0],size);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">for</span> (i=0;i&lt;j;i++) <a class="code" href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(Udot[i]  ,dt*A[j*s+i],U[0],size); </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00062.html#aec0a2fa1fab1467466c58d8b2b3dc18c">PreStage</a>) { <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00062.html#aec0a2fa1fab1467466c58d8b2b3dc18c">PreStage</a>(j,U,solver,mpi,stagetime); <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr); }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> TS-&gt;<a class="code" href="a00073.html#a0339c3e521ebb08df7edc73dbf78dc2d">RHSFunction</a>(Udot[j],U[0],solver,mpi,stagetime);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00062.html#a9112897c69ff035c4f780013884cc0cb">PostStage</a>) { <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00062.html#a9112897c69ff035c4f780013884cc0cb">PostStage</a>(U[j],solver,mpi,stagetime); <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr); }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="a00078.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(TS-&gt;<a class="code" href="a00073.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[j],2*ndims*nvars,0.0);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="a00078.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(solver-&gt;<a class="code" href="a00062.html#ac3326fc53477d445133072e3f1fe6b59">StageBoundaryIntegral</a>,TS-&gt;<a class="code" href="a00073.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[j],2*ndims*nvars);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="comment">/* Step completion */</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordflow">for</span> (j=0; j&lt;r; j++) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="a00078.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a>(solver-&gt;<a class="code" href="a00062.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,D[j*r+0],U[j],size);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">for</span> (i=1; i&lt;r; i++) <a class="code" href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(Uaux[i-1],D[j*r+i]   ,U[j],size);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">for</span> (i=0; i&lt;s; i++) <a class="code" href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(Udot[i]  ,dt*B[j*s+i],U[j],size);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;s; i++) <a class="code" href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(TS-&gt;<a class="code" href="a00073.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[i],dt*B[0*s+i],solver-&gt;<a class="code" href="a00062.html#a6dfeed442d18083b68fd0f28d5f63fa7">StepBoundaryIntegral</a>,</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                                  2*ndims*nvars);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <a class="code" href="a00078.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(U[0],solver-&gt;<a class="code" href="a00062.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,size);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordflow">for</span> (i=1; i&lt;r; i++) <a class="code" href="a00078.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(U[i],Uaux[i-1],size);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div>
-<div class="ttc" id="a00073_html_abaa15763a88d05dc68ff230ce570eee9"><div class="ttname"><a href="a00073.html#abaa15763a88d05dc68ff230ce570eee9">TimeIntegration::mpi</a></div><div class="ttdeci">void * mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00046">timeintegration.h:46</a></div></div>
-<div class="ttc" id="a00078_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00233">arrayfunctions.h:233</a></div></div>
-<div class="ttc" id="a00073_html_a28e4e78c0bf258662bef21d26c51fc0b"><div class="ttname"><a href="a00073.html#a28e4e78c0bf258662bef21d26c51fc0b">TimeIntegration::waqt</a></div><div class="ttdeci">double waqt</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00033">timeintegration.h:33</a></div></div>
-<div class="ttc" id="a00057_html_ae11575eb42a4ab3934cf6278c93010e1"><div class="ttname"><a href="a00057.html#ae11575eb42a4ab3934cf6278c93010e1">GLMGEEParameters::nstages</a></div><div class="ttdeci">int nstages</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00223">timeintegration.h:223</a></div></div>
-<div class="ttc" id="a00073_html_a0339c3e521ebb08df7edc73dbf78dc2d"><div class="ttname"><a href="a00073.html#a0339c3e521ebb08df7edc73dbf78dc2d">TimeIntegration::RHSFunction</a></div><div class="ttdeci">int(* RHSFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00068">timeintegration.h:68</a></div></div>
-<div class="ttc" id="a00057_html_a9699d746362160261a64e9447767c8d0"><div class="ttname"><a href="a00057.html#a9699d746362160261a64e9447767c8d0">GLMGEEParameters::c</a></div><div class="ttdeci">double * c</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00236">timeintegration.h:236</a></div></div>
-<div class="ttc" id="a00062_html"><div class="ttname"><a href="a00062.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00073_html_a3d433839a0290dacbbd609e1f60b0b1d"><div class="ttname"><a href="a00073.html#a3d433839a0290dacbbd609e1f60b0b1d">TimeIntegration::Udot</a></div><div class="ttdeci">double ** Udot</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00056">timeintegration.h:56</a></div></div>
-<div class="ttc" id="a00062_html_ac3326fc53477d445133072e3f1fe6b59"><div class="ttname"><a href="a00062.html#ac3326fc53477d445133072e3f1fe6b59">HyPar::StageBoundaryIntegral</a></div><div class="ttdeci">double * StageBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00324">hypar.h:324</a></div></div>
-<div class="ttc" id="a00057_html_a0a26ce8d1878aac6ddc87e3f6290e039"><div class="ttname"><a href="a00057.html#a0a26ce8d1878aac6ddc87e3f6290e039">GLMGEEParameters::C</a></div><div class="ttdeci">double * C</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00236">timeintegration.h:236</a></div></div>
-<div class="ttc" id="a00057_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00057.html#ad36954709307649365515214a02ab06d">GLMGEEParameters::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00236">timeintegration.h:236</a></div></div>
-<div class="ttc" id="a00073_html_ae21dee7e1deaf4ff3024c1476230d3b1"><div class="ttname"><a href="a00073.html#ae21dee7e1deaf4ff3024c1476230d3b1">TimeIntegration::U</a></div><div class="ttdeci">double ** U</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00054">timeintegration.h:54</a></div></div>
-<div class="ttc" id="a00073_html_ade1bc5cad8c6735a891a28f637cbfb06"><div class="ttname"><a href="a00073.html#ade1bc5cad8c6735a891a28f637cbfb06">TimeIntegration::solver</a></div><div class="ttdeci">void * solver</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00044">timeintegration.h:44</a></div></div>
-<div class="ttc" id="a00062_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00062.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00037">hypar.h:37</a></div></div>
-<div class="ttc" id="a00062_html_a9112897c69ff035c4f780013884cc0cb"><div class="ttname"><a href="a00062.html#a9112897c69ff035c4f780013884cc0cb">HyPar::PostStage</a></div><div class="ttdeci">int(* PostStage)(double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00285">hypar.h:285</a></div></div>
-<div class="ttc" id="a00062_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00062.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00079_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00011">basic.h:11</a></div></div>
-<div class="ttc" id="a00078_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00078.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00281">arrayfunctions.h:281</a></div></div>
-<div class="ttc" id="a00062_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00062_html_aec0a2fa1fab1467466c58d8b2b3dc18c"><div class="ttname"><a href="a00062.html#aec0a2fa1fab1467466c58d8b2b3dc18c">HyPar::PreStage</a></div><div class="ttdeci">int(* PreStage)(int, double **, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00283">hypar.h:283</a></div></div>
-<div class="ttc" id="a00079_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00009">basic.h:9</a></div></div>
-<div class="ttc" id="a00057_html_acab531abaa74a7e664e3986f2522b33a"><div class="ttname"><a href="a00057.html#acab531abaa74a7e664e3986f2522b33a">GLMGEEParameters::r</a></div><div class="ttdeci">int r</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00223">timeintegration.h:223</a></div></div>
-<div class="ttc" id="a00078_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00078.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00142">arrayfunctions.h:142</a></div></div>
-<div class="ttc" id="a00057_html_a00361"><div class="ttname"><a href="a00057.html#a00361">GLMGEEParameters</a></div><div class="ttdoc">Structure containing the parameters for the General Linear Methods with Global Error Estimators (GLM-...</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00222">timeintegration.h:222</a></div></div>
-<div class="ttc" id="a00073_html_a03e28be41881b703c836edbfe9b51b17"><div class="ttname"><a href="a00073.html#a03e28be41881b703c836edbfe9b51b17">TimeIntegration::dt</a></div><div class="ttdeci">double dt</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00035">timeintegration.h:35</a></div></div>
-<div class="ttc" id="a00079_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00079.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00010">basic.h:10</a></div></div>
-<div class="ttc" id="a00064_html_a00363"><div class="ttname"><a href="a00064.html#a00363">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00064_source.html#l00021">mpivars.h:21</a></div></div>
-<div class="ttc" id="a00062_html_a6dfeed442d18083b68fd0f28d5f63fa7"><div class="ttname"><a href="a00062.html#a6dfeed442d18083b68fd0f28d5f63fa7">HyPar::StepBoundaryIntegral</a></div><div class="ttdeci">double * StepBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00326">hypar.h:326</a></div></div>
-<div class="ttc" id="a00073_html_a0176063b27790e17e07c9fa1b3fabdb3"><div class="ttname"><a href="a00073.html#a0176063b27790e17e07c9fa1b3fabdb3">TimeIntegration::BoundaryFlux</a></div><div class="ttdeci">double ** BoundaryFlux</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00060">timeintegration.h:60</a></div></div>
-<div class="ttc" id="a00062_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00062.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00091">hypar.h:91</a></div></div>
-<div class="ttc" id="a00057_html_aacc5d334e4f5520afa40200d0a4dda41"><div class="ttname"><a href="a00057.html#aacc5d334e4f5520afa40200d0a4dda41">GLMGEEParameters::D</a></div><div class="ttdeci">double * D</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00236">timeintegration.h:236</a></div></div>
-<div class="ttc" id="a00078_html_a7d97d4914726fa7cca339356dae28473"><div class="ttname"><a href="a00078.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a></div><div class="ttdeci">#define _ArrayScaleCopy1D_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00062_html_adec095311615891040de11341c01a77f"><div class="ttname"><a href="a00062.html#adec095311615891040de11341c01a77f">HyPar::msti</a></div><div class="ttdeci">void * msti</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00308">hypar.h:308</a></div></div>
-<div class="ttc" id="a00057_html_ac900805a486cbb8489e3c176ed6e0d8e"><div class="ttname"><a href="a00057.html#ac900805a486cbb8489e3c176ed6e0d8e">GLMGEEParameters::A</a></div><div class="ttdeci">double * A</div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00236">timeintegration.h:236</a></div></div>
-<div class="ttc" id="a00073_html"><div class="ttname"><a href="a00073.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00057_source.html#l00025">timeintegration.h:25</a></div></div>
+<p>Definition at line <a class="el" href="a00337_source.html#l00010">10</a> of file <a class="el" href="a00337_source.html">ShallowWater2DCleanup.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <a class="code" href="a00088.html">ShallowWater2D</a> *param  = (<a class="code" href="a00088.html">ShallowWater2D</a>*) s;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  free(param-&gt;<a class="code" href="a00088.html#a9f92e5582bf339a3c95df78b9c684fe0">b</a>);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
+<div class="ttc" id="a00088_html"><div class="ttname"><a href="a00088.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00240">shallowwater2d.h:240</a></div></div>
+<div class="ttc" id="a00088_html_a9f92e5582bf339a3c95df78b9c684fe0"><div class="ttname"><a href="a00088.html#a9f92e5582bf339a3c95df78b9c684fe0">ShallowWater2D::b</a></div><div class="ttdeci">double * b</div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00243">shallowwater2d.h:243</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

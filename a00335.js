@@ -1,4 +1,5 @@
 var a00335 =
 [
-    [ "TimeForwardEuler", "a00335.html#aa9ef7eaebda92d180aea9b0ef8186935", null ]
+    [ "ShallowWater1DUpwindRoe", "a00335.html#ace4421562e3ac0bce55ddde7c58d2239", null ],
+    [ "ShallowWater1DUpwindLLF", "a00335.html#a19452a335e50ca04b8d55db58acccc53", null ]
 ];

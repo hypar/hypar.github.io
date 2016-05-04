@@ -1,5 +1,5 @@
 var a00184 =
 [
-    [ "MPISum_integer", "a00184.html#a3fdbda19a80373d03b0034694d7309b7", null ],
-    [ "MPISum_double", "a00184.html#ab72730180adfeeb505a716952545d591", null ]
+    [ "MPICreateCommunicators", "a00184.html#a8f52d58fa2c0c94914befd51b6d413a1", null ],
+    [ "MPIFreeCommunicators", "a00184.html#a56b1ce0eb3d932698ac49d3c3183d39a", null ]
 ];

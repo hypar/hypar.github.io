@@ -1,5 +1,5 @@
 var a00126 =
 [
-    [ "CalculateLocalExtent", "a00126.html#a33293e35159e6411e3574409bf7d90db", null ],
-    [ "InitializeBoundaries", "a00126.html#a1367d0e3ffe59efe4f79fe39599f9b37", null ]
+    [ "BCSupersonicOutflowU", "a00126.html#a791e37fae3c9489d0fc039102c57409e", null ],
+    [ "BCSupersonicOutflowDU", "a00126.html#a7f9da7b2e071d59ea18b7772cc1676c1", null ]
 ];

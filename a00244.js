@@ -1,6 +1,4 @@
 var a00244 =
 [
-    [ "FPPowerSystem1BusDissipationFunction", "a00244.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
-    [ "FPPowerSystem1BusDiffusionLaplacian", "a00244.html#aab91f803575c434eba177a5b36ddeecc", null ],
-    [ "FPPowerSystem1BusDiffusionGeneral", "a00244.html#a9eaab3023576479a97c08eb308076cf9", null ]
+    [ "FPDoubleWellPrintStep", "a00244.html#a5b51bfceb9555102ac21245741159a0f", null ]
 ];

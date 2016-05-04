@@ -1,4 +1,5 @@
 var a00265 =
 [
-    [ "LinearADRReaction", "a00265.html#acf077873308539e006e15cda9f9d137d", null ]
+    [ "FPPowerSystem1BusDriftFunction", "a00265.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
+    [ "FPPowerSystem1BusUpwind", "a00265.html#aba11a90b1aa788700496713f3aa355b5", null ]
 ];

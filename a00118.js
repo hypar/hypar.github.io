@@ -1,4 +1,5 @@
 var a00118 =
 [
-    [ "CalculateConservationError", "a00118.html#aef9a903e2e2870dbadbae56ab1b62eb7", null ]
+    [ "BCNoslipWallU", "a00118.html#a1384d5e7d1060dea6c26b2aa8988c47b", null ],
+    [ "BCNoslipWallDU", "a00118.html#a1f06f3e2489a4d7300e3d4dd0d10940e", null ]
 ];

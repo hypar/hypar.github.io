@@ -1,5 +1,4 @@
 var a00327 =
 [
-    [ "ShallowWater2DUpwindRoe", "a00327.html#a0e7ae51d13b353863d26192dc37573f7", null ],
-    [ "ShallowWater2DUpwindLLF", "a00327.html#a82a4bea512a2584e39a96945d1855225", null ]
+    [ "ShallowWater1DFlux", "a00327.html#ab8ef6342f2e68ddffa5fe5d5f50cc4ce", null ]
 ];

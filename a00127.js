@@ -1,4 +1,5 @@
 var a00127 =
 [
-    [ "InitializePhysics", "a00127.html#a811f4e30a01be5c6ae4dbca87da0edf3", null ]
+    [ "BCSWSlipWallU", "a00127.html#a7cffeb6ede7dbf886b8970fd0d584961", null ],
+    [ "BCSWSlipWallDU", "a00127.html#af6a7f19c22d24c2c75aab72671e7ca4b", null ]
 ];

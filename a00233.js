@@ -1,5 +1,4 @@
 var a00233 =
 [
-    [ "FPPowerSystemDissipationFunction", "a00233.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
-    [ "FPPowerSystemComputeDiffNumber", "a00233.html#a0baeed235f71eba334249f178f632ac0", null ]
+    [ "Euler2DFlux", "a00233.html#a70c70562a0ea84c0ebf99494b43bbcb0", null ]
 ];

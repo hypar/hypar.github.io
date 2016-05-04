@@ -1,4 +1,5 @@
 var a00268 =
 [
-    [ "NavierStokes2DComputeCFL", "a00268.html#a4bcbd720302cbca8e097d456545d7167", null ]
+    [ "FPPowerSystem3BusDriftFunction", "a00268.html#a96c648e7775486eb94b64ca849329d0e", null ],
+    [ "FPPowerSystem3BusComputeCFL", "a00268.html#a1167fd33640687a66bfb201a54b3665f", null ]
 ];

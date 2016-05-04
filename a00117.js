@@ -1,4 +1,5 @@
 var a00117 =
 [
-    [ "BoundaryIntegral", "a00117.html#abf698222199fe88976002228400c428d", null ]
+    [ "BCNoFluxU", "a00117.html#a47f15d0ef1040bf42b53bd882d612b54", null ],
+    [ "BCNoFluxDU", "a00117.html#a51559c7d6cc8f9e54ff3cd949d0e3872", null ]
 ];

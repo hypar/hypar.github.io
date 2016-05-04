@@ -1,4 +1,6 @@
 var a00260 =
 [
-    [ "LinearADRComputeCFL", "a00260.html#a483cca53816c96d4d08c12241688f75d", null ]
+    [ "FPPowerSystem1BusDissipationFunction", "a00260.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
+    [ "FPPowerSystem1BusDiffusionLaplacian", "a00260.html#aab91f803575c434eba177a5b36ddeecc", null ],
+    [ "FPPowerSystem1BusDiffusionGeneral", "a00260.html#a9eaab3023576479a97c08eb308076cf9", null ]
 ];

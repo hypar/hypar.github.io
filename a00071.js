@@ -1,9 +1,11 @@
 var a00071 =
 [
-    [ "g", "a00071.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
-    [ "bt_type", "a00071.html#a6f84a1093abf57dcbf0406b33f40f766", null ],
-    [ "topo_flag", "a00071.html#a71b5cdadb8aec7421fa05a93ec51c102", null ],
-    [ "b", "a00071.html#a3374c235742374318e70b42a6aa09a82", null ],
+    [ "gamma", "a00071.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "grav", "a00071.html#a87f6134534484ec863864096005ac076", null ],
+    [ "grav_type", "a00071.html#a41908af46d7b1181c9177332aa44ead5", null ],
+    [ "grav_field", "a00071.html#afb1265dc9bb8f8c05bd22f88c23d879c", null ],
+    [ "fast_jac", "a00071.html#a14af7516371abe115b3a1aa9269aebb5", null ],
+    [ "solution", "a00071.html#a7568fac4d4e8488510e1d37f468967b1", null ],
     [ "upw_choice", "a00071.html#a57894a0f53d5b228bf64053367736bf9", null ],
     [ "SourceUpwind", "a00071.html#acf2a05e3d7005c865c3e4f609cf728f8", null ]
 ];

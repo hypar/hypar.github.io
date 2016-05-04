@@ -1,4 +1,4 @@
 var a00266 =
 [
-    [ "LinearADRUpwind", "a00266.html#a2bc2527c84fa0ebf5ef27cf7c4e52bbc", null ]
+    [ "FPPowerSystem3BusAdvection", "a00266.html#a47826d63ca1c3c5825335a3edee34cfd", null ]
 ];

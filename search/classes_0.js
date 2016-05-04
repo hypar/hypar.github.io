@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bandedmatrix',['BandedMatrix',['../a00053.html#a00354',1,'']]]
+  ['bandedmatrix',['BandedMatrix',['../a00069.html#a00375',1,'']]]
 ];

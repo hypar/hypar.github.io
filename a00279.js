@@ -1,17 +1,12 @@
 var a00279 =
 [
-    [ "NavierStokes2DUpwindRoe", "a00279.html#a94a2da28368372eb7470d64daba64701", null ],
-    [ "NavierStokes2DUpwindRF", "a00279.html#a26fb9aaa395af22869ea3403c75b9fc6", null ],
-    [ "NavierStokes2DUpwindLLF", "a00279.html#ae42134097d9d8ba1206ee44ef3cef46a", null ],
-    [ "NavierStokes2DUpwindSWFS", "a00279.html#aea31369800b304c021cbeae1c820d4fe", null ],
-    [ "NavierStokes2DUpwindRusanov", "a00279.html#a35b1a9ef3ac86193f26cea7b61d5dda3", null ],
-    [ "NavierStokes2DUpwindRusanovModified", "a00279.html#a065d64b9ace6d9299bcbeb6a3df38610", null ],
-    [ "NavierStokes2DUpwinddFRoe", "a00279.html#ac8e82aba4c8a677c0e70810446bd8ba2", null ],
-    [ "NavierStokes2DUpwinddFRF", "a00279.html#abb82d24b6ea31a22e93ddce27e9d8854", null ],
-    [ "NavierStokes2DUpwinddFLLF", "a00279.html#a37db09007b30f4f092bd231092af7c91", null ],
-    [ "NavierStokes2DUpwinddFRusanovModified", "a00279.html#a9d050883877d0c2e6982b5523ed8ae98", null ],
-    [ "NavierStokes2DUpwindFdFRoe", "a00279.html#af3c0b6185039a068a0f863c1f7d79b3d", null ],
-    [ "NavierStokes2DUpwindFdFRF", "a00279.html#ad22479fc0a6d11d6e97ae03636e3ded5", null ],
-    [ "NavierStokes2DUpwindFdFLLF", "a00279.html#a9866ef9e01e5e1e34fa699455673959e", null ],
-    [ "NavierStokes2DUpwindFdFRusanovModified", "a00279.html#acd787e13badb965cf382e44b86d2504d", null ]
+    [ "LinearADRComputeCFL", "a00279.html#a57e8a77a10e4f2872a4b0da26b7ecaf0", null ],
+    [ "LinearADRComputeDiffNumber", "a00279.html#a5176a1dd58e72c3eab1a256ff031923b", null ],
+    [ "LinearADRAdvection", "a00279.html#afe48d3c924a3f97413360f5067ec449b", null ],
+    [ "LinearADRDiffusionG", "a00279.html#a65815aeb863f8dcde8f0b2da668cd149", null ],
+    [ "LinearADRDiffusionH", "a00279.html#a5ec329f2c8e98cbb830ecdf49918f195", null ],
+    [ "LinearADRReaction", "a00279.html#a6a48a50119b71f37f6a6a2766567aad9", null ],
+    [ "LinearADRUpwind", "a00279.html#af85114b60285adb19be49cd6547cefea", null ],
+    [ "LinearADRJacobian", "a00279.html#aa4ded73e5b8c1e32c83b1bfbd495643d", null ],
+    [ "LinearADRInitialize", "a00279.html#a1e6c3add39e0d1b759c7ba99aff882ce", null ]
 ];

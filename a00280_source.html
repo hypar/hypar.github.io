@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/NavierStokes3D/NavierStokes3DCleanup.c Source File</title>
+<title>HyPar: src/PhysicalModels/LinearADR/LinearADRJacobian.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,18 +113,36 @@ $(document).ready(function(){initNavTree('a00280_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">NavierStokes3DCleanup.c</div>  </div>
+<div class="title">LinearADRJacobian.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00280.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00067.html">physicalmodels/navierstokes3d.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="a00280.html#a57ed248d95cef9ec72880105eae499ca">    4</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00280.html#a57ed248d95cef9ec72880105eae499ca">NavierStokes3DCleanup</a>(<span class="keywordtype">void</span> *s)</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;}</div>
-<div class="ttc" id="a00280_html_a57ed248d95cef9ec72880105eae499ca"><div class="ttname"><a href="a00280.html#a57ed248d95cef9ec72880105eae499ca">NavierStokes3DCleanup</a></div><div class="ttdeci">int NavierStokes3DCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00280_source.html#l00004">NavierStokes3DCleanup.c:4</a></div></div>
-<div class="ttc" id="a00067_html"><div class="ttname"><a href="a00067.html">navierstokes3d.h</a></div></div>
+<a href="a00280.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00100.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00079.html">physicalmodels/linearadr.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="a00280.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf">   12</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00280.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf">LinearADRJacobian</a>(</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                      <span class="keywordtype">double</span> *Jac, </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                      <span class="keywordtype">double</span> *u,   </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                      <span class="keywordtype">void</span> *p,     </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                      <span class="keywordtype">int</span> dir,     </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                      <span class="keywordtype">int</span> upw      </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                     )</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <a class="code" href="a00079.html#a00383">LinearADR</a> *param = (<a class="code" href="a00079.html#a00383">LinearADR</a>*) p;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  *Jac =    (1-<a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw))*param-&gt;<a class="code" href="a00079.html#a1c93565457c6d07aa9691346f0086e14">a</a>[dir]</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;         +  <a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw) * (1+upw) * <a class="code" href="a00100.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,param-&gt;<a class="code" href="a00079.html#a1c93565457c6d07aa9691346f0086e14">a</a>[dir]) * 0.5</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;         +  <a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw) * (1-upw) * <a class="code" href="a00100.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,param-&gt;<a class="code" href="a00079.html#a1c93565457c6d07aa9691346f0086e14">a</a>[dir]) * 0.5 ;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="ttc" id="a00079_html"><div class="ttname"><a href="a00079.html">linearadr.h</a></div></div>
+<div class="ttc" id="a00079_html_a1c93565457c6d07aa9691346f0086e14"><div class="ttname"><a href="a00079.html#a1c93565457c6d07aa9691346f0086e14">LinearADR::a</a></div><div class="ttdeci">double * a</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00018">linearadr.h:18</a></div></div>
+<div class="ttc" id="a00100_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00033">mathfunctions.h:33</a></div></div>
+<div class="ttc" id="a00280_html_a3a2e89cbd3bcd1bb20f92ba9337e3faf"><div class="ttname"><a href="a00280.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf">LinearADRJacobian</a></div><div class="ttdeci">int LinearADRJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00280_source.html#l00012">LinearADRJacobian.c:12</a></div></div>
+<div class="ttc" id="a00100_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00100.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00019">mathfunctions.h:19</a></div></div>
+<div class="ttc" id="a00100_html"><div class="ttname"><a href="a00100.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00079_html_a00383"><div class="ttname"><a href="a00079.html#a00383">LinearADR</a></div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00017">linearadr.h:17</a></div></div>
+<div class="ttc" id="a00100_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00100.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00015">mathfunctions.h:15</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

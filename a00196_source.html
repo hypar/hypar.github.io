@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PETScFunctions/PetscRHSFunctionExpl.c Source File</title>
+<title>HyPar: src/MPIFunctions/MPIPartitionArray1D.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,105 +113,91 @@ $(document).ready(function(){initNavTree('a00196_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">PetscRHSFunctionExpl.c</div>  </div>
+<div class="title">MPIPartitionArray1D.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00196.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifdef with_petsc</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00079.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00078.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00064.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00082.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00070.html">petscinterface.h</a>&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#undef __FUNCT__</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00196.html#ae60511a9aa5cbf216a00a1bb81006bc5">   16</a></span>&#160;<span class="preprocessor">#define __FUNCT__ &quot;PetscRHSFunctionExpl&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="a00196.html#a2bb23470ba02954293f2af4703408493">   36</a></span>&#160;PetscErrorCode <a class="code" href="a00196.html#a2bb23470ba02954293f2af4703408493">PetscRHSFunctionExpl</a>(</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                                      TS        ts,   </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                                      PetscReal t,    </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                                      Vec       Y,    </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                      Vec       F,    </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                      <span class="keywordtype">void</span>      *ctxt </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                   )</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="a00070.html#a00367">PETScContext</a>    *context = (<a class="code" href="a00070.html#a00367">PETScContext</a>*) ctxt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="a00062.html">HyPar</a>           *solver  = (<a class="code" href="a00062.html">HyPar</a>*)        context-&gt;<a class="code" href="a00070.html#ade1bc5cad8c6735a891a28f637cbfb06">solver</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00064.html#a00363">MPIVariables</a>    *mpi     = (<a class="code" href="a00064.html#a00363">MPIVariables</a>*) context-&gt;<a class="code" href="a00070.html#abaa15763a88d05dc68ff230ce570eee9">mpi</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span>             d;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <a class="code" href="a00079.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  PetscFunctionBegin;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  solver-&gt;<a class="code" href="a00062.html#a037bb9eabb2ecdb3812c625db433cf6b">count_RHSFunction</a>++;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordtype">int</span> size = 1;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">for</span> (d=0; d&lt;solver-&gt;<a class="code" href="a00062.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) size *= (solver-&gt;<a class="code" href="a00062.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d]+2*solver-&gt;<a class="code" href="a00062.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">double</span> *u   = solver-&gt;<a class="code" href="a00062.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordtype">double</span> *rhs = solver-&gt;<a class="code" href="a00062.html#ade4650485fe35fd3e12fea272fc80209">rhs</a>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="comment">/* copy solution from PETSc vector */</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00070.html#aba47a541676718cced51875b1c3a4ba6">TransferVecFromPETSc</a>(u,Y,context);                                         <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="comment">/* apply boundary conditions and exchange data over MPI interfaces */</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00062.html#a7b618dd01713c19c8b76ad5cc67efc5c">ApplyBoundaryConditions</a>(solver,mpi,u,NULL,0,t);                    <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00064.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(solver-&gt;<a class="code" href="a00062.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00062.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                               solver-&gt;<a class="code" href="a00062.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,mpi,u);                             <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="comment">/* Evaluate hyperbolic, parabolic and source terms  and the RHS */</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00062.html#ac6e21700e87392a666ef9425981388a2">HyperbolicFunction</a>(solver-&gt;<a class="code" href="a00062.html#aeadfdde0fbc3058bace813055212dcc3">hyp</a>,u,solver,mpi,t,1,solver-&gt;<a class="code" href="a00062.html#abd6886cf9b7ead81e0aaa9ead9aced81">FFunction</a>,solver-&gt;<a class="code" href="a00062.html#a3687b87fa31b07580aa2ef43089fb010">Upwind</a>);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                                                                                  <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00062.html#ad607a144bb3dbf119fd52c47757212dd">ParabolicFunction</a> (solver-&gt;<a class="code" href="a00062.html#ae53517ad7a202762d7b79eaf681701f3">par</a>,u,solver,mpi,t);                    <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00062.html#ad8a664f0fe5ef5f928bb259fa5e3657e">SourceFunction</a>    (solver-&gt;<a class="code" href="a00062.html#a6b4951ffdbd82f3a3848b82352d389d6">source</a>,u,solver,mpi,t);                 <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <a class="code" href="a00078.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(rhs,size*solver-&gt;<a class="code" href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,0.0);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <a class="code" href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00062.html#aeadfdde0fbc3058bace813055212dcc3">hyp</a>   ,-1.0,rhs,size*solver-&gt;<a class="code" href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00062.html#ae53517ad7a202762d7b79eaf681701f3">par</a>   , 1.0,rhs,size*solver-&gt;<a class="code" href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <a class="code" href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00062.html#a6b4951ffdbd82f3a3848b82352d389d6">source</a>, 1.0,rhs,size*solver-&gt;<a class="code" href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00095.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00094.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00080.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="a00196.html#ac43b2dabcbf9ac251928a7394dc3775a">   25</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00196.html#ac43b2dabcbf9ac251928a7394dc3775a">MPIPartitionArray1D</a>(</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                          <span class="keywordtype">void</span>    *m,       </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                          <span class="keywordtype">double</span>  *xg,      </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                          <span class="keywordtype">double</span>  *x,       </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                          <span class="keywordtype">int</span>     istart,   </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                          <span class="keywordtype">int</span>     iend,     </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                          <span class="keywordtype">int</span>     N_local,  </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                          <span class="keywordtype">int</span>     ghosts    </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                        )</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00080.html#a00384">MPIVariables</a> *mpi = (<a class="code" href="a00080.html#a00384">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">int</span>          ierr = 0;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  MPI_Status   status;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="comment">/* xg should be non-null only on root */</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00080.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a> &amp;&amp; xg) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in MPIPartitionArray1D(): global array exists on non-root processors (rank %d).\n&quot;</span>,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            mpi-&gt;<a class="code" href="a00080.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    ierr = 1;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">if</span> ((!mpi-&gt;<a class="code" href="a00080.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) &amp;&amp; (!xg)) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in MPIPartitionArray1D(): global array is not allocated on root processor.\n&quot;</span>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    ierr = 1;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00080.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">int</span> proc;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">for</span> (proc = 0; proc &lt; mpi-&gt;<a class="code" href="a00080.html#ae68326adc3b3862f1162832f70727b06">nproc</a>; proc++) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <span class="comment">/* Find out the domain limits for each process */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      <span class="keywordtype">int</span> is,ie;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <span class="keywordflow">if</span> (proc) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        MPI_Recv(&amp;is,1,MPI_INT,proc,1442,mpi-&gt;<a class="code" href="a00080.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;status);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        MPI_Recv(&amp;ie,1,MPI_INT,proc,1443,mpi-&gt;<a class="code" href="a00080.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;status);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        is = istart;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        ie = iend;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      <span class="keywordtype">int</span> size = ie - is;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <span class="keywordtype">double</span> *buffer = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      <a class="code" href="a00094.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>((xg+is),buffer,size);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      <span class="keywordflow">if</span> (proc) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        MPI_Send(buffer,size,MPI_DOUBLE,proc,1539,mpi-&gt;<a class="code" href="a00080.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      } <span class="keywordflow">else</span> <a class="code" href="a00094.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(buffer,x,N_local);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      free(buffer);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="comment">/* Transfer RHS to PETSc vector */</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <a class="code" href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00070.html#a94499efe0f52b5174ce7105de5ab1a37">TransferVecToPETSc</a>(rhs,F,context);                                         <a class="code" href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  PetscFunctionReturn(0);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00078_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00078.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00233">arrayfunctions.h:233</a></div></div>
-<div class="ttc" id="a00062_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00062.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00041">hypar.h:41</a></div></div>
-<div class="ttc" id="a00062_html_a037bb9eabb2ecdb3812c625db433cf6b"><div class="ttname"><a href="a00062.html#a037bb9eabb2ecdb3812c625db433cf6b">HyPar::count_RHSFunction</a></div><div class="ttdeci">int count_RHSFunction</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00355">hypar.h:355</a></div></div>
-<div class="ttc" id="a00064_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00064.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00170_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
-<div class="ttc" id="a00062_html_a3687b87fa31b07580aa2ef43089fb010"><div class="ttname"><a href="a00062.html#a3687b87fa31b07580aa2ef43089fb010">HyPar::Upwind</a></div><div class="ttdeci">int(* Upwind)(double *, double *, double *, double *, double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00251">hypar.h:251</a></div></div>
-<div class="ttc" id="a00064_html"><div class="ttname"><a href="a00064.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
-<div class="ttc" id="a00062_html"><div class="ttname"><a href="a00062.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00079_html"><div class="ttname"><a href="a00079.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00062_html_a7b618dd01713c19c8b76ad5cc67efc5c"><div class="ttname"><a href="a00062.html#a7b618dd01713c19c8b76ad5cc67efc5c">HyPar::ApplyBoundaryConditions</a></div><div class="ttdeci">int(* ApplyBoundaryConditions)(void *, void *, double *, double *, int, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00176">hypar.h:176</a></div></div>
-<div class="ttc" id="a00082_html"><div class="ttname"><a href="a00082.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00062_html_ad607a144bb3dbf119fd52c47757212dd"><div class="ttname"><a href="a00062.html#ad607a144bb3dbf119fd52c47757212dd">HyPar::ParabolicFunction</a></div><div class="ttdeci">int(* ParabolicFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00215">hypar.h:215</a></div></div>
-<div class="ttc" id="a00062_html_ad8a664f0fe5ef5f928bb259fa5e3657e"><div class="ttname"><a href="a00062.html#ad8a664f0fe5ef5f928bb259fa5e3657e">HyPar::SourceFunction</a></div><div class="ttdeci">int(* SourceFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00218">hypar.h:218</a></div></div>
-<div class="ttc" id="a00070_html"><div class="ttname"><a href="a00070.html">petscinterface.h</a></div><div class="ttdoc">Contains variables and function definitions for time integration with PETSc (http://www.mcs.anl.gov/petsc/) </div></div>
-<div class="ttc" id="a00062_html_aeadfdde0fbc3058bace813055212dcc3"><div class="ttname"><a href="a00062.html#aeadfdde0fbc3058bace813055212dcc3">HyPar::hyp</a></div><div class="ttdeci">double * hyp</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00094">hypar.h:94</a></div></div>
-<div class="ttc" id="a00062_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00062.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00079_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00079.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00011">basic.h:11</a></div></div>
-<div class="ttc" id="a00196_html_a2bb23470ba02954293f2af4703408493"><div class="ttname"><a href="a00196.html#a2bb23470ba02954293f2af4703408493">PetscRHSFunctionExpl</a></div><div class="ttdeci">PetscErrorCode PetscRHSFunctionExpl(TS ts, PetscReal t, Vec Y, Vec F, void *ctxt)</div><div class="ttdef"><b>Definition:</b> <a href="a00196_source.html#l00036">PetscRHSFunctionExpl.c:36</a></div></div>
-<div class="ttc" id="a00062_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00062.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00079_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00079.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00009">basic.h:9</a></div></div>
-<div class="ttc" id="a00062_html_a6b4951ffdbd82f3a3848b82352d389d6"><div class="ttname"><a href="a00062.html#a6b4951ffdbd82f3a3848b82352d389d6">HyPar::source</a></div><div class="ttdeci">double * source</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00100">hypar.h:100</a></div></div>
-<div class="ttc" id="a00070_html_a00367"><div class="ttname"><a href="a00070.html#a00367">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00070_source.html#l00032">petscinterface.h:32</a></div></div>
-<div class="ttc" id="a00078_html"><div class="ttname"><a href="a00078.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00062_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00062.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00032">hypar.h:32</a></div></div>
-<div class="ttc" id="a00062_html_ade4650485fe35fd3e12fea272fc80209"><div class="ttname"><a href="a00062.html#ade4650485fe35fd3e12fea272fc80209">HyPar::rhs</a></div><div class="ttdeci">double * rhs</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00340">hypar.h:340</a></div></div>
-<div class="ttc" id="a00078_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00078.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00142">arrayfunctions.h:142</a></div></div>
-<div class="ttc" id="a00062_html_ac6e21700e87392a666ef9425981388a2"><div class="ttname"><a href="a00062.html#ac6e21700e87392a666ef9425981388a2">HyPar::HyperbolicFunction</a></div><div class="ttdeci">int(* HyperbolicFunction)(double *, double *, void *, void *, double, int, int(*)(double *, double *, int, void *, double), int(*)(double *, double *, double *, double *, double *, double *, int, void *, double))</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00209">hypar.h:209</a></div></div>
-<div class="ttc" id="a00079_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00079.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00079_source.html#l00010">basic.h:10</a></div></div>
-<div class="ttc" id="a00064_html_a00363"><div class="ttname"><a href="a00064.html#a00363">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00064_source.html#l00021">mpivars.h:21</a></div></div>
-<div class="ttc" id="a00070_html_ade1bc5cad8c6735a891a28f637cbfb06"><div class="ttname"><a href="a00070.html#ade1bc5cad8c6735a891a28f637cbfb06">PETScContext::solver</a></div><div class="ttdeci">void * solver</div><div class="ttdef"><b>Definition:</b> <a href="a00070_source.html#l00034">petscinterface.h:34</a></div></div>
-<div class="ttc" id="a00062_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00062.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00091">hypar.h:91</a></div></div>
-<div class="ttc" id="a00070_html_aba47a541676718cced51875b1c3a4ba6"><div class="ttname"><a href="a00070.html#aba47a541676718cced51875b1c3a4ba6">TransferVecFromPETSc</a></div><div class="ttdeci">int TransferVecFromPETSc(double *, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00022">TransferFromPETSc.c:22</a></div></div>
-<div class="ttc" id="a00070_html_a94499efe0f52b5174ce7105de5ab1a37"><div class="ttname"><a href="a00070.html#a94499efe0f52b5174ce7105de5ab1a37">TransferVecToPETSc</a></div><div class="ttdeci">int TransferVecToPETSc(double *, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00200_source.html#l00023">TransferToPETSc.c:23</a></div></div>
-<div class="ttc" id="a00062_html_ae53517ad7a202762d7b79eaf681701f3"><div class="ttname"><a href="a00062.html#ae53517ad7a202762d7b79eaf681701f3">HyPar::par</a></div><div class="ttdeci">double * par</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00097">hypar.h:97</a></div></div>
-<div class="ttc" id="a00062_html_abd6886cf9b7ead81e0aaa9ead9aced81"><div class="ttname"><a href="a00062.html#abd6886cf9b7ead81e0aaa9ead9aced81">HyPar::FFunction</a></div><div class="ttdeci">int(* FFunction)(double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00082_source.html#l00234">hypar.h:234</a></div></div>
-<div class="ttc" id="a00070_html_abaa15763a88d05dc68ff230ce570eee9"><div class="ttname"><a href="a00070.html#abaa15763a88d05dc68ff230ce570eee9">PETScContext::mpi</a></div><div class="ttdeci">void * mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00070_source.html#l00036">petscinterface.h:36</a></div></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment">/* Meanwhile, on other processes */</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">/* send local start and end indices to root */</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    MPI_Send(&amp;istart,1,MPI_INT,0,1442,mpi-&gt;<a class="code" href="a00080.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    MPI_Send(&amp;iend  ,1,MPI_INT,0,1443,mpi-&gt;<a class="code" href="a00080.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">double</span> *buffer = (<span class="keywordtype">double</span>*) calloc (N_local, <span class="keyword">sizeof</span>(buffer));</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    MPI_Recv(buffer,N_local,MPI_DOUBLE,0,1539,mpi-&gt;<a class="code" href="a00080.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;status);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="a00094.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(buffer,x,N_local);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    free(buffer);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordflow">return</span>(ierr);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="ttc" id="a00080_html_ae68326adc3b3862f1162832f70727b06"><div class="ttname"><a href="a00080.html#ae68326adc3b3862f1162832f70727b06">MPIVariables::nproc</a></div><div class="ttdeci">int nproc</div><div class="ttdef"><b>Definition:</b> <a href="a00080_source.html#l00023">mpivars.h:23</a></div></div>
+<div class="ttc" id="a00080_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00080.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00080_source.html#l00022">mpivars.h:22</a></div></div>
+<div class="ttc" id="a00095_html"><div class="ttname"><a href="a00095.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00080_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00080.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00080_source.html#l00034">mpivars.h:34</a></div></div>
+<div class="ttc" id="a00196_html_ac43b2dabcbf9ac251928a7394dc3775a"><div class="ttname"><a href="a00196.html#ac43b2dabcbf9ac251928a7394dc3775a">MPIPartitionArray1D</a></div><div class="ttdeci">int MPIPartitionArray1D(void *m, double *xg, double *x, int istart, int iend, int N_local, int ghosts)</div><div class="ttdef"><b>Definition:</b> <a href="a00196_source.html#l00025">MPIPartitionArray1D.c:25</a></div></div>
+<div class="ttc" id="a00080_html_a00384"><div class="ttname"><a href="a00080.html#a00384">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00080_source.html#l00021">mpivars.h:21</a></div></div>
+<div class="ttc" id="a00094_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00094.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00094_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00094_html"><div class="ttname"><a href="a00094.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00080_html"><div class="ttname"><a href="a00080.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

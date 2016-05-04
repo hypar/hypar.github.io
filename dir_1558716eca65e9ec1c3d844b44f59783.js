@@ -1,5 +1,0 @@
-var dir_1558716eca65e9ec1c3d844b44f59783 =
-[
-    [ "X", "dir_509de2961b800b6059ec04cb320e1f39.html", "dir_509de2961b800b6059ec04cb320e1f39" ],
-    [ "Y", "dir_1ff8869d1e810479221dbaa9c91a1666.html", "dir_1ff8869d1e810479221dbaa9c91a1666" ]
-];

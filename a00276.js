@@ -1,4 +1,4 @@
 var a00276 =
 [
-    [ "NavierStokes2DParabolicFunction", "a00276.html#a3b7da8c25125ac4681035c3bcd35c449", null ]
+    [ "LinearADRComputeCFL", "a00276.html#a483cca53816c96d4d08c12241688f75d", null ]
 ];

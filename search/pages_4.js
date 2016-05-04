@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['input_20files',['Input Files',['../a00048.html',1,'']]]
+  ['examples',['Examples',['../a00002.html',1,'']]]
 ];

@@ -1,4 +1,5 @@
 var a00351 =
 [
-    [ "tridiagLUGS", "a00351.html#ad485d12c99b8c48303b6bef2f86b135d", null ]
+    [ "_MINIMUM_GHOSTS_", "a00351.html#ab2278b4768059f198821dbf4d1a80389", null ],
+    [ "SecondDerivativeSecondOrderCentral", "a00351.html#a84c8a8f68736a8644c442f8c27628445", null ]
 ];

@@ -1,21 +1,12 @@
 var a00084 =
 [
-    [ "min", "a00084.html#ac6afabdc09a49a433ee19d8a9486056d", null ],
-    [ "max", "a00084.html#affe776513b24d84b39af8ab0930fef7f", null ],
-    [ "min3", "a00084.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a", null ],
-    [ "max3", "a00084.html#aa0d45e1e67c5cacf5c9251fcd90a971b", null ],
-    [ "absolute", "a00084.html#adf1be5ccbb7a2522b4f3a64043c72880", null ],
-    [ "raiseto", "a00084.html#a840eef18a5986381093ff8c176a2153c", null ],
-    [ "sign", "a00084.html#a1e471b644e7fd684cd5dbb144e00ee81", null ],
-    [ "MatMult", "a00084.html#a8f4bfb870b8bd36abee6ae73265174bd", null ],
-    [ "MatMult2", "a00084.html#a06a01d1e6572639588260002be308b61", null ],
-    [ "MatMult3", "a00084.html#ad08720847b0aef444876b608b7af9a5c", null ],
-    [ "MatMult4", "a00084.html#a25b2b3ed3a1c1c8b4b5f23108442cf1f", null ],
-    [ "MatMult5", "a00084.html#af0725a909920c3b3021c53ddfb0e7409", null ],
-    [ "MatVecMult", "a00084.html#a3dc53d4eb4ba0f2cfed00aa69617ee84", null ],
-    [ "MatVecMult2", "a00084.html#a514be5a259cdafd270236704592c6036", null ],
-    [ "MatVecMult3", "a00084.html#abf4f45dbf1a3ea84452ba1da7b526d71", null ],
-    [ "MatVecMult4", "a00084.html#a35ee464e9e1966ad6c652fd4e485631e", null ],
-    [ "MatVecMult5", "a00084.html#a871369dd0a07c55d3329331cb91371da", null ],
-    [ "FindInterval", "a00084.html#a60dedd021ee26fd0f0040876a81bf723", null ]
+    [ "gamma", "a00084.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "R", "a00084.html#a228eb5e837a644887ac6e7bab3f42485", null ],
+    [ "g", "a00084.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
+    [ "init_atmos", "a00084.html#a8033c1255ef443c5e72e120e7519ff6a", null ],
+    [ "mu", "a00084.html#a74577585cf12d1712ab9c57616d49205", null ],
+    [ "Pref", "a00084.html#ad2988f8045b70fe0950d361d8814faa6", null ],
+    [ "Tref", "a00084.html#abfc9a78d9685d39295be4f8cfefed2f2", null ],
+    [ "StandardAtmosphere", "a00084.html#af6fea8fadacd5d3da0d55b76f94d8874", null ],
+    [ "upwind", "a00084.html#aea473d706c30accecfe35e5d76d4b50a", null ]
 ];

@@ -1,12 +1,22 @@
 var a00068 =
 [
+    [ "bctype", "a00068.html#a430ec6bfcdd38ab8e86545e25bc22613", null ],
+    [ "dim", "a00068.html#a70b5e28b5bc3d1b63a7435c5fe50b837", null ],
+    [ "face", "a00068.html#a9582c650f117a06449b5ee368b6762ef", null ],
+    [ "xmin", "a00068.html#a1e51e79041d5a3dddffb503277703568", null ],
+    [ "xmax", "a00068.html#a7ea24a733beddff902459a07bf91ca67", null ],
+    [ "on_this_proc", "a00068.html#a2eec7e4ee612d5edc985ba81453346e1", null ],
+    [ "is", "a00068.html#a481013ba007a99a4237cde5eeb3c9a29", null ],
+    [ "ie", "a00068.html#a7602de5ebb1b59ec35217e78a35a531e", null ],
+    [ "BCFunctionU", "a00068.html#af1c333edda90c79d9eff5442ac440942", null ],
+    [ "BCFunctionDU", "a00068.html#aa14c431b18e0c34e2622e1d5c797f9f0", null ],
+    [ "DirichletValue", "a00068.html#a6aa65431c39a8d8177f35c338ddb7a0e", null ],
+    [ "SpongeValue", "a00068.html#af7eeb4ff3f7c8bc22e0786ddbe62f16d", null ],
+    [ "UnsteadyDirichletSize", "a00068.html#ac3b478217419275ad063182f69cb543d", null ],
+    [ "UnsteadyDirichletData", "a00068.html#a48f59fc59e6a86d0b4aad842daea9106", null ],
+    [ "UnsteadyDirichletFilename", "a00068.html#a81c76294457e5d469798d16ab027c9a2", null ],
     [ "gamma", "a00068.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
-    [ "R", "a00068.html#a228eb5e837a644887ac6e7bab3f42485", null ],
-    [ "g", "a00068.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
-    [ "init_atmos", "a00068.html#a8033c1255ef443c5e72e120e7519ff6a", null ],
-    [ "mu", "a00068.html#a74577585cf12d1712ab9c57616d49205", null ],
-    [ "Pref", "a00068.html#ad2988f8045b70fe0950d361d8814faa6", null ],
-    [ "Tref", "a00068.html#abfc9a78d9685d39295be4f8cfefed2f2", null ],
-    [ "StandardAtmosphere", "a00068.html#af6fea8fadacd5d3da0d55b76f94d8874", null ],
-    [ "upwind", "a00068.html#aea473d706c30accecfe35e5d76d4b50a", null ]
+    [ "FlowDensity", "a00068.html#aa92ee9d8efc5ca49f4a83d8dabf0b15d", null ],
+    [ "FlowVelocity", "a00068.html#a0d0d92fab642e1d02a9de254e73a3f21", null ],
+    [ "FlowPressure", "a00068.html#a0a3c5af6bdb8fbdb746fd4edb374bb18", null ]
 ];

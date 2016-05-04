@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/ShallowWater1D/ShallowWater1DJacobian.c Source File</title>
+<title>HyPar: src/PhysicalModels/Numa2D/Numa2DCleanup.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,51 +113,20 @@ $(document).ready(function(){initNavTree('a00309_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ShallowWater1DJacobian.c</div>  </div>
+<div class="title">Numa2DCleanup.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00309.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00084.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00089.html">physicalmodels/shallowwater1d.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00309.html#a0afc6ad3b8af530bd24834cf3c4e374d">   13</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00309.html#a0afc6ad3b8af530bd24834cf3c4e374d">ShallowWater1DJacobian</a>(</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                    <span class="keywordtype">double</span>  *Jac, </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">double</span>  *u,   </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">void</span>    *p,   </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span>     dir,  </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    <span class="keywordtype">int</span>     upw   </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                   )</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00071.html">ShallowWater1D</a>  *param = (<a class="code" href="a00071.html">ShallowWater1D</a>*) p;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span>   R[<a class="code" href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], D[<a class="code" href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                  L[<a class="code" href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], DL[<a class="code" href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="comment">/* get the eigenvalues and left,right eigenvectors */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00089.html#a1faa098b23f173077df8a7c111dca644">_ShallowWater1DEigenvalues_</a>      (u,D,param,0);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00089.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a> (u,L,param,0);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00089.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a>(u,R,param,0);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> aupw = <a class="code" href="a00084.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw), k;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  k = 0; D[k] = <a class="code" href="a00084.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00084.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00084.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  k = 3; D[k] = <a class="code" href="a00084.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00084.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00084.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="a00084.html#a06a01d1e6572639588260002be308b61">MatMult2</a>(2,DL,D,L);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00084.html#a06a01d1e6572639588260002be308b61">MatMult2</a>(2,Jac,R,DL);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
-<div class="ttc" id="a00089_html_ab304d572a9bf352c09735486f88de6f7"><div class="ttname"><a href="a00089.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater1DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00106">shallowwater1d.h:106</a></div></div>
-<div class="ttc" id="a00309_html_a0afc6ad3b8af530bd24834cf3c4e374d"><div class="ttname"><a href="a00309.html#a0afc6ad3b8af530bd24834cf3c4e374d">ShallowWater1DJacobian</a></div><div class="ttdeci">int ShallowWater1DJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00309_source.html#l00013">ShallowWater1DJacobian.c:13</a></div></div>
-<div class="ttc" id="a00084_html"><div class="ttname"><a href="a00084.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00089_html_a3c10806b3d5a56f4d0e9d4607dafcffc"><div class="ttname"><a href="a00089.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater1DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00117">shallowwater1d.h:117</a></div></div>
-<div class="ttc" id="a00084_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00084.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00084_source.html#l00015">mathfunctions.h:15</a></div></div>
-<div class="ttc" id="a00086_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00086.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00086_source.html#l00057">euler1d.h:57</a></div></div>
-<div class="ttc" id="a00084_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00084.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00084_source.html#l00033">mathfunctions.h:33</a></div></div>
-<div class="ttc" id="a00084_html_a06a01d1e6572639588260002be308b61"><div class="ttname"><a href="a00084.html#a06a01d1e6572639588260002be308b61">MatMult2</a></div><div class="ttdeci">#define MatMult2(N, A, X, Y)</div><div class="ttdef"><b>Definition:</b> <a href="a00084_source.html#l00063">mathfunctions.h:63</a></div></div>
-<div class="ttc" id="a00089_html"><div class="ttname"><a href="a00089.html">shallowwater1d.h</a></div><div class="ttdoc">1D Shallow Water Equations </div></div>
-<div class="ttc" id="a00089_html_a1faa098b23f173077df8a7c111dca644"><div class="ttname"><a href="a00089.html#a1faa098b23f173077df8a7c111dca644">_ShallowWater1DEigenvalues_</a></div><div class="ttdeci">#define _ShallowWater1DEigenvalues_(u, D, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00093">shallowwater1d.h:93</a></div></div>
-<div class="ttc" id="a00084_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00084.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00084_source.html#l00019">mathfunctions.h:19</a></div></div>
-<div class="ttc" id="a00071_html"><div class="ttname"><a href="a00071.html">ShallowWater1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00137">shallowwater1d.h:137</a></div></div>
+<a href="a00309.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00103.html">physicalmodels/numa2d.h</a>&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00098.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="a00309.html#ae3d31a81226a3c8da15d033c06945532">    5</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00309.html#ae3d31a81226a3c8da15d033c06945532">Numa2DCleanup</a>(<span class="keywordtype">void</span> *s)</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;}</div>
+<div class="ttc" id="a00103_html"><div class="ttname"><a href="a00103.html">numa2d.h</a></div></div>
+<div class="ttc" id="a00309_html_ae3d31a81226a3c8da15d033c06945532"><div class="ttname"><a href="a00309.html#ae3d31a81226a3c8da15d033c06945532">Numa2DCleanup</a></div><div class="ttdeci">int Numa2DCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00309_source.html#l00005">Numa2DCleanup.c:5</a></div></div>
+<div class="ttc" id="a00098_html"><div class="ttname"><a href="a00098.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

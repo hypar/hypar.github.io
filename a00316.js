@@ -1,4 +1,5 @@
 var a00316 =
 [
-    [ "ShallowWater2DCleanup", "a00316.html#a8ce86b097b5c5bf69087ba54e89e2acc", null ]
+    [ "Numa2DRusanovFlux", "a00316.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
+    [ "Numa2DRusanovLinearFlux", "a00316.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
 ];

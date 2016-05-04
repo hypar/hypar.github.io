@@ -1,6 +1,5 @@
 var a00278 =
 [
-    [ "NavierStokes2DSourceFunction", "a00278.html#ae606654641878186fe92ef5f09c5240f", null ],
-    [ "NavierStokes2DSourceUpwind", "a00278.html#a70b5d26150db8556361337f7214f2c29", null ],
-    [ "NavierStokes2DSource", "a00278.html#a1e5fa204728e4755e6aac02727d0ac28", null ]
+    [ "LinearADRDiffusionG", "a00278.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
+    [ "LinearADRDiffusionH", "a00278.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
 ];

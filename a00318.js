@@ -1,5 +1,4 @@
 var a00318 =
 [
-    [ "ShallowWater2DLeftEigenvectors", "a00318.html#aedb92b59af4004f2a2905d741bffd00a", null ],
-    [ "ShallowWater2DRightEigenvectors", "a00318.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
+    [ "Numa3DComputeCFL", "a00318.html#acb12fd525157444151deaf74dfab8411", null ]
 ];

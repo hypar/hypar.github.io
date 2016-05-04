@@ -1,7 +1,5 @@
 var a00220 =
 [
-    [ "Euler2DUpwindRoe", "a00220.html#ab331cdd5f4f0c4de721fbc19d6a51eea", null ],
-    [ "Euler2DUpwindRF", "a00220.html#a32d6cc9b43c6b67e528af0e266b49180", null ],
-    [ "Euler2DUpwindLLF", "a00220.html#aadd6257a6586e80c38398c46d3088b16", null ],
-    [ "Euler2DUpwindSWFS", "a00220.html#a8ac4a3f41819711e1dcd10437f9619de", null ]
+    [ "Euler1DFlux", "a00220.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
+    [ "Euler1DStiffFlux", "a00220.html#a3017a4ade688681fa865c1556fb73f97", null ]
 ];

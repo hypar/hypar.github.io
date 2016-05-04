@@ -1,4 +1,5 @@
 var a00319 =
 [
-    [ "ShallowWater2DFlux", "a00319.html#a402c3b0d9e533619a23dc5a06a0c0bd3", null ]
+    [ "Numa3DFlux", "a00319.html#a173a0e31d874adff608b905549a58a11", null ],
+    [ "Numa3DStiffFlux", "a00319.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
 ];

@@ -1,4 +1,5 @@
 var a00259 =
 [
-    [ "LinearADRCleanup", "a00259.html#adbc85fb4ae27eb1e4172c0bfc27b05e0", null ]
+    [ "FPPowerSystem1BusDissipationFunction", "a00259.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
+    [ "FPPowerSystem1BusComputeDiffNumber", "a00259.html#a443e2757428e35f3818ba01dec4c20cd", null ]
 ];

@@ -1,5 +1,4 @@
 var a00243 =
 [
-    [ "FPPowerSystem1BusDissipationFunction", "a00243.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
-    [ "FPPowerSystem1BusComputeDiffNumber", "a00243.html#a443e2757428e35f3818ba01dec4c20cd", null ]
+    [ "FPDoubleWellPostStep", "a00243.html#a55a58cf1157c2706c0c060375655133a", null ]
 ];

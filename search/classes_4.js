@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['glmgeeparameters',['GLMGEEParameters',['../a00057.html#a00361',1,'']]]
+  ['glmgeeparameters',['GLMGEEParameters',['../a00073.html#a00382',1,'']]]
 ];

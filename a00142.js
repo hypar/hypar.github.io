@@ -1,5 +1,5 @@
 var a00142 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00142.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderCRWENOChar", "a00142.html#abbbbf83f7a2db6dc53c7384373be04d1", null ]
+    [ "CalculateLocalExtent", "a00142.html#a33293e35159e6411e3574409bf7d90db", null ],
+    [ "InitializeBoundaries", "a00142.html#a1367d0e3ffe59efe4f79fe39599f9b37", null ]
 ];

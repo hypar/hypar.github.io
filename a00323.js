@@ -1,4 +1,5 @@
 var a00323 =
 [
-    [ "ShallowWater2DModifiedSolution", "a00323.html#a3b76fef2d24dea908f5b016a6cecbf17", null ]
+    [ "Numa3DRusanovFlux", "a00323.html#adee29df467d83a11708cc55884ddfce8", null ],
+    [ "Numa3DRusanovLinearFlux", "a00323.html#aa3a3b4411941091b8333256e032dea99", null ]
 ];
