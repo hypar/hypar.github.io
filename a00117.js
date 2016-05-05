@@ -1,5 +1,5 @@
 var a00117 =
 [
-    [ "BCNoFluxU", "a00117.html#a47f15d0ef1040bf42b53bd882d612b54", null ],
-    [ "BCNoFluxDU", "a00117.html#a51559c7d6cc8f9e54ff3cd949d0e3872", null ]
+    [ "BCExtrapolateU", "a00117.html#ae25dbd294ea08dc2b5c5bfcdaab0cdfc", null ],
+    [ "BCExtrapolateDU", "a00117.html#adebfa74e22353bb92b090a5cad29df93", null ]
 ];

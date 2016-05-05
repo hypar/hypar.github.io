@@ -1,5 +1,5 @@
 var a00074_a00378 =
 [
-    [ "q", "a00074.html#a5b5e3f03e443adea974601f295136638", null ],
-    [ "pdf_integral", "a00074.html#adca2e435527ef52d18b3626b0e2ca852", null ]
+    [ "gamma", "a00074.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "upw_choice", "a00074.html#a57894a0f53d5b228bf64053367736bf9", null ]
 ];

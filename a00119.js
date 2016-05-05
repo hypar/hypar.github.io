@@ -1,5 +1,5 @@
 var a00119 =
 [
-    [ "BCPeriodicU", "a00119.html#ae7c327565752b28cc8313423478efc92", null ],
-    [ "BCPeriodicDU", "a00119.html#a6fa0d136a8c84d934dabdf40def60381", null ]
+    [ "BCNoFluxU", "a00119.html#a47f15d0ef1040bf42b53bd882d612b54", null ],
+    [ "BCNoFluxDU", "a00119.html#a51559c7d6cc8f9e54ff3cd949d0e3872", null ]
 ];

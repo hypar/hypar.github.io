@@ -1,10 +1,9 @@
 var a00101 =
 [
-    [ "_MatrixZero_", "a00101.html#ac7d8b887f87e447fc24749ba3eea95e4", null ],
-    [ "_MatrixMultiply_", "a00101.html#ab6aa501e79620e67e647017307e412f5", null ],
-    [ "_MatrixMultiplyNonSquare_", "a00101.html#a59be919c16cf4ca2fbba0b0370f7f320", null ],
-    [ "_MatrixMultiplySubtract_", "a00101.html#a625c8dc5d5de2ed16dc1a211fc998d36", null ],
-    [ "_MatVecMultiply_", "a00101.html#a1318a4facf7b30129d0509f524a1eb3b", null ],
-    [ "_MatVecMultiplySubtract_", "a00101.html#a41e1094e8869844c3e7bf9d8818b8276", null ],
-    [ "_MatrixInvert_", "a00101.html#a2fc4a6b3bc38a4c6e804076ca1e94de0", null ]
+    [ "ReadArray", "a00101.html#afaf5b0d6e79b1e8674b397aebcb219dc", null ],
+    [ "WriteArray", "a00101.html#aaf888c739c5200d9c58a7154347069b0", null ],
+    [ "WriteBinary", "a00101.html#a067f454c26d85d6cfb4d7d878b3783c9", null ],
+    [ "WriteText", "a00101.html#a3355a71faf3d87f6715ad627db08ac9e", null ],
+    [ "WriteTecplot2D", "a00101.html#a265b0583afb79edd2f2f5d5087e5c3bf", null ],
+    [ "WriteTecplot3D", "a00101.html#a5bdb048ecc5ae7ab61622e4764f3133e", null ]
 ];

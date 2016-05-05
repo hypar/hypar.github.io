@@ -1,4 +1,5 @@
 var a00287 =
 [
-    [ "NavierStokes2DRoeAverage", "a00287.html#acce6c00c941e05d7f465a39fc79f71ca", null ]
+    [ "NavierStokes2DLeftEigenvectors", "a00287.html#a497cabf9429ce30c3107d526bc18a798", null ],
+    [ "NavierStokes2DRightEigenvectors", "a00287.html#a2267c0825e485249fdee53ee44981636", null ]
 ];

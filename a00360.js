@@ -1,4 +1,4 @@
 var a00360 =
 [
-    [ "TimeGLMGEEInitialize", "a00360.html#a0feaaf3153805ccbd44c81288241dbd8", null ]
+    [ "TimeGLMGEE", "a00360.html#aaf72199adf7d99a25cfbe26a1456cdd3", null ]
 ];

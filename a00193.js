@@ -1,5 +1,4 @@
 var a00193 =
 [
-    [ "MPIMax_integer", "a00193.html#a6d51d72d0316346543fbda2aa97a790a", null ],
-    [ "MPIMax_double", "a00193.html#aa8bb15ed31fcdd02194de4d639d67988", null ]
+    [ "MPICreateIOGroups", "a00193.html#a32033a931111b364a144da26e6a53335", null ]
 ];

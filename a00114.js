@@ -1,5 +1,4 @@
 var a00114 =
 [
-    [ "BCDirichletU", "a00114.html#aff556c3ed9f4a947436d47c58ea5983e", null ],
-    [ "BCDirichletDU", "a00114.html#a4b677dc42566c53b16c09ca7f530b787", null ]
+    [ "BandedMatrixPreallocate", "a00114.html#ac62d1bac79d03bd2136c4fb87e9045d4", null ]
 ];

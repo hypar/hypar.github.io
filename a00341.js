@@ -1,4 +1,5 @@
 var a00341 =
 [
-    [ "ShallowWater2DRoeAverage", "a00341.html#a20a7a78c139fb465f48ebe1a5ed0c9af", null ]
+    [ "ShallowWater2DLeftEigenvectors", "a00341.html#aedb92b59af4004f2a2905d741bffd00a", null ],
+    [ "ShallowWater2DRightEigenvectors", "a00341.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
 ];

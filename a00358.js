@@ -1,4 +1,4 @@
 var a00358 =
 [
-    [ "TimeGLMGEE", "a00358.html#aaf72199adf7d99a25cfbe26a1456cdd3", null ]
+    [ "TimeForwardEuler", "a00358.html#aa9ef7eaebda92d180aea9b0ef8186935", null ]
 ];

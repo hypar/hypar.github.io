@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/MPIFunctions/MPIPartition1D.c File Reference</title>
+<title>HyPar: src/MPIFunctions/MPIMax.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,49 +115,56 @@ $(document).ready(function(){initNavTree('a00195.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">MPIPartition1D.c File Reference</div>  </div>
+<div class="title">MPIMax.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Compute the local size.  
+<p>Functions to compute the maximum over all MPI ranks.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00080_source.html">mpivars.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00082_source.html">mpivars.h</a>&gt;</code><br />
 </div>
 <p><a href="a00195_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a87127187b566bfa02b692247f9e3c798"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#a87127187b566bfa02b692247f9e3c798">MPIPartition1D</a> (int nglobal, int nproc, int rank)</td></tr>
-<tr class="separator:a87127187b566bfa02b692247f9e3c798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d51d72d0316346543fbda2aa97a790a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#a6d51d72d0316346543fbda2aa97a790a">MPIMax_integer</a> (int *global, int *var, int size, void *comm)</td></tr>
+<tr class="separator:a6d51d72d0316346543fbda2aa97a790a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8bb15ed31fcdd02194de4d639d67988"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#aa8bb15ed31fcdd02194de4d639d67988">MPIMax_double</a> (double *global, double *var, int size, void *comm)</td></tr>
+<tr class="separator:aa8bb15ed31fcdd02194de4d639d67988"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Compute the local size. </p>
+<div class="textblock"><p>Functions to compute the maximum over all MPI ranks. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00195_source.html">MPIPartition1D.c</a>.</p>
+<p>Definition in file <a class="el" href="a00195_source.html">MPIMax.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a87127187b566bfa02b692247f9e3c798"></a>
+<a class="anchor" id="a6d51d72d0316346543fbda2aa97a790a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int MPIPartition1D </td>
+          <td class="memname">int MPIMax_integer </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nglobal</em>, </td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>global</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>var</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nproc</em>, </td>
+          <td class="paramname"><em>size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>rank</em>&#160;</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>comm</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -166,26 +173,90 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Given a 1D array of a given global size <em>nglobal</em>, and the total number of MPI ranks <em>nproc</em> on which it will be partitioned, this function computes the size of the local part of the 1D array on <em>rank</em>. </p>
+<p>Compute the global maximum over all MPI ranks in a given communicator for <em>int</em> datatype.</p><ul>
+<li>If <em>var</em> is an array of size greater than 1, <em>global</em> will be an array of the same size with each element as the maximum value of that element in <em>var</em> on all the MPI ranks in the given communicator. </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">nglobal</td><td>Global size </td></tr>
-    <tr><td class="paramname">nproc</td><td>Total number of ranks </td></tr>
-    <tr><td class="paramname">rank</td><td>Rank </td></tr>
+    <tr><td class="paramname">global</td><td>array to contain the global maximums </td></tr>
+    <tr><td class="paramname">var</td><td>the local array </td></tr>
+    <tr><td class="paramname">size</td><td>size of the local array </td></tr>
+    <tr><td class="paramname">comm</td><td>MPI communicator </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00195_source.html#l00014">14</a> of file <a class="el" href="a00195_source.html">MPIPartition1D.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">int</span> nlocal;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> (nglobal%nproc == 0) nlocal = nglobal/nproc;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">if</span> (rank == nproc-1)  nlocal = nglobal/nproc + nglobal%nproc;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">else</span>                  nlocal = nglobal/nproc;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span>(nlocal);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<p>Definition at line <a class="el" href="a00195_source.html#l00015">15</a> of file <a class="el" href="a00195_source.html">MPIMax.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#ifdef serial</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">for</span> (i = 0; i &lt; size; i++)  global[i] = var[i];</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  MPI_Allreduce((var==global?MPI_IN_PLACE:var),global,size,MPI_INT,MPI_MAX,*((MPI_Comm*)comm));</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="aa8bb15ed31fcdd02194de4d639d67988"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MPIMax_double </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>global</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>var</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>comm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compute the global maximum over all MPI ranks in a given communicator for <em>double</em> datatype.</p><ul>
+<li>If <em>var</em> is an array of size greater than 1, <em>global</em> will be an array of the same size with each element as the maximum value of that element in <em>var</em> on all the MPI ranks in the given communicator. </li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">global</td><td>array to contain the global maximums </td></tr>
+    <tr><td class="paramname">var</td><td>the local array </td></tr>
+    <tr><td class="paramname">size</td><td>size of the local array </td></tr>
+    <tr><td class="paramname">comm</td><td>MPI communicator </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="a00195_source.html#l00038">38</a> of file <a class="el" href="a00195_source.html">MPIMax.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#ifdef serial</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">for</span> (i = 0; i &lt; size; i++)  global[i] = var[i];</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  MPI_Allreduce((var==global?MPI_IN_PLACE:var),global,size,MPI_DOUBLE,MPI_MAX,*((MPI_Comm*)comm));</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>

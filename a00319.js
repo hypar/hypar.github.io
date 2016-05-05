@@ -1,5 +1,4 @@
 var a00319 =
 [
-    [ "Numa3DFlux", "a00319.html#a173a0e31d874adff608b905549a58a11", null ],
-    [ "Numa3DStiffFlux", "a00319.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
+    [ "Numa3DCleanup", "a00319.html#af62517a2d64232969b52ddcb4e01c150", null ]
 ];

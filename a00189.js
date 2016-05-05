@@ -1,4 +1,4 @@
 var a00189 =
 [
-    [ "MPIGetArrayDatanD", "a00189.html#a85bac139e1cfe7ce1f6d83f8212f5d99", null ]
+    [ "MPIGatherArray1D", "a00189.html#afd93c6a00eeb8b35cd7e709de63f5a20", null ]
 ];

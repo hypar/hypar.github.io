@@ -1,4 +1,5 @@
 var a00353 =
 [
-    [ "TimeError", "a00353.html#a0e482caa3b262c93af18f0e96f16ff59", null ]
+    [ "_MINIMUM_GHOSTS_", "a00353.html#ab2278b4768059f198821dbf4d1a80389", null ],
+    [ "SecondDerivativeSecondOrderCentral", "a00353.html#a84c8a8f68736a8644c442f8c27628445", null ]
 ];

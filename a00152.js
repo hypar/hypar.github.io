@@ -1,4 +1,4 @@
 var a00152 =
 [
-    [ "ReadInputs", "a00152.html#a2882d664a35c549b9f04de1e88a1f346", null ]
+    [ "ParabolicFunctionNC1Stage", "a00152.html#a2faa78314e07ca739b7652ceb22ef083", null ]
 ];

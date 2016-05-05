@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/Euler1D/Euler1DFlux.c Source File</title>
+<title>HyPar: src/PhysicalModels/Euler1D/Euler1DComputeCFL.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,98 +113,71 @@ $(document).ready(function(){initNavTree('a00220_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Euler1DFlux.c</div>  </div>
+<div class="title">Euler1DComputeCFL.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00220.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00094.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00102.html">physicalmodels/euler1d.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00098.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00223.html#a765baa9888bf5d1e7ed3580e6df04e17">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00220.html#a17a485e5749c6ff502d89a28a43c87ca">Euler1DFlux</a>(</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                <span class="keywordtype">double</span>  *f, </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                <span class="keywordtype">double</span>  *u, </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                <span class="keywordtype">int</span>     dir,</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                <span class="keywordtype">void</span>    *s, </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                <span class="keywordtype">double</span>  t   </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;               )</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00097.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00096.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00102.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00104.html">physicalmodels/euler1d.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00100.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="a00225.html#a96dfe05f0bab236d14c49a97f6f3a9c9">   17</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="a00220.html#a820145e91372888fca738bcf320495d9">Euler1DComputeCFL</a>(</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                          <span class="keywordtype">void</span>    *s, </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                          <span class="keywordtype">void</span>    *m, </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                          <span class="keywordtype">double</span>  dt, </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                          <span class="keywordtype">double</span>  t   </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                        )</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00078.html">HyPar</a>             *solver = (<a class="code" href="a00078.html">HyPar</a>*)   s;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00071.html">Euler1D</a>           *param  = (<a class="code" href="a00071.html">Euler1D</a>*) solver-&gt;<a class="code" href="a00078.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">int</span>               *dim    = solver-&gt;<a class="code" href="a00078.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span>               ghosts  = solver-&gt;<a class="code" href="a00078.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span>  ndims   = <a class="code" href="a00102.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span>  nvars   = <a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">int</span>        index[<a class="code" href="a00102.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], bounds[_MODEL_NDIMS_], offset[_MODEL_NDIMS_];</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="comment">/* set bounds for array index to include ghost points */</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="a00094.html#a197e4f9ce0b056b3f3addbbd9887f703">_ArrayAddCopy1D_</a>(dim,(2*ghosts),bounds,ndims);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="comment">/* set offset such that index is compatible with ghost point arrangement */</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00094.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,-ghosts);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00094.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00094.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">double</span> rho, v, e, P;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="a00102.html#af35510fb1477577f57c57cc2a862b1e7">_Euler1DGetFlowVar_</a>((u+nvars*p),rho,v,e,P,param);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="a00102.html#a159a1509b6fbdc57754ca8871d39d97e">_Euler1DSetFlux_</a>((f+nvars*p),rho,v,e,P);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="a00094.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,index,done);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00080.html">HyPar</a>     *solver = (<a class="code" href="a00080.html">HyPar</a>*)   s;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00073.html">Euler1D</a>   *param  = (<a class="code" href="a00073.html">Euler1D</a>*) solver-&gt;<a class="code" href="a00080.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span> *dim    = solver-&gt;<a class="code" href="a00080.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">int</span> ghosts  = solver-&gt;<a class="code" href="a00080.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordtype">int</span> ndims   = solver-&gt;<a class="code" href="a00080.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">int</span> index[ndims];</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">double</span> *u   = solver-&gt;<a class="code" href="a00080.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">double</span> max_cfl = 0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00096.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00096.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">double</span> rho, v, e, P, c, dxinv, local_cfl;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="a00104.html#af35510fb1477577f57c57cc2a862b1e7">_Euler1DGetFlowVar_</a>((u+<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),rho,v,e,P,param);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="a00097.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,index[0],dim,ghosts,solver-&gt;<a class="code" href="a00080.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dxinv); <span class="comment">/* 1/dx */</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    c         = sqrt(param-&gt;<a class="code" href="a00073.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>*P/rho); <span class="comment">/* speed of sound */</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    local_cfl = (<a class="code" href="a00102.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(v)+c)*dt*dxinv; <span class="comment">/* local cfl for this grid point */</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">if</span> (local_cfl &gt; max_cfl) max_cfl = local_cfl;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="a00096.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span>(max_cfl);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="a00223.html#a31b02a37de0ea8443f0dd89d5861e114">   59</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00220.html#a3017a4ade688681fa865c1556fb73f97">Euler1DStiffFlux</a>(</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="keywordtype">double</span>  *f, </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                <span class="keywordtype">double</span>  *u, </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                <span class="keywordtype">int</span>     dir,</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordtype">void</span>    *s, </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                <span class="keywordtype">double</span>  t   </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;               )</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="a00078.html">HyPar</a>             *solver = (<a class="code" href="a00078.html">HyPar</a>*)   s;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <a class="code" href="a00071.html">Euler1D</a>           *param  = (<a class="code" href="a00071.html">Euler1D</a>*) solver-&gt;<a class="code" href="a00078.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordtype">int</span>               *dim    = solver-&gt;<a class="code" href="a00078.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordtype">int</span>               ghosts  = solver-&gt;<a class="code" href="a00078.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span>  ndims   = <a class="code" href="a00102.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span>  nvars   = <a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">int</span>        index[<a class="code" href="a00102.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], bounds[_MODEL_NDIMS_], offset[_MODEL_NDIMS_];</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="comment">/* set bounds for array index to include ghost points */</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="a00094.html#a197e4f9ce0b056b3f3addbbd9887f703">_ArrayAddCopy1D_</a>(dim,(2*ghosts),bounds,ndims);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="comment">/* set offset such that index is compatible with ghost point arrangement */</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <a class="code" href="a00094.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,-ghosts);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00094.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00094.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="a00102.html#a2f680b65f650c3360682d6f65e4f7321">_Euler1DSetLinearizedStiffFlux_</a>((f+nvars*p),(u+nvars*p),(param-&gt;<a class="code" href="a00071.html#a14af7516371abe115b3a1aa9269aebb5">fast_jac</a>+nvars*nvars*p));</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="a00094.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,index,done);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
-<div class="ttc" id="a00094_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00094.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00094_source.html#l00142">arrayfunctions.h:142</a></div></div>
-<div class="ttc" id="a00078_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00078.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00032">hypar.h:32</a></div></div>
-<div class="ttc" id="a00102_html_af35510fb1477577f57c57cc2a862b1e7"><div class="ttname"><a href="a00102.html#af35510fb1477577f57c57cc2a862b1e7">_Euler1DGetFlowVar_</a></div><div class="ttdeci">#define _Euler1DGetFlowVar_(u, rho, v, e, P, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00078">euler1d.h:78</a></div></div>
-<div class="ttc" id="a00094_html_a197e4f9ce0b056b3f3addbbd9887f703"><div class="ttname"><a href="a00094.html#a197e4f9ce0b056b3f3addbbd9887f703">_ArrayAddCopy1D_</a></div><div class="ttdeci">#define _ArrayAddCopy1D_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00094_source.html#l00330">arrayfunctions.h:330</a></div></div>
-<div class="ttc" id="a00220_html_a3017a4ade688681fa865c1556fb73f97"><div class="ttname"><a href="a00220.html#a3017a4ade688681fa865c1556fb73f97">Euler1DStiffFlux</a></div><div class="ttdeci">int Euler1DStiffFlux(double *f, double *u, int dir, void *s, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00059">Euler1DFlux.c:59</a></div></div>
-<div class="ttc" id="a00220_html_a17a485e5749c6ff502d89a28a43c87ca"><div class="ttname"><a href="a00220.html#a17a485e5749c6ff502d89a28a43c87ca">Euler1DFlux</a></div><div class="ttdeci">int Euler1DFlux(double *f, double *u, int dir, void *s, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00016">Euler1DFlux.c:16</a></div></div>
-<div class="ttc" id="a00078_html"><div class="ttname"><a href="a00078.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00102_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00057">euler1d.h:57</a></div></div>
-<div class="ttc" id="a00071_html_a14af7516371abe115b3a1aa9269aebb5"><div class="ttname"><a href="a00071.html#a14af7516371abe115b3a1aa9269aebb5">Euler1D::fast_jac</a></div><div class="ttdeci">double * fast_jac</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00271">euler1d.h:271</a></div></div>
-<div class="ttc" id="a00094_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00094.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00094_source.html#l00079">arrayfunctions.h:79</a></div></div>
-<div class="ttc" id="a00098_html"><div class="ttname"><a href="a00098.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00102_html_a159a1509b6fbdc57754ca8871d39d97e"><div class="ttname"><a href="a00102.html#a159a1509b6fbdc57754ca8871d39d97e">_Euler1DSetFlux_</a></div><div class="ttdeci">#define _Euler1DSetFlux_(f, rho, v, e, P)</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00091">euler1d.h:91</a></div></div>
-<div class="ttc" id="a00094_html"><div class="ttname"><a href="a00094.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00102_html_a57771c952ec174601addf43e1c0202b2"><div class="ttname"><a href="a00102.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a></div><div class="ttdeci">#define _MODEL_NDIMS_</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00055">euler1d.h:55</a></div></div>
-<div class="ttc" id="a00102_html_a2f680b65f650c3360682d6f65e4f7321"><div class="ttname"><a href="a00102.html#a2f680b65f650c3360682d6f65e4f7321">_Euler1DSetLinearizedStiffFlux_</a></div><div class="ttdeci">#define _Euler1DSetLinearizedStiffFlux_(f, u, J)</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00121">euler1d.h:121</a></div></div>
-<div class="ttc" id="a00078_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00078.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00041">hypar.h:41</a></div></div>
-<div class="ttc" id="a00102_html"><div class="ttname"><a href="a00102.html">euler1d.h</a></div><div class="ttdoc">1D Euler Equations (inviscid, compressible flows) </div></div>
-<div class="ttc" id="a00094_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00094.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00094_source.html#l00122">arrayfunctions.h:122</a></div></div>
-<div class="ttc" id="a00071_html"><div class="ttname"><a href="a00071.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00255">euler1d.h:255</a></div></div>
-<div class="ttc" id="a00078_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00078.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00225">hypar.h:225</a></div></div>
+<div class="ttc" id="a00096_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00096.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00122">arrayfunctions.h:122</a></div></div>
+<div class="ttc" id="a00080_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00080.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00091">hypar.h:91</a></div></div>
+<div class="ttc" id="a00102_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00102.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00033">mathfunctions.h:33</a></div></div>
+<div class="ttc" id="a00097_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00097.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00024">basic.h:24</a></div></div>
+<div class="ttc" id="a00096_html"><div class="ttname"><a href="a00096.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00080_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00080.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00032">hypar.h:32</a></div></div>
+<div class="ttc" id="a00080_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00080.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00225">hypar.h:225</a></div></div>
+<div class="ttc" id="a00096_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00096.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00036">arrayfunctions.h:36</a></div></div>
+<div class="ttc" id="a00080_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00080.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00085">hypar.h:85</a></div></div>
+<div class="ttc" id="a00100_html"><div class="ttname"><a href="a00100.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00096_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00096.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00142">arrayfunctions.h:142</a></div></div>
+<div class="ttc" id="a00104_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00057">euler1d.h:57</a></div></div>
+<div class="ttc" id="a00080_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00080.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00080_html"><div class="ttname"><a href="a00080.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00097_html"><div class="ttname"><a href="a00097.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00104_html"><div class="ttname"><a href="a00104.html">euler1d.h</a></div><div class="ttdoc">1D Euler Equations (inviscid, compressible flows) </div></div>
+<div class="ttc" id="a00220_html_a820145e91372888fca738bcf320495d9"><div class="ttname"><a href="a00220.html#a820145e91372888fca738bcf320495d9">Euler1DComputeCFL</a></div><div class="ttdeci">double Euler1DComputeCFL(void *s, void *m, double dt, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00017">Euler1DComputeCFL.c:17</a></div></div>
+<div class="ttc" id="a00102_html"><div class="ttname"><a href="a00102.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00080_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00080.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00041">hypar.h:41</a></div></div>
+<div class="ttc" id="a00073_html"><div class="ttname"><a href="a00073.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00255">euler1d.h:255</a></div></div>
+<div class="ttc" id="a00104_html_af35510fb1477577f57c57cc2a862b1e7"><div class="ttname"><a href="a00104.html#af35510fb1477577f57c57cc2a862b1e7">_Euler1DGetFlowVar_</a></div><div class="ttdeci">#define _Euler1DGetFlowVar_(u, rho, v, e, P, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00078">euler1d.h:78</a></div></div>
+<div class="ttc" id="a00073_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00073.html#a72f9e01745b3a8203067ab84aefc9aea">Euler1D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00256">euler1d.h:256</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

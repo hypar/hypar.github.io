@@ -1,4 +1,5 @@
 var a00195 =
 [
-    [ "MPIPartition1D", "a00195.html#a87127187b566bfa02b692247f9e3c798", null ]
+    [ "MPIMax_integer", "a00195.html#a6d51d72d0316346543fbda2aa97a790a", null ],
+    [ "MPIMax_double", "a00195.html#aa8bb15ed31fcdd02194de4d639d67988", null ]
 ];

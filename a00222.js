@@ -1,4 +1,5 @@
 var a00222 =
 [
-    [ "Euler1DGravityField", "a00222.html#abbbaafa694caadbccd6080cc35b89511", null ]
+    [ "Euler1DFlux", "a00222.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
+    [ "Euler1DStiffFlux", "a00222.html#a3017a4ade688681fa865c1556fb73f97", null ]
 ];

@@ -1,6 +1,5 @@
 var a00271 =
 [
-    [ "ComputeElectricalPower", "a00271.html#a454d95ed74eac931fbd3e02f9ac8ca63", null ],
-    [ "FPPowerSystem3BusDriftFunction", "a00271.html#a5b602ee3f15087c8ab5542c83596f6c0", null ],
-    [ "FPPowerSystem3BusDissipationFunction", "a00271.html#a9dd5286fde835efd7885cad200f01007", null ]
+    [ "FPPowerSystem3BusDissipationFunction", "a00271.html#a9fc174afd12172d7017edb0b05012438", null ],
+    [ "FPPowerSystem3BusComputeDiffNumber", "a00271.html#a2516d85ae9b31b8ca6a13b3542c2a752", null ]
 ];

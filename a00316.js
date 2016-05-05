@@ -1,5 +1,4 @@
 var a00316 =
 [
-    [ "Numa2DRusanovFlux", "a00316.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
-    [ "Numa2DRusanovLinearFlux", "a00316.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
+    [ "Numa2DParabolicFunction", "a00316.html#a572c3429da236f2aeb16775269f0d26b", null ]
 ];

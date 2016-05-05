@@ -1,24 +1,22 @@
 var a00072 =
 [
-    [ "Euler2D", "a00072.html#a00376", [
-      [ "gamma", "a00072.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
-      [ "upw_choice", "a00072.html#a57894a0f53d5b228bf64053367736bf9", null ]
-    ] ],
-    [ "_EULER_2D_", "a00072.html#ae205e355df87a13c8b47c958828bce2f", null ],
-    [ "_MODEL_NDIMS_", "a00072.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00072.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "_ROE_", "a00072.html#abffeadaaee7a3a2baeeb28e395411d73", null ],
-    [ "_RF_", "a00072.html#a51e0f9431973e4cf55e6aeee7dab6d83", null ],
-    [ "_LLF_", "a00072.html#a98a6bcc1b69abface4bef84cf0d51955", null ],
-    [ "_SWFS_", "a00072.html#a930e301363fd9f0a570d97c8c3dd3ea3", null ],
-    [ "_XDIR_", "a00072.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
-    [ "_YDIR_", "a00072.html#a7fd32e06617f4489079bc50ce9bfc00c", null ],
-    [ "_Euler2DGetFlowVar_", "a00072.html#afff338b9964cae67fd9b3f4dc224e77b", null ],
-    [ "_Euler2DSetFlux_", "a00072.html#a9d97dd7f27edf1795e4b1414e7307cd4", null ],
-    [ "_Euler2DRoeAverage_", "a00072.html#ad01b2e4da71d287e9f5574ccecc9997f", null ],
-    [ "_Euler2DEigenvalues_", "a00072.html#acfce335ccbb6208adc1b532cf9d4c7b1", null ],
-    [ "_Euler2DLeftEigenvectors_", "a00072.html#a590ff560306927f56be7a719747324dc", null ],
-    [ "_Euler2DRightEigenvectors_", "a00072.html#a2548fc93774ad99d2d9be0ec40325978", null ],
-    [ "Euler2DInitialize", "a00072.html#a7c85bdac3c8b5f3bb3bd83fdae2e52e8", null ],
-    [ "Euler2DCleanup", "a00072.html#ae2bd18386ee9184c66bb7e7b78f1b73b", null ]
+    [ "bctype", "a00072.html#a430ec6bfcdd38ab8e86545e25bc22613", null ],
+    [ "dim", "a00072.html#a70b5e28b5bc3d1b63a7435c5fe50b837", null ],
+    [ "face", "a00072.html#a9582c650f117a06449b5ee368b6762ef", null ],
+    [ "xmin", "a00072.html#a1e51e79041d5a3dddffb503277703568", null ],
+    [ "xmax", "a00072.html#a7ea24a733beddff902459a07bf91ca67", null ],
+    [ "on_this_proc", "a00072.html#a2eec7e4ee612d5edc985ba81453346e1", null ],
+    [ "is", "a00072.html#a481013ba007a99a4237cde5eeb3c9a29", null ],
+    [ "ie", "a00072.html#a7602de5ebb1b59ec35217e78a35a531e", null ],
+    [ "BCFunctionU", "a00072.html#af1c333edda90c79d9eff5442ac440942", null ],
+    [ "BCFunctionDU", "a00072.html#aa14c431b18e0c34e2622e1d5c797f9f0", null ],
+    [ "DirichletValue", "a00072.html#a6aa65431c39a8d8177f35c338ddb7a0e", null ],
+    [ "SpongeValue", "a00072.html#af7eeb4ff3f7c8bc22e0786ddbe62f16d", null ],
+    [ "UnsteadyDirichletSize", "a00072.html#ac3b478217419275ad063182f69cb543d", null ],
+    [ "UnsteadyDirichletData", "a00072.html#a48f59fc59e6a86d0b4aad842daea9106", null ],
+    [ "UnsteadyDirichletFilename", "a00072.html#a81c76294457e5d469798d16ab027c9a2", null ],
+    [ "gamma", "a00072.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "FlowDensity", "a00072.html#aa92ee9d8efc5ca49f4a83d8dabf0b15d", null ],
+    [ "FlowVelocity", "a00072.html#a0d0d92fab642e1d02a9de254e73a3f21", null ],
+    [ "FlowPressure", "a00072.html#a0a3c5af6bdb8fbdb746fd4edb374bb18", null ]
 ];

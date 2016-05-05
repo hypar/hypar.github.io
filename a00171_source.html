@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/InterpolationFunctions/WENOCleanup.c Source File</title>
+<title>HyPar: src/InterpolationFunctions/Interp2PrimSecondOrder.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,49 +113,74 @@ $(document).ready(function(){initNavTree('a00171_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">WENOCleanup.c</div>  </div>
+<div class="title">Interp2PrimSecondOrder.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00171.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00081.html">interpolation.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00080.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00098.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00171.html#acba860799ef06da30991474042930f74">   14</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00171.html#acba860799ef06da30991474042930f74">WENOCleanup</a>(<span class="keywordtype">void</span> *s  )</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <a class="code" href="a00081.html#a00390">WENOParameters</a>  *weno   = (<a class="code" href="a00081.html#a00390">WENOParameters</a>*) s;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordflow">if</span> (weno-&gt;<a class="code" href="a00081.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>) free(weno-&gt;<a class="code" href="a00081.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">if</span> (weno-&gt;<a class="code" href="a00081.html#ad36954709307649365515214a02ab06d">B</a>) free(weno-&gt;<a class="code" href="a00081.html#ad36954709307649365515214a02ab06d">B</a>);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordflow">if</span> (weno-&gt;<a class="code" href="a00081.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a>) free(weno-&gt;<a class="code" href="a00081.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a>);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> (weno-&gt;<a class="code" href="a00081.html#ac06de847603f5cfaec085f6fe500f3c8">R</a>) free(weno-&gt;<a class="code" href="a00081.html#ac06de847603f5cfaec085f6fe500f3c8">R</a>);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordflow">if</span> (weno-&gt;<a class="code" href="a00081.html#aba3b15034da676474db917f9f5533085">sendbuf</a>) free(weno-&gt;<a class="code" href="a00081.html#aba3b15034da676474db917f9f5533085">sendbuf</a>);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">if</span> (weno-&gt;<a class="code" href="a00081.html#afc23e46e08649e112e8d64d780cea5cb">recvbuf</a>) free(weno-&gt;<a class="code" href="a00081.html#afc23e46e08649e112e8d64d780cea5cb">recvbuf</a>);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  free(weno-&gt;<a class="code" href="a00081.html#ad0c30ee1add42468a6d7c022f2efdf70">offset</a>);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  free(weno-&gt;<a class="code" href="a00081.html#a3ee56e3d8244b3d4582f1396a79f9791">w1</a>);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  free(weno-&gt;<a class="code" href="a00081.html#a31eb3c1fcb3bc85ab4fa156325a1f849">w2</a>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  free(weno-&gt;<a class="code" href="a00081.html#aabd83eb3f8a7e3bb9f79a4a943bbd508">w3</a>);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
-<div class="ttc" id="a00081_html_ac06de847603f5cfaec085f6fe500f3c8"><div class="ttname"><a href="a00081.html#ac06de847603f5cfaec085f6fe500f3c8">WENOParameters::R</a></div><div class="ttdeci">double * R</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00165">interpolation.h:165</a></div></div>
-<div class="ttc" id="a00081_html_aabd83eb3f8a7e3bb9f79a4a943bbd508"><div class="ttname"><a href="a00081.html#aabd83eb3f8a7e3bb9f79a4a943bbd508">WENOParameters::w3</a></div><div class="ttdeci">double * w3</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00174">interpolation.h:174</a></div></div>
-<div class="ttc" id="a00081_html_a0a26ce8d1878aac6ddc87e3f6290e039"><div class="ttname"><a href="a00081.html#a0a26ce8d1878aac6ddc87e3f6290e039">WENOParameters::C</a></div><div class="ttdeci">double * C</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00165">interpolation.h:165</a></div></div>
-<div class="ttc" id="a00081_html_afc23e46e08649e112e8d64d780cea5cb"><div class="ttname"><a href="a00081.html#afc23e46e08649e112e8d64d780cea5cb">WENOParameters::recvbuf</a></div><div class="ttdeci">double * recvbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00170">interpolation.h:170</a></div></div>
-<div class="ttc" id="a00081_html_a00390"><div class="ttname"><a href="a00081.html#a00390">WENOParameters</a></div><div class="ttdoc">Structure of variables/parameters needed by the WENO-type scheme. </div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00146">interpolation.h:146</a></div></div>
-<div class="ttc" id="a00081_html_ad0c30ee1add42468a6d7c022f2efdf70"><div class="ttname"><a href="a00081.html#ad0c30ee1add42468a6d7c022f2efdf70">WENOParameters::offset</a></div><div class="ttdeci">int * offset</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00178">interpolation.h:178</a></div></div>
-<div class="ttc" id="a00081_html_ac900805a486cbb8489e3c176ed6e0d8e"><div class="ttname"><a href="a00081.html#ac900805a486cbb8489e3c176ed6e0d8e">WENOParameters::A</a></div><div class="ttdeci">double * A</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00165">interpolation.h:165</a></div></div>
-<div class="ttc" id="a00081_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00081.html#ad36954709307649365515214a02ab06d">WENOParameters::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00165">interpolation.h:165</a></div></div>
-<div class="ttc" id="a00081_html_a3ee56e3d8244b3d4582f1396a79f9791"><div class="ttname"><a href="a00081.html#a3ee56e3d8244b3d4582f1396a79f9791">WENOParameters::w1</a></div><div class="ttdeci">double * w1</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00174">interpolation.h:174</a></div></div>
-<div class="ttc" id="a00081_html_a31eb3c1fcb3bc85ab4fa156325a1f849"><div class="ttname"><a href="a00081.html#a31eb3c1fcb3bc85ab4fa156325a1f849">WENOParameters::w2</a></div><div class="ttdeci">double * w2</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00174">interpolation.h:174</a></div></div>
-<div class="ttc" id="a00081_html"><div class="ttname"><a href="a00081.html">interpolation.h</a></div><div class="ttdoc">Definitions for the functions computing the interpolated value of the primitive at the cell interface...</div></div>
-<div class="ttc" id="a00098_html"><div class="ttname"><a href="a00098.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00080_html"><div class="ttname"><a href="a00080.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
-<div class="ttc" id="a00171_html_acba860799ef06da30991474042930f74"><div class="ttname"><a href="a00171.html#acba860799ef06da30991474042930f74">WENOCleanup</a></div><div class="ttdeci">int WENOCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00171_source.html#l00014">WENOCleanup.c:14</a></div></div>
-<div class="ttc" id="a00081_html_aba3b15034da676474db917f9f5533085"><div class="ttname"><a href="a00081.html#aba3b15034da676474db917f9f5533085">WENOParameters::sendbuf</a></div><div class="ttdeci">double * sendbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00081_source.html#l00170">interpolation.h:170</a></div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00097.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00096.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00083.html">interpolation.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00082.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00100.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#undef  _MINIMUM_GHOSTS_</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="a00171.html#ab2278b4768059f198821dbf4d1a80389">   19</a></span>&#160;<span class="preprocessor">#define _MINIMUM_GHOSTS_ 1</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00171.html#afd032770fffa0374d37765cc6a09d742">   56</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00171.html#afd032770fffa0374d37765cc6a09d742">Interp2PrimSecondOrder</a>(</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                            <span class="keywordtype">double</span>  *fI,  </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                            <span class="keywordtype">double</span>  *fC,  </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                            <span class="keywordtype">int</span>     dir,  </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                            <span class="keywordtype">void</span>    *s,   </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                            <span class="keywordtype">void</span>    *m    </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                          )</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;{</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <a class="code" href="a00080.html">HyPar</a>         *solver = (<a class="code" href="a00080.html">HyPar</a>*)        s;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordtype">int</span> ghosts = solver-&gt;<a class="code" href="a00080.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordtype">int</span> ndims  = solver-&gt;<a class="code" href="a00080.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordtype">int</span> nvars  = solver-&gt;<a class="code" href="a00080.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordtype">int</span> *dim   = solver-&gt;<a class="code" href="a00080.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="comment">/* create index and bounds for the outer loop, i.e., to loop over all 1D lines along</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">     dimension &quot;dir&quot;                                                                    */</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordtype">int</span> indexC[ndims], indexI[ndims], index_outer[ndims], bounds_outer[ndims], bounds_inter[ndims];</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="a00096.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <a class="code" href="a00096.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_inter,ndims); bounds_inter[dir] += 1;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00096.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="a00096.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexC,ndims);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="a00096.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexI,ndims);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">for</span> (indexI[dir] = 0; indexI[dir] &lt; dim[dir]+1; indexI[dir]++) {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      <span class="keywordtype">int</span> p, qL, qR;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      <a class="code" href="a00096.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds_inter,indexI,0,p);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      indexC[dir] = indexI[dir]-1; <a class="code" href="a00096.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qL);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      indexC[dir] = indexI[dir]  ; <a class="code" href="a00096.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qR);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <span class="keywordtype">int</span> v; <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) fI[p*nvars+v] = (fC[qR*nvars+v] - fC[qL*nvars+v]);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <a class="code" href="a00096.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
+<div class="ttc" id="a00096_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00096.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00122">arrayfunctions.h:122</a></div></div>
+<div class="ttc" id="a00080_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00080.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00171_html_afd032770fffa0374d37765cc6a09d742"><div class="ttname"><a href="a00171.html#afd032770fffa0374d37765cc6a09d742">Interp2PrimSecondOrder</a></div><div class="ttdeci">int Interp2PrimSecondOrder(double *fI, double *fC, int dir, void *s, void *m)</div><div class="ttdoc">2nd order component-wise interpolation of the 2nd primitive on a uniform grid </div><div class="ttdef"><b>Definition:</b> <a href="a00171_source.html#l00056">Interp2PrimSecondOrder.c:56</a></div></div>
+<div class="ttc" id="a00096_html"><div class="ttname"><a href="a00096.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00082_html"><div class="ttname"><a href="a00082.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
+<div class="ttc" id="a00080_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00080.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00032">hypar.h:32</a></div></div>
+<div class="ttc" id="a00096_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00096.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00036">arrayfunctions.h:36</a></div></div>
+<div class="ttc" id="a00083_html"><div class="ttname"><a href="a00083.html">interpolation.h</a></div><div class="ttdoc">Definitions for the functions computing the interpolated value of the primitive at the cell interface...</div></div>
+<div class="ttc" id="a00100_html"><div class="ttname"><a href="a00100.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00096_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00096.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00142">arrayfunctions.h:142</a></div></div>
+<div class="ttc" id="a00096_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00096.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00080_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00080.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00080_html"><div class="ttname"><a href="a00080.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00097_html"><div class="ttname"><a href="a00097.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00080_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00080.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00041">hypar.h:41</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

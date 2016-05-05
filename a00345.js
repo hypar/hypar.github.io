@@ -1,7 +1,4 @@
 var a00345 =
 [
-    [ "ShallowWater2DSourceFunction1", "a00345.html#a4d5b3f3e933170ce53af12d19ba4ef01", null ],
-    [ "ShallowWater2DSourceFunction2", "a00345.html#a5ed617f0405e97ed489c4843d482e692", null ],
-    [ "ApplyBoundaryConditions", "a00345.html#a09f2c325b30d93f213545636ebc1c725", null ],
-    [ "ShallowWater2DSource", "a00345.html#a40d3a942960d07b188d08a46bec76768", null ]
+    [ "ShallowWater2DJacobian", "a00345.html#ac9578045deced429c673bb5e6a1cf034", null ]
 ];

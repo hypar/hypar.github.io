@@ -2,16 +2,16 @@ var NAVTREE =
 [
   [ "HyPar", "index.html", [
     [ "Examples", "a00002.html", "a00002" ],
-    [ "Input Files", "a00064.html", [
-      [ "solver.inp", "a00064.html#solver_inp", null ],
-      [ "boundary.inp", "a00064.html#boundary_inp", null ],
-      [ "initial.inp", "a00064.html#initial_inp", null ],
-      [ "lusolver.inp", "a00064.html#lusolver_inp", null ],
-      [ "weno.inp", "a00064.html#weno_inp", null ],
-      [ "physics.inp", "a00064.html#physics_inp", null ]
+    [ "Input Files", "a00066.html", [
+      [ "solver.inp", "a00066.html#solver_inp", null ],
+      [ "boundary.inp", "a00066.html#boundary_inp", null ],
+      [ "initial.inp", "a00066.html#initial_inp", null ],
+      [ "lusolver.inp", "a00066.html#lusolver_inp", null ],
+      [ "weno.inp", "a00066.html#weno_inp", null ],
+      [ "physics.inp", "a00066.html#physics_inp", null ]
     ] ],
-    [ "Numerical Method", "a00066.html", null ],
-    [ "README", "a00068.html", null ],
+    [ "Numerical Method", "a00068.html", null ],
+    [ "README", "a00070.html", null ],
     [ "Data Structures", null, [
       [ "Data Structures", "annotated.html", "annotated" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -36,14 +36,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00002.html",
-"a00078.html#a1d36fea92472416e32e039b86dea0b18",
-"a00082.html#abdd7dcd1ec7c37af027441f521dbe844",
-"a00096.html#adba2024137894c96339af50efabe3771",
-"a00129.html#a588e1e74fdbac3dcc2b1258aa0c155c0",
-"a00191.html#a32033a931111b364a144da26e6a53335",
-"a00247.html",
-"a00298.html#ab376732168de139806c9f77828caa063",
-"a00350.html"
+"a00080.html#a1c247fc17b5919c384f8426052037f28",
+"a00084.html#aaccb5cbe710523019e8615b49383fea1",
+"a00098.html#adb156eee1d509ee6500ffe20dce7811d",
+"a00131.html",
+"a00193.html",
+"a00248_source.html",
+"a00300.html#a62b44025b86e4d73a34142b32301ee7c",
+"a00351_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

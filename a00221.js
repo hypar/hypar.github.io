@@ -1,4 +1,5 @@
 var a00221 =
 [
-    [ "Euler1DRoeAverage", "a00221.html#a25f26ae1ec34783770e761553ae617ae", null ]
+    [ "Euler1DLeftEigenvectors", "a00221.html#a1815fa0e825f5544526165566c75a619", null ],
+    [ "Euler1DRightEigenvectors", "a00221.html#af93bb74bc4643347f59e3bdb722e864b", null ]
 ];

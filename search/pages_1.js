@@ -11,6 +11,7 @@ var searchData=
   ['2d_20linear_20diffusion_20_2d_20sine_20wave',['2D Linear Diffusion - Sine Wave',['../a00024.html',1,'basic_examples']]],
   ['2d_20linear_20diffusion_20_2d_20sine_20wave',['2D Linear Diffusion - Sine Wave',['../a00060.html',1,'petsc_examples']]],
   ['2d_20navier_2dstokes_20equations_20_2d_20_20laminar_20flow_20over_20flat_20plate',['2D Navier-Stokes Equations -  Laminar Flow over Flat Plate',['../a00038.html',1,'basic_examples']]],
+  ['2d_20navier_2dstokes_20equations_20_2d_20_20laminar_20flow_20over_20flat_20plate',['2D Navier-Stokes Equations -  Laminar Flow over Flat Plate',['../a00064.html',1,'petsc_examples']]],
   ['2d_20shallow_20water_20equations_20_2d_20circular_20dam_20break',['2D Shallow Water Equations - Circular Dam Break',['../a00040.html',1,'basic_examples']]],
   ['2d_20shallow_20water_20equations_20_2d_20latitude_20belt_20flow',['2D Shallow Water Equations - Latitude Belt Flow',['../a00042.html',1,'basic_examples']]]
 ];

@@ -1,4 +1,5 @@
 var a00275 =
 [
-    [ "LinearADRCleanup", "a00275.html#adbc85fb4ae27eb1e4172c0bfc27b05e0", null ]
+    [ "FPPowerSystem3BusDriftFunction", "a00275.html#a96c648e7775486eb94b64ca849329d0e", null ],
+    [ "FPPowerSystem3BusUpwind", "a00275.html#ac1a5f6240ab95ea1019326fb26b76a49", null ]
 ];

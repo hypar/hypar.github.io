@@ -1,4 +1,5 @@
 var a00328 =
 [
-    [ "ShallowWater1DRoeAverage", "a00328.html#a58a7f69435429c6235c30655236fefd9", null ]
+    [ "ShallowWater1DLeftEigenvectors", "a00328.html#aa9519badea39145bc113cba2422016b3", null ],
+    [ "ShallowWater1DRightEigenvectors", "a00328.html#af4a44ab4a02a19c10ad8f4d75f88f8d7", null ]
 ];

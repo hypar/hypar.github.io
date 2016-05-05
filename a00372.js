@@ -1,4 +1,4 @@
 var a00372 =
 [
-    [ "tridiagLUGS", "a00372.html#ad485d12c99b8c48303b6bef2f86b135d", null ]
+    [ "tridiagIterJacobi", "a00372.html#ae1481a48983e9d35c52697326a77dedc", null ]
 ];

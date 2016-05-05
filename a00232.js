@@ -1,5 +1,4 @@
 var a00232 =
 [
-    [ "Euler2DLeftEigenvectors", "a00232.html#a965cafbf06fa0cfd5c0664dc94fcfd3f", null ],
-    [ "Euler2DRightEigenvectors", "a00232.html#a2e9802c52e7497ece4e65e55c77c7b22", null ]
+    [ "Euler2DCleanup", "a00232.html#a3487130c60871e40e78971cfd86e2b6c", null ]
 ];

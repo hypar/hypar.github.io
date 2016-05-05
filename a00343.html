@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DJacobian.c File Reference</title>
+<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DFunctions.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,61 +115,56 @@ $(document).ready(function(){initNavTree('a00343.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">ShallowWater2DJacobian.c File Reference</div>  </div>
+<div class="title">ShallowWater2DFunctions.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Contains the functions compute flux Jacobians for the 2D shallow water system.  
+<p>Miscellaneous functions for the 2D shallow water equations.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00100_source.html">mathfunctions.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00106_source.html">physicalmodels/shallowwater2d.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00097_source.html">basic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00108_source.html">physicalmodels/shallowwater2d.h</a>&gt;</code><br />
 </div>
 <p><a href="a00343_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac9578045deced429c673bb5e6a1cf034"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00343.html#ac9578045deced429c673bb5e6a1cf034">ShallowWater2DJacobian</a> (double *Jac, double *u, void *p, int dir, int upw)</td></tr>
-<tr class="separator:ac9578045deced429c673bb5e6a1cf034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20a7a78c139fb465f48ebe1a5ed0c9af"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00343.html#a20a7a78c139fb465f48ebe1a5ed0c9af">ShallowWater2DRoeAverage</a> (double *uavg, double *uL, double *uR, void *p)</td></tr>
+<tr class="separator:a20a7a78c139fb465f48ebe1a5ed0c9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains the functions compute flux Jacobians for the 2D shallow water system. </p>
+<div class="textblock"><p>Miscellaneous functions for the 2D shallow water equations. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00343_source.html">ShallowWater2DJacobian.c</a>.</p>
+<p>Definition in file <a class="el" href="a00343_source.html">ShallowWater2DFunctions.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ac9578045deced429c673bb5e6a1cf034"></a>
+<a class="anchor" id="a20a7a78c139fb465f48ebe1a5ed0c9af"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ShallowWater2DJacobian </td>
+          <td class="memname">int ShallowWater2DRoeAverage </td>
           <td>(</td>
           <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>Jac</em>, </td>
+          <td class="paramname"><em>uavg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>u</em>, </td>
+          <td class="paramname"><em>uL</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>uR</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>upw</em>&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -178,48 +173,25 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function to compute the flux Jacobian of the 2D shallow water equations, given the solution at a grid point. The Jacobian is square matrix of size nvar=2, and is returned as a 1D array (double) of 4 elements in row-major format. </p>
+<p>Compute the Roe-averaged state for the 2D shallow water equations. This function just calls the macro <a class="el" href="a00108.html#aa3a68e66edc692ac67a2026121be2927">_ShallowWater2DRoeAverage_</a> and is not used by any functions within the 2D shallow water module. However, it's necessary to define it and provide it to the the solver object (<a class="el" href="a00080.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>) so that it can then send it to interpolation functions for a characteristic-based reconstruction. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">Jac</td><td>Jacobian matrix: 1D array of size nvar^2 = 9 </td></tr>
-    <tr><td class="paramname">u</td><td>solution at a grid point (array of size nvar = 3) </td></tr>
-    <tr><td class="paramname">p</td><td>object containing the physics-related parameters </td></tr>
-    <tr><td class="paramname">dir</td><td>spatial dimension (x/y) </td></tr>
-    <tr><td class="paramname">upw</td><td>0 -&gt; send back complete Jacobian, 1 -&gt; send back Jacobian of right(+)-moving flux, -1 -&gt; send back Jacobian of left(-)-moving flux </td></tr>
+    <tr><td class="paramname">uavg</td><td>The computed Roe-averaged state </td></tr>
+    <tr><td class="paramname">uL</td><td>Left state (conserved variables) </td></tr>
+    <tr><td class="paramname">uR</td><td>Right state (conserved variables) </td></tr>
+    <tr><td class="paramname">p</td><td>Object of type <a class="el" href="a00090.html" title="Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. ">ShallowWater2D</a> with physics-related variables </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00343_source.html#l00013">13</a> of file <a class="el" href="a00343_source.html">ShallowWater2DJacobian.c</a>.</p>
+<p>Definition at line <a class="el" href="a00343_source.html#l00016">16</a> of file <a class="el" href="a00343_source.html">ShallowWater2DFunctions.c</a>.</p>
 <div class="fragment"><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00088.html">ShallowWater2D</a>  *param = (<a class="code" href="a00088.html">ShallowWater2D</a>*) p;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span>   R[<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], D[<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                  L[<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], DL[<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="comment">/* get the eigenvalues and left,right eigenvectors */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00106.html#ab51465579037455f044ab58f387caf15">_ShallowWater2DEigenvalues_</a>      (u,D,param,dir);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00106.html#a9fedf0f1165028b0f256b59e72fc5e9a">_ShallowWater2DLeftEigenvectors_</a> (u,L,param,dir);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00106.html#ac2a20407c8e10d3f59b52281ae4e0f39">_ShallowWater2DRightEigenvectors_</a>(u,R,param,dir);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> aupw = <a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw), k;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  k = 0; D[k] = <a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00100.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00100.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  k = 4; D[k] = <a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00100.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00100.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  k = 8; D[k] = <a class="code" href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00100.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00100.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00100.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,DL,D,L);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00100.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(<a class="code" href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,Jac,R,DL);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="ttc" id="a00088_html"><div class="ttname"><a href="a00088.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00240">shallowwater2d.h:240</a></div></div>
-<div class="ttc" id="a00100_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00100.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00033">mathfunctions.h:33</a></div></div>
-<div class="ttc" id="a00106_html_a9fedf0f1165028b0f256b59e72fc5e9a"><div class="ttname"><a href="a00106.html#a9fedf0f1165028b0f256b59e72fc5e9a">_ShallowWater2DLeftEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater2DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00154">shallowwater2d.h:154</a></div></div>
-<div class="ttc" id="a00100_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00100.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00019">mathfunctions.h:19</a></div></div>
-<div class="ttc" id="a00106_html_ac2a20407c8e10d3f59b52281ae4e0f39"><div class="ttname"><a href="a00106.html#ac2a20407c8e10d3f59b52281ae4e0f39">_ShallowWater2DRightEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater2DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00197">shallowwater2d.h:197</a></div></div>
-<div class="ttc" id="a00102_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00102.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00057">euler1d.h:57</a></div></div>
-<div class="ttc" id="a00100_html_ad08720847b0aef444876b608b7af9a5c"><div class="ttname"><a href="a00100.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a></div><div class="ttdeci">#define MatMult3(N, A, X, Y)</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00074">mathfunctions.h:74</a></div></div>
-<div class="ttc" id="a00100_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00100.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00015">mathfunctions.h:15</a></div></div>
-<div class="ttc" id="a00106_html_ab51465579037455f044ab58f387caf15"><div class="ttname"><a href="a00106.html#ab51465579037455f044ab58f387caf15">_ShallowWater2DEigenvalues_</a></div><div class="ttdeci">#define _ShallowWater2DEigenvalues_(u, D, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00129">shallowwater2d.h:129</a></div></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00090.html">ShallowWater2D</a> *param  = (<a class="code" href="a00090.html">ShallowWater2D</a>*) p;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00108.html#aa3a68e66edc692ac67a2026121be2927">_ShallowWater2DRoeAverage_</a>(uavg,uL,uR,param);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="ttc" id="a00108_html_aa3a68e66edc692ac67a2026121be2927"><div class="ttname"><a href="a00108.html#aa3a68e66edc692ac67a2026121be2927">_ShallowWater2DRoeAverage_</a></div><div class="ttdeci">#define _ShallowWater2DRoeAverage_(uavg, uL, uR, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00108">shallowwater2d.h:108</a></div></div>
+<div class="ttc" id="a00090_html"><div class="ttname"><a href="a00090.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00240">shallowwater2d.h:240</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

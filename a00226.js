@@ -1,4 +1,5 @@
 var a00226 =
 [
-    [ "Euler1DPreStep", "a00226.html#a04a19dc2b23de545e18ffddb298960d1", null ]
+    [ "Euler1DJacobian", "a00226.html#ab37022ee06f6873c94049e55a0890fe1", null ],
+    [ "Euler1DStiffJacobian", "a00226.html#a635a7e46a7898c4de6b7a47b1d68c969", null ]
 ];

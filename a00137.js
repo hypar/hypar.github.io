@@ -1,4 +1,5 @@
 var a00137 =
 [
-    [ "ComputeRHSOperators", "a00137.html#ad14888d0f63cc4137735c200b0687c59", null ]
+    [ "ExactSolution", "a00137.html#a9bb14d40dba84c49f607f1f00c1669d6", null ],
+    [ "CalculateError", "a00137.html#a52e8c83d9dad55f9a6b967e63dc5f4bc", null ]
 ];

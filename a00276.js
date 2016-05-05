@@ -1,4 +1,4 @@
 var a00276 =
 [
-    [ "LinearADRComputeCFL", "a00276.html#a483cca53816c96d4d08c12241688f75d", null ]
+    [ "LinearADRAdvection", "a00276.html#a459899fa597c60382818af864366a648", null ]
 ];

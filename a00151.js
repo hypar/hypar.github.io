@@ -1,4 +1,4 @@
 var a00151 =
 [
-    [ "ParabolicFunctionNC2Stage", "a00151.html#a153eb91ec9b118a7b8c971facbc8d920", null ]
+    [ "ParabolicFunctionNC1_5Stage", "a00151.html#af9331a439bf243524c027eba50fdbbfd", null ]
 ];
