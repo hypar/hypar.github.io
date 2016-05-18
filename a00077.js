@@ -1,24 +1,24 @@
 var a00077 =
 [
-    [ "FPPowerSystem", "a00077.html#a00381", [
-      [ "O_s", "a00077.html#aad25901418696dab0fb4016bd2eb87f9", null ],
-      [ "H", "a00077.html#a982cf43f120ff8978010e078bd49d9a3", null ],
-      [ "E", "a00077.html#a1eb62b8cb1f5e5f571d51179718e7d4c", null ],
-      [ "V", "a00077.html#a1e6fac1696a7d8fcf13ce87a658cfe12", null ],
-      [ "g1", "a00077.html#adf05fcfd83be702fb6d79e601cd7df76", null ],
-      [ "g2", "a00077.html#af6cb842b18f412478038edddd8ee6009", null ],
-      [ "D", "a00077.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
-      [ "Pm", "a00077.html#a447021464d5a14391f18d08fc463a7d5", null ],
-      [ "l", "a00077.html#a59e80b8ba32c12c6d0a868f17a19ae48", null ],
-      [ "q", "a00077.html#a5b5e3f03e443adea974601f295136638", null ],
-      [ "tf", "a00077.html#ac0c72a715f4cb2cce75ad7711fa246c4", null ],
-      [ "tcl", "a00077.html#a8159bd898bf5186e56bde271c4e4350d", null ],
-      [ "Pmax", "a00077.html#ab070db6beb517f3c727e4f259f3c43de", null ],
-      [ "pdf_integral", "a00077.html#adca2e435527ef52d18b3626b0e2ca852", null ]
+    [ "Euler2D", "a00077.html#a00389", [
+      [ "gamma", "a00077.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+      [ "upw_choice", "a00077.html#a57894a0f53d5b228bf64053367736bf9", null ]
     ] ],
-    [ "_FP_POWER_SYSTEM_", "a00077.html#aaeb0de68ad20c63864e1a6cdf819e836", null ],
+    [ "_EULER_2D_", "a00077.html#ae205e355df87a13c8b47c958828bce2f", null ],
     [ "_MODEL_NDIMS_", "a00077.html#a57771c952ec174601addf43e1c0202b2", null ],
     [ "_MODEL_NVARS_", "a00077.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "FPPowerSystemInitialize", "a00077.html#abe8191ce0b15220b854bbcda4446b170", null ],
-    [ "FPPowerSystemCleanup", "a00077.html#ac613cf54a15aaed79e93bd3b12d81f44", null ]
+    [ "_ROE_", "a00077.html#abffeadaaee7a3a2baeeb28e395411d73", null ],
+    [ "_RF_", "a00077.html#a51e0f9431973e4cf55e6aeee7dab6d83", null ],
+    [ "_LLF_", "a00077.html#a98a6bcc1b69abface4bef84cf0d51955", null ],
+    [ "_SWFS_", "a00077.html#a930e301363fd9f0a570d97c8c3dd3ea3", null ],
+    [ "_XDIR_", "a00077.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
+    [ "_YDIR_", "a00077.html#a7fd32e06617f4489079bc50ce9bfc00c", null ],
+    [ "_Euler2DGetFlowVar_", "a00077.html#afff338b9964cae67fd9b3f4dc224e77b", null ],
+    [ "_Euler2DSetFlux_", "a00077.html#a9d97dd7f27edf1795e4b1414e7307cd4", null ],
+    [ "_Euler2DRoeAverage_", "a00077.html#ad01b2e4da71d287e9f5574ccecc9997f", null ],
+    [ "_Euler2DEigenvalues_", "a00077.html#acfce335ccbb6208adc1b532cf9d4c7b1", null ],
+    [ "_Euler2DLeftEigenvectors_", "a00077.html#a590ff560306927f56be7a719747324dc", null ],
+    [ "_Euler2DRightEigenvectors_", "a00077.html#a2548fc93774ad99d2d9be0ec40325978", null ],
+    [ "Euler2DInitialize", "a00077.html#a7c85bdac3c8b5f3bb3bd83fdae2e52e8", null ],
+    [ "Euler2DCleanup", "a00077.html#ae2bd18386ee9184c66bb7e7b78f1b73b", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: Numerical Method</title>
+<title>HyPar: Input Files</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -107,67 +107,229 @@ $(document).ready(function(){initNavTree('a00068.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Numerical Method </div>  </div>
+<div class="title">Input Files </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="a00080.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solves the following partial differential equation (PDE) using a conservative finite-difference algorithm on a Cartesian grid. </p><p class="formulaDsp">
-\begin{equation} \frac {\partial {\bf u}} {\partial t} = {\bf F}_{\rm hyp}\left({\bf u}\right) + {\bf F}_{\rm par}\left({\bf u}\right) + {\bf F}_{\rm sou}\left({\bf u}\right) \end{equation}
-</p>
-<p> where \({\bf F}_{\rm hyp}\) is the hyperbolic term, \({\bf F}_{\rm par}\) is the parabolic term, and \({\bf F}_{\rm sou}\) is the source term. Each of these is discretized in space as described below, to obtain the following semi-discrete ordinary differential equation (ODE) in time: </p><p class="formulaDsp">
-\begin{equation} \frac {d {\bf u}} {d t} = \hat{\bf F}_{\rm hyp}\left({\bf u}\right) + \hat{\bf F}_{\rm par}\left({\bf u}\right) + \hat{\bf F}_{\rm sou}\left({\bf u}\right) \end{equation}
-</p>
-<p> where \(\hat{\left(\cdot\right)}\) represents the spatially discretized terms. The governing PDE can be of any space dimension. The semi-discrete ODE is integrated in time by</p><ul>
-<li>Using native time integrators (see <a class="el" href="a00075.html" title="Contains structures and function declarations for time integration. ">timeintegration.h</a>, <a class="el" href="a00100.html#a5242c7db89f8888de5d72251e5da91c2">Solve()</a>).</li>
-<li>PETSc (<a href="https://www.mcs.anl.gov/petsc/">https://www.mcs.anl.gov/petsc/</a>) - specifically the TS module (see <a class="el" href="a00088.html" title="Contains variables and function definitions for time integration with PETSc (http://www.mcs.anl.gov/petsc/) ">petscinterface.h</a>, <a class="el" href="a00100.html#a4dc9b9ce6ce776b7901fa2a6c9c9c1cf" title="Integrate in time with PETSc. ">SolvePETSc()</a>).</li>
+<div class="textblock"><p>The following input files are required to run <a class="el" href="a00083.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>. They are indicated as being mandatory or optional. If optional, then default values are used if not found.</p>
+<p><b>Note:</b> It is best to start with the provided examples, understand their input files based on the information on this page, and then modify them to run other cases.</p>
+<h1><a class="anchor" id="solver_inp"></a>
+solver.inp</h1>
+<p>Requirement: <b>mandatory</b> </p>
+<p>Read by: <a class="el" href="a00102.html#a1eaea8a114ef1dad09df700d03e735e9">ReadInputs()</a></p>
+<p>Description: Specify the main simulation-related parameters.</p>
+<p>Format: ASCII text </p><pre class="fragment">    begin
+        &lt;keyword&gt;   &lt;value&gt;
+        &lt;keyword&gt;   &lt;value&gt;
+        &lt;keyword&gt;   &lt;value&gt;
+        ...
+        &lt;keyword&gt;   &lt;value&gt;
+    end
+</pre><p>where the list of keywords and their type are:<br />
+</p><table class="doxtable">
+<tr>
+<th>Keyword name </th><th>Type </th><th>Variable </th><th>Default value  </th></tr>
+<tr>
+<td>ndims </td><td>int </td><td><a class="el" href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a> </td><td>1 </td></tr>
+<tr>
+<td>nvars </td><td>int </td><td><a class="el" href="a00083.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a> </td><td>1 </td></tr>
+<tr>
+<td>size </td><td>int[ndims] </td><td><a class="el" href="a00083.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a> </td><td>must be specified </td></tr>
+<tr>
+<td>iproc </td><td>int[ndims] </td><td><a class="el" href="a00085.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a> </td><td>must be specified </td></tr>
+<tr>
+<td>ghost </td><td>int </td><td><a class="el" href="a00083.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a> </td><td>1 </td></tr>
+<tr>
+<td>n_iter </td><td>int </td><td><a class="el" href="a00083.html#af0d8e0d5d3de3869b941b66b6caaf964">HyPar::n_iter</a> </td><td>0 </td></tr>
+<tr>
+<td>restart_iter </td><td>int </td><td><a class="el" href="a00083.html#aafb41b96563d9966e8e9f458751f2960">HyPar::restart_iter</a> </td><td>0 </td></tr>
+<tr>
+<td>time_scheme </td><td>char[] </td><td><a class="el" href="a00083.html#a138e751362d14724df8e6ab27c4a5e55">HyPar::time_scheme</a> </td><td>euler </td></tr>
+<tr>
+<td>time_scheme_type </td><td>char[] </td><td><a class="el" href="a00083.html#a61750696383420ba8bcc7d9e44a538e2">HyPar::time_scheme_type</a> </td><td>none </td></tr>
+<tr>
+<td>hyp_space_scheme </td><td>char[] </td><td><a class="el" href="a00083.html#ad29846eeb9c83b329a8d7c1fe69d46b2">HyPar::spatial_scheme_hyp</a> </td><td>1 </td></tr>
+<tr>
+<td>hyp_flux_split </td><td>char[] </td><td><a class="el" href="a00083.html#a5bed0cb9665daad89f4377c4f7609df4">HyPar::SplitHyperbolicFlux</a> </td><td>no </td></tr>
+<tr>
+<td>hyp_interp_type </td><td>char[] </td><td><a class="el" href="a00083.html#a9591ba0fadb863561474e2ba251d2594">HyPar::interp_type</a> </td><td>characteristic </td></tr>
+<tr>
+<td>par_space_type </td><td>char[] </td><td><a class="el" href="a00083.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> </td><td>nonconservative-1stage </td></tr>
+<tr>
+<td>par_space_scheme </td><td>char[] </td><td><a class="el" href="a00083.html#a170f2f6cc8ac86b78fcb376c2392e290">HyPar::spatial_scheme_par</a> </td><td>2 </td></tr>
+<tr>
+<td>dt </td><td>double </td><td><a class="el" href="a00083.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a> </td><td>0.0 </td></tr>
+<tr>
+<td>conservation_check </td><td>char[] </td><td><a class="el" href="a00083.html#ac92c34fe456d92c694eacd2231f5a7b1">HyPar::ConservationCheck</a> </td><td>no </td></tr>
+<tr>
+<td>screen_op_iter </td><td>int </td><td><a class="el" href="a00083.html#a74ff7fa96cbfc4ee87f508f964e94409">HyPar::screen_op_iter</a> </td><td>1 </td></tr>
+<tr>
+<td>file_op_iter </td><td>int </td><td><a class="el" href="a00083.html#a6ff746b30ee55a3bbb9f3306c145f27a">HyPar::file_op_iter</a> </td><td>1000 </td></tr>
+<tr>
+<td>op_file_format </td><td>char[] </td><td><a class="el" href="a00083.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> </td><td>text </td></tr>
+<tr>
+<td>ip_file_type </td><td>char[] </td><td><a class="el" href="a00083.html#a83f3dcd022f744511a44f2a31a824ac8">HyPar::ip_file_type</a> </td><td>ascii </td></tr>
+<tr>
+<td>input_mode </td><td>char[] </td><td><a class="el" href="a00083.html#a0a0b9dc97c7c278a019939d301db9399">HyPar::input_mode</a> </td><td>serial </td></tr>
+<tr>
+<td>output_mode </td><td>char[] </td><td><a class="el" href="a00083.html#a5f89e286a9eaffdb66d966fa6a290d3f">HyPar::output_mode</a> </td><td>serial </td></tr>
+<tr>
+<td>op_overwrite </td><td>char[] </td><td><a class="el" href="a00083.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> </td><td>no </td></tr>
+<tr>
+<td>model </td><td>char[] </td><td><a class="el" href="a00083.html#ad3fe4b266b398f3a7567ac1b241d99a2">HyPar::model</a> </td><td>must be specified </td></tr>
+</table>
+<p><b>Notes:</b> </p><ul>
+<li>"ndims" <b>must</b> be specified <b>before</b> "size" and "iproc".</li>
+<li><p class="startli">if "input_mode" or "output_mode" are set to "parallel" or "mpi-io", the number of I/O ranks must be specified right after as an integer. For example: </p><pre class="fragment">begin
+    ...
+    input_mode  parallel 4
+    ...
+end
+</pre><p class="startli">This means that 4 MPI ranks will participate in file I/O (assuming total MPI ranks is more than 4) (see <a class="el" href="a00185.html#adaa1bd7f962777f3b7ce886a94a8338e">ReadArrayParallel()</a>, <a class="el" href="a00186.html#a1548f4cea5254257d93790952941c351">WriteArrayParallel()</a>, <a class="el" href="a00185.html#ac69cac66cd56d57f21a094418a649714">ReadArrayMPI_IO()</a> ).</p><ul>
+<li>The number of I/O ranks specified for "input_mode" and "output_mode" <b>must</b> <b>be</b> <b>same</b>. Otherwise, the value for the one specified last will be used.</li>
+<li>The number of I/O ranks must be such that the total number of MPI ranks is an integer multiple. Otherwise, the code will use only 1 I/O rank.</li>
 </ul>
-<h2>Hyperbolic term </h2>
-<p>The hyperbolic term is of the following form: </p><p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm hyp}\left({\bf u}\right) = -\sum_{d=0}^{D-1} \frac{\partial {\bf f}_d\left({\bf u}\right)}{\partial x_d} \end{equation}
-</p>
-<p> and is discretized as: </p><p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm hyp}\left({\bf u}\right) \approx - \sum_{d=0}^{D-1} \frac{1}{\Delta x_d} \left[ \hat{\bf f}_{d,j+1/2} - \hat{\bf f}_{d,j-1/2} \right] \end{equation}
-</p>
-<p> where \(d\) is the spatial dimension, \(D\) is the total number of spatial dimensions, \(j\) denotes the grid index along \(d\). This is implemented in <a class="el" href="a00141.html#a0096c47175c007dbe805b34129835b84">HyperbolicFunction()</a>.</p>
-<p>The numerical approximation \(\hat{\bf f}_{d,j+1/2}\) of the primitive of the flux \({\bf f}_d\left({\bf u}\right)\) at the grid interfaces \(j+1/2\) is expressed as </p><p class="formulaDsp">
-\begin{equation} \hat{\bf f}_{d,j+1/2} = \mathcal{U}\left(\hat{\bf f}^L_{d,j+1/2},\hat{\bf f}^R_{d,j+1/2},\hat{\bf u}^L_{d,j+1/2},\hat{\bf u}^R_{d,j+1/2}\right) \end{equation}
-</p>
-<p> where \(\mathcal{U}\) is an upwinding function. <a class="el" href="a00080.html#a3687b87fa31b07580aa2ef43089fb010">HyPar::Upwind</a> points to the physical model-specific upwinding function that implements \(\mathcal{U}\), and is set by the initialization function of a specific physical model (for example <a class="el" href="a00104.html#a2143f7f3c03f53cf752a344a613fe429">Euler1DInitialize()</a>). The physical model is specified by setting <a class="el" href="a00080.html#ad3fe4b266b398f3a7567ac1b241d99a2">HyPar::model</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00100.html#a1eaea8a114ef1dad09df700d03e735e9">ReadInputs()</a>).</p>
-<p>\(\hat{\bf f}^{L,R}_{d,j+1/2}\) are the left- and right-biased numerically interpolated values of the primitive of the flux \({\bf f}_d\left({\bf u}\right)\) at the grid interfaces and are computed using <a class="el" href="a00080.html#a9a8456b08cde5ecf5d15e67e0729525c">HyPar::InterpolateInterfacesHyp</a>. They are initialized in <a class="el" href="a00100.html#a8166bb7cded409b3baa135d99fd6bc7c">InitializeSolvers()</a> based on the value of <a class="el" href="a00080.html#ad29846eeb9c83b329a8d7c1fe69d46b2">HyPar::spatial_scheme_hyp</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00100.html#a1eaea8a114ef1dad09df700d03e735e9">ReadInputs()</a>).</p>
-<p><a class="el" href="a00080.html#ac6e21700e87392a666ef9425981388a2">HyPar::HyperbolicFunction</a> points to <a class="el" href="a00141.html#a0096c47175c007dbe805b34129835b84">HyperbolicFunction()</a>.</p>
-<h2>Parabolic term </h2>
-<p>The parabolic term can take two different forms as described below:-</p>
-<p><b>No</b> <b>cross-derivatives</b>: In this form, the parabolic term is of the following form: </p><p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) = \sum_{d=0}^{D-1} \frac {\partial^2 {\bf g}_d\left({\bf u}\right)} {\partial x_d^2} \end{equation}
-</p>
-<p> where \(d\) is the spatial dimension, and \(D\) is the total number of spatial dimensions. If the parabolic function is in this form, then the physical model must specify <a class="el" href="a00080.html#a3ac9d2c5e617ff6d5029c40e46c0fba3">HyPar::GFunction</a> which must point to the function that computes \({\bf g}_d\left({\bf u}\right)\). In this case, the spatial discretization is carried out in one of two ways:-</p>
-<ul>
-<li>Conservative discretization, implemented in <a class="el" href="a00146.html#abcdd5c036af1b80bd99884e9148fa711">ParabolicFunctionCons1Stage()</a> and invoked by setting <a class="el" href="a00080.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00100.html#aabd653aa5d489ae2d0d8140290f6f026">_CONS_1STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \hat{\bf g}_{d,j+1/2} - \hat{\bf g}_{d,j-1/2} \right] \end{equation}
-</p>
- where \(j\) denotes the grid index along \(d\). \(\hat{\bf g}_{d,j+1/2}\) is the numerical approximation to the second primitive of \({\bf g}_d\left({\bf u}\right)\) and is computed using <a class="el" href="a00080.html#a5b70211377c8260e3f192934a72847df">HyPar::InterpolateInterfacesPar</a>.</li>
-<li>Non-conservative, 1-Stage discretization, implemented in <a class="el" href="a00146.html#aeac475b48b3fe25f426e14ff117db7ba">ParabolicFunctionNC1Stage()</a> and invoked by setting <a class="el" href="a00080.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00100.html#a18ee8cd9b4297a259b08aa4cdfe30aa1">_NC_1STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \mathcal{L}_d\left({\bf g}_d\right) \right] \end{equation}
-</p>
- where \(\mathcal{L}\) represents the finite-difference Laplacian operator, and is computed using <a class="el" href="a00080.html#ad620f41c8df5d995ba6304fa21079103">HyPar::SecondDerivativePar</a>.</li>
+</li>
+<li>If any of the keywords are not present, the default value is used, except the ones whose default values say "must be specified". Thus, keywords that are not required for a particular simulation may be left out of the solver.inp input file. For example,<ul>
+<li>a <a class="el" href="a00076.html" title="Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...">Euler1D</a> simulation does not need "par_space_type" or "par_space_scheme" because it does not have a parabolic term.</li>
+<li>unless a conservation check is required, "conservation_check" can be left out and the code will not check for conservation.</li>
 </ul>
-<p><b>With</b> <b>cross-derivatives</b>: In this form, the parabolic term is of the following form: </p><p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) = \sum_{d1=0}^{D-1}\sum_{d2=0}^{D-1} \frac {\partial^2 h_{d1,d2}\left({\bf u}\right)} {\partial x_{d1} \partial x_{d2}} \end{equation}
-</p>
-<p> where \(d1,d2\) are spatial dimensions, \(D\) is the total number of spatial dimensions. If the parabolic function is in this form, then the physical model must specify <a class="el" href="a00080.html#a6e41f429f671ba4548cb84861c021033">HyPar::HFunction</a> which must point to the function that computes \({\bf h}_{d1,d2}\left({\bf u}\right)\). In this case, the spatial discretization is carried out in one of two ways:-</p>
-<ul>
-<li>Non-conservative 2-stage discretization, implemented in <a class="el" href="a00146.html#a9f5c8ed9c587aa71c9f75209222ad67c">ParabolicFunctionNC2Stage()</a> and invoked by setting <a class="el" href="a00080.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00100.html#a9f4de86b900c9aa5f097c2746e17612a">_NC_2STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d1=0}^{D-1}\sum_{d2=0}^{D-1} \frac {1}{\Delta x_{d1} \Delta x_{d2}} \left[ \mathcal{D}_{d1}\left(\mathcal{D}_{d2}\left({\bf g}_d\right)\right) \right] \end{equation}
-</p>
- where \(\mathcal{D}_d\) denotes the finite-difference first derivative operator along spatial dimension \(d\), and is computed using <a class="el" href="a00080.html#a70476d05a40159f61242a8dae0526cc3">HyPar::FirstDerivativePar</a>.</li>
-<li>Non-conservative, "1.5-Stage" discretization, implemented in <a class="el" href="a00146.html#aedd832fdf4002f675da44a840e132456">ParabolicFunctionNC1_5Stage()</a> and invoked by setting <a class="el" href="a00080.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00100.html#a7bc6f9c42df5610bc5d844ad95c74fb8">_NC_1_5STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d1=0}^{D-1}\sum_{d2=0,d2 \ne d1}^{D-1} \frac {1}{\Delta x_{d1} \Delta x_{d2}} \left[ \mathcal{D}_{d1}\left(\mathcal{D}_{d2}\left({\bf g}_d\right)\right) \right] + \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \mathcal{L}_d\left({\bf g}_d\right) \right] \end{equation}
-</p>
- where \(\mathcal{D}_d\) denotes the finite-difference first derivative operator along spatial dimension \(d\) (computed using <a class="el" href="a00080.html#a70476d05a40159f61242a8dae0526cc3">HyPar::FirstDerivativePar</a>). and \(\mathcal{L}\) represents the finite-difference Laplacian operator (computed using <a class="el" href="a00080.html#ad620f41c8df5d995ba6304fa21079103">HyPar::SecondDerivativePar</a>).</li>
+</li>
 </ul>
-<p>The function pointers <a class="el" href="a00080.html#a5b70211377c8260e3f192934a72847df">HyPar::InterpolateInterfacesPar</a>, <a class="el" href="a00080.html#ad620f41c8df5d995ba6304fa21079103">HyPar::SecondDerivativePar</a>, and <a class="el" href="a00080.html#a70476d05a40159f61242a8dae0526cc3">HyPar::FirstDerivativePar</a> are set in <a class="el" href="a00100.html#a8166bb7cded409b3baa135d99fd6bc7c">InitializeSolvers()</a> based on the value of <a class="el" href="a00080.html#a170f2f6cc8ac86b78fcb376c2392e290">HyPar::spatial_scheme_par</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00100.html#a1eaea8a114ef1dad09df700d03e735e9">ReadInputs()</a>).</p>
-<p>Depending on which of the above forms are used, <a class="el" href="a00080.html#ad607a144bb3dbf119fd52c47757212dd">HyPar::ParabolicFunction</a> points to either of <a class="el" href="a00146.html#abcdd5c036af1b80bd99884e9148fa711">ParabolicFunctionCons1Stage()</a>, <a class="el" href="a00146.html#aeac475b48b3fe25f426e14ff117db7ba">ParabolicFunctionNC1Stage()</a>, <a class="el" href="a00146.html#a9f5c8ed9c587aa71c9f75209222ad67c">ParabolicFunctionNC2Stage()</a>, or <a class="el" href="a00146.html#aedd832fdf4002f675da44a840e132456">ParabolicFunctionNC1_5Stage()</a> (set in <a class="el" href="a00100.html#a8166bb7cded409b3baa135d99fd6bc7c">InitializeSolvers()</a>).</p>
-<h2>Source term </h2>
-<p><a class="el" href="a00080.html#ad8a664f0fe5ef5f928bb259fa5e3657e">HyPar::SourceFunction</a> points to <a class="el" href="a00146.html#a6f2b6bacb5d50cb9fce6e3e00d55cc6d">SourceFunction()</a>. There is no discretization involved in general, and this function just calls the physical model-specific source function to which <a class="el" href="a00080.html#ac195e64afcda3d4ec94d8fdf2b9dcdc8">HyPar::SFunction</a> points. </p>
+<h1><a class="anchor" id="boundary_inp"></a>
+boundary.inp</h1>
+<p>Requirement: <b>mandatory</b> </p>
+<p>Read by: <a class="el" href="a00102.html#a8770e5634efc34bf45dea3596114c092">InitializeBoundaries()</a></p>
+<p>Description: Specify boundary conditions.</p>
+<p>Format: ASCII text </p><pre class="fragment">    nb
+    boundary_type   spatial_dimension   face   [extent] 
+    boundary_type   spatial_dimension   face   [extent] 
+    ...
+    boundary_type   spatial_dimension   face   [extent] 
+</pre><p>where</p><ul>
+<li><b>nb</b> is the number of boundaries</li>
+<li>This is followed by at least <b>nb</b> rows, each row specifying:<ul>
+<li><b>boundary_type</b> - Type of boundary, eg. <a class="el" href="a00100.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>, <a class="el" href="a00100.html#a53da239cc00a2394faa0637dad4d0a0c">_EXTRAPOLATE_</a>, <a class="el" href="a00100.html#a7b8553c8fd765568f7355cf32b93b20d">_DIRICHLET_</a>, etc. See <a class="el" href="a00100.html" title="Containts the structures and definitions for boundary condition implementation. ">include/boundaryconditions.h</a> for a full list.</li>
+<li><b>spatial_dimension</b> - The spatial dimension along which this boundary condition applies. Must be in the range 0, 1, ..., <a class="el" href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a>-1</li>
+<li><b>face</b> - The face on which this the boundary acts (1 means the left face along the dimension, or the low index end, -1 means the right face along the dimension, or the high index end).</li>
+<li>[<b>extent</b>] - The extent of this boundary (in terms of coordinates, not grid indices). Written as (2 X <a class="el" href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a>) real numbers: xmin_0 xmax_0 xmin_1 xmax_1 ... ... xmin_(ndims-1) xmax_(ndims-1), where [xmin_i, xmax_i] define the extent along spatial dimension i. Note that the xmin_i and xmax_i for i = spatial_dimension are ignored, but should be there for the sake of a uniform format (they can be set as 0).</li>
+</ul>
+</li>
+<li>For the following boundary types, an additional line is required right below the line specifying that boundary with inputs specific to that boundary type:<ul>
+<li><a class="el" href="a00100.html#a7b8553c8fd765568f7355cf32b93b20d">_DIRICHLET_</a>: the next line should specify the boundary value of the solution at that boundary (the value is assumed to be constant in space and time). Each component of the solution must be specified (i.e. <a class="el" href="a00083.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a> real numbers). <pre class="fragment">u[0]  u[1]  ... u[#HyPar::nvars-1]
+</pre></li>
+<li><a class="el" href="a00100.html#af3a9f3ba15bc914ed0a88295aee147e8">_SLIP_WALL_</a>, <a class="el" href="a00100.html#affb6a9c452f92435e738bd59b9c98935">_NOSLIP_WALL_</a>, <a class="el" href="a00100.html#a6cd5a586de4ae1a3b73884d62f76bdee">_SW_SLIP_WALL_</a>, or <a class="el" href="a00100.html#ab8248be9e215df26dfce851b1acc54ec">_SW_NOSLIP_WALL_</a>: the next line should specify the wall velocity (assumed to be constant in space and time). Each component of the velocity must be specified (i.e. <a class="el" href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a> real numbers). <pre class="fragment">u[0]  u[1]  ... u[#HyPar::ndims-1]
+</pre></li>
+<li><a class="el" href="a00100.html#adba2024137894c96339af50efabe3771">_SUBSONIC_INFLOW_</a>: the next line must specify the inflow density and velocity vector (assumed to be constant in space and time). Each component of the velocity must be specified (i.e. <a class="el" href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a>+1 real numbers) <pre class="fragment">rho  u[0]  u[1]  ... u[#HyPar::ndims-1]
+</pre></li>
+<li><a class="el" href="a00100.html#adeb38801d1b832ce3eee3ebc1eed6263">_SUBSONIC_OUTFLOW_</a>: the next line must specify the outflow pressure (assumed to be constant in space and time), i.e., one real number <pre class="fragment">p
+</pre></li>
+<li><p class="startli"><a class="el" href="a00100.html#a5c9f9f3c97682664b0fe253e10863b57">_SUPERSONIC_INFLOW_</a>: the next line must specify the inflow density, velocity, and pressure (assumed to be constant in space and time). Each component of the velocity must be specified (i.e. <a class="el" href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a>+2 real numbers) </p><pre class="fragment">rho  u[0]  u[1]  ... u[#HyPar::ndims-1]  p
+</pre><p class="startli">Note that this boundary can also be implemented through the <a class="el" href="a00100.html#a7b8553c8fd765568f7355cf32b93b20d">_DIRICHLET_</a>; however, the flow variables must be converted to the conserved variable form to specify the Dirichlet boundary value: </p><pre class="fragment">rho  rho*u[0]  rho*u[1]  ... rho*u[#HyPar::ndims-1]  E (internal energy)
+</pre></li>
+<li><a class="el" href="a00100.html#a9b20b4f17d0f550f5da42946cc8a5b4a">_TURBULENT_SUPERSONIC_INFLOW_</a>: the next line must specify the inflow mean density, velocity, and pressure (assumed to be constant in space and time), i.e, <a class="el" href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a>+2 real numbersm and the name of the file that contains the unsteady fluctuation data. <pre class="fragment">rho  u[0]  u[1]  ... u[#HyPar::ndims-1]  p  filename
+</pre></li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="initial_inp"></a>
+initial.inp</h1>
+<p>Requirement: <b>mandatory</b> </p>
+<p>Read by: <a class="el" href="a00102.html#acaa477e12d5371876ebdb656626c68ee">InitialSolution()</a>, through <a class="el" href="a00103.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray()</a></p>
+<p>Format: Depends on <a class="el" href="a00083.html#a0a0b9dc97c7c278a019939d301db9399">HyPar::input_mode</a> and <a class="el" href="a00083.html#a83f3dcd022f744511a44f2a31a824ac8">HyPar::ip_file_type</a>, specified in <b>solver.inp</b>. See <a class="el" href="a00185.html#adad6ec70ca9a4a6fef53b7d2abc8b270">ReadArraySerial()</a>, <a class="el" href="a00185.html#adaa1bd7f962777f3b7ce886a94a8338e">ReadArrayParallel()</a>, and <a class="el" href="a00185.html#ac69cac66cd56d57f21a094418a649714">ReadArrayMPI_IO()</a> to understand the format and data layout of this file.</p>
+<p>Description: This file contains the initial solution. It will probably not be created by hand. See the examples provided for codes that generate this file for various problems. The final part in these codes, where the initial solution is written to file, can be reused to generate this file for a new case.</p>
+<h1><a class="anchor" id="lusolver_inp"></a>
+lusolver.inp</h1>
+<p>Requirement: <b>optional</b> </p>
+<p>Read by: <a class="el" href="a00094.html#a52d21dfe1d76916811879bf0d7a29d72">tridiagLUInit()</a></p>
+<p>Description: Specify parameters related to LU solvers for tridiagonal systems of equations. This file is relevant only if some method requiring the solution of a tridiagonal system of equations is being used (for example: <a class="el" href="a00074.html#a33b1e24c12129941b0027a83c543a654" title="5th order CRWENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderCRWENO()</a> ).</p>
+<p>Format: ASCII text </p><pre class="fragment">    begin
+        &lt;keyword&gt;   &lt;value&gt;
+        &lt;keyword&gt;   &lt;value&gt;
+        &lt;keyword&gt;   &lt;value&gt;
+        ...
+        &lt;keyword&gt;   &lt;value&gt;
+    end
+</pre><p>where the list of keywords are:</p>
+<table class="doxtable">
+<tr>
+<th>Keyword name </th><th>Type </th><th>Variable </th><th>Default value  </th></tr>
+<tr>
+<td>evaluate_norm </td><td>int </td><td><a class="el" href="a00094.html#a584c0fc0b1e845800ad511dffc60e032">TridiagLU::evaluate_norm</a> </td><td>1 </td></tr>
+<tr>
+<td>maxiter </td><td>int </td><td><a class="el" href="a00094.html#a274519264a28477940f161ddb4b61feb">TridiagLU::maxiter</a> </td><td>10 </td></tr>
+<tr>
+<td>atol </td><td>double </td><td><a class="el" href="a00094.html#a60c6dfc476dd9596072f61c2ec8d58ed">TridiagLU::atol</a> </td><td>1e-12 </td></tr>
+<tr>
+<td>rtol </td><td>double </td><td><a class="el" href="a00094.html#a4587afeee8941ba7c208b3690a3eeaa7">TridiagLU::rtol</a> </td><td>1e-10 </td></tr>
+<tr>
+<td>verbose </td><td>int </td><td><a class="el" href="a00094.html#a0b2caeb4b6f130be43e5a2f0267dd453">TridiagLU::verbose</a> </td><td>0 </td></tr>
+<tr>
+<td>reducedsolvetype </td><td>char[] </td><td><a class="el" href="a00094.html#ae50ec60868beaab2cb84897adefda09f">TridiagLU::reducedsolvetype</a> </td><td><a class="el" href="a00094.html#a79ddfe354b89d113b72db4b5ae6c6e3d">_TRIDIAG_JACOBI_</a> </td></tr>
+</table>
+<h1><a class="anchor" id="weno_inp"></a>
+weno.inp</h1>
+<p>Requirement: <b>optional</b> </p>
+<p>Read by: <a class="el" href="a00074.html#aecbe557b2ccc254cdbbd312fc91717be">WENOInitialize()</a></p>
+<p>Description: Specify parameters related to WENO-type spatial discretization. This file is relevant only if a WENO-type method is being used for spatial discretization (for example: <a class="el" href="a00074.html#a33b1e24c12129941b0027a83c543a654" title="5th order CRWENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderCRWENO()</a>, <a class="el" href="a00074.html#af2195885ad055989a1b2b11655843343" title="5th order WENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderWENO()</a>, <a class="el" href="a00074.html#ad9c611137cfce1c622c2e9838fb523c8" title="5th order hybrid compact-WENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderHCWENO()</a> ). For most cases, this file is useful if a very specific study on the behavior of the WENO-type method is being carried out; typically, the default values are enough to ensure "good" solutions.</p>
+<p>Format: ASCII text </p><pre class="fragment">    begin
+        &lt;keyword&gt;   &lt;value&gt;
+        &lt;keyword&gt;   &lt;value&gt;
+        ...
+        &lt;keyword&gt;   &lt;value&gt;
+    end
+</pre><p>where the list of keywords are:</p>
+<table class="doxtable">
+<tr>
+<th>Keyword name </th><th>Type </th><th>Variable </th><th>Default value  </th></tr>
+<tr>
+<td>mapped </td><td>int </td><td><a class="el" href="a00074.html#af370a2df117483b6f752da8889a89bb0">WENOParameters::mapped</a> </td><td>0 </td></tr>
+<tr>
+<td>borges </td><td>int </td><td><a class="el" href="a00074.html#af3c02b1dce05b28870fa1994c40cd1f2">WENOParameters::borges</a> </td><td>0 </td></tr>
+<tr>
+<td>yc </td><td>int </td><td><a class="el" href="a00074.html#a8470a9f95ece04985a5031e745042b7e">WENOParameters::yc</a> </td><td>0 </td></tr>
+<tr>
+<td>no_limiting </td><td>int </td><td><a class="el" href="a00074.html#a20e793c98bd33aef1cbbafcf3df48a55">WENOParameters::no_limiting</a> </td><td>0 </td></tr>
+<tr>
+<td>epsilon </td><td>double </td><td><a class="el" href="a00074.html#a974b448c3d0a13d483d36ef15de369b5">WENOParameters::eps</a> </td><td>1e-6 </td></tr>
+<tr>
+<td>rc </td><td>double </td><td><a class="el" href="a00074.html#af77cf650495294f69237f94cc237cba3">WENOParameters::rc</a> </td><td>0.3 </td></tr>
+<tr>
+<td>xi </td><td>double </td><td><a class="el" href="a00074.html#adf147b14a64e08756e9e30868e943da8">WENOParameters::xi</a> </td><td>0.001 </td></tr>
+<tr>
+<td>tol </td><td>double </td><td><a class="el" href="a00074.html#a2687e4b3cb5da7dbd00e565343f66c6c">WENOParameters::tol</a> </td><td>1e-16 </td></tr>
+</table>
+<h1><a class="anchor" id="physics_inp"></a>
+physics.inp</h1>
+<p>Requirement: <b>mandatory/optional</b> (depends on the physical model)</p>
+<p>Read by: The initialization function of the various physics modules (eg. <a class="el" href="a00106.html#a2143f7f3c03f53cf752a344a613fe429">Euler1DInitialize()</a>, <a class="el" href="a00086.html#abdd7dcd1ec7c37af027441f521dbe844">NavierStokes2DInitialize()</a>, etc)</p>
+<p>Description: This file contains inputs specific to a physics model. Depending on the physical model being used, it may or may not be mandatory. The exact parameters to specify depend on the physics.</p>
+<p>Format: ASCII text </p><pre class="fragment">    begin
+        &lt;keyword&gt;   &lt;value&gt;
+        &lt;keyword&gt;   &lt;value&gt;
+        ...
+        &lt;keyword&gt;   &lt;value&gt;
+    end
+</pre><p>See the documentation for the initialization function of the various phyical models for a list of keywords (for example, <a class="el" href="a00106.html#a2143f7f3c03f53cf752a344a613fe429">Euler1DInitialize()</a>, <a class="el" href="a00086.html#abdd7dcd1ec7c37af027441f521dbe844">NavierStokes2DInitialize()</a>).</p>
+<h1><a class="anchor" id="petscrc"></a>
+.petscrc</h1>
+<p>Requirement: <b>mandatory</b> <b>if using PETSc time integration</b>; if absent, <a class="el" href="a00083.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> will use native time integration. If compiled without PETSc, this file is not required.</p>
+<p>Read by: PETSc</p>
+<p>Description: This file contains the input flags required by PETSc time integration and its associated features.</p>
+<p>Format: ASCII text</p>
+<p><b>Note:</b> The contents of this file may also be specified as command line flags.</p>
+<p>This file contains all the inputs required for the PETSc time integrators. See PETSc documentation (<a href="http://www.mcs.anl.gov/petsc/documentation/">http://www.mcs.anl.gov/petsc/documentation/</a>) for all the inputs that PETSc needs, or <b>see the PETSc examples</b> for the inputs relevant to <a class="el" href="a00083.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>. In addition, following are the HyPar-specific inputs (they are all optional, if not specified, default values are used):</p><ul>
+<li><b>-use-petscts</b>: If this flag is specified, PETSc time integration is used. If not specified, native time integration is used (default).</li>
+<li><b>-jfnk_epsilon &lt;value&gt;</b>: specify \(\epsilon\) parameter for the directional-derivative-based approximation of the Jacobian (relevant only for implicit and IMEX time integration) (default: \(10^{-6}\)).</li>
+<li><b>-with_pc</b>: If this flag is specified, a preconditioning matrix will be assembled for use with the preconditioners available in PETSc. If not specified, no preconditioning will be used (default).</li>
+</ul>
+<p>In addition, if an IMEX time integrator (TSARKIMEX - <a href="http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/TSARKIMEX.html">http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/TSARKIMEX.html</a>) is being used, the following terms specify how the hyperbolic, parabolic, and source terms are integrated in time (explicitly or implicitly):</p><ul>
+<li><b>-hyperbolic_explicit</b>: treat hyperbolic term explicitly (<b>default</b>).</li>
+<li><b>-parabolic_explicit</b>: treat parabolic term explicitly.</li>
+<li><b>-source_explicit</b>: treat the source term explicitly.</li>
+<li><b>-hyperbolic_implicit</b>: treat hyperbolic term implicitly.</li>
+<li><b>-parabolic_implicit</b>: treat parabolic term implicitly (<b>default</b>).</li>
+<li><b>-source_implicit</b>: treat the source term implicitly (<b>default</b>). </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

@@ -1,4 +1,5 @@
 var a00236 =
 [
-    [ "Euler2DRoeAverage", "a00236.html#a6f483370683d7a07b8bbe2ae075fa72f", null ]
+    [ "Euler1DJacobian", "a00236.html#ab37022ee06f6873c94049e55a0890fe1", null ],
+    [ "Euler1DStiffJacobian", "a00236.html#a635a7e46a7898c4de6b7a47b1d68c969", null ]
 ];

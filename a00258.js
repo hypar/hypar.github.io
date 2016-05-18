@@ -1,4 +1,4 @@
 var a00258 =
 [
-    [ "FPPowerSystem1BusAdvection", "a00258.html#ad7e78d17ce9013c5e3929a7c13847d83", null ]
+    [ "FPPowerSystemAdvection", "a00258.html#a83601f46a5cf657cb5adf2e34a926a6a", null ]
 ];

@@ -1,4 +1,4 @@
 var a00198 =
 [
-    [ "MPIPartitionArray1D", "a00198.html#ac43b2dabcbf9ac251928a7394dc3775a", null ]
+    [ "MPIGatherArraynD", "a00198.html#a169eaecbc7a45469c78354f9cb1fed64", null ]
 ];

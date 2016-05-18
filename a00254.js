@@ -1,11 +1,11 @@
 var a00254 =
 [
-    [ "FPPowerSystemComputeCFL", "a00254.html#a1396626461470ace65cbf1455f131b76", null ],
-    [ "FPPowerSystemComputeDiffNumber", "a00254.html#ab8de7f0ae001effcbbec9bd4810d889a", null ],
-    [ "FPPowerSystemAdvection", "a00254.html#ac85b4d2a3e40b77c8585cafe79a92ee3", null ],
-    [ "FPPowerSystemDiffusion", "a00254.html#af7673b3bcc662c993cb656d5ed90fd44", null ],
-    [ "FPPowerSystemUpwind", "a00254.html#ab73e9642a9c12c2daad39a35cac25808", null ],
-    [ "FPPowerSystemPostStep", "a00254.html#a0d24dde2126dc609233b4bbace97ec7d", null ],
-    [ "FPPowerSystemPrintStep", "a00254.html#a96cbaf60dc6d571d119165e0acf1f6d3", null ],
-    [ "FPPowerSystemInitialize", "a00254.html#a7eefdce1db66d300ce1151e2213b7f82", null ]
+    [ "FPDoubleWellComputeCFL", "a00254.html#aab878a29e1b3c292d894868dec29e797", null ],
+    [ "FPDoubleWellComputeDiffNumber", "a00254.html#a3fa4b542650a6ebd7b66c02185e7bf80", null ],
+    [ "FPDoubleWellAdvection", "a00254.html#a36a1c067e4ff166c66ef41322cb1d042", null ],
+    [ "FPDoubleWellDiffusion", "a00254.html#ad690cd118aa01b82c3797628f235d4f4", null ],
+    [ "FPDoubleWellUpwind", "a00254.html#a43a2dbc9ea97b5b92b418552a870964e", null ],
+    [ "FPDoubleWellPostStep", "a00254.html#a24e13644876170d1870cd92127cfa486", null ],
+    [ "FPDoubleWellPrintStep", "a00254.html#af15716360ef9a6f2cca6d283f76272e2", null ],
+    [ "FPDoubleWellInitialize", "a00254.html#a4cabdb05aac1b6aa189f6f54c7b89ef2", null ]
 ];

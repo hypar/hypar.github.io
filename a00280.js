@@ -1,5 +1,5 @@
 var a00280 =
 [
-    [ "LinearADRDiffusionG", "a00280.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
-    [ "LinearADRDiffusionH", "a00280.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
+    [ "FPPowerSystem3BusDriftFunction", "a00280.html#a96c648e7775486eb94b64ca849329d0e", null ],
+    [ "FPPowerSystem3BusComputeCFL", "a00280.html#a1167fd33640687a66bfb201a54b3665f", null ]
 ];

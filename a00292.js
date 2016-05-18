@@ -1,5 +1,4 @@
 var a00292 =
 [
-    [ "NavierStokes2DJacobian", "a00292.html#a343a73d6dce8347a2e56d7302392737a", null ],
-    [ "NavierStokes2DStiffJacobian", "a00292.html#aa3baa96900b3d921ae62b3005c16635c", null ]
+    [ "LinearADRJacobian", "a00292.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf", null ]
 ];

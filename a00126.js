@@ -1,5 +1,6 @@
 var a00126 =
 [
-    [ "BCSubsonicOutflowU", "a00126.html#aea51db89a0a00f1c9b8288f9ebc059c6", null ],
-    [ "BCSubsonicOutflowDU", "a00126.html#a93eee7ff0ffe23d4cb5110d2b68eac26", null ]
+    [ "BCSpongeSource", "a00126.html#a2d82f4205eff408d6cd66cf08c2ed5d6", null ],
+    [ "BCSpongeUDummy", "a00126.html#ac58466ec027b61b9f3b23cf2940041da", null ],
+    [ "BCSpongeDUDummy", "a00126.html#a8c9c81681dd43a82f31269a5f97b2d6e", null ]
 ];

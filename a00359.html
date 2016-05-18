@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/TimeIntegration/TimeGetAuxSolutions.c File Reference</title>
+<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DTopography.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,57 +115,48 @@ $(document).ready(function(){initNavTree('a00359.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">TimeGetAuxSolutions.c File Reference</div>  </div>
+<div class="title">ShallowWater2DTopography.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Returns any "auxiliary" solutions.  
+<p>Contains the function to set the bottom topography.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00100_source.html">hypar.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00075_source.html">timeintegration.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00098_source.html">arrayfunctions.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00103_source.html">io.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00110_source.html">physicalmodels/shallowwater2d.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00102_source.html">hypar.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00085_source.html">mpivars.h</a>&gt;</code><br />
 </div>
 <p><a href="a00359_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aafcaf60eab095c5c5a9ad95085846c18"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#aafcaf60eab095c5c5a9ad95085846c18">TimeGetAuxSolutions</a> (int *N, double **uaux, void *s, int n)</td></tr>
-<tr class="separator:aafcaf60eab095c5c5a9ad95085846c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48720dee2a42cab22d4d238ff7a31fef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#a48720dee2a42cab22d4d238ff7a31fef">ShallowWater2DTopography</a> (void *s, void *m)</td></tr>
+<tr class="separator:a48720dee2a42cab22d4d238ff7a31fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Returns any "auxiliary" solutions. </p>
+<div class="textblock"><p>Contains the function to set the bottom topography. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00359_source.html">TimeGetAuxSolutions.c</a>.</p>
+<p>Definition in file <a class="el" href="a00359_source.html">ShallowWater2DTopography.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aafcaf60eab095c5c5a9ad95085846c18"></a>
+<a class="anchor" id="a48720dee2a42cab22d4d238ff7a31fef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int TimeGetAuxSolutions </td>
+          <td class="memname">int ShallowWater2DTopography </td>
           <td>(</td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>N</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double **&#160;</td>
-          <td class="paramname"><em>uaux</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>n</em>&#160;</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>m</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -174,55 +165,131 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return auxiliary solution: Some time integrators may have the concept of auxiliary solutions that they evolve along with the main solution <a class="el" href="a00080.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a> (these may be used for error estimation, for example). This function returns a pointer to such an auxiliary solution. Note that the auxiliary solution has the same dimensions and array layout as the main solution.</p><ul>
-<li>Call with the final argument <em>n</em> less than 0 to get the total number of auxiliary solutions (this value will be stored in the argument <em>N</em> at exit).</li>
-<li>Call with the final argument <em>n</em> less than or equal to zero to get the <em>n-th</em> auxiliary solution (the argument <em>uaux</em> will point to this at exit).</li>
-</ul>
-<p>Note that auxiliary solutions are numbered in the C convention: 0,1,...,N-1.</p>
-<p>Time integration methods which use auxiliary solutions currently implemented:</p><ul>
-<li>General Linear Methods with Global Error Estimators (GLM-GEE - <a class="el" href="a00075.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>) (see <a class="el" href="a00075.html#a7b76988ab950d39d505042dc1f09b875">TimeGLMGEE()</a>, <a class="el" href="a00075.html#ad7d778f0d388a120492e4901c3319d51">TimeGLMGEEInitialize()</a> ). </li>
-</ul>
+<p>Set the bottom topography over the domain - reads the topography data from a file, if available, else sets it to a constant </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">N</td><td>Number of auxiliary solutions </td></tr>
-    <tr><td class="paramname">uaux</td><td>Pointer to the array holding the auxiliary solution </td></tr>
-    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00080.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
-    <tr><td class="paramname">n</td><td>Index of the auxiliary solution to return </td></tr>
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00083.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00085.html#a00397" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00359_source.html#l00029">29</a> of file <a class="el" href="a00359_source.html">TimeGetAuxSolutions.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="a00080.html">HyPar</a>           *solver = (<a class="code" href="a00080.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00091.html">TimeIntegration</a> *TS     = (<a class="code" href="a00091.html">TimeIntegration</a>*) solver-&gt;<a class="code" href="a00080.html#a1d36fea92472416e32e039b86dea0b18">time_integrator</a>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  if (n &gt;= 0) {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00080.html#a138e751362d14724df8e6ab27c4a5e55">time_scheme</a>,<a class="code" href="a00075.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      <a class="code" href="a00075.html#a00384">GLMGEEParameters</a> *params = (<a class="code" href="a00075.html#a00384">GLMGEEParameters</a>*) solver-&gt;<a class="code" href="a00080.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      *uaux = TS-&gt;<a class="code" href="a00091.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[params-&gt;<a class="code" href="a00075.html#acab531abaa74a7e664e3986f2522b33a">r</a>+n];</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span> (!TS) *N = 0;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00080.html#a138e751362d14724df8e6ab27c4a5e55">time_scheme</a>,<a class="code" href="a00075.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="a00075.html#a00384">GLMGEEParameters</a> *params = (<a class="code" href="a00075.html#a00384">GLMGEEParameters</a>*) solver-&gt;<a class="code" href="a00080.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        *N = params-&gt;<a class="code" href="a00075.html#acab531abaa74a7e664e3986f2522b33a">r</a> - 1;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      } <span class="keywordflow">else</span> *N = 0;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="ttc" id="a00091_html"><div class="ttname"><a href="a00091.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00075_source.html#l00025">timeintegration.h:25</a></div></div>
-<div class="ttc" id="a00091_html_ae21dee7e1deaf4ff3024c1476230d3b1"><div class="ttname"><a href="a00091.html#ae21dee7e1deaf4ff3024c1476230d3b1">TimeIntegration::U</a></div><div class="ttdeci">double ** U</div><div class="ttdef"><b>Definition:</b> <a href="a00075_source.html#l00054">timeintegration.h:54</a></div></div>
-<div class="ttc" id="a00080_html_a138e751362d14724df8e6ab27c4a5e55"><div class="ttname"><a href="a00080.html#a138e751362d14724df8e6ab27c4a5e55">HyPar::time_scheme</a></div><div class="ttdeci">char time_scheme[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00053">hypar.h:53</a></div></div>
-<div class="ttc" id="a00075_html_acab531abaa74a7e664e3986f2522b33a"><div class="ttname"><a href="a00075.html#acab531abaa74a7e664e3986f2522b33a">GLMGEEParameters::r</a></div><div class="ttdeci">int r</div><div class="ttdef"><b>Definition:</b> <a href="a00075_source.html#l00223">timeintegration.h:223</a></div></div>
-<div class="ttc" id="a00075_html_aad9619c099daeb3e6b1b7ef9e03e38d8"><div class="ttname"><a href="a00075.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a></div><div class="ttdeci">#define _GLM_GEE_</div><div class="ttdef"><b>Definition:</b> <a href="a00075_source.html#l00014">timeintegration.h:14</a></div></div>
-<div class="ttc" id="a00075_html_a00384"><div class="ttname"><a href="a00075.html#a00384">GLMGEEParameters</a></div><div class="ttdoc">Structure containing the parameters for the General Linear Methods with Global Error Estimators (GLM-...</div><div class="ttdef"><b>Definition:</b> <a href="a00075_source.html#l00222">timeintegration.h:222</a></div></div>
-<div class="ttc" id="a00080_html_adec095311615891040de11341c01a77f"><div class="ttname"><a href="a00080.html#adec095311615891040de11341c01a77f">HyPar::msti</a></div><div class="ttdeci">void * msti</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00308">hypar.h:308</a></div></div>
-<div class="ttc" id="a00080_html_a1d36fea92472416e32e039b86dea0b18"><div class="ttname"><a href="a00080.html#a1d36fea92472416e32e039b86dea0b18">HyPar::time_integrator</a></div><div class="ttdeci">void * time_integrator</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00137">hypar.h:137</a></div></div>
-<div class="ttc" id="a00080_html"><div class="ttname"><a href="a00080.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00020">hypar.h:20</a></div></div>
+<p>Definition at line <a class="el" href="a00359_source.html#l00017">17</a> of file <a class="el" href="a00359_source.html">ShallowWater2DTopography.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <a class="code" href="a00083.html">HyPar</a>          *solver = (<a class="code" href="a00083.html">HyPar</a>*) s;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00085.html#a00397">MPIVariables</a>   *mpi    = (<a class="code" href="a00085.html#a00397">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00092.html">ShallowWater2D</a> *param  = (<a class="code" href="a00092.html">ShallowWater2D</a>*) solver-&gt;<a class="code" href="a00083.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">double</span>         *S      = param-&gt;<a class="code" href="a00092.html#a9f92e5582bf339a3c95df78b9c684fe0">b</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">int</span>            d, done, *dim = solver-&gt;<a class="code" href="a00083.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>, </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                 ghosts = solver-&gt;<a class="code" href="a00083.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00099.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="comment">/* read topography from provided file, if available */</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <a class="code" href="a00099.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00103.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a>(solver-&gt;<a class="code" href="a00083.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,1,solver-&gt;<a class="code" href="a00083.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>,solver-&gt;<a class="code" href="a00083.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,solver-&gt;<a class="code" href="a00083.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                 solver,mpi,NULL,S,<span class="stringliteral">&quot;topography&quot;</span>,&amp;param-&gt;<a class="code" href="a00092.html#a71b5cdadb8aec7421fa05a93ec51c102">topo_flag</a>); <a class="code" href="a00099.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">if</span> (!param-&gt;<a class="code" href="a00092.html#a71b5cdadb8aec7421fa05a93ec51c102">topo_flag</a>) {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="comment">/* if topography file not available, set it to zero */</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(S,solver-&gt;<a class="code" href="a00083.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>,0.0);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">/* if parallel, exchange MPI-boundary ghost point data */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00099.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00085.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>,1,solver-&gt;<a class="code" href="a00083.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                solver-&gt;<a class="code" href="a00083.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,mpi,S); <a class="code" href="a00099.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">if</span> (param-&gt;<a class="code" href="a00092.html#a6f84a1093abf57dcbf0406b33f40f766">bt_type</a>) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment">/* if topography is periodic, then the overall problem must also be periodic</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">       (i.e. boundary conditions will be specified as periodic). Hence, </span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">       MPIExchangeBoundariesnD() will take care of setting the ghosts points </span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">       for multi-processor simulations. For single processor, set the ghost</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">       points accordingly. */</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">int</span> indexb[<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], indexi[<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], bounds[<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        offset[<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>];</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">for</span> (d = 0; d &lt; <a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>; d++) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00085.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[d] == 1) {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="a00098.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,_MODEL_NDIMS_); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,_MODEL_NDIMS_,0); offset[d] = -ghosts;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">/* left boundary */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        done = 0; <a class="code" href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,_MODEL_NDIMS_,0);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;          <a class="code" href="a00098.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,_MODEL_NDIMS_); indexi[d] = indexb[d] + dim[d] - ghosts;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;          <span class="keywordtype">int</span> p1; <a class="code" href="a00098.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(_MODEL_NDIMS_,dim,indexb,offset,ghosts,p1);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;          <span class="keywordtype">int</span> p2; <a class="code" href="a00098.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (_MODEL_NDIMS_,dim,indexi,ghosts,p2);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;          S[p1] = S[p2];</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;          <a class="code" href="a00098.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(_MODEL_NDIMS_,bounds,indexb,done);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="comment">/* right boundary */</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        done = 0; <a class="code" href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,_MODEL_NDIMS_,0);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;          <a class="code" href="a00098.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,_MODEL_NDIMS_);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;          <span class="keywordtype">int</span> p1; <a class="code" href="a00098.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(_MODEL_NDIMS_,dim,indexb,offset,ghosts,p1);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;          <span class="keywordtype">int</span> p2; <a class="code" href="a00098.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (_MODEL_NDIMS_,dim,indexi,ghosts,p2);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;          S[p1] = S[p2];</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;          <a class="code" href="a00098.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(_MODEL_NDIMS_,bounds,indexb,done);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="comment">/* if topography is not periodic, extrapolate it at the boundaries */</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">int</span> indexb[<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], indexi[<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], bounds[<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        offset[<a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>];</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">for</span> (d = 0; d &lt; <a class="code" href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>; d++) {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      <span class="comment">/* left boundary */</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00085.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[d]) {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="a00098.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,_MODEL_NDIMS_); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <a class="code" href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,_MODEL_NDIMS_,0); offset[d] = -ghosts;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        done = 0; <a class="code" href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,_MODEL_NDIMS_,0);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;          <a class="code" href="a00098.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,_MODEL_NDIMS_); indexi[d] = ghosts-1-indexb[d];</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;          <span class="keywordtype">int</span> p1; <a class="code" href="a00098.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(_MODEL_NDIMS_,dim,indexb,offset,ghosts,p1);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;          <span class="keywordtype">int</span> p2; <a class="code" href="a00098.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (_MODEL_NDIMS_,dim,indexi,ghosts,p2);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;          S[p1] = S[p2];</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;          <a class="code" href="a00098.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(_MODEL_NDIMS_,bounds,indexb,done);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="comment">/* right boundary */</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00085.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[d] == mpi-&gt;<a class="code" href="a00085.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[d]-1) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <a class="code" href="a00098.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,_MODEL_NDIMS_); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,_MODEL_NDIMS_,0); offset[d] = dim[d];</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        done = 0; <a class="code" href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,_MODEL_NDIMS_,0);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;          <a class="code" href="a00098.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,_MODEL_NDIMS_); indexi[d] = dim[d]-1-indexb[d];</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;          <span class="keywordtype">int</span> p1; <a class="code" href="a00098.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(_MODEL_NDIMS_,dim,indexb,offset,ghosts,p1);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;          <span class="keywordtype">int</span> p2; <a class="code" href="a00098.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (_MODEL_NDIMS_,dim,indexi,ghosts,p2);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;          S[p1] = S[p2];</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;          <a class="code" href="a00098.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(_MODEL_NDIMS_,bounds,indexb,done);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
+<div class="ttc" id="a00083_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00083.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00032">hypar.h:32</a></div></div>
+<div class="ttc" id="a00085_html_aa3c28612a64b8a97bde66b720e15c700"><div class="ttname"><a href="a00085.html#aa3c28612a64b8a97bde66b720e15c700">MPIVariables::ip</a></div><div class="ttdeci">int * ip</div><div class="ttdef"><b>Definition:</b> <a href="a00085_source.html#l00025">mpivars.h:25</a></div></div>
+<div class="ttc" id="a00092_html_a9f92e5582bf339a3c95df78b9c684fe0"><div class="ttname"><a href="a00092.html#a9f92e5582bf339a3c95df78b9c684fe0">ShallowWater2D::b</a></div><div class="ttdeci">double * b</div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00243">shallowwater2d.h:243</a></div></div>
+<div class="ttc" id="a00092_html_a71b5cdadb8aec7421fa05a93ec51c102"><div class="ttname"><a href="a00092.html#a71b5cdadb8aec7421fa05a93ec51c102">ShallowWater2D::topo_flag</a></div><div class="ttdeci">int topo_flag</div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00241">shallowwater2d.h:241</a></div></div>
+<div class="ttc" id="a00106_html_a57771c952ec174601addf43e1c0202b2"><div class="ttname"><a href="a00106.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a></div><div class="ttdeci">#define _MODEL_NDIMS_</div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00055">euler1d.h:55</a></div></div>
+<div class="ttc" id="a00098_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00098.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00122">arrayfunctions.h:122</a></div></div>
+<div class="ttc" id="a00098_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00098.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00079">arrayfunctions.h:79</a></div></div>
+<div class="ttc" id="a00092_html_a6f84a1093abf57dcbf0406b33f40f766"><div class="ttname"><a href="a00092.html#a6f84a1093abf57dcbf0406b33f40f766">ShallowWater2D::bt_type</a></div><div class="ttdeci">int bt_type</div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00241">shallowwater2d.h:241</a></div></div>
+<div class="ttc" id="a00099_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00099.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00099_source.html#l00011">basic.h:11</a></div></div>
+<div class="ttc" id="a00085_html_a00397"><div class="ttname"><a href="a00085.html#a00397">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00085_source.html#l00021">mpivars.h:21</a></div></div>
+<div class="ttc" id="a00099_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00099.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00099_source.html#l00009">basic.h:9</a></div></div>
+<div class="ttc" id="a00083_html"><div class="ttname"><a href="a00083.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00098_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00098.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00142">arrayfunctions.h:142</a></div></div>
+<div class="ttc" id="a00103_html_afaf5b0d6e79b1e8674b397aebcb219dc"><div class="ttname"><a href="a00103.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a></div><div class="ttdeci">int ReadArray(int, int, int *, int *, int, void *, void *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00185_source.html#l00025">ReadArray.c:25</a></div></div>
+<div class="ttc" id="a00083_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00083_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00083.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00228">hypar.h:228</a></div></div>
+<div class="ttc" id="a00098_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00098.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00098_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00098.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00098_source.html#l00036">arrayfunctions.h:36</a></div></div>
+<div class="ttc" id="a00083_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00083.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00041">hypar.h:41</a></div></div>
+<div class="ttc" id="a00083_html_aa989ebb755986852177779cdf7bd8c85"><div class="ttname"><a href="a00083.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a></div><div class="ttdeci">int * dim_global</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00085_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00085.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00085_source.html#l00024">mpivars.h:24</a></div></div>
+<div class="ttc" id="a00099_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00099.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00099_source.html#l00010">basic.h:10</a></div></div>
+<div class="ttc" id="a00092_html"><div class="ttname"><a href="a00092.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00240">shallowwater2d.h:240</a></div></div>
+<div class="ttc" id="a00083_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00083.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00037">hypar.h:37</a></div></div>
+<div class="ttc" id="a00085_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00085.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00196_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -1,6 +1,5 @@
 var a00130 =
 [
-    [ "BCTurbulentSupersonicInflowU", "a00130.html#aff45ce4055fde7a8f9579686e8e08d82", null ],
-    [ "BCTurbulentSupersonicInflowDU", "a00130.html#a8d0ef9c6609db897dfe364982dabe78b", null ],
-    [ "BCReadTurbulentInflowData", "a00130.html#ae90485b7beacc863180d194634c9e6d5", null ]
+    [ "BCSupersonicOutflowU", "a00130.html#a791e37fae3c9489d0fc039102c57409e", null ],
+    [ "BCSupersonicOutflowDU", "a00130.html#a7f9da7b2e071d59ea18b7772cc1676c1", null ]
 ];

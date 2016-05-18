@@ -1,5 +1,5 @@
 var a00215 =
 [
-    [ "__FUNCT__", "a00215.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscRHSFunctionIMEX", "a00215.html#a3d7e8fc58596e02b5488a600bc87cdb7", null ]
+    [ "ApplyPeriodicity", "a00215.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e", null ],
+    [ "PetscGlobalDOF", "a00215.html#a15c41ba7e2d10e4803226f42708a6ef8", null ]
 ];

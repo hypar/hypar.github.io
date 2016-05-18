@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/ShallowWater1D/ShallowWater1DJacobian.c Source File</title>
+<title>HyPar: src/PhysicalModels/Numa3D/Numa3DFunctions.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,51 +113,75 @@ $(document).ready(function(){initNavTree('a00332_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ShallowWater1DJacobian.c</div>  </div>
+<div class="title">Numa3DFunctions.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00332.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00102.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00107.html">physicalmodels/shallowwater1d.h</a>&gt;</span></div>
+<a href="a00332.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00104.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">physicalmodels/numa3d.h</a>&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="a00333.html#ac5608220335dd25647841014e67ba10f">    5</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00332.html#ac2be313ce1c2510c61ea35f6fd56f254">Numa3DCalculateStandardAtmosphere_1</a>(<span class="keywordtype">void</span> *p,<span class="keywordtype">double</span> z,<span class="keywordtype">double</span> *ExnerP,<span class="keywordtype">double</span> *P,<span class="keywordtype">double</span> *rho,<span class="keywordtype">double</span> *T)</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <a class="code" href="a00089.html">Numa3D</a> *physics = (<a class="code" href="a00089.html">Numa3D</a>*) p;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00332.html#a0afc6ad3b8af530bd24834cf3c4e374d">   13</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00332.html#a0afc6ad3b8af530bd24834cf3c4e374d">ShallowWater1DJacobian</a>(</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                    <span class="keywordtype">double</span>  *Jac, </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">double</span>  *u,   </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">void</span>    *p,   </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span>     dir,  </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    <span class="keywordtype">int</span>     upw   </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                   )</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00089.html">ShallowWater1D</a>  *param = (<a class="code" href="a00089.html">ShallowWater1D</a>*) p;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span>   R[<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], D[<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                  L[<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], DL[<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <span class="keywordtype">double</span> R      = physics-&gt;<a class="code" href="a00089.html#a228eb5e837a644887ac6e7bab3f42485">R</a>;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  <span class="keywordtype">double</span> gamma  = physics-&gt;<a class="code" href="a00089.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  <span class="keywordtype">double</span> g      = physics-&gt;<a class="code" href="a00089.html#ab30c765b9be1b7776c97c899a12a66bb">g</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="comment">/* reference quantities at zero altitude */</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordtype">double</span> P0, T0; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  P0   = physics-&gt;<a class="code" href="a00089.html#ad2988f8045b70fe0950d361d8814faa6">Pref</a>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  T0   = physics-&gt;<a class="code" href="a00089.html#abfc9a78d9685d39295be4f8cfefed2f2">Tref</a>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordtype">double</span> inv_gamma_m1 = 1.0/(gamma-1.0);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordtype">double</span> Cp = gamma * inv_gamma_m1 * R;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordtype">double</span> theta  = T0;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  *ExnerP = 1.0 - (g/(Cp*theta))*z;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  *P      = P0 * <a class="code" href="a00104.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>((*ExnerP),gamma*inv_gamma_m1);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  *rho    = (P0/(R*theta)) * <a class="code" href="a00104.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>((*ExnerP),inv_gamma_m1);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  *T      = (*rho) * theta;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="comment">/* get the eigenvalues and left,right eigenvectors */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00107.html#a1faa098b23f173077df8a7c111dca644">_ShallowWater1DEigenvalues_</a>      (u,D,param,0);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00107.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a> (u,L,param,0);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00107.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a>(u,R,param,0);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> aupw = <a class="code" href="a00102.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw), k;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  k = 0; D[k] = <a class="code" href="a00102.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00102.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00102.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  k = 3; D[k] = <a class="code" href="a00102.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00102.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00102.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="a00102.html#a06a01d1e6572639588260002be308b61">MatMult2</a>(2,DL,D,L);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00102.html#a06a01d1e6572639588260002be308b61">MatMult2</a>(2,Jac,R,DL);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
-<div class="ttc" id="a00102_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00102.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00019">mathfunctions.h:19</a></div></div>
-<div class="ttc" id="a00107_html_ab304d572a9bf352c09735486f88de6f7"><div class="ttname"><a href="a00107.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater1DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00106">shallowwater1d.h:106</a></div></div>
-<div class="ttc" id="a00102_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00102.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00033">mathfunctions.h:33</a></div></div>
-<div class="ttc" id="a00102_html_a06a01d1e6572639588260002be308b61"><div class="ttname"><a href="a00102.html#a06a01d1e6572639588260002be308b61">MatMult2</a></div><div class="ttdeci">#define MatMult2(N, A, X, Y)</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00063">mathfunctions.h:63</a></div></div>
-<div class="ttc" id="a00102_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00102.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00015">mathfunctions.h:15</a></div></div>
-<div class="ttc" id="a00332_html_a0afc6ad3b8af530bd24834cf3c4e374d"><div class="ttname"><a href="a00332.html#a0afc6ad3b8af530bd24834cf3c4e374d">ShallowWater1DJacobian</a></div><div class="ttdeci">int ShallowWater1DJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00332_source.html#l00013">ShallowWater1DJacobian.c:13</a></div></div>
-<div class="ttc" id="a00107_html_a3c10806b3d5a56f4d0e9d4607dafcffc"><div class="ttname"><a href="a00107.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater1DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00117">shallowwater1d.h:117</a></div></div>
-<div class="ttc" id="a00104_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00104.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00057">euler1d.h:57</a></div></div>
-<div class="ttc" id="a00089_html"><div class="ttname"><a href="a00089.html">ShallowWater1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00137">shallowwater1d.h:137</a></div></div>
-<div class="ttc" id="a00107_html_a1faa098b23f173077df8a7c111dca644"><div class="ttname"><a href="a00107.html#a1faa098b23f173077df8a7c111dca644">_ShallowWater1DEigenvalues_</a></div><div class="ttdeci">#define _ShallowWater1DEigenvalues_(u, D, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00093">shallowwater1d.h:93</a></div></div>
-<div class="ttc" id="a00102_html"><div class="ttname"><a href="a00102.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00107_html"><div class="ttname"><a href="a00107.html">shallowwater1d.h</a></div><div class="ttdoc">1D Shallow Water Equations </div></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="a00333.html#ac16db84618d93d2d70fa177b41daeb45">   30</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00332.html#a276b2e95fcf1c00b0e9d8bd641c9deed">Numa3DCalculateStandardAtmosphere_2</a>(<span class="keywordtype">void</span> *p,<span class="keywordtype">double</span> z,<span class="keywordtype">double</span> *ExnerP,<span class="keywordtype">double</span> *P,<span class="keywordtype">double</span> *rho,<span class="keywordtype">double</span> *T)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <a class="code" href="a00089.html">Numa3D</a> *physics = (<a class="code" href="a00089.html">Numa3D</a>*) p;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">double</span> R      = physics-&gt;<a class="code" href="a00089.html#a228eb5e837a644887ac6e7bab3f42485">R</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordtype">double</span> gamma  = physics-&gt;<a class="code" href="a00089.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">double</span> g      = physics-&gt;<a class="code" href="a00089.html#ab30c765b9be1b7776c97c899a12a66bb">g</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">/* reference quantities at zero altitude */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordtype">double</span> P0, T0; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  P0 = physics-&gt;<a class="code" href="a00089.html#ad2988f8045b70fe0950d361d8814faa6">Pref</a>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  T0 = physics-&gt;<a class="code" href="a00089.html#abfc9a78d9685d39295be4f8cfefed2f2">Tref</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">double</span> BV = 0.01; <span class="comment">/* Brunt-Vaisala frequency */</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">double</span> inv_gamma_m1 = 1.0/(gamma-1.0);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">double</span> Cp = gamma * inv_gamma_m1 * R;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">double</span> term   = BV*BV*z/g;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">double</span> theta  = T0 * exp(term);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  *ExnerP = 1.0 + (g*g/(Cp*T0*BV*BV)) * (exp(-term) - 1.0);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  *P      = P0 * <a class="code" href="a00104.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>((*ExnerP),gamma*inv_gamma_m1);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  *rho    = (P0/(R*theta)) * <a class="code" href="a00104.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>((*ExnerP),inv_gamma_m1);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  *T      = (*rho) * theta;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="ttc" id="a00089_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00089.html#a72f9e01745b3a8203067ab84aefc9aea">Numa3D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00129">numa3d.h:129</a></div></div>
+<div class="ttc" id="a00104_html_a840eef18a5986381093ff8c176a2153c"><div class="ttname"><a href="a00104.html#a840eef18a5986381093ff8c176a2153c">raiseto</a></div><div class="ttdeci">#define raiseto(x, a)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00038">mathfunctions.h:38</a></div></div>
+<div class="ttc" id="a00089_html_ab30c765b9be1b7776c97c899a12a66bb"><div class="ttname"><a href="a00089.html#ab30c765b9be1b7776c97c899a12a66bb">Numa3D::g</a></div><div class="ttdeci">double g</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00132">numa3d.h:132</a></div></div>
+<div class="ttc" id="a00089_html_abfc9a78d9685d39295be4f8cfefed2f2"><div class="ttname"><a href="a00089.html#abfc9a78d9685d39295be4f8cfefed2f2">Numa3D::Tref</a></div><div class="ttdeci">double Tref</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00136">numa3d.h:136</a></div></div>
+<div class="ttc" id="a00332_html_a276b2e95fcf1c00b0e9d8bd641c9deed"><div class="ttname"><a href="a00332.html#a276b2e95fcf1c00b0e9d8bd641c9deed">Numa3DCalculateStandardAtmosphere_2</a></div><div class="ttdeci">int Numa3DCalculateStandardAtmosphere_2(void *p, double z, double *ExnerP, double *P, double *rho, double *T)</div><div class="ttdef"><b>Definition:</b> <a href="a00332_source.html#l00030">Numa3DFunctions.c:30</a></div></div>
+<div class="ttc" id="a00089_html_a228eb5e837a644887ac6e7bab3f42485"><div class="ttname"><a href="a00089.html#a228eb5e837a644887ac6e7bab3f42485">Numa3D::R</a></div><div class="ttdeci">double R</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00130">numa3d.h:130</a></div></div>
+<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">numa3d.h</a></div></div>
+<div class="ttc" id="a00089_html"><div class="ttname"><a href="a00089.html">Numa3D</a></div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00128">numa3d.h:128</a></div></div>
+<div class="ttc" id="a00332_html_ac2be313ce1c2510c61ea35f6fd56f254"><div class="ttname"><a href="a00332.html#ac2be313ce1c2510c61ea35f6fd56f254">Numa3DCalculateStandardAtmosphere_1</a></div><div class="ttdeci">int Numa3DCalculateStandardAtmosphere_1(void *p, double z, double *ExnerP, double *P, double *rho, double *T)</div><div class="ttdef"><b>Definition:</b> <a href="a00332_source.html#l00005">Numa3DFunctions.c:5</a></div></div>
+<div class="ttc" id="a00104_html"><div class="ttname"><a href="a00104.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00089_html_ad2988f8045b70fe0950d361d8814faa6"><div class="ttname"><a href="a00089.html#ad2988f8045b70fe0950d361d8814faa6">Numa3D::Pref</a></div><div class="ttdeci">double Pref</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00136">numa3d.h:136</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

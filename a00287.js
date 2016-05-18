@@ -1,5 +1,4 @@
 var a00287 =
 [
-    [ "NavierStokes2DLeftEigenvectors", "a00287.html#a497cabf9429ce30c3107d526bc18a798", null ],
-    [ "NavierStokes2DRightEigenvectors", "a00287.html#a2267c0825e485249fdee53ee44981636", null ]
+    [ "LinearADRCleanup", "a00287.html#adbc85fb4ae27eb1e4172c0bfc27b05e0", null ]
 ];

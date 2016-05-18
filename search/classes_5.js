@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hypar',['HyPar',['../a00080.html',1,'']]]
+  ['glmgeeparameters',['GLMGEEParameters',['../a00078.html#a00395',1,'']]]
 ];

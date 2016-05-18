@@ -1,4 +1,5 @@
 var a00232 =
 [
-    [ "Euler2DCleanup", "a00232.html#a3487130c60871e40e78971cfd86e2b6c", null ]
+    [ "Euler1DFlux", "a00232.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
+    [ "Euler1DStiffFlux", "a00232.html#a3017a4ade688681fa865c1556fb73f97", null ]
 ];

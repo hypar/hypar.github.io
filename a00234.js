@@ -1,5 +1,4 @@
 var a00234 =
 [
-    [ "Euler2DLeftEigenvectors", "a00234.html#a965cafbf06fa0cfd5c0664dc94fcfd3f", null ],
-    [ "Euler2DRightEigenvectors", "a00234.html#a2e9802c52e7497ece4e65e55c77c7b22", null ]
+    [ "Euler1DGravityField", "a00234.html#abbbaafa694caadbccd6080cc35b89511", null ]
 ];

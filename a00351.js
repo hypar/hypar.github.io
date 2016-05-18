@@ -1,4 +1,5 @@
 var a00351 =
 [
-    [ "ShallowWater2DWriteTopography", "a00351.html#af3b283ff0aff6907c6a0648dfd8cb975", null ]
+    [ "ShallowWater2DLeftEigenvectors", "a00351.html#aedb92b59af4004f2a2905d741bffd00a", null ],
+    [ "ShallowWater2DRightEigenvectors", "a00351.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
 ];

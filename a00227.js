@@ -1,4 +1,5 @@
 var a00227 =
 [
-    [ "Euler1DModifiedSolution", "a00227.html#a258df8c9435bff8a343c38c497818f1e", null ]
+    [ "__FUNCT__", "a00227.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "TransferVecFromPETSc", "a00227.html#abb476449ff310bdfdd082faeb31e36d1", null ]
 ];

@@ -1,5 +1,4 @@
 var a00195 =
 [
-    [ "MPIMax_integer", "a00195.html#a6d51d72d0316346543fbda2aa97a790a", null ],
-    [ "MPIMax_double", "a00195.html#aa8bb15ed31fcdd02194de4d639d67988", null ]
+    [ "MPIExchangeBoundaries1D", "a00195.html#af9f32944efd136da82cdc63a893f9b3b", null ]
 ];

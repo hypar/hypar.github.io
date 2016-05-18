@@ -1,5 +1,5 @@
 var a00125 =
 [
-    [ "BCSubsonicInflowU", "a00125.html#a9c5eb47fb65476896445cc90ec945312", null ],
-    [ "BCSubsonicInflowDU", "a00125.html#a0097a7496ec3581366ee8388ae0f9f0e", null ]
+    [ "BCSlipWallU", "a00125.html#abdeb4e91e1441a25130cb2d3a1be09b0", null ],
+    [ "BCSlipWallDU", "a00125.html#ab200c2fba9ceeadcb1eac34fda5ddcb7", null ]
 ];

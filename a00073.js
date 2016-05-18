@@ -1,11 +1,14 @@
 var a00073 =
 [
-    [ "gamma", "a00073.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
-    [ "grav", "a00073.html#a87f6134534484ec863864096005ac076", null ],
-    [ "grav_type", "a00073.html#a41908af46d7b1181c9177332aa44ead5", null ],
-    [ "grav_field", "a00073.html#afb1265dc9bb8f8c05bd22f88c23d879c", null ],
-    [ "fast_jac", "a00073.html#a14af7516371abe115b3a1aa9269aebb5", null ],
-    [ "solution", "a00073.html#a7568fac4d4e8488510e1d37f468967b1", null ],
-    [ "upw_choice", "a00073.html#a57894a0f53d5b228bf64053367736bf9", null ],
-    [ "SourceUpwind", "a00073.html#acf2a05e3d7005c865c3e4f609cf728f8", null ]
+    [ "BandedMatrix", "a00073.html#a00387", [
+      [ "nbands", "a00073.html#a30165df2b4e7a3d2b24bfd0963c16172", null ],
+      [ "nrows_local", "a00073.html#ac2b596b16037450673a77da1080b8707", null ],
+      [ "BlockSize", "a00073.html#aeae4e1754c511c08564892d93c83ada1", null ],
+      [ "ncol", "a00073.html#a6db648ed09c7736e77e2c79f2a4514fd", null ],
+      [ "nrow", "a00073.html#a0a58ae803aa8c0ef7cf86577919f205e", null ],
+      [ "data", "a00073.html#a23436a7a2b44939627b59df11be7ad75", null ]
+    ] ],
+    [ "BandedMatrixDestroy", "a00073.html#a7481e8970799d48bf61489d2c8664291", null ],
+    [ "BandedMatrixInitialize", "a00073.html#a2e2999e64538fc1278db51e3a4544c0a", null ],
+    [ "BandedMatrixPreallocate", "a00073.html#a6f340cd6da5050e863142a9a5d3b4276", null ]
 ];

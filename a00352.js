@@ -1,5 +1,4 @@
 var a00352 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00352.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "SecondDerivativeFourthOrderCentral", "a00352.html#a41e040c0062127ce7e0edc64569c845e", null ]
+    [ "ShallowWater2DFlux", "a00352.html#a402c3b0d9e533619a23dc5a06a0c0bd3", null ]
 ];

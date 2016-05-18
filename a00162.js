@@ -1,5 +1,4 @@
 var a00162 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00162.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderHCWENOChar", "a00162.html#a2e43ae211de60776d2cf914a389d54af", null ]
+    [ "CompactSchemeInitialize", "a00162.html#a666601a9c9c7e3084adef44396a87827", null ]
 ];

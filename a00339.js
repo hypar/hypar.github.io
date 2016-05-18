@@ -1,4 +1,4 @@
 var a00339 =
 [
-    [ "ShallowWater2DCleanup", "a00339.html#a8ce86b097b5c5bf69087ba54e89e2acc", null ]
+    [ "ShallowWater1DFlux", "a00339.html#ab8ef6342f2e68ddffa5fe5d5f50cc4ce", null ]
 ];

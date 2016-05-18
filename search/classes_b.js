@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['timeintegration',['TimeIntegration',['../a00091.html',1,'']]],
-  ['tridiaglu',['TridiagLU',['../a00092.html#a00391',1,'']]]
+  ['shallowwater1d',['ShallowWater1D',['../a00091.html',1,'']]],
+  ['shallowwater2d',['ShallowWater2D',['../a00092.html',1,'']]]
 ];

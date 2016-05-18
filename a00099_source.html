@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: include/firstderivative.h Source File</title>
+<title>HyPar: include/basic.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,58 +113,31 @@ $(document).ready(function(){initNavTree('a00099_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">firstderivative.h</div>  </div>
+<div class="title">basic.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00099.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="a00099.html#a335207df926b8a880a4e9d124aee3c11">    7</a></span>&#160;<span class="preprocessor">#define _FIRST_ORDER_           &quot;1&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="a00099.html#a89694dcc7c48314c98b9636759bb8bee">    9</a></span>&#160;<span class="preprocessor">#define _SECOND_ORDER_CENTRAL_  &quot;2&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="a00099.html#aac4d00dd8bef7592948a7e563021c02a">   11</a></span>&#160;<span class="preprocessor">#define _FOURTH_ORDER_CENTRAL_  &quot;4&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">/* One-dimensional first derivative functions: Functions to calculate the</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * finite-difference approximation to the first derivative along a given </span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * dimension at the cell-centers / grid points.</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> * Arguments:-</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> *  </span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> *  Df        double*     array containing the approximation to the first derivative</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> *                        (1D array representing an n-D solution)</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> *  f         double*     array containing the function whose first derivative is to</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> *                        be computed.</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> *                        (1D array representing an n-D solution)</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  dir       int         dimension (x/y/z/...) along which to compute the first derivative</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> *  bias      int         forward or backward differencing for odd-ordered approximations</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *                        (-1: backward, 1: forward)</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *  s         void*       pointer to an object providing the solver context. The object must</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> *                        contain at least the following:</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *                        ndims     int       number of dimensions</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *                        nvars     int       number of elements at each grid location</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *                        dim       int*      array of grid size along each dimension </span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *                                            (integer array of size ndims)</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *                        ghosts    int       number of ghost points</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> *  m         void*       Pointer to an object providing the MPI context. Current not being </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> *                        used. This will be required for compact finite-difference methods.</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> * Notes:</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"> *  + The first derivative is computed at the ghost points too. Thus, biased schemes are used</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment"> *    at and near the boundaries.</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00099.html#ad06a8db0245d2502016fb6c7b77ef37f">FirstDerivativeFirstOrder</a>         (<span class="keywordtype">double</span>*,<span class="keywordtype">double</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>,<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*); </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00099.html#a27d213967bae3d2b969d07a967525541">FirstDerivativeSecondOrderCentral</a> (<span class="keywordtype">double</span>*,<span class="keywordtype">double</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>,<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*); </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00099.html#a08c28e6bc4493172df7b7867e1f3d815">FirstDerivativeFourthOrderCentral</a> (<span class="keywordtype">double</span>*,<span class="keywordtype">double</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>,<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*); </div>
-<div class="ttc" id="a00099_html_a27d213967bae3d2b969d07a967525541"><div class="ttname"><a href="a00099.html#a27d213967bae3d2b969d07a967525541">FirstDerivativeSecondOrderCentral</a></div><div class="ttdeci">int FirstDerivativeSecondOrderCentral(double *, double *, int, int, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00133_source.html#l00036">FirstDerivativeSecondOrder.c:36</a></div></div>
-<div class="ttc" id="a00099_html_a08c28e6bc4493172df7b7867e1f3d815"><div class="ttname"><a href="a00099.html#a08c28e6bc4493172df7b7867e1f3d815">FirstDerivativeFourthOrderCentral</a></div><div class="ttdeci">int FirstDerivativeFourthOrderCentral(double *, double *, int, int, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00132_source.html#l00036">FirstDerivativeFourthOrder.c:36</a></div></div>
-<div class="ttc" id="a00099_html_ad06a8db0245d2502016fb6c7b77ef37f"><div class="ttname"><a href="a00099.html#ad06a8db0245d2502016fb6c7b77ef37f">FirstDerivativeFirstOrder</a></div><div class="ttdeci">int FirstDerivativeFirstOrder(double *, double *, int, int, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00037">FirstDerivativeFirstOrder.c:37</a></div></div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="a00099.html#a51efea86a4d76d1259893f606b776573">    7</a></span>&#160;<span class="preprocessor">#define _MAX_STRING_SIZE_ 500</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifdef debug</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="a00099.html#ad6ab74942c9de13cf0b4c12eb0d91780">    9</a></span>&#160;<span class="preprocessor">  #define IERR ierr= </span></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00099.html#a68f50121fb9a7daeaf60e50cdef82ef3">   10</a></span>&#160;<span class="preprocessor">  #define _DECLARE_IERR_ int ierr = 0; </span></div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="a00099.html#add9cf96ae374934d245a1dc1ab697a42">   11</a></span>&#160;<span class="preprocessor">  #define CHECKERR(ierr) { if (ierr) return(ierr); }</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">  #define IERR</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">  #define _DECLARE_IERR_</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">  #define CHECKERR(ierr)</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="a00099.html#abfd977805f9104d0141377f9b4ac954e">   19</a></span>&#160;<span class="preprocessor">#define _MACHINE_ZERO_ 1.0e-14</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="a00099.html#a9aa9bad8531d6733731a850ccc471a42">   24</a></span>&#160;<span class="preprocessor">#define _GetCoordinate_(dir,i,dim,ghosts,x,coord) \</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">    int arraycounter,offset = 0; \</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">    for (arraycounter = 0; arraycounter &lt; dir; arraycounter++) offset += (dim[arraycounter]+2*ghosts); \</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">    coord = (x[offset+ghosts+i]); \</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->
