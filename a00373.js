@@ -1,5 +1,4 @@
 var a00373 =
 [
-    [ "TimeRHSFunctionExplicit", "a00373.html#ab9588b67b4f4ce05c80eff310709ab04", null ],
-    [ "TimeInitialize", "a00373.html#a197505d03d69f40cb54f671775db98ac", null ]
+    [ "TimeExplicitRKInitialize", "a00373.html#a309ef629f0d505023e04e93c1cd0ea7a", null ]
 ];

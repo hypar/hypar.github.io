@@ -1,10 +1,10 @@
 var dir_157cc1c95f06aeb8b741f2bc7fe7cc3f =
 [
-    [ "blocktridiagIterJacobi.c", "a00380.html", "a00380" ],
-    [ "blocktridiagLU.c", "a00381.html", "a00381" ],
-    [ "tridiagIterJacobi.c", "a00382.html", "a00382" ],
-    [ "tridiagLU.c", "a00383.html", "a00383" ],
-    [ "tridiagLUGS.c", "a00384.html", "a00384" ],
-    [ "tridiagLUInit.c", "a00385.html", "a00385" ],
-    [ "tridiagScaLPK.c", "a00386.html", null ]
+    [ "blocktridiagIterJacobi.c", "a00386.html", "a00386" ],
+    [ "blocktridiagLU.c", "a00387.html", "a00387" ],
+    [ "tridiagIterJacobi.c", "a00388.html", "a00388" ],
+    [ "tridiagLU.c", "a00389.html", "a00389" ],
+    [ "tridiagLUGS.c", "a00390.html", "a00390" ],
+    [ "tridiagLUInit.c", "a00391.html", "a00391" ],
+    [ "tridiagScaLPK.c", "a00392.html", null ]
 ];

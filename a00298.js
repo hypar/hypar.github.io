@@ -1,6 +1,4 @@
 var a00298 =
 [
-    [ "NavierStokes2DFlux", "a00298.html#af9474905c4b501fdee9a18e490f6499d", null ],
-    [ "NavierStokes2DStiffFlux", "a00298.html#ae5da2defa681602a634b5e5455bae4cb", null ],
-    [ "NavierStokes2DNonStiffFlux", "a00298.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
+    [ "LinearADRJacobian", "a00298.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf", null ]
 ];

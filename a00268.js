@@ -1,4 +1,5 @@
 var a00268 =
 [
-    [ "FPPowerSystem1BusAdvection", "a00268.html#ad7e78d17ce9013c5e3929a7c13847d83", null ]
+    [ "FPPowerSystemDissipationFunction", "a00268.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
+    [ "FPPowerSystemDiffusion", "a00268.html#a0210181023c485ae65c8d7983f23303a", null ]
 ];

@@ -1,4 +1,5 @@
 var a00209 =
 [
-    [ "MPIRanknD", "a00209.html#aa849b75c6eefcd0c18231a625638eaa4", null ]
+    [ "MPIMax_integer", "a00209.html#a6d51d72d0316346543fbda2aa97a790a", null ],
+    [ "MPIMax_double", "a00209.html#aa8bb15ed31fcdd02194de4d639d67988", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DJacobian.c Source File</title>
+<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DCleanup.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,52 +113,25 @@ $(document).ready(function(){initNavTree('a00355_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ShallowWater2DJacobian.c</div>  </div>
+<div class="title">ShallowWater2DCleanup.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00355.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00104.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00110.html">physicalmodels/shallowwater2d.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00116.html">physicalmodels/shallowwater2d.h</a>&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00355.html#ac9578045deced429c673bb5e6a1cf034">   13</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00355.html#ac9578045deced429c673bb5e6a1cf034">ShallowWater2DJacobian</a>(</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                    <span class="keywordtype">double</span>  *Jac, </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">double</span>  *u,   </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">void</span>    *p,   </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span>     dir,  </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    <span class="keywordtype">int</span>     upw   </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                   )</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00092.html">ShallowWater2D</a>  *param = (<a class="code" href="a00092.html">ShallowWater2D</a>*) p;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span>   R[<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], D[<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                  L[<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], DL[<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="comment">/* get the eigenvalues and left,right eigenvectors */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00110.html#ab51465579037455f044ab58f387caf15">_ShallowWater2DEigenvalues_</a>      (u,D,param,dir);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00110.html#a9fedf0f1165028b0f256b59e72fc5e9a">_ShallowWater2DLeftEigenvectors_</a> (u,L,param,dir);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00110.html#ac2a20407c8e10d3f59b52281ae4e0f39">_ShallowWater2DRightEigenvectors_</a>(u,R,param,dir);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> aupw = <a class="code" href="a00104.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw), k;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  k = 0; D[k] = <a class="code" href="a00104.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00104.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00104.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  k = 4; D[k] = <a class="code" href="a00104.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00104.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00104.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  k = 8; D[k] = <a class="code" href="a00104.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00104.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00104.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00104.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,DL,D,L);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00104.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(<a class="code" href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,Jac,R,DL);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="ttc" id="a00104_html_ad08720847b0aef444876b608b7af9a5c"><div class="ttname"><a href="a00104.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a></div><div class="ttdeci">#define MatMult3(N, A, X, Y)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00074">mathfunctions.h:74</a></div></div>
-<div class="ttc" id="a00110_html"><div class="ttname"><a href="a00110.html">shallowwater2d.h</a></div><div class="ttdoc">2D Shallow Water Equations </div></div>
-<div class="ttc" id="a00110_html_ab51465579037455f044ab58f387caf15"><div class="ttname"><a href="a00110.html#ab51465579037455f044ab58f387caf15">_ShallowWater2DEigenvalues_</a></div><div class="ttdeci">#define _ShallowWater2DEigenvalues_(u, D, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00129">shallowwater2d.h:129</a></div></div>
-<div class="ttc" id="a00106_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00106.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00106_source.html#l00057">euler1d.h:57</a></div></div>
-<div class="ttc" id="a00355_html_ac9578045deced429c673bb5e6a1cf034"><div class="ttname"><a href="a00355.html#ac9578045deced429c673bb5e6a1cf034">ShallowWater2DJacobian</a></div><div class="ttdeci">int ShallowWater2DJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00355_source.html#l00013">ShallowWater2DJacobian.c:13</a></div></div>
-<div class="ttc" id="a00104_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00104.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00033">mathfunctions.h:33</a></div></div>
-<div class="ttc" id="a00104_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00104.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00019">mathfunctions.h:19</a></div></div>
-<div class="ttc" id="a00110_html_a9fedf0f1165028b0f256b59e72fc5e9a"><div class="ttname"><a href="a00110.html#a9fedf0f1165028b0f256b59e72fc5e9a">_ShallowWater2DLeftEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater2DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00154">shallowwater2d.h:154</a></div></div>
-<div class="ttc" id="a00092_html"><div class="ttname"><a href="a00092.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00240">shallowwater2d.h:240</a></div></div>
-<div class="ttc" id="a00104_html"><div class="ttname"><a href="a00104.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00104_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00104.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00015">mathfunctions.h:15</a></div></div>
-<div class="ttc" id="a00110_html_ac2a20407c8e10d3f59b52281ae4e0f39"><div class="ttname"><a href="a00110.html#ac2a20407c8e10d3f59b52281ae4e0f39">_ShallowWater2DRightEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater2DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00197">shallowwater2d.h:197</a></div></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00355.html#a8ce86b097b5c5bf69087ba54e89e2acc">   10</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00355.html#a8ce86b097b5c5bf69087ba54e89e2acc">ShallowWater2DCleanup</a>(</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                   <span class="keywordtype">void</span> *s </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                  )</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <a class="code" href="a00098.html">ShallowWater2D</a> *param  = (<a class="code" href="a00098.html">ShallowWater2D</a>*) s;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  free(param-&gt;<a class="code" href="a00098.html#a9f92e5582bf339a3c95df78b9c684fe0">b</a>);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
+<div class="ttc" id="a00098_html_a9f92e5582bf339a3c95df78b9c684fe0"><div class="ttname"><a href="a00098.html#a9f92e5582bf339a3c95df78b9c684fe0">ShallowWater2D::b</a></div><div class="ttdeci">double * b</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00243">shallowwater2d.h:243</a></div></div>
+<div class="ttc" id="a00098_html"><div class="ttname"><a href="a00098.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00240">shallowwater2d.h:240</a></div></div>
+<div class="ttc" id="a00355_html_a8ce86b097b5c5bf69087ba54e89e2acc"><div class="ttname"><a href="a00355.html#a8ce86b097b5c5bf69087ba54e89e2acc">ShallowWater2DCleanup</a></div><div class="ttdeci">int ShallowWater2DCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00355_source.html#l00010">ShallowWater2DCleanup.c:10</a></div></div>
+<div class="ttc" id="a00116_html"><div class="ttname"><a href="a00116.html">shallowwater2d.h</a></div><div class="ttdoc">2D Shallow Water Equations </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

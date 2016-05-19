@@ -1,4 +1,5 @@
 var a00296 =
 [
-    [ "NavierStokes2DComputeCFL", "a00296.html#a4bcbd720302cbca8e097d456545d7167", null ]
+    [ "LinearADRDiffusionG", "a00296.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
+    [ "LinearADRDiffusionH", "a00296.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
 ];

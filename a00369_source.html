@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/TimeIntegration/TimeGetAuxSolutions.c Source File</title>
+<title>HyPar: src/SecondDerivative/SecondDerivativeSecondOrder.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,54 +113,84 @@ $(document).ready(function(){initNavTree('a00369_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">TimeGetAuxSolutions.c</div>  </div>
+<div class="title">SecondDerivativeSecondOrder.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00369.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00102.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00078.html">timeintegration.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="a00369.html#aafcaf60eab095c5c5a9ad95085846c18">   29</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00369.html#aafcaf60eab095c5c5a9ad95085846c18">TimeGetAuxSolutions</a>(</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                          <span class="keywordtype">int</span>     *N,      </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                          <span class="keywordtype">double</span>  **uaux,  </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                          <span class="keywordtype">void</span>    *s,      </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                          <span class="keywordtype">int</span>     n        </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                       )</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="a00083.html">HyPar</a>           *solver = (<a class="code" href="a00083.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00093.html">TimeIntegration</a> *TS     = (<a class="code" href="a00093.html">TimeIntegration</a>*) solver-&gt;<a class="code" href="a00083.html#a1d36fea92472416e32e039b86dea0b18">time_integrator</a>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  if (n &gt;= 0) {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00083.html#a138e751362d14724df8e6ab27c4a5e55">time_scheme</a>,<a class="code" href="a00078.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      <a class="code" href="a00078.html#a00395">GLMGEEParameters</a> *params = (<a class="code" href="a00078.html#a00395">GLMGEEParameters</a>*) solver-&gt;<a class="code" href="a00083.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      *uaux = TS-&gt;<a class="code" href="a00093.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[params-&gt;<a class="code" href="a00078.html#acab531abaa74a7e664e3986f2522b33a">r</a>+n];</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span> (!TS) *N = 0;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00083.html#a138e751362d14724df8e6ab27c4a5e55">time_scheme</a>,<a class="code" href="a00078.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="a00078.html#a00395">GLMGEEParameters</a> *params = (<a class="code" href="a00078.html#a00395">GLMGEEParameters</a>*) solver-&gt;<a class="code" href="a00083.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        *N = params-&gt;<a class="code" href="a00078.html#acab531abaa74a7e664e3986f2522b33a">r</a> - 1;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      } <span class="keywordflow">else</span> *N = 0;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="ttc" id="a00078_html_aad9619c099daeb3e6b1b7ef9e03e38d8"><div class="ttname"><a href="a00078.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a></div><div class="ttdeci">#define _GLM_GEE_</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00014">timeintegration.h:14</a></div></div>
-<div class="ttc" id="a00093_html"><div class="ttname"><a href="a00093.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00025">timeintegration.h:25</a></div></div>
-<div class="ttc" id="a00093_html_ae21dee7e1deaf4ff3024c1476230d3b1"><div class="ttname"><a href="a00093.html#ae21dee7e1deaf4ff3024c1476230d3b1">TimeIntegration::U</a></div><div class="ttdeci">double ** U</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00054">timeintegration.h:54</a></div></div>
-<div class="ttc" id="a00083_html_a138e751362d14724df8e6ab27c4a5e55"><div class="ttname"><a href="a00083.html#a138e751362d14724df8e6ab27c4a5e55">HyPar::time_scheme</a></div><div class="ttdeci">char time_scheme[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00053">hypar.h:53</a></div></div>
-<div class="ttc" id="a00083_html"><div class="ttname"><a href="a00083.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00083_html_adec095311615891040de11341c01a77f"><div class="ttname"><a href="a00083.html#adec095311615891040de11341c01a77f">HyPar::msti</a></div><div class="ttdeci">void * msti</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00313">hypar.h:313</a></div></div>
-<div class="ttc" id="a00083_html_a1d36fea92472416e32e039b86dea0b18"><div class="ttname"><a href="a00083.html#a1d36fea92472416e32e039b86dea0b18">HyPar::time_integrator</a></div><div class="ttdeci">void * time_integrator</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00140">hypar.h:140</a></div></div>
-<div class="ttc" id="a00078_html"><div class="ttname"><a href="a00078.html">timeintegration.h</a></div><div class="ttdoc">Contains structures and function declarations for time integration. </div></div>
-<div class="ttc" id="a00078_html_acab531abaa74a7e664e3986f2522b33a"><div class="ttname"><a href="a00078.html#acab531abaa74a7e664e3986f2522b33a">GLMGEEParameters::r</a></div><div class="ttdeci">int r</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00223">timeintegration.h:223</a></div></div>
-<div class="ttc" id="a00102_html"><div class="ttname"><a href="a00102.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00078_html_a00395"><div class="ttname"><a href="a00078.html#a00395">GLMGEEParameters</a></div><div class="ttdoc">Structure containing the parameters for the General Linear Methods with Global Error Estimators (GLM-...</div><div class="ttdef"><b>Definition:</b> <a href="a00078_source.html#l00222">timeintegration.h:222</a></div></div>
-<div class="ttc" id="a00369_html_aafcaf60eab095c5c5a9ad95085846c18"><div class="ttname"><a href="a00369.html#aafcaf60eab095c5c5a9ad95085846c18">TimeGetAuxSolutions</a></div><div class="ttdeci">int TimeGetAuxSolutions(int *N, double **uaux, void *s, int n)</div><div class="ttdef"><b>Definition:</b> <a href="a00369_source.html#l00029">TimeGetAuxSolutions.c:29</a></div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00105.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00104.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00117.html">secondderivative.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00091.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#undef  _MINIMUM_GHOSTS_</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="a00369.html#ab2278b4768059f198821dbf4d1a80389">   18</a></span>&#160;<span class="preprocessor">#define _MINIMUM_GHOSTS_ 1</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="a00369.html#a84c8a8f68736a8644c442f8c27628445">   34</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00369.html#a84c8a8f68736a8644c442f8c27628445">SecondDerivativeSecondOrderCentral</a>(</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                                        <span class="keywordtype">double</span>  *D2f, </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                                        <span class="keywordtype">double</span>  *f,   </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                                        <span class="keywordtype">int</span>     dir,  </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                        <span class="keywordtype">void</span>    *s,   </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                        <span class="keywordtype">void</span>    *m    </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                      )</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="a00089.html">HyPar</a>         *solver = (<a class="code" href="a00089.html">HyPar</a>*) s;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">int</span>           i, v;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span> ghosts = solver-&gt;<a class="code" href="a00089.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">int</span> ndims  = solver-&gt;<a class="code" href="a00089.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">int</span> nvars  = solver-&gt;<a class="code" href="a00089.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">int</span> *dim   = solver-&gt;<a class="code" href="a00089.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordflow">if</span> ((!D2f) || (!f)) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot;Error in SecondDerivativeSecondOrder(): input arrays not allocated.\n&quot;</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">if</span> (ghosts &lt; <a class="code" href="a00369.html#ab2278b4768059f198821dbf4d1a80389">_MINIMUM_GHOSTS_</a>) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot;Error in SecondDerivativeSecondOrder(): insufficient number of ghosts.\n&quot;</span>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">/* create index and bounds for the outer loop, i.e., to loop over all 1D lines along</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">     dimension &quot;dir&quot;                                                                    */</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordtype">int</span> indexC[ndims], index_outer[ndims], bounds_outer[ndims];</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="a00104.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="a00104.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexC,ndims);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; dim[dir]; i++) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      <span class="keywordtype">int</span> qL, qC, qR;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      indexC[dir] = i-1; <a class="code" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qL);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      indexC[dir] = i  ; <a class="code" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qC);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      indexC[dir] = i+1; <a class="code" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qR);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++)  D2f[qC*nvars+v] = f[qL*nvars+v]-2*f[qC*nvars+v]+f[qR*nvars+v];</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="a00104.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
+<div class="ttc" id="a00091_html"><div class="ttname"><a href="a00091.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
+<div class="ttc" id="a00089_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00089.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00041">hypar.h:41</a></div></div>
+<div class="ttc" id="a00369_html_a84c8a8f68736a8644c442f8c27628445"><div class="ttname"><a href="a00369.html#a84c8a8f68736a8644c442f8c27628445">SecondDerivativeSecondOrderCentral</a></div><div class="ttdeci">int SecondDerivativeSecondOrderCentral(double *D2f, double *f, int dir, void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00369_source.html#l00034">SecondDerivativeSecondOrder.c:34</a></div></div>
+<div class="ttc" id="a00104_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00104.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00089_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00089.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00104_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00036">arrayfunctions.h:36</a></div></div>
+<div class="ttc" id="a00104_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00142">arrayfunctions.h:142</a></div></div>
+<div class="ttc" id="a00117_html"><div class="ttname"><a href="a00117.html">secondderivative.h</a></div><div class="ttdoc">Definitions for the functions computing the second derivative. </div></div>
+<div class="ttc" id="a00089_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00089.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00089_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00089.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00032">hypar.h:32</a></div></div>
+<div class="ttc" id="a00105_html"><div class="ttname"><a href="a00105.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00369_html_ab2278b4768059f198821dbf4d1a80389"><div class="ttname"><a href="a00369.html#ab2278b4768059f198821dbf4d1a80389">_MINIMUM_GHOSTS_</a></div><div class="ttdeci">#define _MINIMUM_GHOSTS_</div><div class="ttdef"><b>Definition:</b> <a href="a00369_source.html#l00018">SecondDerivativeSecondOrder.c:18</a></div></div>
+<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00089_html"><div class="ttname"><a href="a00089.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00104_html"><div class="ttname"><a href="a00104.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00104_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00104.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00122">arrayfunctions.h:122</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

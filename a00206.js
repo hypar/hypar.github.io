@@ -1,4 +1,5 @@
 var a00206 =
 [
-    [ "MPIPartitionArray1D", "a00206.html#ac43b2dabcbf9ac251928a7394dc3775a", null ]
+    [ "GetStringFromInteger", "a00206.html#a3e3ad5aed581d9ae563190c365dadc41", null ],
+    [ "MPIGetFilename", "a00206.html#a3bea94d51bdf0cd76ac4a0b0d52a5baa", null ]
 ];

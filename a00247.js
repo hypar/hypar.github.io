@@ -1,13 +1,10 @@
 var a00247 =
 [
-    [ "Euler2DComputeCFL", "a00247.html#a87513d4aa56364c1dfa489ce71f843e7", null ],
-    [ "Euler2DFlux", "a00247.html#ab83d076af8c2728b75cc1e9d753c2e8c", null ],
-    [ "Euler2DUpwindRoe", "a00247.html#a701ca801be0e1687066c368d6feaa9de", null ],
-    [ "Euler2DUpwindRF", "a00247.html#a61780ec55b692f0294babda71dad6d90", null ],
-    [ "Euler2DUpwindLLF", "a00247.html#ac37051d8d9d3f76b0fb04d873e80e9f5", null ],
-    [ "Euler2DUpwindSWFS", "a00247.html#afaab085e2d6d8e02e05593bd3c3fa1ec", null ],
-    [ "Euler2DRoeAverage", "a00247.html#ab0bae2e6f4ac6dadf947d2ad766a3d27", null ],
-    [ "Euler2DLeftEigenvectors", "a00247.html#abc3249c6e004e0eed1149fcff50d090c", null ],
-    [ "Euler2DRightEigenvectors", "a00247.html#ade37c0fac7a8b529ca43bbc113e5934b", null ],
-    [ "Euler2DInitialize", "a00247.html#a1bfe2d97eda88cf31864852c31ad9074", null ]
+    [ "Euler1DUpwindRoe", "a00247.html#a6dc9d104ca58ca3ea0da7039fe5323c4", null ],
+    [ "Euler1DUpwindRF", "a00247.html#a803a31978814cfaef298c686b99d6ed0", null ],
+    [ "Euler1DUpwindLLF", "a00247.html#aaafb95c6a0e137263bc9d072444a1fb7", null ],
+    [ "Euler1DUpwindSWFS", "a00247.html#ad6796e7537a610cfeb2efcc62e98d43d", null ],
+    [ "Euler1DUpwinddFRoe", "a00247.html#a661317dfe3032428094f1dc054d207ae", null ],
+    [ "Euler1DUpwinddFRF", "a00247.html#a7efe8a920b95163f2dd3ae308d7c063e", null ],
+    [ "Euler1DUpwinddFLLF", "a00247.html#aefac1195512cb539fbe564a84cc68d43", null ]
 ];

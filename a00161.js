@@ -1,4 +1,4 @@
 var a00161 =
 [
-    [ "CompactSchemeCleanup", "a00161.html#a528af16d6f4744046af63cb2d5520437", null ]
+    [ "ParabolicFunctionNC2Stage", "a00161.html#a153eb91ec9b118a7b8c971facbc8d920", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PETScFunctions/PetscCleanup.c Source File</title>
+<title>HyPar: src/MPIFunctions/MPIPartition1D.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,23 +113,29 @@ $(document).ready(function(){initNavTree('a00211_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">PetscCleanup.c</div>  </div>
+<div class="title">MPIPartition1D.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00211.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00090.html">petscinterface.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00091.html">mpivars.h</a>&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00211.html#a6135b9aff50e410b03934a0688d8a73b">   10</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00211.html#a6135b9aff50e410b03934a0688d8a73b">PetscCleanup</a>(<span class="keywordtype">void</span> *obj )</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <a class="code" href="a00090.html#a00401">PETScContext</a> *ctxt = (<a class="code" href="a00090.html#a00401">PETScContext</a>*) obj;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="keywordflow">if</span> (ctxt-&gt;<a class="code" href="a00090.html#a0c5f291f027b0928672b89121f44c0fc">globalDOF</a>) free(ctxt-&gt;<a class="code" href="a00090.html#a0c5f291f027b0928672b89121f44c0fc">globalDOF</a>);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
-<div class="ttc" id="a00090_html"><div class="ttname"><a href="a00090.html">petscinterface.h</a></div><div class="ttdoc">Contains variables and function definitions for time integration with PETSc (http://www.mcs.anl.gov/petsc/) </div></div>
-<div class="ttc" id="a00090_html_a00401"><div class="ttname"><a href="a00090.html#a00401">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00032">petscinterface.h:32</a></div></div>
-<div class="ttc" id="a00211_html_a6135b9aff50e410b03934a0688d8a73b"><div class="ttname"><a href="a00211.html#a6135b9aff50e410b03934a0688d8a73b">PetscCleanup</a></div><div class="ttdeci">int PetscCleanup(void *obj)</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00010">PetscCleanup.c:10</a></div></div>
-<div class="ttc" id="a00090_html_a0c5f291f027b0928672b89121f44c0fc"><div class="ttname"><a href="a00090.html#a0c5f291f027b0928672b89121f44c0fc">PETScContext::globalDOF</a></div><div class="ttdeci">double * globalDOF</div><div class="ttdef"><b>Definition:</b> <a href="a00090_source.html#l00071">petscinterface.h:71</a></div></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00211.html#a87127187b566bfa02b692247f9e3c798">   14</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00211.html#a87127187b566bfa02b692247f9e3c798">MPIPartition1D</a>(</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">int</span> nglobal,  </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">int</span> nproc,    </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span> rank      </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                  )</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">int</span> nlocal;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> (nglobal%nproc == 0) nlocal = nglobal/nproc;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">if</span> (rank == nproc-1)  nlocal = nglobal/nproc + nglobal%nproc;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">else</span>                  nlocal = nglobal/nproc;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span>(nlocal);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="ttc" id="a00091_html"><div class="ttname"><a href="a00091.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
+<div class="ttc" id="a00211_html_a87127187b566bfa02b692247f9e3c798"><div class="ttname"><a href="a00211.html#a87127187b566bfa02b692247f9e3c798">MPIPartition1D</a></div><div class="ttdeci">int MPIPartition1D(int nglobal, int nproc, int rank)</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00014">MPIPartition1D.c:14</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

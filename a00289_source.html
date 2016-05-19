@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/LinearADR/LinearADRComputeDiffNumber.c Source File</title>
+<title>HyPar: src/PhysicalModels/FPPowerSystem3Bus/FPPowerSystem3BusFunctions.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,53 +113,193 @@ $(document).ready(function(){initNavTree('a00289_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LinearADRComputeDiffNumber.c</div>  </div>
+<div class="title">FPPowerSystem3BusFunctions.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00289.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00099.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00084.html">physicalmodels/linearadr.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00085.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00102.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="a00291.html#a5176a1dd58e72c3eab1a256ff031923b">    6</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="a00289.html#aacfc9dbfe043a23f0f169f10e7c041e1">LinearADRComputeDiffNumber</a>(<span class="keywordtype">void</span> *s,<span class="keywordtype">void</span> *m,<span class="keywordtype">double</span> dt,<span class="keywordtype">double</span> t)</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <a class="code" href="a00083.html">HyPar</a>         *solver = (<a class="code" href="a00083.html">HyPar</a>*)        s;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <a class="code" href="a00084.html#a00396">LinearADR</a>     *params = (<a class="code" href="a00084.html#a00396">LinearADR</a>*)    solver-&gt;<a class="code" href="a00083.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  <span class="keywordtype">int</span>           d, i, v;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keywordtype">int</span>     ndims  = solver-&gt;<a class="code" href="a00083.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="keywordtype">int</span>     nvars  = solver-&gt;<a class="code" href="a00083.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordtype">int</span>     ghosts = solver-&gt;<a class="code" href="a00083.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keywordtype">int</span>     *dim   = solver-&gt;<a class="code" href="a00083.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keywordtype">double</span>  max_diffno = 0;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  for (d = 0; d &lt; ndims; d++) {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; dim[d]; i++) {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;      <span class="keywordflow">for</span> (v = 0; v &lt; nvars; v++) {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordtype">double</span> dxinv;  <a class="code" href="a00099.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(d,i,dim,ghosts,solver-&gt;<a class="code" href="a00083.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dxinv);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordtype">double</span> local_diffno =   params-&gt;<a class="code" href="a00084.html#ae6261d15419eb591b3f65c5f8cd7b8cb">d</a>[nvars*d+v] * dt * dxinv * dxinv;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordflow">if</span> (local_diffno &gt; max_diffno) max_diffno = local_diffno;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;      }</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  }</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordflow">return</span>(max_diffno);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
-<div class="ttc" id="a00083_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00083.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00032">hypar.h:32</a></div></div>
-<div class="ttc" id="a00084_html"><div class="ttname"><a href="a00084.html">linearadr.h</a></div></div>
-<div class="ttc" id="a00099_html"><div class="ttname"><a href="a00099.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00083_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00083.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00099_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00099.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00099_source.html#l00024">basic.h:24</a></div></div>
-<div class="ttc" id="a00083_html"><div class="ttname"><a href="a00083.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00083_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00083.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00083_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00083.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00228">hypar.h:228</a></div></div>
-<div class="ttc" id="a00083_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00083.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00041">hypar.h:41</a></div></div>
-<div class="ttc" id="a00084_html_a00396"><div class="ttname"><a href="a00084.html#a00396">LinearADR</a></div><div class="ttdef"><b>Definition:</b> <a href="a00084_source.html#l00017">linearadr.h:17</a></div></div>
-<div class="ttc" id="a00083_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00083.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00102_source.html#l00085">hypar.h:85</a></div></div>
-<div class="ttc" id="a00084_html_ae6261d15419eb591b3f65c5f8cd7b8cb"><div class="ttname"><a href="a00084.html#ae6261d15419eb591b3f65c5f8cd7b8cb">LinearADR::d</a></div><div class="ttdeci">double * d</div><div class="ttdef"><b>Definition:</b> <a href="a00084_source.html#l00019">linearadr.h:19</a></div></div>
-<div class="ttc" id="a00289_html_aacfc9dbfe043a23f0f169f10e7c041e1"><div class="ttname"><a href="a00289.html#aacfc9dbfe043a23f0f169f10e7c041e1">LinearADRComputeDiffNumber</a></div><div class="ttdeci">double LinearADRComputeDiffNumber(void *s, void *m, double dt, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00289_source.html#l00006">LinearADRComputeDiffNumber.c:6</a></div></div>
-<div class="ttc" id="a00085_html"><div class="ttname"><a href="a00085.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
-<div class="ttc" id="a00102_html"><div class="ttname"><a href="a00102.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<a href="a00289.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00105.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00104.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00088.html">physicalmodels/fppowersystem3bus.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00289.html#a454d95ed74eac931fbd3e02f9ac8ca63">   14</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="a00289.html#a454d95ed74eac931fbd3e02f9ac8ca63">ComputeElectricalPower</a>(</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                                    <span class="keywordtype">double</span> theta1,  </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                                    <span class="keywordtype">double</span> theta2,  </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                                    <span class="keywordtype">void</span>   *p,      </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                                    <span class="keywordtype">double</span> *Pe1,    </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                                    <span class="keywordtype">double</span> *Pe2,    </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                                    <span class="keywordtype">double</span> *Pe3     </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                  )</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00088.html#a00400">FPPowerSystem3Bus</a> *params = (<a class="code" href="a00088.html#a00400">FPPowerSystem3Bus</a>*) p;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">double</span> E1 = params-&gt;<a class="code" href="a00088.html#a7bc4f300d97cc1b0372bef26efee2a25">E1</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">double</span> E2 = params-&gt;<a class="code" href="a00088.html#a4253d509b3f503c98dace895ae404e0c">E2</a>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">double</span> E3 = params-&gt;<a class="code" href="a00088.html#ac6cc3b7063363ccaf35b8e9864ada6c3">Eref</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordtype">double</span> *G = params-&gt;<a class="code" href="a00088.html#a4ac9953c6b8de1b9fcda41fc859adfb4">G</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">double</span> *B = params-&gt;<a class="code" href="a00088.html#ad36954709307649365515214a02ab06d">B</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">double</span> Eph[3][2];</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  Eph[0][0] = E1*cos(theta1);   Eph[0][1] = E1*sin(theta1);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  Eph[1][0] = E2*cos(theta2);   Eph[1][1] = E2*sin(theta2);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  Eph[2][0] = E3;               Eph[2][1] = 0.0;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">double</span> Y[3][3][2];</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">int</span> i,j;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;3; i++) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">for</span> (j=0; j&lt;3; j++) {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      Y[i][j][0] = G[i*3+j];</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      Y[i][j][1] = B[i*3+j];</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">double</span> YEph[3][2];</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  YEph[0][0] =   Y[0][0][0]*Eph[0][0] - Y[0][0][1]*Eph[0][1]</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;               + Y[0][1][0]*Eph[1][0] - Y[0][1][1]*Eph[1][1]</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;               + Y[0][2][0]*Eph[2][0] - Y[0][2][1]*Eph[2][1];</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  YEph[0][1] =   Y[0][0][0]*Eph[0][1] + Y[0][0][1]*Eph[0][0]</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;               + Y[0][1][0]*Eph[1][1] + Y[0][1][1]*Eph[1][0]</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;               + Y[0][2][0]*Eph[2][1] + Y[0][2][1]*Eph[2][0];</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  YEph[1][0] =   Y[1][0][0]*Eph[0][0] - Y[1][0][1]*Eph[0][1]</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;               + Y[1][1][0]*Eph[1][0] - Y[1][1][1]*Eph[1][1]</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;               + Y[1][2][0]*Eph[2][0] - Y[1][2][1]*Eph[2][1];</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  YEph[1][1] =   Y[1][0][0]*Eph[0][1] + Y[1][0][1]*Eph[0][0]</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;               + Y[1][1][0]*Eph[1][1] + Y[1][1][1]*Eph[1][0]</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;               + Y[1][2][0]*Eph[2][1] + Y[1][2][1]*Eph[2][0];</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  YEph[2][0] =   Y[2][0][0]*Eph[0][0] - Y[2][0][1]*Eph[0][1]</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;               + Y[2][1][0]*Eph[1][0] - Y[2][1][1]*Eph[1][1]</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;               + Y[2][2][0]*Eph[2][0] - Y[2][2][1]*Eph[2][1];</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  YEph[2][1] =   Y[2][0][0]*Eph[0][1] + Y[2][0][1]*Eph[0][0]</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;               + Y[2][1][0]*Eph[1][1] + Y[2][1][1]*Eph[1][0]</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;               + Y[2][2][0]*Eph[2][1] + Y[2][2][1]*Eph[2][0];</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  YEph[0][1] = - YEph[0][1];</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  YEph[1][1] = - YEph[1][1];</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  YEph[2][1] = - YEph[2][1];</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  *Pe1 = Eph[0][0]*YEph[0][0] - Eph[0][1]*YEph[0][1];</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  *Pe2 = Eph[1][0]*YEph[1][0] - Eph[1][1]*YEph[1][1];</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  *Pe3 = Eph[2][0]*YEph[2][0] - Eph[2][1]*YEph[2][1];</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="a00291.html#a96c648e7775486eb94b64ca849329d0e">   76</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00289.html#a5b602ee3f15087c8ab5542c83596f6c0">FPPowerSystem3BusDriftFunction</a>(</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                                    <span class="keywordtype">int</span>     dir,    </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                                    <span class="keywordtype">void</span>    *p,     </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                                    <span class="keywordtype">double</span>  *x,     </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                                    <span class="keywordtype">double</span>  t,      </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                                    <span class="keywordtype">double</span>  *<a class="code" href="a00085.html#a45bcf0bb95407584d582c61664359c14">drift</a>  </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                                  )</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <a class="code" href="a00088.html#a00400">FPPowerSystem3Bus</a> *params = (<a class="code" href="a00088.html#a00400">FPPowerSystem3Bus</a>*) p;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordtype">double</span> theta1 = x[0];</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordtype">double</span> theta2 = x[1];</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordtype">double</span> Omega1 = x[2];</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordtype">double</span> Omega2 = x[3];</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordtype">double</span> omegaB     = params-&gt;<a class="code" href="a00088.html#ac789ae1b1c053a68151c68902fee8ac9">omegaB</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">double</span> Pm1_avg    = params-&gt;<a class="code" href="a00088.html#aa0722324a5f8f83285eb295741e06447">Pm1_avg</a>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordtype">double</span> Pm2_avg    = params-&gt;<a class="code" href="a00088.html#a94d96e5670f1beb15bd9ca0c681e91fd">Pm2_avg</a>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordtype">double</span> Pmref_avg  = params-&gt;<a class="code" href="a00088.html#a9e4c7ae4dc16b007fd1d8e77b539c077">Pmref_avg</a>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordtype">double</span> H1         = params-&gt;<a class="code" href="a00088.html#afa5f25beeda3aece1803a92b64262dab">H1</a>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordtype">double</span> H2         = params-&gt;<a class="code" href="a00088.html#aab6041131b2e33076efab27de0a33da9">H2</a>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">double</span> Href       = params-&gt;<a class="code" href="a00088.html#ad89180516350922363ad85315bc3b102">Href</a>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">double</span> gamma      = params-&gt;<a class="code" href="a00088.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordtype">double</span> Pe1, Pe2, Peref;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <a class="code" href="a00289.html#a454d95ed74eac931fbd3e02f9ac8ca63">ComputeElectricalPower</a>(theta1,theta2,params,&amp;Pe1,&amp;Pe2,&amp;Peref);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keywordtype">double</span> F1 = Pm1_avg / (2*H1) - Pmref_avg / (2*Href);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">double</span> F2 = Pm2_avg / (2*H2) - Pmref_avg / (2*Href);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordtype">double</span> S1 = Pe1 / (2*H1) - Peref / (2*Href);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordtype">double</span> S2 = Pe2 / (2*H2) - Peref / (2*Href);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  drift[0] = omegaB * Omega1;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  drift[1] = omegaB * Omega2;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  drift[2] = F1 - gamma*Omega1 - S1;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  drift[3] = F2 - gamma*Omega2 - S2;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="a00289.html#a9dd5286fde835efd7885cad200f01007">  117</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00289.html#a9dd5286fde835efd7885cad200f01007">FPPowerSystem3BusDissipationFunction</a>(</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                                          <span class="keywordtype">int</span>     dir1,   </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                                          <span class="keywordtype">int</span>     dir2,   </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                                          <span class="keywordtype">void</span>    *p,     </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                                          <span class="keywordtype">double</span>  t,      </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                                          <span class="keywordtype">double</span>  *dissp  </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                                        )</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;{</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <a class="code" href="a00088.html#a00400">FPPowerSystem3Bus</a> *params = (<a class="code" href="a00088.html#a00400">FPPowerSystem3Bus</a>*) p;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <a class="code" href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(dissp,<a class="code" href="a00112.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>*<a class="code" href="a00112.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>,0.0);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordtype">double</span> sigma11 = params-&gt;<a class="code" href="a00088.html#a0ed5773af7a32aac7e04e94105eaf9c2">sigma</a>[0][0];</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keywordtype">double</span> sigma12 = params-&gt;<a class="code" href="a00088.html#a0ed5773af7a32aac7e04e94105eaf9c2">sigma</a>[0][1];</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keywordtype">double</span> sigma21 = params-&gt;<a class="code" href="a00088.html#a0ed5773af7a32aac7e04e94105eaf9c2">sigma</a>[1][0];</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keywordtype">double</span> sigma22 = params-&gt;<a class="code" href="a00088.html#a0ed5773af7a32aac7e04e94105eaf9c2">sigma</a>[1][1];</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordtype">double</span> lambda11 = params-&gt;<a class="code" href="a00088.html#a88a1f523fba1871f8b0d9e708c75aa17">lambda</a>[0][0];</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keywordtype">double</span> lambda12 = params-&gt;<a class="code" href="a00088.html#a88a1f523fba1871f8b0d9e708c75aa17">lambda</a>[0][1];</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordtype">double</span> lambda21 = params-&gt;<a class="code" href="a00088.html#a88a1f523fba1871f8b0d9e708c75aa17">lambda</a>[1][0];</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <span class="keywordtype">double</span> lambda22 = params-&gt;<a class="code" href="a00088.html#a88a1f523fba1871f8b0d9e708c75aa17">lambda</a>[1][1];</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordtype">double</span> gamma  = params-&gt;<a class="code" href="a00088.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="keywordtype">double</span> omegaB = params-&gt;<a class="code" href="a00088.html#ac789ae1b1c053a68151c68902fee8ac9">omegaB</a>;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="preprocessor">#if 0</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="comment">/* steady state coefficients */</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  dissp[2*_MODEL_NDIMS_+0] = sigma11*sigma11*lambda11*lambda11*omegaB;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  dissp[2*_MODEL_NDIMS_+1] = sigma12*sigma12*lambda12*lambda12*omegaB;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  dissp[3*_MODEL_NDIMS_+0] = sigma21*sigma21*lambda21*lambda21*omegaB;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  dissp[3*_MODEL_NDIMS_+1] = sigma22*sigma22*lambda22*lambda22*omegaB;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  dissp[2*_MODEL_NDIMS_+2] = sigma11*sigma11*lambda11*(1.0-gamma*lambda11);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  dissp[2*_MODEL_NDIMS_+3] = sigma12*sigma12*lambda12*(1.0-gamma*lambda12);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  dissp[3*_MODEL_NDIMS_+2] = sigma21*sigma21*lambda21*(1.0-gamma*lambda21);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  dissp[3*_MODEL_NDIMS_+3] = sigma22*sigma22*lambda22*(1.0-gamma*lambda22);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="comment">/* time-dependent coefficients */</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  dissp[2*_MODEL_NDIMS_+0] = sigma11*sigma11*lambda11*omegaB*(lambda11*(1-exp(-t/lambda11))-t*exp(-t/lambda11));</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  dissp[2*_MODEL_NDIMS_+1] = sigma12*sigma12*lambda12*omegaB*(lambda12*(1-exp(-t/lambda12))-t*exp(-t/lambda12));</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  dissp[3*_MODEL_NDIMS_+0] = sigma21*sigma21*lambda21*omegaB*(lambda21*(1-exp(-t/lambda21))-t*exp(-t/lambda21));</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  dissp[3*_MODEL_NDIMS_+1] = sigma22*sigma22*lambda22*omegaB*(lambda22*(1-exp(-t/lambda22))-t*exp(-t/lambda22));</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  dissp[2*_MODEL_NDIMS_+2] = sigma11*sigma11*(lambda11*(1-exp(-t/lambda11))+gamma*lambda11*(t*exp(-t/lambda11)-lambda11*(1-exp(-t/lambda11))));</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  dissp[2*_MODEL_NDIMS_+3] = sigma12*sigma12*(lambda12*(1-exp(-t/lambda12))+gamma*lambda12*(t*exp(-t/lambda12)-lambda12*(1-exp(-t/lambda12))));</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  dissp[3*_MODEL_NDIMS_+2] = sigma21*sigma21*(lambda21*(1-exp(-t/lambda21))+gamma*lambda21*(t*exp(-t/lambda21)-lambda21*(1-exp(-t/lambda21))));</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  dissp[3*_MODEL_NDIMS_+3] = sigma22*sigma22*(lambda22*(1-exp(-t/lambda22))+gamma*lambda22*(t*exp(-t/lambda22)-lambda22*(1-exp(-t/lambda22))));</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;}</div>
+<div class="ttc" id="a00088_html_ac789ae1b1c053a68151c68902fee8ac9"><div class="ttname"><a href="a00088.html#ac789ae1b1c053a68151c68902fee8ac9">FPPowerSystem3Bus::omegaB</a></div><div class="ttdeci">double omegaB</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_a4253d509b3f503c98dace895ae404e0c"><div class="ttname"><a href="a00088.html#a4253d509b3f503c98dace895ae404e0c">FPPowerSystem3Bus::E2</a></div><div class="ttdeci">double E2</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_a94d96e5670f1beb15bd9ca0c681e91fd"><div class="ttname"><a href="a00088.html#a94d96e5670f1beb15bd9ca0c681e91fd">FPPowerSystem3Bus::Pm2_avg</a></div><div class="ttdeci">double Pm2_avg</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html"><div class="ttname"><a href="a00088.html">fppowersystem3bus.h</a></div><div class="ttdoc">3-Bus Power System model </div></div>
+<div class="ttc" id="a00088_html_a0ed5773af7a32aac7e04e94105eaf9c2"><div class="ttname"><a href="a00088.html#a0ed5773af7a32aac7e04e94105eaf9c2">FPPowerSystem3Bus::sigma</a></div><div class="ttdeci">double sigma[2][2]</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00289_html_a5b602ee3f15087c8ab5542c83596f6c0"><div class="ttname"><a href="a00289.html#a5b602ee3f15087c8ab5542c83596f6c0">FPPowerSystem3BusDriftFunction</a></div><div class="ttdeci">int FPPowerSystem3BusDriftFunction(int dir, void *p, double *x, double t, double *drift)</div><div class="ttdef"><b>Definition:</b> <a href="a00289_source.html#l00076">FPPowerSystem3BusFunctions.c:76</a></div></div>
+<div class="ttc" id="a00088_html_aa0722324a5f8f83285eb295741e06447"><div class="ttname"><a href="a00088.html#aa0722324a5f8f83285eb295741e06447">FPPowerSystem3Bus::Pm1_avg</a></div><div class="ttdeci">double Pm1_avg</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00289_html_a9dd5286fde835efd7885cad200f01007"><div class="ttname"><a href="a00289.html#a9dd5286fde835efd7885cad200f01007">FPPowerSystem3BusDissipationFunction</a></div><div class="ttdeci">int FPPowerSystem3BusDissipationFunction(int dir1, int dir2, void *p, double t, double *dissp)</div><div class="ttdef"><b>Definition:</b> <a href="a00289_source.html#l00117">FPPowerSystem3BusFunctions.c:117</a></div></div>
+<div class="ttc" id="a00088_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00088.html#a72f9e01745b3a8203067ab84aefc9aea">FPPowerSystem3Bus::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_ac6cc3b7063363ccaf35b8e9864ada6c3"><div class="ttname"><a href="a00088.html#ac6cc3b7063363ccaf35b8e9864ada6c3">FPPowerSystem3Bus::Eref</a></div><div class="ttdeci">double Eref</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_a4ac9953c6b8de1b9fcda41fc859adfb4"><div class="ttname"><a href="a00088.html#a4ac9953c6b8de1b9fcda41fc859adfb4">FPPowerSystem3Bus::G</a></div><div class="ttdeci">double * G</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00085_html_a45bcf0bb95407584d582c61664359c14"><div class="ttname"><a href="a00085.html#a45bcf0bb95407584d582c61664359c14">drift</a></div><div class="ttdeci">#define drift(x)</div><div class="ttdef"><b>Definition:</b> <a href="a00085_source.html#l00031">fpdoublewell.h:31</a></div></div>
+<div class="ttc" id="a00112_html_a57771c952ec174601addf43e1c0202b2"><div class="ttname"><a href="a00112.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a></div><div class="ttdeci">#define _MODEL_NDIMS_</div><div class="ttdef"><b>Definition:</b> <a href="a00112_source.html#l00055">euler1d.h:55</a></div></div>
+<div class="ttc" id="a00104_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00142">arrayfunctions.h:142</a></div></div>
+<div class="ttc" id="a00105_html"><div class="ttname"><a href="a00105.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00088_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00088.html#ad36954709307649365515214a02ab06d">FPPowerSystem3Bus::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_a7bc4f300d97cc1b0372bef26efee2a25"><div class="ttname"><a href="a00088.html#a7bc4f300d97cc1b0372bef26efee2a25">FPPowerSystem3Bus::E1</a></div><div class="ttdeci">double E1</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_ad89180516350922363ad85315bc3b102"><div class="ttname"><a href="a00088.html#ad89180516350922363ad85315bc3b102">FPPowerSystem3Bus::Href</a></div><div class="ttdeci">double Href</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_afa5f25beeda3aece1803a92b64262dab"><div class="ttname"><a href="a00088.html#afa5f25beeda3aece1803a92b64262dab">FPPowerSystem3Bus::H1</a></div><div class="ttdeci">double H1</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_a88a1f523fba1871f8b0d9e708c75aa17"><div class="ttname"><a href="a00088.html#a88a1f523fba1871f8b0d9e708c75aa17">FPPowerSystem3Bus::lambda</a></div><div class="ttdeci">double lambda[2][2]</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_a9e4c7ae4dc16b007fd1d8e77b539c077"><div class="ttname"><a href="a00088.html#a9e4c7ae4dc16b007fd1d8e77b539c077">FPPowerSystem3Bus::Pmref_avg</a></div><div class="ttdeci">double Pmref_avg</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00088_html_aab6041131b2e33076efab27de0a33da9"><div class="ttname"><a href="a00088.html#aab6041131b2e33076efab27de0a33da9">FPPowerSystem3Bus::H2</a></div><div class="ttdeci">double H2</div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00104_html"><div class="ttname"><a href="a00104.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00088_html_a00400"><div class="ttname"><a href="a00088.html#a00400">FPPowerSystem3Bus</a></div><div class="ttdoc">Structure containing variable and parameters specific to the 3-bus power system model. This structure contains the physical parameters and variables for the Fokker-Planck model for a 3-bus power system. </div><div class="ttdef"><b>Definition:</b> <a href="a00088_source.html#l00049">fppowersystem3bus.h:49</a></div></div>
+<div class="ttc" id="a00289_html_a454d95ed74eac931fbd3e02f9ac8ca63"><div class="ttname"><a href="a00289.html#a454d95ed74eac931fbd3e02f9ac8ca63">ComputeElectricalPower</a></div><div class="ttdeci">static void ComputeElectricalPower(double theta1, double theta2, void *p, double *Pe1, double *Pe2, double *Pe3)</div><div class="ttdef"><b>Definition:</b> <a href="a00289_source.html#l00014">FPPowerSystem3BusFunctions.c:14</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

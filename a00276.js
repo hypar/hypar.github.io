@@ -1,4 +1,5 @@
 var a00276 =
 [
-    [ "FPPowerSystem1BusPrintStep", "a00276.html#a63b47912a5bc608b51b63950fd40e0a6", null ]
+    [ "FPPowerSystem1BusDriftFunction", "a00276.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
+    [ "FPPowerSystem1BusComputeCFL", "a00276.html#a55b31508f49708c46c4bb3e44939f982", null ]
 ];

@@ -1,4 +1,4 @@
 var a00343 =
 [
-    [ "ShallowWater1DModifiedSolution", "a00343.html#a2066cec9c112ad28c814055df4ed2d59", null ]
+    [ "ShallowWater1DComputeCFL", "a00343.html#a71431a278135cf3bc23d5a0a393f1c9b", null ]
 ];

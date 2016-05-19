@@ -1,4 +1,4 @@
 var a00249 =
 [
-    [ "FPDoubleWellAdvection", "a00249.html#a26fb36ec8e908db54dff371cedc63df5", null ]
+    [ "Euler2DComputeCFL", "a00249.html#af4be0dfa0c4017155bb18bfc3e46505a", null ]
 ];

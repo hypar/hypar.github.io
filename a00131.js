@@ -1,5 +1,5 @@
 var a00131 =
 [
-    [ "BCSWSlipWallU", "a00131.html#a7cffeb6ede7dbf886b8970fd0d584961", null ],
-    [ "BCSWSlipWallDU", "a00131.html#af6a7f19c22d24c2c75aab72671e7ca4b", null ]
+    [ "BCSlipWallU", "a00131.html#abdeb4e91e1441a25130cb2d3a1be09b0", null ],
+    [ "BCSlipWallDU", "a00131.html#ab200c2fba9ceeadcb1eac34fda5ddcb7", null ]
 ];

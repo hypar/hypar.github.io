@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: include/mathfunctions.h Source File</title>
+<title>HyPar: include/arrayfunctions.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,149 +113,305 @@ $(document).ready(function(){initNavTree('a00104_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mathfunctions.h</div>  </div>
+<div class="title">arrayfunctions.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00104.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">/* Basic functions */</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00104.html#a60dedd021ee26fd0f0040876a81bf723">FindInterval</a>(<span class="keywordtype">double</span>,<span class="keywordtype">double</span>,<span class="keywordtype">double</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>*,<span class="keywordtype">int</span>*);</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="a00104.html#ac6afabdc09a49a433ee19d8a9486056d">   15</a></span>&#160;<span class="preprocessor">#define min(a,b) ((a)&lt;(b)?(a):(b))</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="a00104.html#affe776513b24d84b39af8ab0930fef7f">   19</a></span>&#160;<span class="preprocessor">#define max(a,b) ((a)&gt;(b)?(a):(b))</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="a00104.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a">   24</a></span>&#160;<span class="preprocessor">#define min3(a,b,c) min(min((a),(b)),min((b),(c)))</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="a00104.html#aa0d45e1e67c5cacf5c9251fcd90a971b">   28</a></span>&#160;<span class="preprocessor">#define max3(a,b,c) max(max((a),(b)),max((b),(c)))</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="a00104.html#adf1be5ccbb7a2522b4f3a64043c72880">   33</a></span>&#160;<span class="preprocessor">#define absolute(a) ((a)&lt;0?-(a):(a))</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a00104.html#a840eef18a5986381093ff8c176a2153c">   38</a></span>&#160;<span class="preprocessor">#define raiseto(x,a) (exp((a)*log(x)))</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a00104.html#a1e471b644e7fd684cd5dbb144e00ee81">   43</a></span>&#160;<span class="preprocessor">#define sign(a) ((a)&lt;0?-1.0:1.0)</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00105.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="a00104.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">   17</a></span>&#160;<span class="preprocessor">#define _ArrayIndexnD_(N,index,imax,i,ghost)  \</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">    int arraycounter, term=1, index_copy=index; \</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;N; arraycounter++) term *= (imax[arraycounter]+2*(ghost));\</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">    for (arraycounter=N-1; arraycounter&gt;=0; arraycounter--) {\</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">      term /= imax[arraycounter]; \</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">      i[arraycounter] = index_copy/term; \</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">      index_copy -= i[arraycounter]*term; \</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">    } \</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;N; arraycounter++) i[arraycounter] -= (ghost);\</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">   36</a></span>&#160;<span class="preprocessor">#define _ArrayIndex1D_(N,imax,i,ghost,index)  \</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">    index = i[N-1]+(ghost); \</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">    int arraycounter; \</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">    for (arraycounter = (N)-2; arraycounter &gt; -1; arraycounter--) { \</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">      index = ((index*(imax[arraycounter]+2*(ghost))) + (i[arraycounter]+(ghost))); \</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">    } \</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">  }</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="a00104.html#a8f4bfb870b8bd36abee6ae73265174bd">   49</a></span>&#160;<span class="preprocessor">#define MatMult(N,A,X,Y) \</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">    int i,j,k;  \</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">    for (i = 0; i &lt; (N); i++) { \</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">      for (j = 0; j &lt; (N); j++) { \</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">        A[i*(N)+j] = 0.0; \</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">        for (k = 0; k &lt; (N); k++) A[i*(N)+j] += X[i*(N)+k]*Y[k*(N)+j]; \</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">      } \</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    } \</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="a00104.html#a06a01d1e6572639588260002be308b61">   63</a></span>&#160;<span class="preprocessor">#define MatMult2(N,A,X,Y) \</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">    A[0] = X[0]*Y[0] + X[1]*Y[2]; \</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">    A[1] = X[0]*Y[1] + X[1]*Y[3]; \</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">    A[2] = X[2]*Y[0] + X[3]*Y[2]; \</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">    A[3] = X[2]*Y[1] + X[3]*Y[3]; \</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="a00104.html#ad08720847b0aef444876b608b7af9a5c">   74</a></span>&#160;<span class="preprocessor">#define MatMult3(N,A,X,Y) \</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">    A[0] = X[0]*Y[0] + X[1]*Y[3] + X[2]*Y[6]; \</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">    A[1] = X[0]*Y[1] + X[1]*Y[4] + X[2]*Y[7]; \</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">    A[2] = X[0]*Y[2] + X[1]*Y[5] + X[2]*Y[8]; \</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">    A[3] = X[3]*Y[0] + X[4]*Y[3] + X[5]*Y[6]; \</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">    A[4] = X[3]*Y[1] + X[4]*Y[4] + X[5]*Y[7]; \</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">    A[5] = X[3]*Y[2] + X[4]*Y[5] + X[5]*Y[8]; \</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">    A[6] = X[6]*Y[0] + X[7]*Y[3] + X[8]*Y[6]; \</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">    A[7] = X[6]*Y[1] + X[7]*Y[4] + X[8]*Y[7]; \</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">    A[8] = X[6]*Y[2] + X[7]*Y[5] + X[8]*Y[8]; \</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="a00104.html#a25b2b3ed3a1c1c8b4b5f23108442cf1f">   90</a></span>&#160;<span class="preprocessor">#define MatMult4(N,A,X,Y) \</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">    A[0]  =  X[0]*Y[0]  +  X[1]*Y[4]  +  X[2]*Y[8]  +  X[3]*Y[12]; \</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">    A[1]  =  X[0]*Y[1]  +  X[1]*Y[5]  +  X[2]*Y[9]  +  X[3]*Y[13]; \</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">    A[2]  =  X[0]*Y[2]  +  X[1]*Y[6]  +  X[2]*Y[10] +  X[3]*Y[14]; \</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">    A[3]  =  X[0]*Y[3]  +  X[1]*Y[7]  +  X[2]*Y[11] +  X[3]*Y[15]; \</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">    A[4]  =  X[4]*Y[0]  +  X[5]*Y[4]  +  X[6]*Y[8]  +  X[7]*Y[12]; \</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">    A[5]  =  X[4]*Y[1]  +  X[5]*Y[5]  +  X[6]*Y[9]  +  X[7]*Y[13]; \</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">    A[6]  =  X[4]*Y[2]  +  X[5]*Y[6]  +  X[6]*Y[10] +  X[7]*Y[14]; \</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">    A[7]  =  X[4]*Y[3]  +  X[5]*Y[7]  +  X[6]*Y[11] +  X[7]*Y[15]; \</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">    A[8]  =  X[8]*Y[0]  +  X[9]*Y[4]  +  X[10]*Y[8]  + X[11]*Y[12];\</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">    A[9]  =  X[8]*Y[1]  +  X[9]*Y[5]  +  X[10]*Y[9]  + X[11]*Y[13];\</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">    A[10] =  X[8]*Y[2]  +  X[9]*Y[6]  +  X[10]*Y[10] + X[11]*Y[14];\</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">    A[11] =  X[8]*Y[3]  +  X[9]*Y[7]  +  X[10]*Y[11] + X[11]*Y[15];\</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">    A[12] =  X[12]*Y[0] +  X[13]*Y[4] +  X[14]*Y[8]  + X[15]*Y[12];\</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">    A[13] =  X[12]*Y[1] +  X[13]*Y[5] +  X[14]*Y[9]  + X[15]*Y[13];\</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">    A[14] =  X[12]*Y[2] +  X[13]*Y[6] +  X[14]*Y[10] + X[15]*Y[14];\</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">    A[15] =  X[12]*Y[3] +  X[13]*Y[7] +  X[14]*Y[11] + X[15]*Y[15];\</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="a00104.html#af0725a909920c3b3021c53ddfb0e7409">  113</a></span>&#160;<span class="preprocessor">#define MatMult5(N,A,X,Y) \</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">    A[0]  =  X[0]*Y[0]  +  X[1]*Y[5]  +  X[2]*Y[10]  +  X[3]*Y[15]  +  X[4]*Y[20]; \</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">    A[1]  =  X[0]*Y[1]  +  X[1]*Y[6]  +  X[2]*Y[11]  +  X[3]*Y[16]  +  X[4]*Y[21]; \</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">    A[2]  =  X[0]*Y[2]  +  X[1]*Y[7]  +  X[2]*Y[12]  +  X[3]*Y[17]  +  X[4]*Y[22]; \</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">    A[3]  =  X[0]*Y[3]  +  X[1]*Y[8]  +  X[2]*Y[13]  +  X[3]*Y[18]  +  X[4]*Y[23]; \</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">    A[4]  =  X[0]*Y[4]  +  X[1]*Y[9]  +  X[2]*Y[14]  +  X[3]*Y[19]  +  X[4]*Y[24]; \</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">    A[5]  =  X[5]*Y[0]  +  X[6]*Y[5]  +  X[7]*Y[10]  +  X[8]*Y[15]  +  X[9]*Y[20]; \</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">    A[6]  =  X[5]*Y[1]  +  X[6]*Y[6]  +  X[7]*Y[11]  +  X[8]*Y[16]  +  X[9]*Y[21]; \</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">    A[7]  =  X[5]*Y[2]  +  X[6]*Y[7]  +  X[7]*Y[12]  +  X[8]*Y[17]  +  X[9]*Y[22]; \</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">    A[8]  =  X[5]*Y[3]  +  X[6]*Y[8]  +  X[7]*Y[13]  +  X[8]*Y[18]  +  X[9]*Y[23]; \</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">    A[9]  =  X[5]*Y[4]  +  X[6]*Y[9]  +  X[7]*Y[14]  +  X[8]*Y[19]  +  X[9]*Y[24]; \</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">    A[10] =  X[10]*Y[0] +  X[11]*Y[5] +  X[12]*Y[10] +  X[13]*Y[15] +  X[14]*Y[20];\</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">    A[11] =  X[10]*Y[1] +  X[11]*Y[6] +  X[12]*Y[11] +  X[13]*Y[16] +  X[14]*Y[21];\</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">    A[12] =  X[10]*Y[2] +  X[11]*Y[7] +  X[12]*Y[12] +  X[13]*Y[17] +  X[14]*Y[22];\</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">    A[13] =  X[10]*Y[3] +  X[11]*Y[8] +  X[12]*Y[13] +  X[13]*Y[18] +  X[14]*Y[23];\</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">    A[14] =  X[10]*Y[4] +  X[11]*Y[9] +  X[12]*Y[14] +  X[13]*Y[19] +  X[14]*Y[24];\</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">    A[15] =  X[15]*Y[0] +  X[16]*Y[5] +  X[17]*Y[10] +  X[18]*Y[15] +  X[19]*Y[20];\</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">    A[16] =  X[15]*Y[1] +  X[16]*Y[6] +  X[17]*Y[11] +  X[18]*Y[16] +  X[19]*Y[21];\</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">    A[17] =  X[15]*Y[2] +  X[16]*Y[7] +  X[17]*Y[12] +  X[18]*Y[17] +  X[19]*Y[22];\</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">    A[18] =  X[15]*Y[3] +  X[16]*Y[8] +  X[17]*Y[13] +  X[18]*Y[18] +  X[19]*Y[23];\</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor">    A[19] =  X[15]*Y[4] +  X[16]*Y[9] +  X[17]*Y[14] +  X[18]*Y[19] +  X[19]*Y[24];\</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">    A[20] =  X[20]*Y[0] +  X[21]*Y[5] +  X[22]*Y[10] +  X[23]*Y[15] +  X[24]*Y[20];\</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">    A[21] =  X[20]*Y[1] +  X[21]*Y[6] +  X[22]*Y[11] +  X[23]*Y[16] +  X[24]*Y[21];\</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">    A[22] =  X[20]*Y[2] +  X[21]*Y[7] +  X[22]*Y[12] +  X[23]*Y[17] +  X[24]*Y[22];\</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">    A[23] =  X[20]*Y[3] +  X[21]*Y[8] +  X[22]*Y[13] +  X[23]*Y[18] +  X[24]*Y[23];\</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor">    A[24] =  X[20]*Y[4] +  X[21]*Y[9] +  X[22]*Y[14] +  X[23]*Y[19] +  X[24]*Y[24];\</span></div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="a00104.html#a3dc53d4eb4ba0f2cfed00aa69617ee84">  147</a></span>&#160;<span class="preprocessor">#define MatVecMult(N,y,A,x) \</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor">    int i,j; \</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="preprocessor">    for (i = 0; i &lt; (N); i++) { \</span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor">      y[i] = 0; \</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="preprocessor">      for (j = 0; j &lt; (N); j++) y[i] += A[i*(N)+j]*x[j]; \</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor">    } \</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="a00104.html#a514be5a259cdafd270236704592c6036">  159</a></span>&#160;<span class="preprocessor">#define MatVecMult2(N,y,A,x) \</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor">    y[0] = A[0]*x[0] + A[1]*x[1];\</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor">    y[1] = A[2]*x[0] + A[3]*x[1];\</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="a00104.html#abf4f45dbf1a3ea84452ba1da7b526d71">  168</a></span>&#160;<span class="preprocessor">#define MatVecMult3(N,y,A,x) \</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">    y[0] = A[0]*x[0] + A[1]*x[1] + A[2]*x[2];\</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor">    y[1] = A[3]*x[0] + A[4]*x[1] + A[5]*x[2];\</span></div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">    y[2] = A[6]*x[0] + A[7]*x[1] + A[8]*x[2];\</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
-<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="a00104.html#a35ee464e9e1966ad6c652fd4e485631e">  178</a></span>&#160;<span class="preprocessor">#define MatVecMult4(N,y,A,x) \</span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="preprocessor">    y[0] = A[0]*x[0]  +  A[1]*x[1]  +  A[2]*x[2]  +  A[3]*x[3]; \</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="preprocessor">    y[1] = A[4]*x[0]  +  A[5]*x[1]  +  A[6]*x[2]  +  A[7]*x[3]; \</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor">    y[2] = A[8]*x[0]  +  A[9]*x[1]  +  A[10]*x[2] +  A[11]*x[3];\</span></div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="preprocessor">    y[3] = A[12]*x[0] +  A[13]*x[1] +  A[14]*x[2] +  A[15]*x[3];\</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="a00104.html#a871369dd0a07c55d3329331cb91371da">  189</a></span>&#160;<span class="preprocessor">#define MatVecMult5(N,y,A,x) \</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">    y[0] = A[0]*x[0]  +  A[1]*x[1]  +  A[2]*x[2]  +  A[3]*x[3]  +  A[4]*x[4]; \</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor">    y[1] = A[5]*x[0]  +  A[6]*x[1]  +  A[7]*x[2]  +  A[8]*x[3]  +  A[9]*x[4]; \</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor">    y[2] = A[10]*x[0] + A[11]*x[1]  +  A[12]*x[2] +  A[13]*x[3] +  A[14]*x[4];\</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor">    y[3] = A[15]*x[0] +  A[16]*x[1] +  A[17]*x[2] +  A[18]*x[3] +  A[19]*x[4];\</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="preprocessor">    y[4] = A[20]*x[0] +  A[21]*x[1] +  A[22]*x[2] +  A[23]*x[3] +  A[24]*x[4];\</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="ttc" id="a00104_html_a60dedd021ee26fd0f0040876a81bf723"><div class="ttname"><a href="a00104.html#a60dedd021ee26fd0f0040876a81bf723">FindInterval</a></div><div class="ttdeci">void FindInterval(double, double, double *, int, int *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00192_source.html#l00019">FindInterval.c:19</a></div></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a00104.html#a821fdee79ad8783ca2fa5594689ff5cd">   52</a></span>&#160;<span class="preprocessor">#define _ArrayIndex1D2_(N,imax,i,ghost,index) \</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">    index = i[1]+(ghost); \</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    index = ((index*(imax[0]+2*(ghost))) + (i[0]+(ghost))); \</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="a00104.html#aa437648ab639c64e10e80b03cf9b0e5a">   65</a></span>&#160;<span class="preprocessor">#define _ArrayIndex1D3_(N,imax,i,ghost,index)  \</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">    index = i[2]+(ghost); \</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">    index = ((index*(imax[1]+2*(ghost))) + (i[1]+(ghost))); \</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">    index = ((index*(imax[0]+2*(ghost))) + (i[0]+(ghost))); \</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="a00104.html#a0739cb538f4d301fad3b45059ddd0738">   79</a></span>&#160;<span class="preprocessor">#define _ArrayIndex1DWO_(N,imax,i,offset,ghost,index) \</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">    index = i[N-1]+(ghost)+ offset[N-1];\</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">    int arraycounter; \</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">    for (arraycounter = (N)-2; arraycounter &gt; -1; arraycounter--) { \</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">      index = ((index*(imax[arraycounter]+2*(ghost))) + (i[arraycounter]+(ghost)+offset[arraycounter]));\</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">    } \</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="a00104.html#aeeca31bc5bdd0f883deb1acdbcc50ba9">   96</a></span>&#160;<span class="preprocessor">#define _ArrayIndex1DWO2_(N,imax,i,offset,ghost,index) \</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">    index = i[1]+(ghost)+ offset[1];\</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">    index = ((index*(imax[0]+2*(ghost))) + (i[0]+(ghost)+offset[0]));\</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="a00104.html#aabb325e04ffe9f824732ded3db4efefe">  110</a></span>&#160;<span class="preprocessor">#define _ArrayIndex1DWO3_(N,imax,i,offset,ghost,index) \</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">    index = i[2]+(ghost)+ offset[2];\</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">    index = ((index*(imax[1]+2*(ghost))) + (i[1]+(ghost)+offset[1]));\</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">    index = ((index*(imax[0]+2*(ghost))) + (i[0]+(ghost)+offset[0]));\</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="a00104.html#ac5ec1371623f11d03b0f42adaa24acbc">  122</a></span>&#160;<span class="preprocessor">#define _ArrayIncrementIndex_(N,imax,i,done) \</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">    int arraycounter = 0; \</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">    while (arraycounter &lt; (N)) { \</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">      if (i[arraycounter] == imax[arraycounter]-1) { \</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">        i[arraycounter] = 0; \</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">        arraycounter++; \</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">      } else { \</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">        i[arraycounter]++; \</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">        break; \</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">      } \</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">    } \</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor">    if (arraycounter == (N)) done = 1; \</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">    else          done = 0; \</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">  142</a></span>&#160;<span class="preprocessor">#define _ArraySetValue_(x,size,value)                                                                               \</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor">    for (arraycounter = 0; arraycounter &lt; (size); arraycounter++)  x[arraycounter] = (value);                       \</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="a00104.html#a1dab5f429ccd03c4a7fbb605d8ef75b6">  152</a></span>&#160;<span class="preprocessor">#define _ArrayScale1D_(x,a,size)                                                                                    \</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) x[arraycounter] *= a;                                   \</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="a00104.html#ab49d0f261ea751a17d6beca0504daf78">  163</a></span>&#160;<span class="preprocessor">#define _ArraySubtract1D_(x,a,b,size)                                                                               \</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) x[arraycounter] = a[arraycounter] - b[arraycounter];    \</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="a00104.html#a98a3bb5fda2fcafb70a6288d100a0924">  174</a></span>&#160;<span class="preprocessor">#define _ArrayAdd1D_(x,a,b,size)                                                                                    \</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) x[arraycounter] = a[arraycounter] + b[arraycounter];    \</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="a00104.html#a91cf013be7000a1d164015624cc70af6">  185</a></span>&#160;<span class="preprocessor">#define _ArrayMultiply1D_(x,a,b,size)                                                                                    \</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) x[arraycounter] = a[arraycounter] * b[arraycounter];    \</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="a00104.html#a6e9a85d9e2b01e38fecf30887ad7cf17">  196</a></span>&#160;<span class="preprocessor">#define _ArrayMultiply3Add1D_(x,a,b,c,d,e,f,size)                                                                                    \</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) \</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor">      x[arraycounter] = a[arraycounter]*b[arraycounter]+c[arraycounter]*d[arraycounter]+e[arraycounter]*f[arraycounter]; \</span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
+<div class="line"><a name="l00207"></a><span class="lineno"><a class="line" href="a00104.html#a2f49d5542341082805ad9e0bcd2e2640">  207</a></span>&#160;<span class="preprocessor">#define _ArrayConvexCombination1D_(z,a,x,y,size)                                                                    \</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) \</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">      z[arraycounter] = a[arraycounter]*x[arraycounter]+(1.0-a[arraycounter])*y[arraycounter]; \</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="a00104.html#ab8e3b679b04116dd6be664e727f0d951">  220</a></span>&#160;<span class="preprocessor">#define _ArrayAYPX_(x,a,y,size)                                                                                     \</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) \</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor">      y[arraycounter] = a*y[arraycounter] + x[arraycounter];\</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="a00104.html#a4cd66304bc41a7751842230af3063b62">  233</a></span>&#160;<span class="preprocessor">#define _ArrayAXPY_(x,a,y,size)                                                                                     \</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) y[arraycounter] += a*x[arraycounter];                   \</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
+<div class="line"><a name="l00245"></a><span class="lineno"><a class="line" href="a00104.html#ae2829ea36a04607caf64d3a462339af9">  245</a></span>&#160;<span class="preprocessor">#define _ArrayAXBY_(z,a,x,b,y,size)                                                                                 \</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) z[arraycounter] = a*x[arraycounter]+b*y[arraycounter];  \</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
+<div class="line"><a name="l00257"></a><span class="lineno"><a class="line" href="a00104.html#a7f8e5a8a430e71fd48b436003049d07b">  257</a></span>&#160;<span class="preprocessor">#define _ArrayAXBYCZ_(w,a,x,b,y,c,z,size)                                                                                 \</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) w[arraycounter] = a*x[arraycounter]+b*y[arraycounter]+c*z[arraycounter];  \</span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="a00104.html#ac635a3e703ebbdc6994da8639bc09082">  269</a></span>&#160;<span class="preprocessor">#define _ArrayScaledAXPY_(x,a,e,y,size)                                                                                     \</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor">  {                                                                                                                 \</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">    int arraycounter;                                                                                               \</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) \</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">      y[arraycounter] = e*(y[arraycounter]+a*x[arraycounter]);                   \</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
+<div class="line"><a name="l00281"></a><span class="lineno"><a class="line" href="a00104.html#a89e8330d9e06dd0666c50833628a125c">  281</a></span>&#160;<span class="preprocessor">#define _ArrayCopy1D_(x,y,size) \</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="preprocessor">    int arraycounter; \</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="preprocessor">    for (arraycounter = 0; arraycounter &lt; size; arraycounter++) y[arraycounter] = x[arraycounter]; \</span></div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;</div>
+<div class="line"><a name="l00293"></a><span class="lineno"><a class="line" href="a00104.html#a86a1cfc61a785261595c33eb7bce7316">  293</a></span>&#160;<span class="preprocessor">#define _ArrayCopy1D2_(x,y,size) \</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="preprocessor">    y[0] = x[0]; \</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="preprocessor">    y[1] = x[1]; \</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
+<div class="line"><a name="l00305"></a><span class="lineno"><a class="line" href="a00104.html#a6c0f97c663dddd14f3f683e5c223d88c">  305</a></span>&#160;<span class="preprocessor">#define _ArrayCopy1D3_(x,y,size) \</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="preprocessor">    y[0] = x[0]; \</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="preprocessor">    y[1] = x[1]; \</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="preprocessor">    y[2] = x[2]; \</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;</div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="line" href="a00104.html#a7d97d4914726fa7cca339356dae28473">  318</a></span>&#160;<span class="preprocessor">#define _ArrayScaleCopy1D_(x,a,y,size) \</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="preprocessor">    int arraycounter; \</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="preprocessor">    for (arraycounter = 0; arraycounter &lt; size; arraycounter++) y[arraycounter] = a*x[arraycounter]; \</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;</div>
+<div class="line"><a name="l00330"></a><span class="lineno"><a class="line" href="a00104.html#a197e4f9ce0b056b3f3addbbd9887f703">  330</a></span>&#160;<span class="preprocessor">#define _ArrayAddCopy1D_(x,a,y,size) \</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="preprocessor">    int arraycounter; \</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="preprocessor">    for (arraycounter = 0; arraycounter &lt; size; arraycounter++) y[arraycounter] = a+x[arraycounter]; \</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;</div>
+<div class="line"><a name="l00339"></a><span class="lineno"><a class="line" href="a00104.html#abc65e9c6a51b875f46fdb054a0ecf604">  339</a></span>&#160;<span class="preprocessor">#define _ArrayProduct1D_(x,size,p) \</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="preprocessor">    int arraycounter = 0; p = 1; \</span></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;size; arraycounter++) p *= x[arraycounter]; \</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="preprocessor">#if !defined(INLINE)</span></div>
+<div class="line"><a name="l00346"></a><span class="lineno"><a class="line" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">  346</a></span>&#160;<span class="preprocessor"># define INLINE inline</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<a class="code" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a> <span class="keywordtype">int</span>    <a class="code" href="a00104.html#ac4ae1109cf287763cef63cc38d52589f">ArrayCopynD</a>            (<span class="keywordtype">int</span>,<span class="keywordtype">double</span>*,<span class="keywordtype">double</span>*,<span class="keywordtype">int</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>*,<span class="keywordtype">int</span>);</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<a class="code" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a> <span class="keywordtype">double</span> <a class="code" href="a00104.html#ac20bd4916c6169956e5bf80777c6ab8f">ArrayMaxnD</a>             (<span class="keywordtype">int</span>,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>*,<span class="keywordtype">double</span>*);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<a class="code" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a> <span class="keywordtype">double</span> <a class="code" href="a00104.html#a8c279db0af78d8ff386cf1a023a405dd">ArraySumSquarenD</a>       (<span class="keywordtype">int</span>,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>*,<span class="keywordtype">double</span>*);</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<a class="code" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a> <span class="keywordtype">double</span> <a class="code" href="a00104.html#a60a3d838d95d860a21de20936f7bb910">ArraySumAbsnD</a>          (<span class="keywordtype">int</span>,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>*,<span class="keywordtype">double</span>*);</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
+<div class="line"><a name="l00355"></a><span class="lineno"><a class="line" href="a00104.html#ac4ae1109cf287763cef63cc38d52589f">  355</a></span>&#160;<a class="code" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a> <span class="keywordtype">int</span> <a class="code" href="a00104.html#ac4ae1109cf287763cef63cc38d52589f">ArrayCopynD</a>(<span class="keywordtype">int</span>    ndims,  </div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;                       <span class="keywordtype">double</span> *x,     </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                       <span class="keywordtype">double</span> *y,     </div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;                       <span class="keywordtype">int</span>    *dim,   </div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;                       <span class="keywordtype">int</span>    g1,     </div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;                       <span class="keywordtype">int</span>    g2,     </div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;                       <span class="keywordtype">int</span>    *index, </div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;                       <span class="keywordtype">int</span>    nvars   </div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;                      )</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;{</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keywordflow">if</span> (!y) {</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in ArrayCopynD(): array \&quot;y\&quot; not allocated.\n&quot;</span>);</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  }</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  <span class="keywordflow">if</span> (!x) {</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in ArrayCopynD(): array \&quot;x\&quot; not allocated.\n&quot;</span>);</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  }</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;  <span class="keywordtype">int</span> done = 0;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;  <a class="code" href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="keywordtype">int</span> p1, p2;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <a class="code" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,g1,p1); </div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <a class="code" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,g2,p2);</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <a class="code" href="a00104.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>((x+p1*nvars),(y+p2*nvars),nvars);</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    <a class="code" href="a00104.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;  }</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;}</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;</div>
+<div class="line"><a name="l00387"></a><span class="lineno"><a class="line" href="a00104.html#ac20bd4916c6169956e5bf80777c6ab8f">  387</a></span>&#160;<a class="code" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a> <span class="keywordtype">double</span> <a class="code" href="a00104.html#ac20bd4916c6169956e5bf80777c6ab8f">ArrayMaxnD</a>(<span class="keywordtype">int</span>    nvars,  </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;                         <span class="keywordtype">int</span>    ndims,  </div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                         <span class="keywordtype">int</span>    *dim,   </div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;                         <span class="keywordtype">int</span>    ghosts, </div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;                         <span class="keywordtype">int</span>    *index, </div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;                         <span class="keywordtype">double</span> *x      </div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;                        )</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;{</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  <span class="keywordtype">double</span> sum = 0;</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordtype">int</span> v; </div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      <span class="keywordtype">double</span> term = ( x[p*nvars+v]&gt;0 ? x[p*nvars+v] : -x[p*nvars+v] );</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;      <span class="keywordflow">if</span> (term &gt; sum) sum = term;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    }</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <a class="code" href="a00104.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;  }</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;  <span class="keywordflow">return</span>(sum);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;}</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;</div>
+<div class="line"><a name="l00411"></a><span class="lineno"><a class="line" href="a00104.html#a60a3d838d95d860a21de20936f7bb910">  411</a></span>&#160;<a class="code" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a> <span class="keywordtype">double</span> <a class="code" href="a00104.html#a60a3d838d95d860a21de20936f7bb910">ArraySumAbsnD</a>(<span class="keywordtype">int</span>     nvars,  </div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;                            <span class="keywordtype">int</span>     ndims,  </div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;                            <span class="keywordtype">int</span>     *dim,   </div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;                            <span class="keywordtype">int</span>     ghosts, </div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;                            <span class="keywordtype">int</span>     *index, </div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;                            <span class="keywordtype">double</span>  *x      </div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                           )</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;{</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;  <span class="keywordtype">double</span> sum = 0;</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="keywordtype">int</span> v; <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) sum += ( x[p*nvars+v]&gt;0 ? x[p*nvars+v] : -x[p*nvars+v] );</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <a class="code" href="a00104.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;  }</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;  <span class="keywordflow">return</span>(sum);</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;}</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;</div>
+<div class="line"><a name="l00430"></a><span class="lineno"><a class="line" href="a00104.html#a8c279db0af78d8ff386cf1a023a405dd">  430</a></span>&#160;<a class="code" href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a> <span class="keywordtype">double</span> <a class="code" href="a00104.html#a8c279db0af78d8ff386cf1a023a405dd">ArraySumSquarenD</a>(<span class="keywordtype">int</span>    nvars,  </div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;                               <span class="keywordtype">int</span>    ndims,  </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;                               <span class="keywordtype">int</span>    *dim,   </div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;                               <span class="keywordtype">int</span>    ghosts, </div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;                               <span class="keywordtype">int</span>    *index, </div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;                               <span class="keywordtype">double</span> *x      </div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;                              )</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;{</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;  <span class="keywordtype">double</span> sum = 0;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;    <span class="keywordtype">int</span> v; <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) sum += (x[p*nvars+v]*x[p*nvars+v]);</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    <a class="code" href="a00104.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;  }</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;  <span class="keywordflow">return</span>(sum);</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;}</div>
+<div class="ttc" id="a00104_html_ac20bd4916c6169956e5bf80777c6ab8f"><div class="ttname"><a href="a00104.html#ac20bd4916c6169956e5bf80777c6ab8f">ArrayMaxnD</a></div><div class="ttdeci">INLINE double ArrayMaxnD(int, int, int *, int, int *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00387">arrayfunctions.h:387</a></div></div>
+<div class="ttc" id="a00104_html_a2eb6f9e0395b47b8d5e3eeae4fe0c116"><div class="ttname"><a href="a00104.html#a2eb6f9e0395b47b8d5e3eeae4fe0c116">INLINE</a></div><div class="ttdeci">#define INLINE</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00346">arrayfunctions.h:346</a></div></div>
+<div class="ttc" id="a00104_html_a60a3d838d95d860a21de20936f7bb910"><div class="ttname"><a href="a00104.html#a60a3d838d95d860a21de20936f7bb910">ArraySumAbsnD</a></div><div class="ttdeci">INLINE double ArraySumAbsnD(int, int, int *, int, int *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00411">arrayfunctions.h:411</a></div></div>
+<div class="ttc" id="a00104_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00104.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00104_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00104.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00036">arrayfunctions.h:36</a></div></div>
+<div class="ttc" id="a00104_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00104.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00142">arrayfunctions.h:142</a></div></div>
+<div class="ttc" id="a00105_html"><div class="ttname"><a href="a00105.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00104_html_ac4ae1109cf287763cef63cc38d52589f"><div class="ttname"><a href="a00104.html#ac4ae1109cf287763cef63cc38d52589f">ArrayCopynD</a></div><div class="ttdeci">INLINE int ArrayCopynD(int, double *, double *, int *, int, int, int *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00355">arrayfunctions.h:355</a></div></div>
+<div class="ttc" id="a00104_html_a8c279db0af78d8ff386cf1a023a405dd"><div class="ttname"><a href="a00104.html#a8c279db0af78d8ff386cf1a023a405dd">ArraySumSquarenD</a></div><div class="ttdeci">INLINE double ArraySumSquarenD(int, int, int *, int, int *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00430">arrayfunctions.h:430</a></div></div>
+<div class="ttc" id="a00104_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00104.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00104_source.html#l00122">arrayfunctions.h:122</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

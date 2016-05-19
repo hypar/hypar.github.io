@@ -1,5 +1,4 @@
 var a00335 =
 [
-    [ "Numa3DRusanovFlux", "a00335.html#adee29df467d83a11708cc55884ddfce8", null ],
-    [ "Numa3DRusanovLinearFlux", "a00335.html#aa3a3b4411941091b8333256e032dea99", null ]
+    [ "Numa3DCleanup", "a00335.html#af62517a2d64232969b52ddcb4e01c150", null ]
 ];

@@ -1,10 +1,25 @@
 var a00241 =
 [
-    [ "Euler1DUpwindRoe", "a00241.html#a6dc9d104ca58ca3ea0da7039fe5323c4", null ],
-    [ "Euler1DUpwindRF", "a00241.html#a803a31978814cfaef298c686b99d6ed0", null ],
-    [ "Euler1DUpwindLLF", "a00241.html#aaafb95c6a0e137263bc9d072444a1fb7", null ],
-    [ "Euler1DUpwindSWFS", "a00241.html#ad6796e7537a610cfeb2efcc62e98d43d", null ],
-    [ "Euler1DUpwinddFRoe", "a00241.html#a661317dfe3032428094f1dc054d207ae", null ],
-    [ "Euler1DUpwinddFRF", "a00241.html#a7efe8a920b95163f2dd3ae308d7c063e", null ],
-    [ "Euler1DUpwinddFLLF", "a00241.html#aefac1195512cb539fbe564a84cc68d43", null ]
+    [ "Euler1DComputeCFL", "a00241.html#a96dfe05f0bab236d14c49a97f6f3a9c9", null ],
+    [ "Euler1DFlux", "a00241.html#a765baa9888bf5d1e7ed3580e6df04e17", null ],
+    [ "Euler1DStiffFlux", "a00241.html#a31b02a37de0ea8443f0dd89d5861e114", null ],
+    [ "Euler1DSource", "a00241.html#a52dc5f992bf9d226505d94da0d45176e", null ],
+    [ "Euler1DUpwindRoe", "a00241.html#a84fa9fe2c9c779fa314d02fd62df589f", null ],
+    [ "Euler1DUpwinddFRoe", "a00241.html#a0632e000475600a07f89aaad0fcea2a2", null ],
+    [ "Euler1DUpwindRF", "a00241.html#aecab791493af24dbb79224ccdd1c22cd", null ],
+    [ "Euler1DUpwinddFRF", "a00241.html#a2e6e98b8cf8dda3540b17764262ef7dc", null ],
+    [ "Euler1DUpwindLLF", "a00241.html#a9f4272feb90b98823419004ad0923446", null ],
+    [ "Euler1DUpwinddFLLF", "a00241.html#a2050afda2d76244d8b1be2534d8eee88", null ],
+    [ "Euler1DUpwindSWFS", "a00241.html#a0c16592ca1938504fff89a566be82a87", null ],
+    [ "Euler1DJacobian", "a00241.html#a7ab3a531ada5d839c915add13cea5ae0", null ],
+    [ "Euler1DStiffJacobian", "a00241.html#a79e3229219a9992f484df9573de95ec3", null ],
+    [ "Euler1DRoeAverage", "a00241.html#a6dfa80796cd1ce0ba0712c301dd68d2f", null ],
+    [ "Euler1DLeftEigenvectors", "a00241.html#a979f0aa5a88e8c1d32794ccba50bc806", null ],
+    [ "Euler1DRightEigenvectors", "a00241.html#a6139f9478a0791ac0a0c0d43faffb378", null ],
+    [ "Euler1DGravityField", "a00241.html#ac2a5ef9ed2d6611286c0ff4e213c735b", null ],
+    [ "Euler1DSourceUpwindLLF", "a00241.html#a9626db6c422f313b9762b0223f1a52da", null ],
+    [ "Euler1DSourceUpwindRoe", "a00241.html#a564a6dcdf1979d59610503201e6f2619", null ],
+    [ "Euler1DModifiedSolution", "a00241.html#ae1858c7bcd504b88e0140b21e41c35bf", null ],
+    [ "Euler1DPreStep", "a00241.html#a3c64bcea38b974bd6a174b9f6324cf64", null ],
+    [ "Euler1DInitialize", "a00241.html#a5ca9a44e7eaa2b535b4d4431b60c9ff6", null ]
 ];

@@ -1,4 +1,5 @@
 var a00155 =
 [
-    [ "ParabolicFunctionNC2Stage", "a00155.html#a153eb91ec9b118a7b8c971facbc8d920", null ]
+    [ "VolumeIntegral", "a00155.html#a1f30168f72fce94d12bd0cc8d9322494", null ],
+    [ "InitialSolution", "a00155.html#af9a92a8e942f70bccfa38c1849e49bd8", null ]
 ];

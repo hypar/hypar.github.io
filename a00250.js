@@ -1,4 +1,5 @@
 var a00250 =
 [
-    [ "FPDoubleWellCleanup", "a00250.html#aba54bd78f13e1e8074ff6f755d710871", null ]
+    [ "Euler2DLeftEigenvectors", "a00250.html#a965cafbf06fa0cfd5c0664dc94fcfd3f", null ],
+    [ "Euler2DRightEigenvectors", "a00250.html#a2e9802c52e7497ece4e65e55c77c7b22", null ]
 ];

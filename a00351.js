@@ -1,5 +1,5 @@
 var a00351 =
 [
-    [ "ShallowWater2DLeftEigenvectors", "a00351.html#aedb92b59af4004f2a2905d741bffd00a", null ],
-    [ "ShallowWater2DRightEigenvectors", "a00351.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
+    [ "ShallowWater1DSourceUpwindLLF", "a00351.html#a7ff86870738e940b355fc34e9989b4cf", null ],
+    [ "ShallowWater1DSourceUpwindRoe", "a00351.html#a120e0e4b2185cdef19b4f78efd1dfe1b", null ]
 ];

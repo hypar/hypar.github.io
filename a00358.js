@@ -1,5 +1,4 @@
 var a00358 =
 [
-    [ "ShallowWater2DSourceUpwindLLF", "a00358.html#a12c14b7e0827bc83f1b1cc26f6106de7", null ],
-    [ "ShallowWater2DSourceUpwindRoe", "a00358.html#ae351c73f881dba794dd07de10c8bafa4", null ]
+    [ "ShallowWater2DFlux", "a00358.html#a402c3b0d9e533619a23dc5a06a0c0bd3", null ]
 ];

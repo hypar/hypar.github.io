@@ -1,4 +1,5 @@
 var a00334 =
 [
-    [ "Numa3DSource", "a00334.html#ac1ef542f82c25ef1fb460454f75b4694", null ]
+    [ "Numa2DRusanovFlux", "a00334.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
+    [ "Numa2DRusanovLinearFlux", "a00334.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
 ];

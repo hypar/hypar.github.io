@@ -1,5 +1,5 @@
 var a00210 =
 [
-    [ "MPISum_integer", "a00210.html#a3fdbda19a80373d03b0034694d7309b7", null ],
-    [ "MPISum_double", "a00210.html#ab72730180adfeeb505a716952545d591", null ]
+    [ "MPIMin_integer", "a00210.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
+    [ "MPIMin_double", "a00210.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
 ];

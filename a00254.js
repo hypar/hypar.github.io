@@ -1,11 +1,7 @@
 var a00254 =
 [
-    [ "FPDoubleWellComputeCFL", "a00254.html#aab878a29e1b3c292d894868dec29e797", null ],
-    [ "FPDoubleWellComputeDiffNumber", "a00254.html#a3fa4b542650a6ebd7b66c02185e7bf80", null ],
-    [ "FPDoubleWellAdvection", "a00254.html#a36a1c067e4ff166c66ef41322cb1d042", null ],
-    [ "FPDoubleWellDiffusion", "a00254.html#ad690cd118aa01b82c3797628f235d4f4", null ],
-    [ "FPDoubleWellUpwind", "a00254.html#a43a2dbc9ea97b5b92b418552a870964e", null ],
-    [ "FPDoubleWellPostStep", "a00254.html#a24e13644876170d1870cd92127cfa486", null ],
-    [ "FPDoubleWellPrintStep", "a00254.html#af15716360ef9a6f2cca6d283f76272e2", null ],
-    [ "FPDoubleWellInitialize", "a00254.html#a4cabdb05aac1b6aa189f6f54c7b89ef2", null ]
+    [ "Euler2DUpwindRoe", "a00254.html#ab331cdd5f4f0c4de721fbc19d6a51eea", null ],
+    [ "Euler2DUpwindRF", "a00254.html#a32d6cc9b43c6b67e528af0e266b49180", null ],
+    [ "Euler2DUpwindLLF", "a00254.html#aadd6257a6586e80c38398c46d3088b16", null ],
+    [ "Euler2DUpwindSWFS", "a00254.html#a8ac4a3f41819711e1dcd10437f9619de", null ]
 ];

@@ -1,13 +1,14 @@
 var a00079 =
 [
-    [ "FPDoubleWell", "a00079.html#a00391", [
-      [ "q", "a00079.html#a5b5e3f03e443adea974601f295136638", null ],
-      [ "pdf_integral", "a00079.html#adca2e435527ef52d18b3626b0e2ca852", null ]
+    [ "BandedMatrix", "a00079.html#a00393", [
+      [ "nbands", "a00079.html#a30165df2b4e7a3d2b24bfd0963c16172", null ],
+      [ "nrows_local", "a00079.html#ac2b596b16037450673a77da1080b8707", null ],
+      [ "BlockSize", "a00079.html#aeae4e1754c511c08564892d93c83ada1", null ],
+      [ "ncol", "a00079.html#a6db648ed09c7736e77e2c79f2a4514fd", null ],
+      [ "nrow", "a00079.html#a0a58ae803aa8c0ef7cf86577919f205e", null ],
+      [ "data", "a00079.html#a23436a7a2b44939627b59df11be7ad75", null ]
     ] ],
-    [ "_FP_DOUBLE_WELL_", "a00079.html#a801cd9499779d35febbce73603aa70a6", null ],
-    [ "_MODEL_NDIMS_", "a00079.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00079.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "drift", "a00079.html#a45bcf0bb95407584d582c61664359c14", null ],
-    [ "FPDoubleWellInitialize", "a00079.html#af48e8eb8a81020a97b3b7b039bb94626", null ],
-    [ "FPDoubleWellCleanup", "a00079.html#ad512be0d21fc4b769fcc735ec3482203", null ]
+    [ "BandedMatrixDestroy", "a00079.html#a7481e8970799d48bf61489d2c8664291", null ],
+    [ "BandedMatrixInitialize", "a00079.html#a2e2999e64538fc1278db51e3a4544c0a", null ],
+    [ "BandedMatrixPreallocate", "a00079.html#a6f340cd6da5050e863142a9a5d3b4276", null ]
 ];

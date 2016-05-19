@@ -1,4 +1,5 @@
 var a00337 =
 [
-    [ "ShallowWater1DComputeCFL", "a00337.html#a71431a278135cf3bc23d5a0a393f1c9b", null ]
+    [ "Numa3DFlux", "a00337.html#a173a0e31d874adff608b905549a58a11", null ],
+    [ "Numa3DStiffFlux", "a00337.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
 ];

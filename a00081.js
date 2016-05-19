@@ -1,21 +1,22 @@
 var a00081 =
 [
-    [ "FPPowerSystem1Bus", "a00081.html#a00393", [
-      [ "omegaB", "a00081.html#ac789ae1b1c053a68151c68902fee8ac9", null ],
-      [ "omegaS", "a00081.html#a9b6bd0a73a0ef62d17fad2c55823ff29", null ],
-      [ "H", "a00081.html#a982cf43f120ff8978010e078bd49d9a3", null ],
-      [ "D", "a00081.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
-      [ "Pm_avg", "a00081.html#a56c71d67270967a7c7a4978ccd0eaedc", null ],
-      [ "Pmax", "a00081.html#ab070db6beb517f3c727e4f259f3c43de", null ],
-      [ "sigma", "a00081.html#a4ef930be9d7ab47d59cc0668d0d1fac8", null ],
-      [ "lambda", "a00081.html#a3db359547eed8cfd48ca821d95f577af", null ],
-      [ "pdf_integral", "a00081.html#adca2e435527ef52d18b3626b0e2ca852", null ]
-    ] ],
-    [ "_FP_POWER_SYSTEM_1BUS_", "a00081.html#a104fb063ee608b39fdab8d5e1e752ca3", null ],
-    [ "_MODEL_NDIMS_", "a00081.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00081.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "_XDIR_", "a00081.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
-    [ "_YDIR_", "a00081.html#a7fd32e06617f4489079bc50ce9bfc00c", null ],
-    [ "FPPowerSystem1BusInitialize", "a00081.html#aa498ad8f4fd87b8a18d2d81e327d7013", null ],
-    [ "FPPowerSystem1BusCleanup", "a00081.html#aa1df50611026cfcfb6c36f53a7620fef", null ]
+    [ "bctype", "a00081.html#a430ec6bfcdd38ab8e86545e25bc22613", null ],
+    [ "dim", "a00081.html#a70b5e28b5bc3d1b63a7435c5fe50b837", null ],
+    [ "face", "a00081.html#a9582c650f117a06449b5ee368b6762ef", null ],
+    [ "xmin", "a00081.html#a1e51e79041d5a3dddffb503277703568", null ],
+    [ "xmax", "a00081.html#a7ea24a733beddff902459a07bf91ca67", null ],
+    [ "on_this_proc", "a00081.html#a2eec7e4ee612d5edc985ba81453346e1", null ],
+    [ "is", "a00081.html#a481013ba007a99a4237cde5eeb3c9a29", null ],
+    [ "ie", "a00081.html#a7602de5ebb1b59ec35217e78a35a531e", null ],
+    [ "BCFunctionU", "a00081.html#af1c333edda90c79d9eff5442ac440942", null ],
+    [ "BCFunctionDU", "a00081.html#aa14c431b18e0c34e2622e1d5c797f9f0", null ],
+    [ "DirichletValue", "a00081.html#a6aa65431c39a8d8177f35c338ddb7a0e", null ],
+    [ "SpongeValue", "a00081.html#af7eeb4ff3f7c8bc22e0786ddbe62f16d", null ],
+    [ "UnsteadyDirichletSize", "a00081.html#ac3b478217419275ad063182f69cb543d", null ],
+    [ "UnsteadyDirichletData", "a00081.html#a48f59fc59e6a86d0b4aad842daea9106", null ],
+    [ "UnsteadyDirichletFilename", "a00081.html#a81c76294457e5d469798d16ab027c9a2", null ],
+    [ "gamma", "a00081.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "FlowDensity", "a00081.html#aa92ee9d8efc5ca49f4a83d8dabf0b15d", null ],
+    [ "FlowVelocity", "a00081.html#a0d0d92fab642e1d02a9de254e73a3f21", null ],
+    [ "FlowPressure", "a00081.html#a0a3c5af6bdb8fbdb746fd4edb374bb18", null ]
 ];

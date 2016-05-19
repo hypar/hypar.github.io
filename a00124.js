@@ -1,5 +1,5 @@
 var a00124 =
 [
-    [ "BCReflectU", "a00124.html#a262943d07ca8e576f79b36846a43e103", null ],
-    [ "BCReflectDU", "a00124.html#a58cf19d9e89aca3fcd89cb70af7d54ae", null ]
+    [ "BCDirichletU", "a00124.html#aff556c3ed9f4a947436d47c58ea5983e", null ],
+    [ "BCDirichletDU", "a00124.html#a4b677dc42566c53b16c09ca7f530b787", null ]
 ];

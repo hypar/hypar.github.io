@@ -1,4 +1,5 @@
 var a00366 =
 [
-    [ "TimeExplicitRKCleanup", "a00366.html#a6c15ee3ba87216c336861346c3e577c3", null ]
+    [ "ShallowWater2DUpwindRoe", "a00366.html#a0e7ae51d13b353863d26192dc37573f7", null ],
+    [ "ShallowWater2DUpwindLLF", "a00366.html#a82a4bea512a2584e39a96945d1855225", null ]
 ];
