@@ -1,4 +1,5 @@
 var a00301 =
 [
-    [ "NavierStokes2DCleanup", "a00301.html#aba05814e738820ec567e128228243e89", null ]
+    [ "FPPowerSystemDissipationFunction", "a00301.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
+    [ "FPPowerSystemDiffusion", "a00301.html#a0210181023c485ae65c8d7983f23303a", null ]
 ];

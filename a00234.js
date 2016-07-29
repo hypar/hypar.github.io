@@ -1,6 +1,4 @@
 var a00234 =
 [
-    [ "__FUNCT__", "a00234.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "TransferVecToPETSc", "a00234.html#ade5f8f199ddce54db3bcd559252ac637", null ],
-    [ "TransferMatToPETSc", "a00234.html#abbb95954ce9349ea01f27f0c37af56ff", null ]
+    [ "MPIExchangeBoundariesnD", "a00234.html#a9ca8704e62dcfc35e14e8ddccd464c89", null ]
 ];

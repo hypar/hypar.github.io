@@ -1,5 +1,5 @@
 var a00210 =
 [
-    [ "MPIMin_integer", "a00210.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
-    [ "MPIMin_double", "a00210.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
+    [ "_MINIMUM_GHOSTS_", "a00210.html#ab2278b4768059f198821dbf4d1a80389", null ],
+    [ "Interp1PrimFirstOrderUpwind", "a00210.html#ab483642b3722bdf31908f407a4de4673", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/Euler2D/Euler2DEigen.c Source File</title>
+<title>HyPar: src/PETScFunctions/PetscComputePreconMatIMEX.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,47 +113,38 @@ $(document).ready(function(){initNavTree('a00250_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Euler2DEigen.c</div>  </div>
+<div class="title">PetscComputePreconMatIMEX.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00250.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00105.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00104.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00110.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00083.html">physicalmodels/euler2d.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">  Rohde, A., &quot;Eigenvalues and Eigenvectors of the Euler Equations</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">  in General Geometries&quot;, AIAA 2001-2609</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00253.html#abc3249c6e004e0eed1149fcff50d090c">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00250.html#a965cafbf06fa0cfd5c0664dc94fcfd3f">Euler2DLeftEigenvectors</a>(<span class="keywordtype">double</span> *u,<span class="keywordtype">double</span> *L,<span class="keywordtype">void</span> *p,<span class="keywordtype">int</span> dir)</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <a class="code" href="a00083.html#a00395">Euler2D</a> *param  = (<a class="code" href="a00083.html#a00395">Euler2D</a>*)  p;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <a class="code" href="a00083.html#a590ff560306927f56be7a719747324dc">_Euler2DLeftEigenvectors_</a>(u,L,param,dir);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="a00253.html#ade37c0fac7a8b529ca43bbc113e5934b">   23</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00250.html#a2e9802c52e7497ece4e65e55c77c7b22">Euler2DRightEigenvectors</a>(<span class="keywordtype">double</span> *u,<span class="keywordtype">double</span> *R,<span class="keywordtype">void</span> *p,<span class="keywordtype">int</span> dir)</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00083.html#a00395">Euler2D</a> *param  = (<a class="code" href="a00083.html#a00395">Euler2D</a>*)  p;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <a class="code" href="a00083.html#a2548fc93774ad99d2d9be0ec40325978">_Euler2DRightEigenvectors_</a>(u,R,param,dir);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="ttc" id="a00083_html_a590ff560306927f56be7a719747324dc"><div class="ttname"><a href="a00083.html#a590ff560306927f56be7a719747324dc">_Euler2DLeftEigenvectors_</a></div><div class="ttdeci">#define _Euler2DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00083_source.html#l00135">euler2d.h:135</a></div></div>
-<div class="ttc" id="a00110_html"><div class="ttname"><a href="a00110.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00250_html_a2e9802c52e7497ece4e65e55c77c7b22"><div class="ttname"><a href="a00250.html#a2e9802c52e7497ece4e65e55c77c7b22">Euler2DRightEigenvectors</a></div><div class="ttdeci">int Euler2DRightEigenvectors(double *u, double *R, void *p, int dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00250_source.html#l00023">Euler2DEigen.c:23</a></div></div>
-<div class="ttc" id="a00083_html"><div class="ttname"><a href="a00083.html">euler2d.h</a></div></div>
-<div class="ttc" id="a00083_html_a00395"><div class="ttname"><a href="a00083.html#a00395">Euler2D</a></div><div class="ttdef"><b>Definition:</b> <a href="a00083_source.html#l00244">euler2d.h:244</a></div></div>
-<div class="ttc" id="a00105_html"><div class="ttname"><a href="a00105.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00250_html_a965cafbf06fa0cfd5c0664dc94fcfd3f"><div class="ttname"><a href="a00250.html#a965cafbf06fa0cfd5c0664dc94fcfd3f">Euler2DLeftEigenvectors</a></div><div class="ttdeci">int Euler2DLeftEigenvectors(double *u, double *L, void *p, int dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00250_source.html#l00016">Euler2DEigen.c:16</a></div></div>
-<div class="ttc" id="a00104_html"><div class="ttname"><a href="a00104.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00083_html_a2548fc93774ad99d2d9be0ec40325978"><div class="ttname"><a href="a00083.html#a2548fc93774ad99d2d9be0ec40325978">_Euler2DRightEigenvectors_</a></div><div class="ttdeci">#define _Euler2DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00083_source.html#l00189">euler2d.h:189</a></div></div>
+<a href="a00250.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifdef with_petsc</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00121.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00113.html">petscinterface.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#undef __FUNCT__</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="a00250.html#ae60511a9aa5cbf216a00a1bb81006bc5">   15</a></span>&#160;<span class="preprocessor">#define __FUNCT__ &quot;PetscComputePreconMatIMEX&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="a00250.html#af35f414384329e97ef54aed58e8f3d48">   67</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00250.html#af35f414384329e97ef54aed58e8f3d48">PetscComputePreconMatIMEX</a>(</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                              Mat Pmat,   </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                              Vec Y,      </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                              <span class="keywordtype">void</span> *ctxt  </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                             )</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="comment">/* Same implementation as PetscComputePreconMatImpl() */</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">return</span>(<a class="code" href="a00113.html#a4c77df03a775220fb7bcf6b137ca59b3">PetscComputePreconMatImpl</a>(Pmat,Y,ctxt));</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00121_html"><div class="ttname"><a href="a00121.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00113_html"><div class="ttname"><a href="a00113.html">petscinterface.h</a></div><div class="ttdoc">Contains variables and function definitions for time integration with PETSc (http://www.mcs.anl.gov/petsc/) </div></div>
+<div class="ttc" id="a00250_html_af35f414384329e97ef54aed58e8f3d48"><div class="ttname"><a href="a00250.html#af35f414384329e97ef54aed58e8f3d48">PetscComputePreconMatIMEX</a></div><div class="ttdeci">int PetscComputePreconMatIMEX(Mat Pmat, Vec Y, void *ctxt)</div><div class="ttdef"><b>Definition:</b> <a href="a00250_source.html#l00067">PetscComputePreconMatIMEX.c:67</a></div></div>
+<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
+<div class="ttc" id="a00113_html_a4c77df03a775220fb7bcf6b137ca59b3"><div class="ttname"><a href="a00113.html#a4c77df03a775220fb7bcf6b137ca59b3">PetscComputePreconMatImpl</a></div><div class="ttdeci">int PetscComputePreconMatImpl(Mat, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00251_source.html#l00064">PetscComputePreconMatImpl.c:64</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

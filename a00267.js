@@ -1,5 +1,6 @@
 var a00267 =
 [
-    [ "FPPowerSystemDissipationFunction", "a00267.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
-    [ "FPPowerSystemComputeDiffNumber", "a00267.html#a0baeed235f71eba334249f178f632ac0", null ]
+    [ "__FUNCT__", "a00267.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "TransferVecToPETSc", "a00267.html#ade5f8f199ddce54db3bcd559252ac637", null ],
+    [ "TransferMatToPETSc", "a00267.html#abbb95954ce9349ea01f27f0c37af56ff", null ]
 ];

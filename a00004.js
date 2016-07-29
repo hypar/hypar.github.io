@@ -16,11 +16,12 @@ var a00004 =
     [ "2D Euler Equations - Isentropic Vortex Convection", "a00032.html", null ],
     [ "2D Euler Equations (with gravitational force) - Inertia-Gravity Waves", "a00034.html", null ],
     [ "2D Euler Equations (with gravitational force) - Rising Thermal Bubble", "a00036.html", null ],
-    [ "2D Navier-Stokes Equations -  Laminar Flow over Flat Plate", "a00038.html", null ],
-    [ "2D Shallow Water Equations - Circular Dam Break", "a00040.html", null ],
-    [ "2D Shallow Water Equations - Latitude Belt Flow", "a00042.html", null ],
-    [ "3D Linear Advection - Gaussian Pulse", "a00044.html", null ],
-    [ "3D Navier-Stokes Equations - Isotropic Turbulence Decay", "a00046.html", null ],
-    [ "3D Navier-Stokes Equations - Rising Thermal Bubble", "a00048.html", null ],
-    [ "3D NUMA (Nonhydrostatic Unified Model of the Atmosphere) Equations - Rising Thermal Bubble", "a00050.html", null ]
+    [ "2D Navier-Stokes Equations -  Lid-Driven Square Cavity", "a00038.html", null ],
+    [ "2D Navier-Stokes Equations -  Laminar Flow over Flat Plate", "a00040.html", null ],
+    [ "2D Shallow Water Equations - Circular Dam Break", "a00042.html", null ],
+    [ "2D Shallow Water Equations - Latitude Belt Flow", "a00044.html", null ],
+    [ "3D Linear Advection - Gaussian Pulse", "a00046.html", null ],
+    [ "3D Navier-Stokes Equations - Isotropic Turbulence Decay", "a00048.html", null ],
+    [ "3D Navier-Stokes Equations - Rising Thermal Bubble", "a00050.html", null ],
+    [ "3D NUMA (Nonhydrostatic Unified Model of the Atmosphere) Equations - Rising Thermal Bubble", "a00052.html", null ]
 ];

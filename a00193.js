@@ -1,4 +1,4 @@
 var a00193 =
 [
-    [ "WriteBinary", "a00193.html#a50ece3698b176f0251f3308300a333bb", null ]
+    [ "IBIdentifyMode", "a00193.html#a6a8ad4a1a3ebaa527f0d45d5c6f793dd", null ]
 ];

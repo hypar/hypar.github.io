@@ -1,4 +1,5 @@
 var a00153 =
 [
-    [ "InitializePhysics", "a00153.html#a811f4e30a01be5c6ae4dbca87da0edf3", null ]
+    [ "BCSubsonicOutflowU", "a00153.html#aea51db89a0a00f1c9b8288f9ebc059c6", null ],
+    [ "BCSubsonicOutflowDU", "a00153.html#a93eee7ff0ffe23d4cb5110d2b68eac26", null ]
 ];

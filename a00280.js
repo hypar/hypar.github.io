@@ -1,12 +1,10 @@
 var a00280 =
 [
-    [ "FPPowerSystem1BusComputeCFL", "a00280.html#aa388298514bb5a18cffe10c106106c10", null ],
-    [ "FPPowerSystem1BusComputeDiffNumber", "a00280.html#a2d45277a6fdff4acd956154955115fd8", null ],
-    [ "FPPowerSystem1BusAdvection", "a00280.html#a8953d6ab92fdd1fb1cf07e6967a6429e", null ],
-    [ "FPPowerSystem1BusDiffusionLaplacian", "a00280.html#a6b69cbe74e1e532a8b094223fa000ab4", null ],
-    [ "FPPowerSystem1BusDiffusionGeneral", "a00280.html#a42f78f09724fded0ed35c35453f33b54", null ],
-    [ "FPPowerSystem1BusUpwind", "a00280.html#a638932c0498d1c700a308b1a9fcc747c", null ],
-    [ "FPPowerSystem1BusPostStep", "a00280.html#a55d6bb8aafb51bc6407dffaa8eaad139", null ],
-    [ "FPPowerSystem1BusPrintStep", "a00280.html#aabb34e00c1f63832146a7a66ee58d3f0", null ],
-    [ "FPPowerSystem1BusInitialize", "a00280.html#abb50651efbfa511b136e7b1d64bd06b8", null ]
+    [ "Euler1DUpwindRoe", "a00280.html#a6dc9d104ca58ca3ea0da7039fe5323c4", null ],
+    [ "Euler1DUpwindRF", "a00280.html#a803a31978814cfaef298c686b99d6ed0", null ],
+    [ "Euler1DUpwindLLF", "a00280.html#aaafb95c6a0e137263bc9d072444a1fb7", null ],
+    [ "Euler1DUpwindSWFS", "a00280.html#ad6796e7537a610cfeb2efcc62e98d43d", null ],
+    [ "Euler1DUpwinddFRoe", "a00280.html#a661317dfe3032428094f1dc054d207ae", null ],
+    [ "Euler1DUpwinddFRF", "a00280.html#a7efe8a920b95163f2dd3ae308d7c063e", null ],
+    [ "Euler1DUpwinddFLLF", "a00280.html#aefac1195512cb539fbe564a84cc68d43", null ]
 ];

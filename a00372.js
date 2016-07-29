@@ -1,4 +1,5 @@
 var a00372 =
 [
-    [ "TimeExplicitRKCleanup", "a00372.html#a6c15ee3ba87216c336861346c3e577c3", null ]
+    [ "Numa3DFlux", "a00372.html#a173a0e31d874adff608b905549a58a11", null ],
+    [ "Numa3DStiffFlux", "a00372.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
 ];

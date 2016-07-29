@@ -1,4 +1,5 @@
 var a00376 =
 [
-    [ "TimeGLMGEE", "a00376.html#aaf72199adf7d99a25cfbe26a1456cdd3", null ]
+    [ "Numa3DRusanovFlux", "a00376.html#adee29df467d83a11708cc55884ddfce8", null ],
+    [ "Numa3DRusanovLinearFlux", "a00376.html#aa3a3b4411941091b8333256e032dea99", null ]
 ];

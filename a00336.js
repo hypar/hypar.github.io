@@ -1,4 +1,5 @@
 var a00336 =
 [
-    [ "Numa3DComputeCFL", "a00336.html#acb12fd525157444151deaf74dfab8411", null ]
+    [ "NavierStokes2DLeftEigenvectors", "a00336.html#a497cabf9429ce30c3107d526bc18a798", null ],
+    [ "NavierStokes2DRightEigenvectors", "a00336.html#a2267c0825e485249fdee53ee44981636", null ]
 ];

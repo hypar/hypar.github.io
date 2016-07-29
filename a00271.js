@@ -1,4 +1,5 @@
 var a00271 =
 [
-    [ "FPPowerSystemPostStep", "a00271.html#a53299bf3e204ca1f69f714f462378999", null ]
+    [ "Euler1DFlux", "a00271.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
+    [ "Euler1DStiffFlux", "a00271.html#a3017a4ade688681fa865c1556fb73f97", null ]
 ];

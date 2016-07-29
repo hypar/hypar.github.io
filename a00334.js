@@ -1,5 +1,4 @@
 var a00334 =
 [
-    [ "Numa2DRusanovFlux", "a00334.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
-    [ "Numa2DRusanovLinearFlux", "a00334.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
+    [ "NavierStokes2DCleanup", "a00334.html#aba05814e738820ec567e128228243e89", null ]
 ];

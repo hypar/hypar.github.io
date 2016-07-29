@@ -1,6 +1,6 @@
 var a00192 =
 [
-    [ "WriteArraySerial", "a00192.html#a62e3430c806c874df7b65e9ba3da95c7", null ],
-    [ "WriteArrayParallel", "a00192.html#a1548f4cea5254257d93790952941c351", null ],
-    [ "WriteArray", "a00192.html#a39266090467a28f626638e7bfc9957e2", null ]
+    [ "CountBoundaryPoints", "a00192.html#ac20a15dad8cdc1021b559f08cd60bdf4", null ],
+    [ "SetBoundaryPoints", "a00192.html#a684729950453b8313d61c1731acf5e5c", null ],
+    [ "IBIdentifyBoundary", "a00192.html#a65f57f0636944e8a45906b00c8882a8a", null ]
 ];

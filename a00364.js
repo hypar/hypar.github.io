@@ -1,5 +1,5 @@
 var a00364 =
 [
-    [ "ShallowWater2DSourceUpwindLLF", "a00364.html#a12c14b7e0827bc83f1b1cc26f6106de7", null ],
-    [ "ShallowWater2DSourceUpwindRoe", "a00364.html#ae351c73f881dba794dd07de10c8bafa4", null ]
+    [ "Numa2DFlux", "a00364.html#a6a672aa8b32d8ff139204f56c11c725e", null ],
+    [ "Numa2DStiffFlux", "a00364.html#a6c56b9f36babefae799e469d7f9036df", null ]
 ];

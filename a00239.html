@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/Euler1D/Euler1DFunctions.c File Reference</title>
+<title>HyPar: src/MPIFunctions/MPIIOGroups.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,83 +115,126 @@ $(document).ready(function(){initNavTree('a00239.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Euler1DFunctions.c File Reference</div>  </div>
+<div class="title">MPIIOGroups.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Miscellaneous functions for the 1D Euler equations.  
+<p>Create I/O groups of MPI ranks.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;math.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00105_source.html">basic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00112_source.html">physicalmodels/euler1d.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00108_source.html">mpivars.h</a>&gt;</code><br />
 </div>
 <p><a href="a00239_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a25f26ae1ec34783770e761553ae617ae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a25f26ae1ec34783770e761553ae617ae">Euler1DRoeAverage</a> (double *uavg, double *uL, double *uR, void *p)</td></tr>
-<tr class="separator:a25f26ae1ec34783770e761553ae617ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32033a931111b364a144da26e6a53335"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a32033a931111b364a144da26e6a53335">MPICreateIOGroups</a> (void *m)</td></tr>
+<tr class="separator:a32033a931111b364a144da26e6a53335"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Miscellaneous functions for the 1D Euler equations. </p>
+<div class="textblock"><p>Create I/O groups of MPI ranks. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00239_source.html">Euler1DFunctions.c</a>.</p>
+<p>Definition in file <a class="el" href="a00239_source.html">MPIIOGroups.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a25f26ae1ec34783770e761553ae617ae"></a>
+<a class="anchor" id="a32033a931111b364a144da26e6a53335"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Euler1DRoeAverage </td>
+          <td class="memname">int MPICreateIOGroups </td>
           <td>(</td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>uavg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>uL</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>uR</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>m</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute the Roe-averaged state for the 1D Euler equations. This function just calls the macro <a class="el" href="a00112.html#a9a3e89dcf75e61433735d59b6556c346">_Euler1DRoeAverage_</a> and is not used by any functions within the 1D Euler module. However, it's necessary to define it and provide it to the the solver object (<a class="el" href="a00089.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>) so that it can then send it to interpolation functions for a characteristic-based reconstruction. </p>
+<p>Create I/O groups of MPI ranks: A scalable approach to file I/O when running simulations on a large number of processors (&gt;10,000) is partitioning all the MPI ranks into I/O group. Each group has a "leader" that:</p><ul>
+<li>Input - reads the local data of each member rank from the file and sends it to that member.</li>
+<li>Output - gets the local data of each member rank and writes it to a file.</li>
+</ul>
+<p>The number of I/O groups (and hence, the number of I/O ranks reading and writing to files) is specified through <a class="el" href="a00108.html#a297fca986fa3aa27de07a0c746ffaaa8">MPIVariables::N_IORanks</a>. Ideally, this would correspond to the number of I/O nodes available for the total number of compute nodes being used on a HPC platform.</p>
+<p>Two extreme cases are:</p><ul>
+<li>Number of I/O ranks is 1, i.e., just one rank (typically rank 0) is responsible for reading and writing the local data of every rank.</li>
+<li>Number of I/O ranks is equal to the total number of MPI ranks, i.e., each MPI rank reads and writes from and to its own files.</li>
+</ul>
+<p>Neither of the extreme cases are scalable.</p>
+<p>Notes:</p><ul>
+<li>If the total number of MPI ranks (<a class="el" href="a00108.html#ae68326adc3b3862f1162832f70727b06">MPIVariables::nproc</a>) is not an integer multiple of the specified number of I/O groups (<a class="el" href="a00108.html#a297fca986fa3aa27de07a0c746ffaaa8">MPIVariables::N_IORanks</a>), then only 1 rank is used. </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">uavg</td><td>The computed Roe-averaged state </td></tr>
-    <tr><td class="paramname">uL</td><td>Left state (conserved variables) </td></tr>
-    <tr><td class="paramname">uR</td><td>Right state (conserved variables) </td></tr>
-    <tr><td class="paramname">p</td><td>Object of type <a class="el" href="a00082.html" title="Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...">Euler1D</a> with physics-related variables </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00108.html#a00443" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00239_source.html#l00016">16</a> of file <a class="el" href="a00239_source.html">Euler1DFunctions.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00082.html">Euler1D</a> *param  = (<a class="code" href="a00082.html">Euler1D</a>*) p;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00112.html#a9a3e89dcf75e61433735d59b6556c346">_Euler1DRoeAverage_</a>(uavg,uL,uR,param);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
-<div class="ttc" id="a00082_html"><div class="ttname"><a href="a00082.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00112_source.html#l00255">euler1d.h:255</a></div></div>
-<div class="ttc" id="a00112_html_a9a3e89dcf75e61433735d59b6556c346"><div class="ttname"><a href="a00112.html#a9a3e89dcf75e61433735d59b6556c346">_Euler1DRoeAverage_</a></div><div class="ttdeci">#define _Euler1DRoeAverage_(uavg, uL, uR, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00112_source.html#l00151">euler1d.h:151</a></div></div>
+<p>Definition at line <a class="el" href="a00239_source.html#l00037">37</a> of file <a class="el" href="a00239_source.html">MPIIOGroups.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00108.html#a00443">MPIVariables</a> *mpi = (<a class="code" href="a00108.html#a00443">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">int</span> nproc         = mpi-&gt;<a class="code" href="a00108.html#ae68326adc3b3862f1162832f70727b06">nproc</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">int</span> rank          = mpi-&gt;<a class="code" href="a00108.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">int</span> N_IORanks     = mpi-&gt;<a class="code" href="a00108.html#a297fca986fa3aa27de07a0c746ffaaa8">N_IORanks</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span> GroupSize;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">if</span> (nproc%N_IORanks==0) GroupSize = nproc/N_IORanks;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">if</span> (!rank) {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      printf(<span class="stringliteral">&quot;Note: in MPICreateIOGroups() - Number of &quot;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      printf(<span class="stringliteral">&quot;ranks (nproc) is not divisible by number &quot;</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      printf(<span class="stringliteral">&quot;of IO ranks (N_IORanks). Readjusting number &quot;</span>);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      printf(<span class="stringliteral">&quot;of IO ranks to fix this.\n&quot;</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    N_IORanks = 1;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span> (!rank) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      printf(<span class="stringliteral">&quot;Number of IO Ranks: %d\n&quot;</span>,N_IORanks);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    GroupSize = nproc;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  mpi-&gt;<a class="code" href="a00108.html#a1654ada98aca560c6cb1dc79bb6576c3">CommGroup</a>  = rank/GroupSize;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  mpi-&gt;<a class="code" href="a00108.html#a1e6b9b6dca494aa45e43214f120e6630">IORank</a>     = mpi-&gt;<a class="code" href="a00108.html#a1654ada98aca560c6cb1dc79bb6576c3">CommGroup</a> * GroupSize;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="comment">/* set flag for whether this rank does file I/O */</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">if</span> (rank == mpi-&gt;<a class="code" href="a00108.html#a1e6b9b6dca494aa45e43214f120e6630">IORank</a>)  mpi-&gt;<a class="code" href="a00108.html#a92096d6b87420d0e71b38c6dc5e10b14">IOParticipant</a> = 1;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">else</span>                      mpi-&gt;<a class="code" href="a00108.html#a92096d6b87420d0e71b38c6dc5e10b14">IOParticipant</a> = 0;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="comment">/* save the first and last process of this group */</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  mpi-&gt;<a class="code" href="a00108.html#aff30abd72b51ad067b03ec6d574973a1">GroupStartRank</a> = mpi-&gt;<a class="code" href="a00108.html#a1e6b9b6dca494aa45e43214f120e6630">IORank</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  mpi-&gt;<a class="code" href="a00108.html#ada7c6833a6ee759beee80a693cf86072">GroupEndRank</a>   = (mpi-&gt;<a class="code" href="a00108.html#a1654ada98aca560c6cb1dc79bb6576c3">CommGroup</a>+1)*GroupSize;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="comment">/* create a new communicator with the IO participants */</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordtype">int</span> i,*FileIORanks;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  MPI_Group WorldGroup, IOGroup;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  FileIORanks = (<span class="keywordtype">int</span>*) calloc (N_IORanks,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;N_IORanks; i++) FileIORanks[i] = i*GroupSize;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  MPI_Comm_group(mpi-&gt;<a class="code" href="a00108.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;WorldGroup);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  MPI_Group_incl(WorldGroup,N_IORanks,FileIORanks,&amp;IOGroup);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  MPI_Comm_create(mpi-&gt;<a class="code" href="a00108.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,IOGroup,&amp;mpi-&gt;<a class="code" href="a00108.html#ae297d101be8576bfb36202ebb61085e6">IOWorld</a>);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  MPI_Group_free(&amp;IOGroup);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  MPI_Group_free(&amp;WorldGroup);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  free(FileIORanks);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="ttc" id="a00108_html_a1e6b9b6dca494aa45e43214f120e6630"><div class="ttname"><a href="a00108.html#a1e6b9b6dca494aa45e43214f120e6630">MPIVariables::IORank</a></div><div class="ttdeci">int IORank</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00041">mpivars.h:41</a></div></div>
+<div class="ttc" id="a00108_html_a00443"><div class="ttname"><a href="a00108.html#a00443">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00021">mpivars.h:21</a></div></div>
+<div class="ttc" id="a00108_html_a297fca986fa3aa27de07a0c746ffaaa8"><div class="ttname"><a href="a00108.html#a297fca986fa3aa27de07a0c746ffaaa8">MPIVariables::N_IORanks</a></div><div class="ttdeci">int N_IORanks</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00038">mpivars.h:38</a></div></div>
+<div class="ttc" id="a00108_html_aff30abd72b51ad067b03ec6d574973a1"><div class="ttname"><a href="a00108.html#aff30abd72b51ad067b03ec6d574973a1">MPIVariables::GroupStartRank</a></div><div class="ttdeci">int GroupStartRank</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00042">mpivars.h:42</a></div></div>
+<div class="ttc" id="a00108_html_ae68326adc3b3862f1162832f70727b06"><div class="ttname"><a href="a00108.html#ae68326adc3b3862f1162832f70727b06">MPIVariables::nproc</a></div><div class="ttdeci">int nproc</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00023">mpivars.h:23</a></div></div>
+<div class="ttc" id="a00108_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00108.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00022">mpivars.h:22</a></div></div>
+<div class="ttc" id="a00108_html_a92096d6b87420d0e71b38c6dc5e10b14"><div class="ttname"><a href="a00108.html#a92096d6b87420d0e71b38c6dc5e10b14">MPIVariables::IOParticipant</a></div><div class="ttdeci">int IOParticipant</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00039">mpivars.h:39</a></div></div>
+<div class="ttc" id="a00108_html_ada7c6833a6ee759beee80a693cf86072"><div class="ttname"><a href="a00108.html#ada7c6833a6ee759beee80a693cf86072">MPIVariables::GroupEndRank</a></div><div class="ttdeci">int GroupEndRank</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00043">mpivars.h:43</a></div></div>
+<div class="ttc" id="a00108_html_a1654ada98aca560c6cb1dc79bb6576c3"><div class="ttname"><a href="a00108.html#a1654ada98aca560c6cb1dc79bb6576c3">MPIVariables::CommGroup</a></div><div class="ttdeci">int CommGroup</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00040">mpivars.h:40</a></div></div>
+<div class="ttc" id="a00108_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00108.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00034">mpivars.h:34</a></div></div>
+<div class="ttc" id="a00108_html_ae297d101be8576bfb36202ebb61085e6"><div class="ttname"><a href="a00108.html#ae297d101be8576bfb36202ebb61085e6">MPIVariables::IOWorld</a></div><div class="ttdeci">MPI_Comm IOWorld</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00045">mpivars.h:45</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

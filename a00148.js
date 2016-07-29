@@ -1,4 +1,5 @@
 var a00148 =
 [
-    [ "ExactSolution", "a00148.html#a2c6f5746549f2bc9ec0e4826b16dd4a3", null ]
+    [ "BCReflectU", "a00148.html#a262943d07ca8e576f79b36846a43e103", null ],
+    [ "BCReflectDU", "a00148.html#a58cf19d9e89aca3fcd89cb70af7d54ae", null ]
 ];

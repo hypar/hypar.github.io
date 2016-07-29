@@ -1,22 +1,14 @@
 var searchData=
 [
-  ['n',['N',['../a00088.html#a7722c8ecbb62d99aee7ce68b1752f337',1,'FPPowerSystem3Bus']]],
-  ['n_5fbv',['N_bv',['../a00092.html#aa79c64518f6e9127d9b201bacd398174',1,'NavierStokes2D::N_bv()'],['../a00093.html#aa79c64518f6e9127d9b201bacd398174',1,'NavierStokes3D::N_bv()']]],
-  ['n_5fioranks',['N_IORanks',['../a00091.html#a297fca986fa3aa27de07a0c746ffaaa8',1,'MPIVariables']]],
-  ['n_5fiter',['n_iter',['../a00089.html#af0d8e0d5d3de3869b941b66b6caaf964',1,'HyPar::n_iter()'],['../a00099.html#af0d8e0d5d3de3869b941b66b6caaf964',1,'TimeIntegration::n_iter()']]],
-  ['nbands',['nbands',['../a00079.html#a30165df2b4e7a3d2b24bfd0963c16172',1,'BandedMatrix']]],
-  ['nboundaryzones',['nBoundaryZones',['../a00089.html#a3f9a55664d1c8f058828ae9f4de11906',1,'HyPar']]],
-  ['ncol',['ncol',['../a00079.html#a6db648ed09c7736e77e2c79f2a4514fd',1,'BandedMatrix']]],
-  ['ndims',['ndims',['../a00089.html#a484873c74138512e41bc50d17b7d955a',1,'HyPar']]],
-  ['no_5flimiting',['no_limiting',['../a00080.html#a20e793c98bd33aef1cbbafcf3df48a55',1,'WENOParameters']]],
-  ['nonlinearinterp',['NonlinearInterp',['../a00089.html#abfb95b26a10515a77c736845f2c173cc',1,'HyPar']]],
-  ['norm',['norm',['../a00099.html#a7e8f00a437ef8fd856bc83c9a763d6cc',1,'TimeIntegration']]],
-  ['npoints_5fglobal',['npoints_global',['../a00089.html#a4e67f54563a3c4ff005dfaf0130f957c',1,'HyPar']]],
-  ['npoints_5flocal',['npoints_local',['../a00089.html#afae6319baba315ac1f0c56505610ed85',1,'HyPar']]],
-  ['npoints_5flocal_5fwghosts',['npoints_local_wghosts',['../a00089.html#a20ee1fd00a220b98513127884a5558cf',1,'HyPar']]],
-  ['nproc',['nproc',['../a00091.html#ae68326adc3b3862f1162832f70727b06',1,'MPIVariables']]],
-  ['nrow',['nrow',['../a00079.html#a0a58ae803aa8c0ef7cf86577919f205e',1,'BandedMatrix']]],
-  ['nrows_5flocal',['nrows_local',['../a00079.html#ac2b596b16037450673a77da1080b8707',1,'BandedMatrix']]],
-  ['nstages',['nstages',['../a00084.html#ae11575eb42a4ab3934cf6278c93010e1',1,'ExplicitRKParameters::nstages()'],['../a00084.html#ae11575eb42a4ab3934cf6278c93010e1',1,'GLMGEEParameters::nstages()']]],
-  ['nvars',['nvars',['../a00089.html#ae8f6d2fd6490d3153cb4133bf183a404',1,'HyPar']]]
+  ['mapped',['mapped',['../a00097.html#af370a2df117483b6f752da8889a89bb0',1,'WENOParameters']]],
+  ['max_5fcfl',['max_cfl',['../a00116.html#a1c93911a48b34f9e4815b866f7ec5a78',1,'TimeIntegration']]],
+  ['max_5fdiff',['max_diff',['../a00116.html#ab0ebc6c6141837ad4bbbc75a4e1f0a99',1,'TimeIntegration']]],
+  ['maxbuf',['maxbuf',['../a00108.html#a4c12bdea025b404c7dd79f368fc03efd',1,'MPIVariables']]],
+  ['maxiter',['maxiter',['../a00117.html#a274519264a28477940f161ddb4b61feb',1,'TridiagLU']]],
+  ['minf',['Minf',['../a00109.html#aa5f774fe7b4f69be5e085f1988ef2a6d',1,'NavierStokes2D::Minf()'],['../a00110.html#aa5f774fe7b4f69be5e085f1988ef2a6d',1,'NavierStokes3D::Minf()']]],
+  ['mode',['mode',['../a00096.html#a935394e510d17282c5697cd76a6e2667',1,'ImmersedBoundary']]],
+  ['model',['model',['../a00106.html#ad3fe4b266b398f3a7567ac1b241d99a2',1,'HyPar']]],
+  ['mpi',['mpi',['../a00113.html#abaa15763a88d05dc68ff230ce570eee9',1,'PETScContext::mpi()'],['../a00116.html#abaa15763a88d05dc68ff230ce570eee9',1,'TimeIntegration::mpi()']]],
+  ['msti',['msti',['../a00106.html#adec095311615891040de11341c01a77f',1,'HyPar']]],
+  ['mu',['mu',['../a00111.html#a74577585cf12d1712ab9c57616d49205',1,'Numa2D']]]
 ];

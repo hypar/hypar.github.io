@@ -1,4 +1,5 @@
 var a00349 =
 [
-    [ "ShallowWater1DModifiedSolution", "a00349.html#a2066cec9c112ad28c814055df4ed2d59", null ]
+    [ "NavierStokes3DLeftEigenvectors", "a00349.html#ab376732168de139806c9f77828caa063", null ],
+    [ "NavierStokes3DRightEigenvectors", "a00349.html#a62b44025b86e4d73a34142b32301ee7c", null ]
 ];

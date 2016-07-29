@@ -1,5 +1,5 @@
 var a00316 =
 [
-    [ "NavierStokes3DLeftEigenvectors", "a00316.html#ab376732168de139806c9f77828caa063", null ],
-    [ "NavierStokes3DRightEigenvectors", "a00316.html#a62b44025b86e4d73a34142b32301ee7c", null ]
+    [ "FPPowerSystem1BusDriftFunction", "a00316.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
+    [ "FPPowerSystem1BusUpwind", "a00316.html#aba11a90b1aa788700496713f3aa355b5", null ]
 ];

@@ -2,20 +2,22 @@ var NAVTREE =
 [
   [ "HyPar", "index.html", [
     [ "Examples", "a00002.html", "a00002" ],
-    [ "Input Files", "a00074.html", [
-      [ "solver.inp", "a00074.html#solver_inp", null ],
-      [ "boundary.inp", "a00074.html#boundary_inp", null ],
-      [ "initial.inp", "a00074.html#initial_inp", null ],
-      [ "lusolver.inp", "a00074.html#lusolver_inp", null ],
-      [ "weno.inp", "a00074.html#weno_inp", null ],
-      [ "physics.inp", "a00074.html#physics_inp", null ],
-      [ ".petscrc", "a00074.html#petscrc", null ]
+    [ "Input Files", "a00088.html", [
+      [ "solver.inp", "a00088.html#solver_inp", null ],
+      [ "boundary.inp", "a00088.html#boundary_inp", null ],
+      [ "initial.inp", "a00088.html#initial_inp", null ],
+      [ "lusolver.inp", "a00088.html#lusolver_inp", null ],
+      [ "weno.inp", "a00088.html#weno_inp", null ],
+      [ "physics.inp", "a00088.html#physics_inp", null ],
+      [ ".petscrc", "a00088.html#petscrc", null ],
+      [ "Immersed Body", "a00088.html#immersed_body", null ]
     ] ],
-    [ "Numerical Method", "a00076.html", [
-      [ "Spatial Discretization", "a00076.html#spatial_discretization", null ],
-      [ "Time Integration", "a00076.html#time_integration", null ]
+    [ "Numerical Method", "a00090.html", [
+      [ "Spatial Discretization", "a00090.html#spatial_discretization", null ],
+      [ "Time Integration", "a00090.html#time_integration", null ]
     ] ],
-    [ "README", "a00078.html", null ],
+    [ "License", "a00092.html", null ],
+    [ "README", "a00094.html", null ],
     [ "Data Structures", null, [
       [ "Data Structures", "annotated.html", "annotated" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -40,15 +42,15 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00002.html",
-"a00085_source.html",
-"a00092.html#a51e0f9431973e4cf55e6aeee7dab6d83",
-"a00106.html#a5c9f9f3c97682664b0fe253e10863b57",
-"a00133_source.html",
-"a00194.html#a9f54139b318c86dab6743896cc5afcb9",
-"a00253.html#a87513d4aa56364c1dfa489ce71f843e7",
-"a00307.html#ad4812f3094293efdaf08af6c34e9aaea",
-"a00357.html#aedb92b59af4004f2a2905d741bffd00a",
-"globals_i.html"
+"a00100.html#a57771c952ec174601addf43e1c0202b2",
+"a00106.html#abd6886cf9b7ead81e0aaa9ead9aced81",
+"a00115.html#ad8657a5ec76e12f3066fb4b4eb75ace9",
+"a00131.html#a6b4a6d4059122df4573f3ac5e80901b3",
+"a00188.html#a76089b67cecd81759e6cc71a873fe02e",
+"a00254.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e",
+"a00308_source.html",
+"a00355.html#ae1dbdac366ab08e662af6736a26dbeac",
+"a00413.html#a0feaaf3153805ccbd44c81288241dbd8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

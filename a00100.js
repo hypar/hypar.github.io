@@ -1,26 +1,24 @@
 var a00100 =
 [
-    [ "TridiagLU", "a00100.html#a00408", [
-      [ "reducedsolvetype", "a00100.html#ae50ec60868beaab2cb84897adefda09f", null ],
-      [ "evaluate_norm", "a00100.html#a584c0fc0b1e845800ad511dffc60e032", null ],
-      [ "maxiter", "a00100.html#a274519264a28477940f161ddb4b61feb", null ],
-      [ "atol", "a00100.html#a60c6dfc476dd9596072f61c2ec8d58ed", null ],
-      [ "rtol", "a00100.html#a4587afeee8941ba7c208b3690a3eeaa7", null ],
-      [ "exititer", "a00100.html#a846172807b19cf19a2587ede74b06828", null ],
-      [ "exitnorm", "a00100.html#a0a20107c06f29ce4d4ac23a4e7cfb17a", null ],
-      [ "verbose", "a00100.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ],
-      [ "total_time", "a00100.html#abc276e47b85df9dd59f248e663b3b971", null ],
-      [ "stage1_time", "a00100.html#a8cd56611f6cd8c71a991c9ed2b97ca29", null ],
-      [ "stage2_time", "a00100.html#ab956b3ef566ffdd35d9ddc39c2662875", null ],
-      [ "stage3_time", "a00100.html#a45e5bf315927ed87c57bcf220ec49861", null ],
-      [ "stage4_time", "a00100.html#ac7df4fddfc5aa2827b346dcfd80346fb", null ]
+    [ "Euler2D", "a00100.html#a00431", [
+      [ "gamma", "a00100.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+      [ "upw_choice", "a00100.html#a57894a0f53d5b228bf64053367736bf9", null ]
     ] ],
-    [ "_TRIDIAG_JACOBI_", "a00100.html#a79ddfe354b89d113b72db4b5ae6c6e3d", null ],
-    [ "_TRIDIAG_GS_", "a00100.html#adf756eb923ab79f911e38a82da7a6cab", null ],
-    [ "tridiagLU", "a00100.html#a83b53dedf034d67bf2dde46eebf492ee", null ],
-    [ "tridiagLUGS", "a00100.html#a3d43d79472727ef201c8a48f3073decd", null ],
-    [ "tridiagIterJacobi", "a00100.html#a1b0ccd6fb49ee8efe7c87a78e1bbe0ec", null ],
-    [ "tridiagLUInit", "a00100.html#a52d21dfe1d76916811879bf0d7a29d72", null ],
-    [ "blocktridiagLU", "a00100.html#ad2c404dd44e760ee729740176b186bd0", null ],
-    [ "blocktridiagIterJacobi", "a00100.html#a8c48f135943fe35da85072714d4b1b23", null ]
+    [ "_EULER_2D_", "a00100.html#ae205e355df87a13c8b47c958828bce2f", null ],
+    [ "_MODEL_NDIMS_", "a00100.html#a57771c952ec174601addf43e1c0202b2", null ],
+    [ "_MODEL_NVARS_", "a00100.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
+    [ "_ROE_", "a00100.html#abffeadaaee7a3a2baeeb28e395411d73", null ],
+    [ "_RF_", "a00100.html#a51e0f9431973e4cf55e6aeee7dab6d83", null ],
+    [ "_LLF_", "a00100.html#a98a6bcc1b69abface4bef84cf0d51955", null ],
+    [ "_SWFS_", "a00100.html#a930e301363fd9f0a570d97c8c3dd3ea3", null ],
+    [ "_XDIR_", "a00100.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
+    [ "_YDIR_", "a00100.html#a7fd32e06617f4489079bc50ce9bfc00c", null ],
+    [ "_Euler2DGetFlowVar_", "a00100.html#afff338b9964cae67fd9b3f4dc224e77b", null ],
+    [ "_Euler2DSetFlux_", "a00100.html#a9d97dd7f27edf1795e4b1414e7307cd4", null ],
+    [ "_Euler2DRoeAverage_", "a00100.html#ad01b2e4da71d287e9f5574ccecc9997f", null ],
+    [ "_Euler2DEigenvalues_", "a00100.html#acfce335ccbb6208adc1b532cf9d4c7b1", null ],
+    [ "_Euler2DLeftEigenvectors_", "a00100.html#a590ff560306927f56be7a719747324dc", null ],
+    [ "_Euler2DRightEigenvectors_", "a00100.html#a2548fc93774ad99d2d9be0ec40325978", null ],
+    [ "Euler2DInitialize", "a00100.html#a7c85bdac3c8b5f3bb3bd83fdae2e52e8", null ],
+    [ "Euler2DCleanup", "a00100.html#ae2bd18386ee9184c66bb7e7b78f1b73b", null ]
 ];

@@ -1,5 +1,6 @@
 var a00337 =
 [
-    [ "Numa3DFlux", "a00337.html#a173a0e31d874adff608b905549a58a11", null ],
-    [ "Numa3DStiffFlux", "a00337.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
+    [ "NavierStokes2DFlux", "a00337.html#af9474905c4b501fdee9a18e490f6499d", null ],
+    [ "NavierStokes2DStiffFlux", "a00337.html#ae5da2defa681602a634b5e5455bae4cb", null ],
+    [ "NavierStokes2DNonStiffFlux", "a00337.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
 ];

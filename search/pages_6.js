@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['numerical_20method',['Numerical Method',['../a00076.html',1,'']]]
+  ['license',['License',['../a00092.html',1,'']]]
 ];

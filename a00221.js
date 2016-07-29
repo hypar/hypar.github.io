@@ -1,5 +1,7 @@
 var a00221 =
 [
-    [ "ApplyPeriodicity", "a00221.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e", null ],
-    [ "PetscGlobalDOF", "a00221.html#a15c41ba7e2d10e4803226f42708a6ef8", null ]
+    [ "WENOFifthOrderCalculateWeights", "a00221.html#a3107c4ab0a55a53d58b3b7c1c456be75", null ],
+    [ "WENOFifthOrderCalculateWeightsChar", "a00221.html#a44d32cb52b0ef592fbf15b18edade695", null ],
+    [ "WENOFifthOrderInitializeWeights", "a00221.html#a522dbf81bca4ddfffd0a49b88f6bc6bc", null ],
+    [ "WENOInitialize", "a00221.html#ab998cb7839e6b350b0450adabcfeafc7", null ]
 ];

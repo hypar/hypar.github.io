@@ -1,21 +1,11 @@
 var a00099 =
 [
-    [ "iter", "a00099.html#aab6f168571c2073e01e240524b8a3da0", null ],
-    [ "n_iter", "a00099.html#af0d8e0d5d3de3869b941b66b6caaf964", null ],
-    [ "restart_iter", "a00099.html#aafb41b96563d9966e8e9f458751f2960", null ],
-    [ "waqt", "a00099.html#a28e4e78c0bf258662bef21d26c51fc0b", null ],
-    [ "dt", "a00099.html#a03e28be41881b703c836edbfe9b51b17", null ],
-    [ "norm", "a00099.html#a7e8f00a437ef8fd856bc83c9a763d6cc", null ],
-    [ "max_cfl", "a00099.html#a1c93911a48b34f9e4815b866f7ec5a78", null ],
-    [ "max_diff", "a00099.html#ab0ebc6c6141837ad4bbbc75a4e1f0a99", null ],
-    [ "solver", "a00099.html#ade1bc5cad8c6735a891a28f637cbfb06", null ],
-    [ "mpi", "a00099.html#abaa15763a88d05dc68ff230ce570eee9", null ],
-    [ "u", "a00099.html#a3b6b999a764f1e2ea94bb5f28c7a558c", null ],
-    [ "rhs", "a00099.html#ade4650485fe35fd3e12fea272fc80209", null ],
-    [ "U", "a00099.html#ae21dee7e1deaf4ff3024c1476230d3b1", null ],
-    [ "Udot", "a00099.html#a3d433839a0290dacbbd609e1f60b0b1d", null ],
-    [ "BoundaryFlux", "a00099.html#a0176063b27790e17e07c9fa1b3fabdb3", null ],
-    [ "ResidualFile", "a00099.html#aadc7e3b297d31fd0f7f791fd24e5c810", null ],
-    [ "TimeIntegrate", "a00099.html#a0a56abc9998d52ce97217f6e3f6f8d7a", null ],
-    [ "RHSFunction", "a00099.html#a0339c3e521ebb08df7edc73dbf78dc2d", null ]
+    [ "gamma", "a00099.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "grav", "a00099.html#a87f6134534484ec863864096005ac076", null ],
+    [ "grav_type", "a00099.html#a41908af46d7b1181c9177332aa44ead5", null ],
+    [ "grav_field", "a00099.html#afb1265dc9bb8f8c05bd22f88c23d879c", null ],
+    [ "fast_jac", "a00099.html#a14af7516371abe115b3a1aa9269aebb5", null ],
+    [ "solution", "a00099.html#a7568fac4d4e8488510e1d37f468967b1", null ],
+    [ "upw_choice", "a00099.html#a57894a0f53d5b228bf64053367736bf9", null ],
+    [ "SourceUpwind", "a00099.html#acf2a05e3d7005c865c3e4f609cf728f8", null ]
 ];

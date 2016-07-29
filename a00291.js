@@ -1,5 +1,4 @@
 var a00291 =
 [
-    [ "FPPowerSystem3BusDriftFunction", "a00291.html#a96c648e7775486eb94b64ca849329d0e", null ],
-    [ "FPPowerSystem3BusUpwind", "a00291.html#ac1a5f6240ab95ea1019326fb26b76a49", null ]
+    [ "FPDoubleWellComputeDiffNumber", "a00291.html#a54014d08719e5db4fdfc34b558d9fd60", null ]
 ];

@@ -1,5 +1,5 @@
 var a00242 =
 [
-    [ "Euler1DJacobian", "a00242.html#ab37022ee06f6873c94049e55a0890fe1", null ],
-    [ "Euler1DStiffJacobian", "a00242.html#a635a7e46a7898c4de6b7a47b1d68c969", null ]
+    [ "MPIMin_integer", "a00242.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
+    [ "MPIMin_double", "a00242.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
 ];

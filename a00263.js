@@ -1,4 +1,5 @@
 var a00263 =
 [
-    [ "FPDoubleWellUpwind", "a00263.html#a6c2964e5df00f839b0ebb11fd1d426ff", null ]
+    [ "__FUNCT__", "a00263.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "PetscRHSFunctionExpl", "a00263.html#a2bb23470ba02954293f2af4703408493", null ]
 ];

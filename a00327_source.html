@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/Numa2D/Numa2DCleanup.c Source File</title>
+<title>HyPar: src/PhysicalModels/LinearADR/LinearADRComputeCFL.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,20 +113,51 @@ $(document).ready(function(){initNavTree('a00327_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Numa2DCleanup.c</div>  </div>
+<div class="title">LinearADRComputeCFL.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00327.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00113.html">physicalmodels/numa2d.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">hypar.h</a>&gt;</span></div>
+<a href="a00327.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00107.html">physicalmodels/linearadr.h</a>&gt;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="a00327.html#ae3d31a81226a3c8da15d033c06945532">    5</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00327.html#ae3d31a81226a3c8da15d033c06945532">Numa2DCleanup</a>(<span class="keywordtype">void</span> *s)</div>
+<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="a00330.html#a57e8a77a10e4f2872a4b0da26b7ecaf0">    5</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="a00327.html#a483cca53816c96d4d08c12241688f75d">LinearADRComputeCFL</a>(<span class="keywordtype">void</span> *s,<span class="keywordtype">void</span> *m,<span class="keywordtype">double</span> dt,<span class="keywordtype">double</span> t)</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;}</div>
-<div class="ttc" id="a00327_html_ae3d31a81226a3c8da15d033c06945532"><div class="ttname"><a href="a00327.html#ae3d31a81226a3c8da15d033c06945532">Numa2DCleanup</a></div><div class="ttdeci">int Numa2DCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00327_source.html#l00005">Numa2DCleanup.c:5</a></div></div>
-<div class="ttc" id="a00113_html"><div class="ttname"><a href="a00113.html">numa2d.h</a></div></div>
-<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <a class="code" href="a00106.html">HyPar</a>         *solver = (<a class="code" href="a00106.html">HyPar</a>*)        s;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <a class="code" href="a00107.html#a00442">LinearADR</a>     *params = (<a class="code" href="a00107.html#a00442">LinearADR</a>*)    solver-&gt;<a class="code" href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <span class="keywordtype">int</span>           d, i, v;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  <span class="keywordtype">int</span>     ndims  = solver-&gt;<a class="code" href="a00106.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keywordtype">int</span>     nvars  = solver-&gt;<a class="code" href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="keywordtype">int</span>     ghosts = solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordtype">int</span>     *dim   = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordtype">double</span>  max_cfl = 0;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  for (d = 0; d &lt; ndims; d++) {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; dim[d]; i++) {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;      <span class="keywordflow">for</span> (v = 0; v &lt; nvars; v++) {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keywordtype">double</span> dxinv; <a class="code" href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(d,i,dim,ghosts,solver-&gt;<a class="code" href="a00106.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dxinv);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordtype">double</span> local_cfl = params-&gt;<a class="code" href="a00107.html#a1c93565457c6d07aa9691346f0086e14">a</a>[nvars*d+v]*dt*dxinv;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordflow">if</span> (local_cfl &gt; max_cfl) max_cfl = local_cfl;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;      }</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span>(max_cfl);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="ttc" id="a00106_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00106.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00106_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00231">hypar.h:231</a></div></div>
+<div class="ttc" id="a00106_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00041">hypar.h:41</a></div></div>
+<div class="ttc" id="a00122_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00024">basic.h:24</a></div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
+<div class="ttc" id="a00327_html_a483cca53816c96d4d08c12241688f75d"><div class="ttname"><a href="a00327.html#a483cca53816c96d4d08c12241688f75d">LinearADRComputeCFL</a></div><div class="ttdeci">double LinearADRComputeCFL(void *s, void *m, double dt, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00327_source.html#l00005">LinearADRComputeCFL.c:5</a></div></div>
+<div class="ttc" id="a00106_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00107_html_a00442"><div class="ttname"><a href="a00107.html#a00442">LinearADR</a></div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00017">linearadr.h:17</a></div></div>
+<div class="ttc" id="a00106_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00106.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00085">hypar.h:85</a></div></div>
+<div class="ttc" id="a00106_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00032">hypar.h:32</a></div></div>
+<div class="ttc" id="a00107_html_a1c93565457c6d07aa9691346f0086e14"><div class="ttname"><a href="a00107.html#a1c93565457c6d07aa9691346f0086e14">LinearADR::a</a></div><div class="ttdeci">double * a</div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00018">linearadr.h:18</a></div></div>
+<div class="ttc" id="a00107_html"><div class="ttname"><a href="a00107.html">linearadr.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

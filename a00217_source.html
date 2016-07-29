@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PETScFunctions/PetscCleanup.c Source File</title>
+<title>HyPar: src/InterpolationFunctions/MUSCLInitialize.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,23 +113,32 @@ $(document).ready(function(){initNavTree('a00217_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">PetscCleanup.c</div>  </div>
+<div class="title">MUSCLInitialize.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00217.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00096.html">petscinterface.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00217.html#a6135b9aff50e410b03934a0688d8a73b">   10</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00217.html#a6135b9aff50e410b03934a0688d8a73b">PetscCleanup</a>(<span class="keywordtype">void</span> *obj )</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <a class="code" href="a00096.html#a00407">PETScContext</a> *ctxt = (<a class="code" href="a00096.html#a00407">PETScContext</a>*) obj;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="keywordflow">if</span> (ctxt-&gt;<a class="code" href="a00096.html#a0c5f291f027b0928672b89121f44c0fc">globalDOF</a>) free(ctxt-&gt;<a class="code" href="a00096.html#a0c5f291f027b0928672b89121f44c0fc">globalDOF</a>);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
-<div class="ttc" id="a00096_html_a00407"><div class="ttname"><a href="a00096.html#a00407">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00032">petscinterface.h:32</a></div></div>
-<div class="ttc" id="a00096_html"><div class="ttname"><a href="a00096.html">petscinterface.h</a></div><div class="ttdoc">Contains variables and function definitions for time integration with PETSc (http://www.mcs.anl.gov/petsc/) </div></div>
-<div class="ttc" id="a00217_html_a6135b9aff50e410b03934a0688d8a73b"><div class="ttname"><a href="a00217.html#a6135b9aff50e410b03934a0688d8a73b">PetscCleanup</a></div><div class="ttdeci">int PetscCleanup(void *obj)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00010">PetscCleanup.c:10</a></div></div>
-<div class="ttc" id="a00096_html_a0c5f291f027b0928672b89121f44c0fc"><div class="ttname"><a href="a00096.html#a0c5f291f027b0928672b89121f44c0fc">PETScContext::globalDOF</a></div><div class="ttdeci">double * globalDOF</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00071">petscinterface.h:71</a></div></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00097.html">interpolation.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00217.html#ab9c0c7ce0e00510c982d1408fc3f8ee7">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00217.html#ab9c0c7ce0e00510c982d1408fc3f8ee7">MUSCLInitialize</a>(</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                      <span class="keywordtype">void</span> *s,  </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                      <span class="keywordtype">void</span> *m   </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                   )</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="a00097.html#a00444">MUSCLParameters</a>  *muscl   = (<a class="code" href="a00097.html#a00444">MUSCLParameters</a>*) s;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="comment">/* hard coding these parameters for now */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="comment">/* modify to read from an input file later */</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  muscl-&gt;<a class="code" href="a00097.html#a974b448c3d0a13d483d36ef15de369b5">eps</a> = 1e-3;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="ttc" id="a00217_html_ab9c0c7ce0e00510c982d1408fc3f8ee7"><div class="ttname"><a href="a00217.html#ab9c0c7ce0e00510c982d1408fc3f8ee7">MUSCLInitialize</a></div><div class="ttdeci">int MUSCLInitialize(void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00016">MUSCLInitialize.c:16</a></div></div>
+<div class="ttc" id="a00097_html_a974b448c3d0a13d483d36ef15de369b5"><div class="ttname"><a href="a00097.html#a974b448c3d0a13d483d36ef15de369b5">MUSCLParameters::eps</a></div><div class="ttdeci">double eps</div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00146">interpolation.h:146</a></div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00097_html_a00444"><div class="ttname"><a href="a00097.html#a00444">MUSCLParameters</a></div><div class="ttdoc">Structure of variables/parameters needed by the MUSCL scheme. </div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00145">interpolation.h:145</a></div></div>
+<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
+<div class="ttc" id="a00097_html"><div class="ttname"><a href="a00097.html">interpolation.h</a></div><div class="ttdoc">Definitions for the functions computing the interpolated value of the primitive at the cell interface...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

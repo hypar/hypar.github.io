@@ -1,5 +1,5 @@
 var a00341 =
 [
-    [ "Numa3DRusanovFlux", "a00341.html#adee29df467d83a11708cc55884ddfce8", null ],
-    [ "Numa3DRusanovLinearFlux", "a00341.html#aa3a3b4411941091b8333256e032dea99", null ]
+    [ "NavierStokes2DJacobian", "a00341.html#a343a73d6dce8347a2e56d7302392737a", null ],
+    [ "NavierStokes2DStiffJacobian", "a00341.html#aa3baa96900b3d921ae62b3005c16635c", null ]
 ];

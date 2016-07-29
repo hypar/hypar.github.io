@@ -1,5 +1,5 @@
 var a00155 =
 [
-    [ "VolumeIntegral", "a00155.html#a1f30168f72fce94d12bd0cc8d9322494", null ],
-    [ "InitialSolution", "a00155.html#af9a92a8e942f70bccfa38c1849e49bd8", null ]
+    [ "BCSupersonicOutflowU", "a00155.html#a791e37fae3c9489d0fc039102c57409e", null ],
+    [ "BCSupersonicOutflowDU", "a00155.html#a7f9da7b2e071d59ea18b7772cc1676c1", null ]
 ];

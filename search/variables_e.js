@@ -1,23 +1,12 @@
 var searchData=
 [
-  ['p',['p',['../a00080.html#aace2d484b0e3651abd108f04803d316c',1,'WENOParameters']]],
-  ['p0',['p0',['../a00092.html#a8be9de5ac626cddcd15c5ec181619694',1,'NavierStokes2D::p0()'],['../a00093.html#a8be9de5ac626cddcd15c5ec181619694',1,'NavierStokes3D::p0()']]],
-  ['par',['par',['../a00089.html#ae53517ad7a202762d7b79eaf681701f3',1,'HyPar']]],
-  ['parabolicfunction',['ParabolicFunction',['../a00089.html#ad607a144bb3dbf119fd52c47757212dd',1,'HyPar']]],
-  ['pdf_5fintegral',['pdf_integral',['../a00085.html#adca2e435527ef52d18b3626b0e2ca852',1,'FPDoubleWell::pdf_integral()'],['../a00086.html#adca2e435527ef52d18b3626b0e2ca852',1,'FPPowerSystem::pdf_integral()'],['../a00087.html#adca2e435527ef52d18b3626b0e2ca852',1,'FPPowerSystem1Bus::pdf_integral()'],['../a00088.html#adca2e435527ef52d18b3626b0e2ca852',1,'FPPowerSystem3Bus::pdf_integral()']]],
-  ['physics',['physics',['../a00089.html#a48e81a1806b5774943fd9a26e9a190f2',1,'HyPar']]],
-  ['physicsoutput',['PhysicsOutput',['../a00089.html#a1c247fc17b5919c384f8426052037f28',1,'HyPar']]],
-  ['pm',['Pm',['../a00086.html#a447021464d5a14391f18d08fc463a7d5',1,'FPPowerSystem']]],
-  ['pm1_5favg',['Pm1_avg',['../a00088.html#aa0722324a5f8f83285eb295741e06447',1,'FPPowerSystem3Bus']]],
-  ['pm2_5favg',['Pm2_avg',['../a00088.html#a94d96e5670f1beb15bd9ca0c681e91fd',1,'FPPowerSystem3Bus']]],
-  ['pm_5favg',['Pm_avg',['../a00087.html#a56c71d67270967a7c7a4978ccd0eaedc',1,'FPPowerSystem1Bus']]],
-  ['pmax',['Pmax',['../a00086.html#ab070db6beb517f3c727e4f259f3c43de',1,'FPPowerSystem::Pmax()'],['../a00087.html#ab070db6beb517f3c727e4f259f3c43de',1,'FPPowerSystem1Bus::Pmax()']]],
-  ['pmref_5favg',['Pmref_avg',['../a00088.html#a9e4c7ae4dc16b007fd1d8e77b539c077',1,'FPPowerSystem3Bus']]],
-  ['poststage',['PostStage',['../a00089.html#a9112897c69ff035c4f780013884cc0cb',1,'HyPar']]],
-  ['poststep',['PostStep',['../a00089.html#a4adb9bd4b6212a29447f5960870c6700',1,'HyPar']]],
-  ['pr',['Pr',['../a00092.html#af0f6e03342b9eb912e25f94ce0249a2c',1,'NavierStokes2D::Pr()'],['../a00093.html#af0f6e03342b9eb912e25f94ce0249a2c',1,'NavierStokes3D::Pr()']]],
-  ['pref',['Pref',['../a00094.html#ad2988f8045b70fe0950d361d8814faa6',1,'Numa2D::Pref()'],['../a00095.html#ad2988f8045b70fe0950d361d8814faa6',1,'Numa3D::Pref()']]],
-  ['prestage',['PreStage',['../a00089.html#aec0a2fa1fab1467466c58d8b2b3dc18c',1,'HyPar']]],
-  ['prestep',['PreStep',['../a00089.html#a6f5f6b79d3991a3124226d4cc576e475',1,'HyPar']]],
-  ['printstep',['PrintStep',['../a00089.html#a6020f09f8f913abd7d0895953661e230',1,'HyPar']]]
+  ['o_5fs',['O_s',['../a00103.html#aad25901418696dab0fb4016bd2eb87f9',1,'FPPowerSystem']]],
+  ['offset',['offset',['../a00097.html#ad0c30ee1add42468a6d7c022f2efdf70',1,'WENOParameters']]],
+  ['omega',['Omega',['../a00112.html#a1b5bf6735b7465aec5c931281d240737',1,'Numa3D']]],
+  ['omegab',['omegaB',['../a00104.html#ac789ae1b1c053a68151c68902fee8ac9',1,'FPPowerSystem1Bus::omegaB()'],['../a00105.html#ac789ae1b1c053a68151c68902fee8ac9',1,'FPPowerSystem3Bus::omegaB()']]],
+  ['omegas',['omegaS',['../a00104.html#a9b6bd0a73a0ef62d17fad2c55823ff29',1,'FPPowerSystem1Bus']]],
+  ['on_5fthis_5fproc',['on_this_proc',['../a00098.html#a2eec7e4ee612d5edc985ba81453346e1',1,'DomainBoundary']]],
+  ['op_5ffile_5fformat',['op_file_format',['../a00106.html#a51a3b8c19b86e9e1df5be02b05a6613c',1,'HyPar']]],
+  ['op_5foverwrite',['op_overwrite',['../a00106.html#a4e93cb107e180ef982b74cef7726b70f',1,'HyPar']]],
+  ['output_5fmode',['output_mode',['../a00106.html#a5f89e286a9eaffdb66d966fa6a290d3f',1,'HyPar']]]
 ];

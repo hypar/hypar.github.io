@@ -1,4 +1,6 @@
 var a00252 =
 [
-    [ "Euler2DRoeAverage", "a00252.html#a6f483370683d7a07b8bbe2ae075fa72f", null ]
+    [ "__FUNCT__", "a00252.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "absolute", "a00252.html#adf1be5ccbb7a2522b4f3a64043c72880", null ],
+    [ "PetscComputeRHSOperators", "a00252.html#a0f2c1412c41c1c0ca7c4a68827b6e4f0", null ]
 ];

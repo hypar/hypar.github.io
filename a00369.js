@@ -1,5 +1,5 @@
 var a00369 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00369.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "SecondDerivativeSecondOrderCentral", "a00369.html#a84c8a8f68736a8644c442f8c27628445", null ]
+    [ "Numa2DRusanovFlux", "a00369.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
+    [ "Numa2DRusanovLinearFlux", "a00369.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
 ];

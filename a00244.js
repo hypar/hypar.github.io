@@ -1,4 +1,4 @@
 var a00244 =
 [
-    [ "Euler1DPreStep", "a00244.html#a04a19dc2b23de545e18ffddb298960d1", null ]
+    [ "MPIPartitionArray1D", "a00244.html#ac43b2dabcbf9ac251928a7394dc3775a", null ]
 ];

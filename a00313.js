@@ -1,17 +1,12 @@
 var a00313 =
 [
-    [ "NavierStokes2DUpwindRoe", "a00313.html#a94a2da28368372eb7470d64daba64701", null ],
-    [ "NavierStokes2DUpwindRF", "a00313.html#a26fb9aaa395af22869ea3403c75b9fc6", null ],
-    [ "NavierStokes2DUpwindLLF", "a00313.html#ae42134097d9d8ba1206ee44ef3cef46a", null ],
-    [ "NavierStokes2DUpwindSWFS", "a00313.html#aea31369800b304c021cbeae1c820d4fe", null ],
-    [ "NavierStokes2DUpwindRusanov", "a00313.html#a35b1a9ef3ac86193f26cea7b61d5dda3", null ],
-    [ "NavierStokes2DUpwindRusanovModified", "a00313.html#a065d64b9ace6d9299bcbeb6a3df38610", null ],
-    [ "NavierStokes2DUpwinddFRoe", "a00313.html#ac8e82aba4c8a677c0e70810446bd8ba2", null ],
-    [ "NavierStokes2DUpwinddFRF", "a00313.html#abb82d24b6ea31a22e93ddce27e9d8854", null ],
-    [ "NavierStokes2DUpwinddFLLF", "a00313.html#a37db09007b30f4f092bd231092af7c91", null ],
-    [ "NavierStokes2DUpwinddFRusanovModified", "a00313.html#a9d050883877d0c2e6982b5523ed8ae98", null ],
-    [ "NavierStokes2DUpwindFdFRoe", "a00313.html#af3c0b6185039a068a0f863c1f7d79b3d", null ],
-    [ "NavierStokes2DUpwindFdFRF", "a00313.html#ad22479fc0a6d11d6e97ae03636e3ded5", null ],
-    [ "NavierStokes2DUpwindFdFLLF", "a00313.html#a9866ef9e01e5e1e34fa699455673959e", null ],
-    [ "NavierStokes2DUpwindFdFRusanovModified", "a00313.html#acd787e13badb965cf382e44b86d2504d", null ]
+    [ "FPPowerSystem1BusComputeCFL", "a00313.html#aa388298514bb5a18cffe10c106106c10", null ],
+    [ "FPPowerSystem1BusComputeDiffNumber", "a00313.html#a2d45277a6fdff4acd956154955115fd8", null ],
+    [ "FPPowerSystem1BusAdvection", "a00313.html#a8953d6ab92fdd1fb1cf07e6967a6429e", null ],
+    [ "FPPowerSystem1BusDiffusionLaplacian", "a00313.html#a6b69cbe74e1e532a8b094223fa000ab4", null ],
+    [ "FPPowerSystem1BusDiffusionGeneral", "a00313.html#a42f78f09724fded0ed35c35453f33b54", null ],
+    [ "FPPowerSystem1BusUpwind", "a00313.html#a638932c0498d1c700a308b1a9fcc747c", null ],
+    [ "FPPowerSystem1BusPostStep", "a00313.html#a55d6bb8aafb51bc6407dffaa8eaad139", null ],
+    [ "FPPowerSystem1BusPrintStep", "a00313.html#aabb34e00c1f63832146a7a66ee58d3f0", null ],
+    [ "FPPowerSystem1BusInitialize", "a00313.html#abb50651efbfa511b136e7b1d64bd06b8", null ]
 ];

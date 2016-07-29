@@ -1,4 +1,5 @@
 var a00151 =
 [
-    [ "Initialize", "a00151.html#a09c78e44849845864c29c1fa3351ccc3", null ]
+    [ "BCSubsonicAmbivalentU", "a00151.html#aa06b35b07659fa413f72a90372e325d0", null ],
+    [ "BCSubsonicAmbivalentDU", "a00151.html#a29fa900dc028ce522c560ad08a5b795b", null ]
 ];

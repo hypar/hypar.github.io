@@ -1,5 +1,6 @@
 var a00002 =
 [
     [ "Basic Examples", "a00004.html", "a00004" ],
-    [ "PETSc Examples", "a00052.html", "a00052" ]
+    [ "PETSc Examples", "a00054.html", "a00054" ],
+    [ "Immersed Boundaries Examples", "a00078.html", "a00078" ]
 ];

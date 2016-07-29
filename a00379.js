@@ -1,5 +1,5 @@
 var a00379 =
 [
-    [ "TimeRHSFunctionExplicit", "a00379.html#ab9588b67b4f4ce05c80eff310709ab04", null ],
-    [ "TimeInitialize", "a00379.html#a197505d03d69f40cb54f671775db98ac", null ]
+    [ "ShallowWater1DLeftEigenvectors", "a00379.html#aa9519badea39145bc113cba2422016b3", null ],
+    [ "ShallowWater1DRightEigenvectors", "a00379.html#af4a44ab4a02a19c10ad8f4d75f88f8d7", null ]
 ];

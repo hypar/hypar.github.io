@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/ShallowWater1D/ShallowWater1DCleanup.c Source File</title>
+<title>HyPar: src/PhysicalModels/NavierStokes2D/NavierStokes2DModifiedSolution.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,25 +113,75 @@ $(document).ready(function(){initNavTree('a00342_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ShallowWater1DCleanup.c</div>  </div>
+<div class="title">NavierStokes2DModifiedSolution.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00342.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00115.html">physicalmodels/shallowwater1d.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00342.html#a74ff6a2c0441fdb3430a5eb4958ae101">   10</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00342.html#a74ff6a2c0441fdb3430a5eb4958ae101">ShallowWater1DCleanup</a>(</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                   <span class="keywordtype">void</span> *s </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                  )</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <a class="code" href="a00097.html">ShallowWater1D</a> *param  = (<a class="code" href="a00097.html">ShallowWater1D</a>*) s;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  free(param-&gt;<a class="code" href="a00097.html#a3374c235742374318e70b42a6aa09a82">b</a>);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
-<div class="ttc" id="a00115_html"><div class="ttname"><a href="a00115.html">shallowwater1d.h</a></div><div class="ttdoc">1D Shallow Water Equations </div></div>
-<div class="ttc" id="a00342_html_a74ff6a2c0441fdb3430a5eb4958ae101"><div class="ttname"><a href="a00342.html#a74ff6a2c0441fdb3430a5eb4958ae101">ShallowWater1DCleanup</a></div><div class="ttdeci">int ShallowWater1DCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00342_source.html#l00010">ShallowWater1DCleanup.c:10</a></div></div>
-<div class="ttc" id="a00097_html_a3374c235742374318e70b42a6aa09a82"><div class="ttname"><a href="a00097.html#a3374c235742374318e70b42a6aa09a82">ShallowWater1D::b</a></div><div class="ttdeci">double * b</div><div class="ttdef"><b>Definition:</b> <a href="a00115_source.html#l00141">shallowwater1d.h:141</a></div></div>
-<div class="ttc" id="a00097_html"><div class="ttname"><a href="a00097.html">ShallowWater1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00115_source.html#l00137">shallowwater1d.h:137</a></div></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00122.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00121.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00109.html">physicalmodels/navierstokes2d.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="a00342.html#a916a084793b1263b4896f97edc4186b9">   31</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00342.html#a916a084793b1263b4896f97edc4186b9">NavierStokes2DModifiedSolution</a>(</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                                    <span class="keywordtype">double</span>  *uC,  </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                                    <span class="keywordtype">double</span>  *u,   </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                                    <span class="keywordtype">int</span>     d,    </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                                    <span class="keywordtype">void</span>    *s,   </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                                    <span class="keywordtype">void</span>    *m,   </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                                    <span class="keywordtype">double</span> waqt   </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                                  )</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="a00106.html">HyPar</a>           *solver = (<a class="code" href="a00106.html">HyPar</a>*)          s;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <a class="code" href="a00109.html#a00445">NavierStokes2D</a>  *param  = (<a class="code" href="a00109.html#a00445">NavierStokes2D</a>*) solver-&gt;<a class="code" href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">int</span>     ghosts  = solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">int</span>     *dim    = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">int</span>     ndims   = solver-&gt;<a class="code" href="a00106.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">int</span>     index[ndims], bounds[ndims], offset[ndims];</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="comment">/* set bounds for array index to include ghost points */</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,ndims);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">int</span> i; <span class="keywordflow">for</span> (i=0; i&lt;ndims; i++) bounds[i] += 2*ghosts;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="comment">/* set offset such that index is compatible with ghost point arrangement */</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,-ghosts);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">double</span> inv_gamma_m1 = 1.0 / (param-&gt;<a class="code" href="a00109.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>-1.0);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">double</span> rho, uvel, vvel, E, P;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="a00109.html#a90ce369a1f9d490ab6d392a996e5be4c">_NavierStokes2DGetFlowVar_</a>((u+<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),rho,uvel,vvel,E,P,param);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    uC[<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p+0] = u[<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p+0] * param-&gt;<a class="code" href="a00109.html#aed6abeb9de440ef71c2709218395317d">grav_field_f</a>[p];</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    uC[<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p+1] = u[<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p+1] * param-&gt;<a class="code" href="a00109.html#aed6abeb9de440ef71c2709218395317d">grav_field_f</a>[p];</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    uC[<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p+2] = u[<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p+2] * param-&gt;<a class="code" href="a00109.html#aed6abeb9de440ef71c2709218395317d">grav_field_f</a>[p];</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    uC[<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p+3] = (P*inv_gamma_m1)*(1.0/param-&gt;<a class="code" href="a00109.html#ad2261e3953cff99f1593f3b326312f28">grav_field_g</a>[p]) + (0.5*rho*(uvel*uvel+vvel*vvel))*param-&gt;<a class="code" href="a00109.html#aed6abeb9de440ef71c2709218395317d">grav_field_f</a>[p];</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,index,done);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="ttc" id="a00122_html"><div class="ttname"><a href="a00122.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00106_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00106.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00109_html_a90ce369a1f9d490ab6d392a996e5be4c"><div class="ttname"><a href="a00109.html#a90ce369a1f9d490ab6d392a996e5be4c">_NavierStokes2DGetFlowVar_</a></div><div class="ttdeci">#define _NavierStokes2DGetFlowVar_(u, rho, vx, vy, e, P, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00081">navierstokes2d.h:81</a></div></div>
+<div class="ttc" id="a00109_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00109.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes2D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00377">navierstokes2d.h:377</a></div></div>
+<div class="ttc" id="a00121_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00122">arrayfunctions.h:122</a></div></div>
+<div class="ttc" id="a00121_html"><div class="ttname"><a href="a00121.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00121_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00109_html_aed6abeb9de440ef71c2709218395317d"><div class="ttname"><a href="a00109.html#aed6abeb9de440ef71c2709218395317d">NavierStokes2D::grav_field_f</a></div><div class="ttdeci">double * grav_field_f</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00390">navierstokes2d.h:390</a></div></div>
+<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00121_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00079">arrayfunctions.h:79</a></div></div>
+<div class="ttc" id="a00106_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00231">hypar.h:231</a></div></div>
+<div class="ttc" id="a00109_html"><div class="ttname"><a href="a00109.html">navierstokes2d.h</a></div><div class="ttdoc">2D Navier Stokes equations (compressible flows) </div></div>
+<div class="ttc" id="a00121_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00142">arrayfunctions.h:142</a></div></div>
+<div class="ttc" id="a00106_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00041">hypar.h:41</a></div></div>
+<div class="ttc" id="a00342_html_a916a084793b1263b4896f97edc4186b9"><div class="ttname"><a href="a00342.html#a916a084793b1263b4896f97edc4186b9">NavierStokes2DModifiedSolution</a></div><div class="ttdeci">int NavierStokes2DModifiedSolution(double *uC, double *u, int d, void *s, void *m, double waqt)</div><div class="ttdef"><b>Definition:</b> <a href="a00342_source.html#l00031">NavierStokes2DModifiedSolution.c:31</a></div></div>
+<div class="ttc" id="a00109_html_ad2261e3953cff99f1593f3b326312f28"><div class="ttname"><a href="a00109.html#ad2261e3953cff99f1593f3b326312f28">NavierStokes2D::grav_field_g</a></div><div class="ttdeci">double * grav_field_g</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00390">navierstokes2d.h:390</a></div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
+<div class="ttc" id="a00109_html_a00445"><div class="ttname"><a href="a00109.html#a00445">NavierStokes2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Navier Stokes equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D Navier-Stokes equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00376">navierstokes2d.h:376</a></div></div>
+<div class="ttc" id="a00129_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00057">euler1d.h:57</a></div></div>
+<div class="ttc" id="a00106_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00032">hypar.h:32</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

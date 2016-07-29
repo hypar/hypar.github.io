@@ -1,5 +1,5 @@
 var a00232 =
 [
-    [ "__FUNCT__", "a00232.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscRHSFunctionImpl", "a00232.html#a30eb70124fc46fad83f5748fbe322ed4", null ]
+    [ "MPICreateCommunicators", "a00232.html#a8f52d58fa2c0c94914befd51b6d413a1", null ],
+    [ "MPIFreeCommunicators", "a00232.html#a56b1ce0eb3d932698ac49d3c3183d39a", null ]
 ];
