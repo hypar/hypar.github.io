@@ -1,4 +1,5 @@
 var a00393 =
 [
-    [ "ShallowWater2DFlux", "a00393.html#a402c3b0d9e533619a23dc5a06a0c0bd3", null ]
+    [ "ShallowWater2DLeftEigenvectors", "a00393.html#aedb92b59af4004f2a2905d741bffd00a", null ],
+    [ "ShallowWater2DRightEigenvectors", "a00393.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
 ];

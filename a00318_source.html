@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/FPPowerSystem3Bus/FPPowerSystem3BusCleanup.c Source File</title>
+<title>HyPar: src/PhysicalModels/FPPowerSystem3Bus/FPPowerSystem3BusAdvection.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,43 +113,46 @@ $(document).ready(function(){initNavTree('a00318_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">FPPowerSystem3BusCleanup.c</div>  </div>
+<div class="title">FPPowerSystem3BusAdvection.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00318.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00105.html">physicalmodels/fppowersystem3bus.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00318.html#ae3739edb84bb838b7917c2b19ee8350c">   10</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00318.html#ae3739edb84bb838b7917c2b19ee8350c">FPPowerSystem3BusCleanup</a>(</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                              <span class="keywordtype">void</span> *s </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                            )</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <a class="code" href="a00105.html#a00438">FPPowerSystem3Bus</a> *physics = (<a class="code" href="a00105.html#a00438">FPPowerSystem3Bus</a>*) s;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  free(physics-&gt;<a class="code" href="a00105.html#a4ac9953c6b8de1b9fcda41fc859adfb4">G</a>);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  free(physics-&gt;<a class="code" href="a00105.html#ad36954709307649365515214a02ab06d">B</a>);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
-<div class="ttc" id="a00318_html_ae3739edb84bb838b7917c2b19ee8350c"><div class="ttname"><a href="a00318.html#ae3739edb84bb838b7917c2b19ee8350c">FPPowerSystem3BusCleanup</a></div><div class="ttdeci">int FPPowerSystem3BusCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00318_source.html#l00010">FPPowerSystem3BusCleanup.c:10</a></div></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00122.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00121.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00105.html">physicalmodels/fppowersystem3bus.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00324.html#a68bbc9ffcd74c439612e232e16b4678b">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00318.html#a47826d63ca1c3c5825335a3edee34cfd">FPPowerSystem3BusAdvection</a>(</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                                <span class="keywordtype">double</span>  *f,   </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                                <span class="keywordtype">double</span>  *u,   </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                                <span class="keywordtype">int</span>     dir,  </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                                <span class="keywordtype">void</span>    *s,   </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                <span class="keywordtype">double</span>  t     </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                              )</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00106.html">HyPar</a> *solver = (<a class="code" href="a00106.html">HyPar</a>*) s;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(u,f,solver-&gt;<a class="code" href="a00106.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="ttc" id="a00122_html"><div class="ttname"><a href="a00122.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00106_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00106.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00037">hypar.h:37</a></div></div>
+<div class="ttc" id="a00121_html"><div class="ttname"><a href="a00121.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00121_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00318_html_a47826d63ca1c3c5825335a3edee34cfd"><div class="ttname"><a href="a00318.html#a47826d63ca1c3c5825335a3edee34cfd">FPPowerSystem3BusAdvection</a></div><div class="ttdeci">int FPPowerSystem3BusAdvection(double *f, double *u, int dir, void *s, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00318_source.html#l00016">FPPowerSystem3BusAdvection.c:16</a></div></div>
 <div class="ttc" id="a00105_html"><div class="ttname"><a href="a00105.html">fppowersystem3bus.h</a></div><div class="ttdoc">3-Bus Power System model </div></div>
-<div class="ttc" id="a00105_html_a4ac9953c6b8de1b9fcda41fc859adfb4"><div class="ttname"><a href="a00105.html#a4ac9953c6b8de1b9fcda41fc859adfb4">FPPowerSystem3Bus::G</a></div><div class="ttdeci">double * G</div><div class="ttdef"><b>Definition:</b> <a href="a00105_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
-<div class="ttc" id="a00105_html_a00438"><div class="ttname"><a href="a00105.html#a00438">FPPowerSystem3Bus</a></div><div class="ttdoc">Structure containing variable and parameters specific to the 3-bus power system model. This structure contains the physical parameters and variables for the Fokker-Planck model for a 3-bus power system. </div><div class="ttdef"><b>Definition:</b> <a href="a00105_source.html#l00049">fppowersystem3bus.h:49</a></div></div>
-<div class="ttc" id="a00105_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00105.html#ad36954709307649365515214a02ab06d">FPPowerSystem3Bus::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00105_source.html#l00052">fppowersystem3bus.h:52</a></div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10897352; 
-var sc_invisible=1; 
-var sc_security="83042f57"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counters" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/10897352/0/83042f57/1/"
-alt="free hit counters"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4f99e73020cfe6ed8a86f0042d0d702a.html">PhysicalModels</a></li><li class="navelem"><a class="el" href="dir_a59e3eef905af99e2d0e70a8dd1cc569.html">FPPowerSystem3Bus</a></li><li class="navelem"><a class="el" href="a00318.html">FPPowerSystem3BusAdvection.c</a></li>
+    <li class="footer">Generated on Fri Nov 3 2017 13:56:22 for HyPar by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

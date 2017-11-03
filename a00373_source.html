@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/Numa3D/Numa3DFunctions.c Source File</title>
+<title>HyPar: src/PhysicalModels/Numa3D/Numa3DFlux.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,91 +113,122 @@ $(document).ready(function(){initNavTree('a00373_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Numa3DFunctions.c</div>  </div>
+<div class="title">Numa3DFlux.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00373.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00127.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00131.html">physicalmodels/numa3d.h</a>&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="a00374.html#ac5608220335dd25647841014e67ba10f">    5</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00373.html#ac2be313ce1c2510c61ea35f6fd56f254">Numa3DCalculateStandardAtmosphere_1</a>(<span class="keywordtype">void</span> *p,<span class="keywordtype">double</span> z,<span class="keywordtype">double</span> *ExnerP,<span class="keywordtype">double</span> *P,<span class="keywordtype">double</span> *rho,<span class="keywordtype">double</span> *T)</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <a class="code" href="a00112.html">Numa3D</a> *physics = (<a class="code" href="a00112.html">Numa3D</a>*) p;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <span class="keywordtype">double</span> R      = physics-&gt;<a class="code" href="a00112.html#a228eb5e837a644887ac6e7bab3f42485">R</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  <span class="keywordtype">double</span> gamma  = physics-&gt;<a class="code" href="a00112.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  <span class="keywordtype">double</span> g      = physics-&gt;<a class="code" href="a00112.html#ab30c765b9be1b7776c97c899a12a66bb">g</a>;</div>
+<a href="a00373.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00122.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00121.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00131.html">physicalmodels/numa3d.h</a>&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="a00375.html#af65b0aa648b23422047d1d9197212ad5">    7</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00373.html#a173a0e31d874adff608b905549a58a11">Numa3DFlux</a>(<span class="keywordtype">double</span> *f,<span class="keywordtype">double</span> *u,<span class="keywordtype">int</span> dir,<span class="keywordtype">void</span> *s,<span class="keywordtype">double</span> t)</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <a class="code" href="a00106.html">HyPar</a>  *solver = (<a class="code" href="a00106.html">HyPar</a>*)   s;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  <a class="code" href="a00112.html">Numa3D</a> *param  = (<a class="code" href="a00112.html">Numa3D</a>*) solver-&gt;<a class="code" href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  <span class="keywordtype">int</span>     i;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="comment">/* reference quantities at zero altitude */</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordtype">double</span> P0, T0; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  P0   = physics-&gt;<a class="code" href="a00112.html#ad2988f8045b70fe0950d361d8814faa6">Pref</a>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  T0   = physics-&gt;<a class="code" href="a00112.html#abfc9a78d9685d39295be4f8cfefed2f2">Tref</a>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="keywordtype">int</span> *dim    = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordtype">int</span> ghosts  = solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keywordtype">int</span> ndims   = solver-&gt;<a class="code" href="a00106.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordtype">int</span> index[ndims], bounds[ndims], offset[ndims];</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordtype">double</span> inv_gamma_m1 = 1.0/(gamma-1.0);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordtype">double</span> Cp = gamma * inv_gamma_m1 * R;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordtype">double</span> theta  = T0;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  *ExnerP = 1.0 - (g/(Cp*theta))*z;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  *P      = P0 * <a class="code" href="a00127.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>((*ExnerP),gamma*inv_gamma_m1);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  *rho    = (P0/(R*theta)) * <a class="code" href="a00127.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>((*ExnerP),inv_gamma_m1);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  *T      = (*rho) * theta;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="comment">/* set bounds for array index to include ghost points */</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,ndims);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;ndims; i++) bounds[i] += 2*ghosts;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="comment">/* set offset such that index is compatible with ghost point arrangement */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,-ghosts);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">double</span> drho,uvel,vvel,wvel,dT,dP,rho0,T0,P0,EP,zcoord;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="a00374.html#ac16db84618d93d2d70fa177b41daeb45">   30</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00373.html#a276b2e95fcf1c00b0e9d8bd641c9deed">Numa3DCalculateStandardAtmosphere_2</a>(<span class="keywordtype">void</span> *p,<span class="keywordtype">double</span> z,<span class="keywordtype">double</span> *ExnerP,<span class="keywordtype">double</span> *P,<span class="keywordtype">double</span> *rho,<span class="keywordtype">double</span> *T)</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <a class="code" href="a00112.html">Numa3D</a> *physics = (<a class="code" href="a00112.html">Numa3D</a>*) p;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">double</span> R      = physics-&gt;<a class="code" href="a00112.html#a228eb5e837a644887ac6e7bab3f42485">R</a>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordtype">double</span> gamma  = physics-&gt;<a class="code" href="a00112.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">double</span> g      = physics-&gt;<a class="code" href="a00112.html#ab30c765b9be1b7776c97c899a12a66bb">g</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">/* reference quantities at zero altitude */</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordtype">double</span> P0, T0; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  P0 = physics-&gt;<a class="code" href="a00112.html#ad2988f8045b70fe0950d361d8814faa6">Pref</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  T0 = physics-&gt;<a class="code" href="a00112.html#abfc9a78d9685d39295be4f8cfefed2f2">Tref</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00110.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>,index[<a class="code" href="a00110.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>]-ghosts,dim,ghosts,solver-&gt;<a class="code" href="a00106.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,zcoord);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    param-&gt;<a class="code" href="a00112.html#af6fea8fadacd5d3da0d55b76f94d8874">StandardAtmosphere</a>(param,zcoord,&amp;EP,&amp;P0,&amp;rho0,&amp;T0);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="a00131.html#a818bde49111f049193cd0726ad12fcf9">_Numa3DGetFlowVars_</a>     ((u+<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),drho,uvel,vvel,wvel,dT,rho0);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="a00131.html#aa1817d886435da278195ba0cbe2577aa">_Numa3DComputePressure_</a> (param,T0,dT,P0,dP);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="a00131.html#af509db65dd8d8956a032fdf478266f7b">_Numa3DSetFlux_</a>         ((f+<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),dir,drho,uvel,vvel,wvel,dT,dP,rho0,T0);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,index,done);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  }</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">double</span> BV = 0.01; <span class="comment">/* Brunt-Vaisala frequency */</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">double</span> inv_gamma_m1 = 1.0/(gamma-1.0);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">double</span> Cp = gamma * inv_gamma_m1 * R;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">double</span> term   = BV*BV*z/g;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">double</span> theta  = T0 * exp(term);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  *ExnerP = 1.0 + (g*g/(Cp*T0*BV*BV)) * (exp(-term) - 1.0);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  *P      = P0 * <a class="code" href="a00127.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>((*ExnerP),gamma*inv_gamma_m1);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  *rho    = (P0/(R*theta)) * <a class="code" href="a00127.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>((*ExnerP),inv_gamma_m1);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  *T      = (*rho) * theta;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a00375.html#a2cbd383fbe6bdc2d785e3b6e3ced2d52">   43</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00373.html#a6fed3d0e85c6ae04c0c28f2b58c6781b">Numa3DStiffFlux</a>(<span class="keywordtype">double</span> *f,<span class="keywordtype">double</span> *u,<span class="keywordtype">int</span> dir,<span class="keywordtype">void</span> *s,<span class="keywordtype">double</span> t)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="a00106.html">HyPar</a>  *solver = (<a class="code" href="a00106.html">HyPar</a>*)   s;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00112.html">Numa3D</a> *param  = (<a class="code" href="a00112.html">Numa3D</a>*) solver-&gt;<a class="code" href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span>     i;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">int</span> *dim    = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">int</span> ghosts  = solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordtype">int</span> ndims   = solver-&gt;<a class="code" href="a00106.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordtype">int</span> index[ndims], bounds[ndims], offset[ndims];</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="ttc" id="a00127_html"><div class="ttname"><a href="a00127.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00373_html_ac2be313ce1c2510c61ea35f6fd56f254"><div class="ttname"><a href="a00373.html#ac2be313ce1c2510c61ea35f6fd56f254">Numa3DCalculateStandardAtmosphere_1</a></div><div class="ttdeci">int Numa3DCalculateStandardAtmosphere_1(void *p, double z, double *ExnerP, double *P, double *rho, double *T)</div><div class="ttdef"><b>Definition:</b> <a href="a00373_source.html#l00005">Numa3DFunctions.c:5</a></div></div>
-<div class="ttc" id="a00112_html_a228eb5e837a644887ac6e7bab3f42485"><div class="ttname"><a href="a00112.html#a228eb5e837a644887ac6e7bab3f42485">Numa3D::R</a></div><div class="ttdeci">double R</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00130">numa3d.h:130</a></div></div>
-<div class="ttc" id="a00112_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00112.html#a72f9e01745b3a8203067ab84aefc9aea">Numa3D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00129">numa3d.h:129</a></div></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">/* set bounds for array index to include ghost points */</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,ndims);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;ndims; i++) bounds[i] += 2*ghosts;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="comment">/* set offset such that index is compatible with ghost point arrangement */</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,-ghosts);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">double</span> drho,uvel,vvel,wvel,dT,dP,rho0,T0,P0,EP,zcoord;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00110.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>,index[<a class="code" href="a00110.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>]-ghosts,dim,ghosts,solver-&gt;<a class="code" href="a00106.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,zcoord);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    param-&gt;<a class="code" href="a00112.html#af6fea8fadacd5d3da0d55b76f94d8874">StandardAtmosphere</a>(param,zcoord,&amp;EP,&amp;P0,&amp;rho0,&amp;T0);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="a00131.html#a818bde49111f049193cd0726ad12fcf9">_Numa3DGetFlowVars_</a>               ((u+<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),drho,uvel,vvel,wvel,dT,rho0);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="a00131.html#a5641d10eb827d4dd68663e60fe098a14">_Numa3DComputeLinearizedPressure_</a> (param,T0,dT,P0,dP);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="a00131.html#a420a7eb3d9d4c8f02243dc3a5efc510b">_Numa3DSetLinearFlux_</a>             ((f+<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),dir,drho,uvel,vvel,wvel,dT,dP,rho0,T0);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,index,done);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
+<div class="ttc" id="a00131_html_a818bde49111f049193cd0726ad12fcf9"><div class="ttname"><a href="a00131.html#a818bde49111f049193cd0726ad12fcf9">_Numa3DGetFlowVars_</a></div><div class="ttdeci">#define _Numa3DGetFlowVars_(u, drho, uvel, vvel, wvel, dT, rho0)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00039">numa3d.h:39</a></div></div>
+<div class="ttc" id="a00122_html"><div class="ttname"><a href="a00122.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00106_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00106.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00131_html_af509db65dd8d8956a032fdf478266f7b"><div class="ttname"><a href="a00131.html#af509db65dd8d8956a032fdf478266f7b">_Numa3DSetFlux_</a></div><div class="ttdeci">#define _Numa3DSetFlux_(f, dir, drho, uvel, vvel, wvel, dT, dP, rho0, T0)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00048">numa3d.h:48</a></div></div>
+<div class="ttc" id="a00121_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00122">arrayfunctions.h:122</a></div></div>
+<div class="ttc" id="a00121_html"><div class="ttname"><a href="a00121.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00121_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00131_html_a420a7eb3d9d4c8f02243dc3a5efc510b"><div class="ttname"><a href="a00131.html#a420a7eb3d9d4c8f02243dc3a5efc510b">_Numa3DSetLinearFlux_</a></div><div class="ttdeci">#define _Numa3DSetLinearFlux_(f, dir, drho, uvel, vvel, wvel, dT, dP, rho0, T0)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00071">numa3d.h:71</a></div></div>
+<div class="ttc" id="a00106_html_a711aad4cbe735871dd9e91ab575c878b"><div class="ttname"><a href="a00106.html#a711aad4cbe735871dd9e91ab575c878b">HyPar::x</a></div><div class="ttdeci">double * x</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00082">hypar.h:82</a></div></div>
+<div class="ttc" id="a00131_html_aa1817d886435da278195ba0cbe2577aa"><div class="ttname"><a href="a00131.html#aa1817d886435da278195ba0cbe2577aa">_Numa3DComputePressure_</a></div><div class="ttdeci">#define _Numa3DComputePressure_(params, T0, dT, P0, dP)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00103">numa3d.h:103</a></div></div>
+<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00020">hypar.h:20</a></div></div>
+<div class="ttc" id="a00121_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00079">arrayfunctions.h:79</a></div></div>
+<div class="ttc" id="a00373_html_a6fed3d0e85c6ae04c0c28f2b58c6781b"><div class="ttname"><a href="a00373.html#a6fed3d0e85c6ae04c0c28f2b58c6781b">Numa3DStiffFlux</a></div><div class="ttdeci">int Numa3DStiffFlux(double *f, double *u, int dir, void *s, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00373_source.html#l00043">Numa3DFlux.c:43</a></div></div>
+<div class="ttc" id="a00112_html_af6fea8fadacd5d3da0d55b76f94d8874"><div class="ttname"><a href="a00112.html#af6fea8fadacd5d3da0d55b76f94d8874">Numa3D::StandardAtmosphere</a></div><div class="ttdeci">void(* StandardAtmosphere)(void *, double, double *, double *, double *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00139">numa3d.h:139</a></div></div>
+<div class="ttc" id="a00106_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00231">hypar.h:231</a></div></div>
 <div class="ttc" id="a00112_html"><div class="ttname"><a href="a00112.html">Numa3D</a></div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00128">numa3d.h:128</a></div></div>
-<div class="ttc" id="a00127_html_a840eef18a5986381093ff8c176a2153c"><div class="ttname"><a href="a00127.html#a840eef18a5986381093ff8c176a2153c">raiseto</a></div><div class="ttdeci">#define raiseto(x, a)</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00038">mathfunctions.h:38</a></div></div>
-<div class="ttc" id="a00373_html_a276b2e95fcf1c00b0e9d8bd641c9deed"><div class="ttname"><a href="a00373.html#a276b2e95fcf1c00b0e9d8bd641c9deed">Numa3DCalculateStandardAtmosphere_2</a></div><div class="ttdeci">int Numa3DCalculateStandardAtmosphere_2(void *p, double z, double *ExnerP, double *P, double *rho, double *T)</div><div class="ttdef"><b>Definition:</b> <a href="a00373_source.html#l00030">Numa3DFunctions.c:30</a></div></div>
-<div class="ttc" id="a00112_html_ad2988f8045b70fe0950d361d8814faa6"><div class="ttname"><a href="a00112.html#ad2988f8045b70fe0950d361d8814faa6">Numa3D::Pref</a></div><div class="ttdeci">double Pref</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00136">numa3d.h:136</a></div></div>
-<div class="ttc" id="a00112_html_ab30c765b9be1b7776c97c899a12a66bb"><div class="ttname"><a href="a00112.html#ab30c765b9be1b7776c97c899a12a66bb">Numa3D::g</a></div><div class="ttdeci">double g</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00132">numa3d.h:132</a></div></div>
+<div class="ttc" id="a00121_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00142">arrayfunctions.h:142</a></div></div>
+<div class="ttc" id="a00106_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00041">hypar.h:41</a></div></div>
+<div class="ttc" id="a00122_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00024">basic.h:24</a></div></div>
+<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00373_html_a173a0e31d874adff608b905549a58a11"><div class="ttname"><a href="a00373.html#a173a0e31d874adff608b905549a58a11">Numa3DFlux</a></div><div class="ttdeci">int Numa3DFlux(double *f, double *u, int dir, void *s, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00373_source.html#l00007">Numa3DFlux.c:7</a></div></div>
+<div class="ttc" id="a00131_html_a5641d10eb827d4dd68663e60fe098a14"><div class="ttname"><a href="a00131.html#a5641d10eb827d4dd68663e60fe098a14">_Numa3DComputeLinearizedPressure_</a></div><div class="ttdeci">#define _Numa3DComputeLinearizedPressure_(params, T0, dT, P0, dP)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00112">numa3d.h:112</a></div></div>
 <div class="ttc" id="a00131_html"><div class="ttname"><a href="a00131.html">numa3d.h</a></div></div>
-<div class="ttc" id="a00112_html_abfc9a78d9685d39295be4f8cfefed2f2"><div class="ttname"><a href="a00112.html#abfc9a78d9685d39295be4f8cfefed2f2">Numa3D::Tref</a></div><div class="ttdeci">double Tref</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00136">numa3d.h:136</a></div></div>
+<div class="ttc" id="a00129_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00058">euler1d.h:58</a></div></div>
+<div class="ttc" id="a00110_html_a227beecac6bef022707512c15d39e30b"><div class="ttname"><a href="a00110.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a></div><div class="ttdeci">#define _ZDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00110_source.html#l00076">navierstokes3d.h:76</a></div></div>
+<div class="ttc" id="a00106_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00032">hypar.h:32</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10897352; 
-var sc_invisible=1; 
-var sc_security="83042f57"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counters" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/10897352/0/83042f57/1/"
-alt="free hit counters"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4f99e73020cfe6ed8a86f0042d0d702a.html">PhysicalModels</a></li><li class="navelem"><a class="el" href="dir_493b87128faf27e7e62df6ccd1375a53.html">Numa3D</a></li><li class="navelem"><a class="el" href="a00373.html">Numa3DFlux.c</a></li>
+    <li class="footer">Generated on Fri Nov 3 2017 13:56:22 for HyPar by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

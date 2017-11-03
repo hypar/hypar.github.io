@@ -1,5 +1,4 @@
 var a00364 =
 [
-    [ "Numa2DFlux", "a00364.html#a6a672aa8b32d8ff139204f56c11c725e", null ],
-    [ "Numa2DStiffFlux", "a00364.html#a6c56b9f36babefae799e469d7f9036df", null ]
+    [ "Numa2DComputeCFL", "a00364.html#a0b0fab13b3677c4d7bbf7a940ce65875", null ]
 ];

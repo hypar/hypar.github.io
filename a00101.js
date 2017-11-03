@@ -1,13 +1,13 @@
 var a00101 =
 [
     [ "TimeIntegration", "a00116.html", "a00116" ],
-    [ "ExplicitRKParameters", "a00101.html#a00432", [
+    [ "ExplicitRKParameters", "a00101.html#a00433", [
       [ "nstages", "a00101.html#ae11575eb42a4ab3934cf6278c93010e1", null ],
       [ "A", "a00101.html#ac900805a486cbb8489e3c176ed6e0d8e", null ],
       [ "b", "a00101.html#a9f92e5582bf339a3c95df78b9c684fe0", null ],
       [ "c", "a00101.html#a9699d746362160261a64e9447767c8d0", null ]
     ] ],
-    [ "GLMGEEParameters", "a00101.html#a00439", [
+    [ "GLMGEEParameters", "a00101.html#a00440", [
       [ "nstages", "a00101.html#ae11575eb42a4ab3934cf6278c93010e1", null ],
       [ "r", "a00101.html#acab531abaa74a7e664e3986f2522b33a", null ],
       [ "ee_mode", "a00101.html#a7ece217d7b1c25180e149a4df063d8b3", null ],

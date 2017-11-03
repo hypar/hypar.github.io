@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/Euler1D/Euler1DGravityField.c Source File</title>
+<title>HyPar: src/PhysicalModels/Euler1D/Euler1DFunctions.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,131 +113,40 @@ $(document).ready(function(){initNavTree('a00273_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Euler1DGravityField.c</div>  </div>
+<div class="title">Euler1DFunctions.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00273.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00121.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00129.html">physicalmodels/euler1d.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="a00274.html#ac2a5ef9ed2d6611286c0ff4e213c735b">   23</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00273.html#abbbaafa694caadbccd6080cc35b89511">Euler1DGravityField</a>(</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                        <span class="keywordtype">void</span> *s, </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                        <span class="keywordtype">void</span> *m  </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                       )</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00106.html">HyPar</a>         *solver = (<a class="code" href="a00106.html">HyPar</a>*)        s;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00108.html#a00443">MPIVariables</a>  *mpi    = (<a class="code" href="a00108.html#a00443">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00099.html">Euler1D</a>       *param  = (<a class="code" href="a00099.html">Euler1D</a>*)      solver-&gt;<a class="code" href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">double</span>  *S      = param-&gt;<a class="code" href="a00099.html#afb1265dc9bb8f8c05bd22f88c23d879c">grav_field</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">int</span>     *dim    = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">int</span>     ghosts  = solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordtype">int</span>     index[<a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], bounds[_MODEL_NDIMS_],</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;          offset[_MODEL_NDIMS_], d, done;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">/* set bounds for array index to include ghost points */</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,_MODEL_NDIMS_);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>; d++) bounds[d] += 2*ghosts;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="comment">/* set offset such that index is compatible with ghost point arrangement */</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,_MODEL_NDIMS_,-ghosts);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="comment">/* set the value of the gravity field */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  done = 0; <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,_MODEL_NDIMS_,0);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">int</span> p;                <a class="code" href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(_MODEL_NDIMS_,dim,index,offset,ghosts,p);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">double</span> xcoord;        <a class="code" href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>,index[<a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>]-ghosts,dim,ghosts,solver-&gt;<a class="code" href="a00106.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,xcoord);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">if</span> (param-&gt;<a class="code" href="a00099.html#a41908af46d7b1181c9177332aa44ead5">grav_type</a> == 0) {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      S[p] = exp(-param-&gt;<a class="code" href="a00099.html#a87f6134534484ec863864096005ac076">grav</a>*xcoord);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (param-&gt;<a class="code" href="a00099.html#a41908af46d7b1181c9177332aa44ead5">grav_type</a> == 1) {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      <span class="keywordtype">double</span> pi = 4.0 * atan(1.0);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      <span class="keywordtype">double</span> phi = -sin(2*pi*xcoord)/(2*pi);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      S[p] = exp(-phi);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(_MODEL_NDIMS_,bounds,index,done);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordflow">if</span> (param-&gt;<a class="code" href="a00099.html#a41908af46d7b1181c9177332aa44ead5">grav_type</a> != 1) {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">/* a sensible simulation will not specify peridic boundary conditions </span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">    * along a direction in which gravity acts (unless the gravitational field</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">    * itself is sinusoidal), so extrapolate the gravity field at the boundaries */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">int</span> indexb[<a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], indexi[<a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>];</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">for</span> (d = 0; d &lt; <a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>; d++) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      <span class="comment">/* left boundary */</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00108.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[d]) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,_MODEL_NDIMS_); bounds[d] = ghosts;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,_MODEL_NDIMS_,0); offset[d] = -ghosts;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        done = 0; <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,_MODEL_NDIMS_,0);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;          <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,_MODEL_NDIMS_); indexi[d] = ghosts-1-indexb[d];</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;          <span class="keywordtype">int</span> p1; <a class="code" href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(_MODEL_NDIMS_,dim,indexb,offset,ghosts,p1);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;          <span class="keywordtype">int</span> p2; <a class="code" href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (_MODEL_NDIMS_,dim,indexi,ghosts,p2);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;          S[p1] = S[p2];</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;          <a class="code" href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(_MODEL_NDIMS_,bounds,indexb,done);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <span class="comment">/* right boundary */</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00108.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[d] == mpi-&gt;<a class="code" href="a00108.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[d]-1) {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,_MODEL_NDIMS_); bounds[d] = ghosts;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,_MODEL_NDIMS_,0); offset[d] = dim[d];</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        done = 0; <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,_MODEL_NDIMS_,0);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;          <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,_MODEL_NDIMS_); indexi[d] = dim[d]-1-indexb[d];</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;          <span class="keywordtype">int</span> p1; <a class="code" href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(_MODEL_NDIMS_,dim,indexb,offset,ghosts,p1);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;          <span class="keywordtype">int</span> p2; <a class="code" href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (_MODEL_NDIMS_,dim,indexi,ghosts,p2);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;          S[p1] = S[p2];</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;          <a class="code" href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(_MODEL_NDIMS_,bounds,indexb,done);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div>
-<div class="ttc" id="a00099_html_a87f6134534484ec863864096005ac076"><div class="ttname"><a href="a00099.html#a87f6134534484ec863864096005ac076">Euler1D::grav</a></div><div class="ttdeci">double grav</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00257">euler1d.h:257</a></div></div>
-<div class="ttc" id="a00108_html_a00443"><div class="ttname"><a href="a00108.html#a00443">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00021">mpivars.h:21</a></div></div>
-<div class="ttc" id="a00129_html_a6a44057228e5f4b86e1c4d04b2a28977"><div class="ttname"><a href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a></div><div class="ttdeci">#define _XDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00072">euler1d.h:72</a></div></div>
-<div class="ttc" id="a00121_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00122">arrayfunctions.h:122</a></div></div>
-<div class="ttc" id="a00121_html"><div class="ttname"><a href="a00121.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00121_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00281">arrayfunctions.h:281</a></div></div>
-<div class="ttc" id="a00106_html_a711aad4cbe735871dd9e91ab575c878b"><div class="ttname"><a href="a00106.html#a711aad4cbe735871dd9e91ab575c878b">HyPar::x</a></div><div class="ttdeci">double * x</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00082">hypar.h:82</a></div></div>
-<div class="ttc" id="a00121_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00036">arrayfunctions.h:36</a></div></div>
-<div class="ttc" id="a00099_html"><div class="ttname"><a href="a00099.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00255">euler1d.h:255</a></div></div>
-<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00121_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00079">arrayfunctions.h:79</a></div></div>
-<div class="ttc" id="a00106_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00231">hypar.h:231</a></div></div>
-<div class="ttc" id="a00099_html_a41908af46d7b1181c9177332aa44ead5"><div class="ttname"><a href="a00099.html#a41908af46d7b1181c9177332aa44ead5">Euler1D::grav_type</a></div><div class="ttdeci">int grav_type</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00268">euler1d.h:268</a></div></div>
-<div class="ttc" id="a00129_html_a57771c952ec174601addf43e1c0202b2"><div class="ttname"><a href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a></div><div class="ttdeci">#define _MODEL_NDIMS_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00055">euler1d.h:55</a></div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00122.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00129.html">physicalmodels/euler1d.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00275.html#a6dfa80796cd1ce0ba0712c301dd68d2f">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00273.html#a25f26ae1ec34783770e761553ae617ae">Euler1DRoeAverage</a>(</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                      <span class="keywordtype">double</span>  *uavg, </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                      <span class="keywordtype">double</span>  *uL,   </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                      <span class="keywordtype">double</span>  *uR,   </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                      <span class="keywordtype">void</span>    *p     </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                     )</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00099.html">Euler1D</a> *param  = (<a class="code" href="a00099.html">Euler1D</a>*) p;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00129.html#a9a3e89dcf75e61433735d59b6556c346">_Euler1DRoeAverage_</a>(uavg,uL,uR,param);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="ttc" id="a00122_html"><div class="ttname"><a href="a00122.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00129_html_a9a3e89dcf75e61433735d59b6556c346"><div class="ttname"><a href="a00129.html#a9a3e89dcf75e61433735d59b6556c346">_Euler1DRoeAverage_</a></div><div class="ttdeci">#define _Euler1DRoeAverage_(uavg, uL, uR, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00167">euler1d.h:167</a></div></div>
+<div class="ttc" id="a00099_html"><div class="ttname"><a href="a00099.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00271">euler1d.h:271</a></div></div>
 <div class="ttc" id="a00129_html"><div class="ttname"><a href="a00129.html">euler1d.h</a></div><div class="ttdoc">1D Euler Equations (inviscid, compressible flows) </div></div>
-<div class="ttc" id="a00108_html_aa3c28612a64b8a97bde66b720e15c700"><div class="ttname"><a href="a00108.html#aa3c28612a64b8a97bde66b720e15c700">MPIVariables::ip</a></div><div class="ttdeci">int * ip</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00025">mpivars.h:25</a></div></div>
-<div class="ttc" id="a00121_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00142">arrayfunctions.h:142</a></div></div>
-<div class="ttc" id="a00106_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00041">hypar.h:41</a></div></div>
-<div class="ttc" id="a00099_html_afb1265dc9bb8f8c05bd22f88c23d879c"><div class="ttname"><a href="a00099.html#afb1265dc9bb8f8c05bd22f88c23d879c">Euler1D::grav_field</a></div><div class="ttdeci">double * grav_field</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00270">euler1d.h:270</a></div></div>
-<div class="ttc" id="a00122_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00024">basic.h:24</a></div></div>
-<div class="ttc" id="a00108_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00108.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00024">mpivars.h:24</a></div></div>
-<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
-<div class="ttc" id="a00106_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00032">hypar.h:32</a></div></div>
-<div class="ttc" id="a00273_html_abbbaafa694caadbccd6080cc35b89511"><div class="ttname"><a href="a00273.html#abbbaafa694caadbccd6080cc35b89511">Euler1DGravityField</a></div><div class="ttdeci">int Euler1DGravityField(void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00273_source.html#l00023">Euler1DGravityField.c:23</a></div></div>
+<div class="ttc" id="a00273_html_a25f26ae1ec34783770e761553ae617ae"><div class="ttname"><a href="a00273.html#a25f26ae1ec34783770e761553ae617ae">Euler1DRoeAverage</a></div><div class="ttdeci">int Euler1DRoeAverage(double *uavg, double *uL, double *uR, void *p)</div><div class="ttdef"><b>Definition:</b> <a href="a00273_source.html#l00016">Euler1DFunctions.c:16</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10897352; 
-var sc_invisible=1; 
-var sc_security="83042f57"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counters" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/10897352/0/83042f57/1/"
-alt="free hit counters"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4f99e73020cfe6ed8a86f0042d0d702a.html">PhysicalModels</a></li><li class="navelem"><a class="el" href="dir_a580acf5b82349c5068c63a2b2fdce4e.html">Euler1D</a></li><li class="navelem"><a class="el" href="a00273.html">Euler1DFunctions.c</a></li>
+    <li class="footer">Generated on Fri Nov 3 2017 13:56:22 for HyPar by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

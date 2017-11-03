@@ -22,8 +22,8 @@ var searchData=
   ['bcsupersonicoutflow_2ec',['BCSupersonicOutflow.c',['../a00155.html',1,'']]],
   ['bcswslipwall_2ec',['BCSWSlipWall.c',['../a00156.html',1,'']]],
   ['bcturbulentsupersonicinflow_2ec',['BCTurbulentSupersonicInflow.c',['../a00157.html',1,'']]],
-  ['blocktridiagiterjacobi_2ec',['blocktridiagIterJacobi.c',['../a00421.html',1,'']]],
-  ['blocktridiaglu_2ec',['blocktridiagLU.c',['../a00422.html',1,'']]],
+  ['blocktridiagiterjacobi_2ec',['blocktridiagIterJacobi.c',['../a00422.html',1,'']]],
+  ['blocktridiaglu_2ec',['blocktridiagLU.c',['../a00423.html',1,'']]],
   ['boundaryconditions_2eh',['boundaryconditions.h',['../a00123.html',1,'']]],
   ['boundaryintegral_2ec',['BoundaryIntegral.c',['../a00163.html',1,'']]]
 ];

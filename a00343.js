@@ -1,4 +1,4 @@
 var a00343 =
 [
-    [ "NavierStokes2DParabolicFunction", "a00343.html#a3b7da8c25125ac4681035c3bcd35c449", null ]
+    [ "NavierStokes2DModifiedSolution", "a00343.html#a916a084793b1263b4896f97edc4186b9", null ]
 ];

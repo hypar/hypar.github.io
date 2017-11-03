@@ -1,6 +1,5 @@
 var a00350 =
 [
-    [ "NavierStokes3DFlux", "a00350.html#ac0c3d11fce67eca952fcb594ff3930cb", null ],
-    [ "NavierStokes3DStiffFlux", "a00350.html#a028bf569168b6ac14cc51c485fd891ce", null ],
-    [ "NavierStokes3DNonStiffFlux", "a00350.html#ae304378ba0faf692ac352fef0deeb961", null ]
+    [ "NavierStokes3DLeftEigenvectors", "a00350.html#ab376732168de139806c9f77828caa063", null ],
+    [ "NavierStokes3DRightEigenvectors", "a00350.html#a62b44025b86e4d73a34142b32301ee7c", null ]
 ];

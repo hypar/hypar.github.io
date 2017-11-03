@@ -8,7 +8,7 @@ var searchData=
   ['applyboundaryconditions_2ec',['ApplyBoundaryConditions.c',['../a00161.html',1,'']]],
   ['applyibconditions',['ApplyIBConditions',['../a00106.html#a76b40a001be94d77bd8b84358d3dd1b0',1,'HyPar::ApplyIBConditions()'],['../a00162.html#a63bad563b5163bdada0672cec6d535c0',1,'ApplyIBConditions(void *s, void *m, double *x, double waqt):&#160;ApplyIBConditions.c'],['../a00175.html#a4cf60474c83d29277a8c9060143113ff',1,'ApplyIBConditions(void *, void *, double *, double):&#160;ApplyIBConditions.c']]],
   ['applyibconditions_2ec',['ApplyIBConditions.c',['../a00162.html',1,'']]],
-  ['applyperiodicity',['ApplyPeriodicity',['../a00254.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e',1,'PetscGlobalDOF.c']]],
+  ['applyperiodicity',['ApplyPeriodicity',['../a00255.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e',1,'PetscGlobalDOF.c']]],
   ['arraycopynd',['ArrayCopynD',['../a00121.html#ac4ae1109cf287763cef63cc38d52589f',1,'arrayfunctions.h']]],
   ['arrayfunctions_2eh',['arrayfunctions.h',['../a00121.html',1,'']]],
   ['arrayimplementations_2ec',['ArrayImplementations.c',['../a00137.html',1,'']]],

@@ -1,5 +1,5 @@
 var a00365 =
 [
-    [ "Numa2DCalculateStandardAtmosphere_1", "a00365.html#a63e7a4dc0f7cb9263a16c05431e03dc8", null ],
-    [ "Numa2DCalculateStandardAtmosphere_2", "a00365.html#a5b324327c40edaecca557cfa76c9cd2b", null ]
+    [ "Numa2DFlux", "a00365.html#a6a672aa8b32d8ff139204f56c11c725e", null ],
+    [ "Numa2DStiffFlux", "a00365.html#a6c56b9f36babefae799e469d7f9036df", null ]
 ];

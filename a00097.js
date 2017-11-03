@@ -1,9 +1,9 @@
 var a00097 =
 [
-    [ "MUSCLParameters", "a00097.html#a00444", [
+    [ "MUSCLParameters", "a00097.html#a00445", [
       [ "eps", "a00097.html#a974b448c3d0a13d483d36ef15de369b5", null ]
     ] ],
-    [ "WENOParameters", "a00097.html#a00449", [
+    [ "WENOParameters", "a00097.html#a00450", [
       [ "mapped", "a00097.html#af370a2df117483b6f752da8889a89bb0", null ],
       [ "borges", "a00097.html#af3c02b1dce05b28870fa1994c40cd1f2", null ],
       [ "yc", "a00097.html#a8470a9f95ece04985a5031e745042b7e", null ],
@@ -19,7 +19,7 @@ var a00097 =
       [ "offset", "a00097.html#ad0c30ee1add42468a6d7c022f2efdf70", null ],
       [ "size", "a00097.html#a439227feff9d7f55384e8780cfc2eb82", null ]
     ] ],
-    [ "CompactScheme", "a00097.html#a00430", [
+    [ "CompactScheme", "a00097.html#a00431", [
       [ "A", "a00097.html#ac900805a486cbb8489e3c176ed6e0d8e", null ],
       [ "B", "a00097.html#ad36954709307649365515214a02ab06d", null ],
       [ "C", "a00097.html#a0a26ce8d1878aac6ddc87e3f6290e039", null ],

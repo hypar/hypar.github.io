@@ -1,6 +1,5 @@
 var a00337 =
 [
-    [ "NavierStokes2DFlux", "a00337.html#af9474905c4b501fdee9a18e490f6499d", null ],
-    [ "NavierStokes2DStiffFlux", "a00337.html#ae5da2defa681602a634b5e5455bae4cb", null ],
-    [ "NavierStokes2DNonStiffFlux", "a00337.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
+    [ "NavierStokes2DLeftEigenvectors", "a00337.html#a497cabf9429ce30c3107d526bc18a798", null ],
+    [ "NavierStokes2DRightEigenvectors", "a00337.html#a2267c0825e485249fdee53ee44981636", null ]
 ];

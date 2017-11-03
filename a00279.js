@@ -1,5 +1,5 @@
 var a00279 =
 [
-    [ "Euler1DSourceUpwindLLF", "a00279.html#a229db12fad7bac6cf5f1223f204fe1f9", null ],
-    [ "Euler1DSourceUpwindRoe", "a00279.html#ad94cc03bc96444b2f8ce0e701fe489f3", null ]
+    [ "Euler1DSourceFunction", "a00279.html#a23bb10e5b44548d3c27b43d0bb954214", null ],
+    [ "Euler1DSource", "a00279.html#a2b851ab206d30609f55154fa1bc0f787", null ]
 ];

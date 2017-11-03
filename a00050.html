@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('a00050.html','');});
 <div class="title">3D Navier-Stokes Equations - Rising Thermal Bubble </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Location: <b>hypar/Examples/3D/NavierStokes3D/RisingThermalBubble</b> (This directory contains all the input files needed to run this case. If there is a <em>Run.m</em>, run it in MATLAB to quickly set up, run, and visualize the example).</p>
+<div class="textblock"><p>Location: <b>hypar/Examples/3D/NavierStokes3D/RisingThermalBubble_Config1</b> (This directory contains all the input files needed to run this case. If there is a <em>Run.m</em>, run it in MATLAB to quickly set up, run, and visualize the example).</p>
 <p>Governing equations: 3D Navier-Stokes Equations (<a class="el" href="a00110.html" title="3D Navier Stokes equations (compressible flows) ">navierstokes3d.h</a>)</p>
 <p>Domain: \(0 \le x,y,z &lt; 1000\,{\rm m}\), <em>"slip-wall"</em> (<a class="el" href="a00123.html#af3a9f3ba15bc914ed0a88295aee147e8">_SLIP_WALL_</a>) boundaries everywhere, with zero wall velocity.</p>
 <p>Reference:</p><ul>
@@ -361,7 +361,7 @@ $(document).ready(function(){initNavTree('a00050.html','');});
 <p>Note that <b>iproc</b> is set to </p><pre class="fragment">  4 4 4
 </pre><p>in <b>solver.inp</b> (i.e., 4 processors along <em>x</em>, 4 processors along <em>y</em>, and 4 processor along <em>z</em>). Thus, this example should be run with 64 MPI ranks (or change <b>iproc</b>).</p>
 <p>After running the code, there should be 11 output files <b>op_00000.bin</b>, <b>op_00001.bin</b>, ... <b>op_00010.bin</b>; the first one is the solution at \(t=0\) and the final one is the solution at \(t=200\,{\rm s}\). Since <a class="el" href="a00106.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, separate files are written for solutions at each output time. All the files are binary (<a class="el" href="a00106.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>binary</em> in <b>solver.inp</b>).</p>
-<p>The following code (<b>Examples/3D/NavierStokes3D/RisingThermalBubble/aux/PostProcess.c</b>) can be used to convert the binary solution file (with conserved variables \(\rho,\rho u,\rho v,\rho w,e\)) to Tecplot or plain text files with the primitive and reference variables \(\rho,u,v,w,P,\theta,\rho_0,P_0,\pi,\theta_0\) where the subscript \(0\) indicates the hydrostatic mean value. </p><div class="fragment"><div class="line"><span class="comment">/*</span></div>
+<p>The following code (<b>Examples/3D/NavierStokes3D/RisingThermalBubble_Config1/aux/PostProcess.c</b>) can be used to convert the binary solution file (with conserved variables \(\rho,\rho u,\rho v,\rho w,e\)) to Tecplot or plain text files with the primitive and reference variables \(\rho,u,v,w,P,\theta,\rho_0,P_0,\pi,\theta_0\) where the subscript \(0\) indicates the hydrostatic mean value. </p><div class="fragment"><div class="line"><span class="comment">/*</span></div>
 <div class="line"><span class="comment">  Rising Thermal Bubble:-</span></div>
 <div class="line"><span class="comment">  The code takes a binary solution file (that contains the </span></div>
 <div class="line"><span class="comment">  conserved variable (rho, rho*u, rho*v, rho*w, e) as its input </span></div>
@@ -738,7 +738,7 @@ $(document).ready(function(){initNavTree('a00050.html','');});
 </div><!-- fragment --><p>The following figure shows the potential temperature iso-surface for the initial and final solutions (plotted in VisIt): </p><div class="image">
 <img src="Solution_3DNavStok_Bubble3D.png" alt="Solution_3DNavStok_Bubble3D.png"/>
 </div>
-<p>The file <b>Extras/ExtractSlice.c</b> can be used to extract a slice perpendicular to any dimension at a specified location along that dimension. The extract slice is written out in the same binary format as the original solutions files (with the same names op_xxxxx.bin) in a subdirectory called <b>slices</b> (<b>Note:</b> make the subdirectory called <em>slices</em> before running this code). The following code (<b>Examples/3D/NavierStokes3D/RisingThermalBubble/aux/PostProcessSlice.c</b>) can then be used (in the <b>slices</b> subdirectory) to convert the binary slice solution file (with conserved variables \(\rho,\rho u,\rho v,\rho w,e\)) to Tecplot or plain text files with the primitive and reference variables \(\rho,u,v,w,P,\theta,\rho_0,P_0,\pi,\theta_0\). <b>Note</b> that it needs the relevant <b>solver.inp</b> and <b>physics.inp</b> that can be created as follows:</p><ul>
+<p>The file <b>Extras/ExtractSlice.c</b> can be used to extract a slice perpendicular to any dimension at a specified location along that dimension. The extract slice is written out in the same binary format as the original solutions files (with the same names op_xxxxx.bin) in a subdirectory called <b>slices</b> (<b>Note:</b> make the subdirectory called <em>slices</em> before running this code). The following code (<b>Examples/3D/NavierStokes3D/RisingThermalBubble_Config1/aux/PostProcessSlice.c</b>) can then be used (in the <b>slices</b> subdirectory) to convert the binary slice solution file (with conserved variables \(\rho,\rho u,\rho v,\rho w,e\)) to Tecplot or plain text files with the primitive and reference variables \(\rho,u,v,w,P,\theta,\rho_0,P_0,\pi,\theta_0\). <b>Note</b> that it needs the relevant <b>solver.inp</b> and <b>physics.inp</b> that can be created as follows:</p><ul>
 <li>Copy the original solver.inp and physics.inp to the slices subdirectory.</li>
 <li>In solver.inp, set <b>ndims</b> as <b>2</b>, and remove the component of <b>size</b> and <b>iproc</b> corresponding to the dimension being eliminated while extracting the slices (in this case, it is <em>z</em> or the 3rd component).</li>
 <li>In physics.inp, remove the component of <b>gravity</b> corresponding to the dimension perpendicular to the slice.</li>
@@ -1247,20 +1247,14 @@ $(document).ready(function(){initNavTree('a00050.html','');});
 <div class="line">Finished.</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10897352; 
-var sc_invisible=1; 
-var sc_security="83042f57"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counters" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/10897352/0/83042f57/1/"
-alt="free hit counters"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="a00002.html">Examples</a></li><li class="navelem"><a class="el" href="a00004.html">Basic Examples</a></li>
+    <li class="footer">Generated on Fri Nov 3 2017 13:56:26 for HyPar by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

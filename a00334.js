@@ -1,4 +1,4 @@
 var a00334 =
 [
-    [ "NavierStokes2DCleanup", "a00334.html#aba05814e738820ec567e128228243e89", null ]
+    [ "LinearADRUpwind", "a00334.html#a2bc2527c84fa0ebf5ef27cf7c4e52bbc", null ]
 ];

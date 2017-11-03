@@ -1,6 +1,6 @@
 var a00113 =
 [
-    [ "PETScContext", "a00113.html#a00447", [
+    [ "PETScContext", "a00113.html#a00448", [
       [ "solver", "a00113.html#ade1bc5cad8c6735a891a28f637cbfb06", null ],
       [ "mpi", "a00113.html#abaa15763a88d05dc68ff230ce570eee9", null ],
       [ "shift", "a00113.html#ab057d99becacf205132fd8c235a8488a", null ],
@@ -43,5 +43,6 @@ var a00113 =
     [ "PetscPreStage", "a00113.html#aa52bad03c15488a2119b794d0e70deed", null ],
     [ "PetscPostStage", "a00113.html#ad1f357f94c228ba9ff45275064ca162b", null ],
     [ "PetscPreTimeStep", "a00113.html#ace222db5eadd0e0bd27229641e43fa9b", null ],
-    [ "PetscPostTimeStep", "a00113.html#a3f7397f8cd5e90306fb7f02edecb3782", null ]
+    [ "PetscPostTimeStep", "a00113.html#a3f7397f8cd5e90306fb7f02edecb3782", null ],
+    [ "PetscTimeError", "a00113.html#ab501847c597b0c20dff03d95a663b9b4", null ]
 ];

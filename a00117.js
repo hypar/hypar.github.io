@@ -1,6 +1,6 @@
 var a00117 =
 [
-    [ "TridiagLU", "a00117.html#a00448", [
+    [ "TridiagLU", "a00117.html#a00449", [
       [ "reducedsolvetype", "a00117.html#ae50ec60868beaab2cb84897adefda09f", null ],
       [ "evaluate_norm", "a00117.html#a584c0fc0b1e845800ad511dffc60e032", null ],
       [ "maxiter", "a00117.html#a274519264a28477940f161ddb4b61feb", null ],

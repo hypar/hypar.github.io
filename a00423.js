@@ -1,4 +1,4 @@
 var a00423 =
 [
-    [ "tridiagIterJacobi", "a00423.html#ae1481a48983e9d35c52697326a77dedc", null ]
+    [ "blocktridiagLU", "a00423.html#a55888a62483c0754cf6e4e030ffe2023", null ]
 ];

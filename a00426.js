@@ -1,4 +1,4 @@
 var a00426 =
 [
-    [ "tridiagLUInit", "a00426.html#af4e80f0b187c9e7e6272a460f4a05fab", null ]
+    [ "tridiagLUGS", "a00426.html#ad485d12c99b8c48303b6bef2f86b135d", null ]
 ];

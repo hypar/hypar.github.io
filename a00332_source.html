@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/LinearADR/LinearADRReaction.c Source File</title>
+<title>HyPar: src/PhysicalModels/LinearADR/LinearADRJacobian.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,38 +113,46 @@ $(document).ready(function(){initNavTree('a00332_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LinearADRReaction.c</div>  </div>
+<div class="title">LinearADRJacobian.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00332.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00107.html">physicalmodels/linearadr.h</a>&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="a00332.html#acf077873308539e006e15cda9f9d137d">    5</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00332.html#acf077873308539e006e15cda9f9d137d">LinearADRReaction</a>(<span class="keywordtype">void</span> *s,<span class="keywordtype">void</span> *m)</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;}</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
-<div class="ttc" id="a00332_html_acf077873308539e006e15cda9f9d137d"><div class="ttname"><a href="a00332.html#acf077873308539e006e15cda9f9d137d">LinearADRReaction</a></div><div class="ttdeci">int LinearADRReaction(void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00332_source.html#l00005">LinearADRReaction.c:5</a></div></div>
+<a href="a00332.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00127.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00107.html">physicalmodels/linearadr.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="a00332.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf">   12</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00332.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf">LinearADRJacobian</a>(</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                      <span class="keywordtype">double</span> *Jac, </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                      <span class="keywordtype">double</span> *u,   </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                      <span class="keywordtype">void</span> *p,     </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                      <span class="keywordtype">int</span> dir,     </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                      <span class="keywordtype">int</span> upw      </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                     )</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <a class="code" href="a00107.html#a00443">LinearADR</a> *param = (<a class="code" href="a00107.html#a00443">LinearADR</a>*) p;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  *Jac =    (1-<a class="code" href="a00127.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw))*<a class="code" href="a00127.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(param-&gt;<a class="code" href="a00107.html#a1c93565457c6d07aa9691346f0086e14">a</a>[dir])</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;         +  <a class="code" href="a00127.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw) * (1+upw) * <a class="code" href="a00127.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,param-&gt;<a class="code" href="a00107.html#a1c93565457c6d07aa9691346f0086e14">a</a>[dir]) * 0.5</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;         -  <a class="code" href="a00127.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw) * (1-upw) * <a class="code" href="a00127.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,param-&gt;<a class="code" href="a00107.html#a1c93565457c6d07aa9691346f0086e14">a</a>[dir]) * 0.5 ;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="ttc" id="a00127_html"><div class="ttname"><a href="a00127.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00127_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00127.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00015">mathfunctions.h:15</a></div></div>
+<div class="ttc" id="a00332_html_a3a2e89cbd3bcd1bb20f92ba9337e3faf"><div class="ttname"><a href="a00332.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf">LinearADRJacobian</a></div><div class="ttdeci">int LinearADRJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00332_source.html#l00012">LinearADRJacobian.c:12</a></div></div>
+<div class="ttc" id="a00127_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00127.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00019">mathfunctions.h:19</a></div></div>
+<div class="ttc" id="a00107_html_a00443"><div class="ttname"><a href="a00107.html#a00443">LinearADR</a></div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00017">linearadr.h:17</a></div></div>
+<div class="ttc" id="a00127_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00127.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00033">mathfunctions.h:33</a></div></div>
+<div class="ttc" id="a00107_html_a1c93565457c6d07aa9691346f0086e14"><div class="ttname"><a href="a00107.html#a1c93565457c6d07aa9691346f0086e14">LinearADR::a</a></div><div class="ttdeci">double * a</div><div class="ttdef"><b>Definition:</b> <a href="a00107_source.html#l00018">linearadr.h:18</a></div></div>
 <div class="ttc" id="a00107_html"><div class="ttname"><a href="a00107.html">linearadr.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10897352; 
-var sc_invisible=1; 
-var sc_security="83042f57"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counters" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/10897352/0/83042f57/1/"
-alt="free hit counters"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4f99e73020cfe6ed8a86f0042d0d702a.html">PhysicalModels</a></li><li class="navelem"><a class="el" href="dir_995772fd950dbb1d8eacbc1ec1016d31.html">LinearADR</a></li><li class="navelem"><a class="el" href="a00332.html">LinearADRJacobian.c</a></li>
+    <li class="footer">Generated on Fri Nov 3 2017 13:56:22 for HyPar by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

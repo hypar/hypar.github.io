@@ -1,5 +1,5 @@
 var a00271 =
 [
-    [ "Euler1DFlux", "a00271.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
-    [ "Euler1DStiffFlux", "a00271.html#a3017a4ade688681fa865c1556fb73f97", null ]
+    [ "Euler1DLeftEigenvectors", "a00271.html#a1815fa0e825f5544526165566c75a619", null ],
+    [ "Euler1DRightEigenvectors", "a00271.html#af93bb74bc4643347f59e3bdb722e864b", null ]
 ];

@@ -1,12 +1,15 @@
 var a00096_a00441 =
 [
-    [ "body", "a00096.html#af858f0e9bc4a6cb1c16ad2931cf4b43d", null ],
-    [ "boundary", "a00096.html#aeab4c13a1e3fce2920ce0ff616d0fac5", null ],
-    [ "fmap", "a00096.html#a83fe29d69e04c222af5c68e38142336c", null ],
-    [ "tolerance", "a00096.html#a97eab6d709b80585fe9e8a54b1e3da27", null ],
-    [ "delta", "a00096.html#a9ea1a8f5ef3e6d20b362385e1288c72c", null ],
-    [ "itr_max", "a00096.html#a5a34c6ed89d3769fb1200fdfbdc8ae33", null ],
-    [ "n_boundary_nodes", "a00096.html#a7f578e3fbaeeea97b65e3ade80f60a78", null ],
-    [ "nfacets_local", "a00096.html#ab3583871695c8f2fc06011d14e092d09", null ],
-    [ "mode", "a00096.html#a935394e510d17282c5697cd76a6e2667", null ]
+    [ "i", "a00096.html#acb559820d9ca11295b4500f179ef6392", null ],
+    [ "j", "a00096.html#a37d972ae0b47b9099e30983131d31916", null ],
+    [ "k", "a00096.html#ab66ed8e0098c0a86b458672a55a9cca9", null ],
+    [ "p", "a00096.html#a533391314665d6bf1b5575e9a9cd8552", null ],
+    [ "x", "a00096.html#af88b946fb90d5f08b5fb740c70e98c10", null ],
+    [ "y", "a00096.html#ab927965981178aa1fba979a37168db2a", null ],
+    [ "z", "a00096.html#ab3e6ed577a7c669c19de1f9c1b46c872", null ],
+    [ "face", "a00096.html#a84f780956fce41006ca0d5bd16478490", null ],
+    [ "interp_nodes", "a00096.html#a849cc8a5a571348a4d50a0332d9816f8", null ],
+    [ "interp_coeffs", "a00096.html#a4855c244bb3e3ba9b245312a375eed76", null ],
+    [ "interp_node_distance", "a00096.html#a9ba638c4f33720c7289cac3bf73ca088", null ],
+    [ "surface_distance", "a00096.html#a7b34733bcf53c70cfe86f22bbb05b309", null ]
 ];

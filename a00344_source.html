@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/NavierStokes2D/NavierStokes2DPreStep.c Source File</title>
+<title>HyPar: src/PhysicalModels/NavierStokes2D/NavierStokes2DParabolicFunction.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,115 +113,221 @@ $(document).ready(function(){initNavTree('a00344_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">NavierStokes2DPreStep.c</div>  </div>
+<div class="title">NavierStokes2DParabolicFunction.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00344.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00121.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00127.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00109.html">physicalmodels/navierstokes2d.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="a00344.html#a11e38123cda69377fd19c569c20d4bf1">   31</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00344.html#a11e38123cda69377fd19c569c20d4bf1">NavierStokes2DPreStep</a>(</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                            <span class="keywordtype">double</span>  *u,   </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                            <span class="keywordtype">void</span>    *s,   </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                            <span class="keywordtype">void</span>    *m,   </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                            <span class="keywordtype">double</span>  waqt  </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                         )</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00106.html">HyPar</a>             *solver = (<a class="code" href="a00106.html">HyPar</a>*)   s;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00109.html#a00445">NavierStokes2D</a>    *param  = (<a class="code" href="a00109.html#a00445">NavierStokes2D</a>*) solver-&gt;<a class="code" href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">int</span>               *dim    = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordtype">int</span>               ghosts  = solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>, dir, p;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">double</span>            *A;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span>  ndims   = <a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span>  JacSize = <a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">int</span>        index[<a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], bounds[_MODEL_NDIMS_], offset[_MODEL_NDIMS_];</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span>     D[<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>],L[_MODEL_NVARS_*_MODEL_NVARS_],</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                    R[_MODEL_NVARS_*_MODEL_NVARS_],DL[_MODEL_NVARS_*_MODEL_NVARS_];</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="comment">/* set bounds for array index to include ghost points */</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="a00121.html#a197e4f9ce0b056b3f3addbbd9887f703">_ArrayAddCopy1D_</a>(dim,(2*ghosts),bounds,ndims);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="comment">/* set offset such that index is compatible with ghost point arrangement */</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,-ghosts);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="comment">/* copy the solution to act as a reference for linearization */</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <a class="code" href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(u,param-&gt;<a class="code" href="a00109.html#a5e98bc441f5d361be0dd5f13bce1257e">solution</a>,(solver-&gt;<a class="code" href="a00106.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>*_MODEL_NVARS_));</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p);</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00122.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00121.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00127.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00109.html">physicalmodels/navierstokes2d.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00125.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a00344.html#a3b7da8c25125ac4681035c3bcd35c449">   38</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00344.html#a3b7da8c25125ac4681035c3bcd35c449">NavierStokes2DParabolicFunction</a>(</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                                      <span class="keywordtype">double</span>  *par, </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                      <span class="keywordtype">double</span>  *u,   </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                      <span class="keywordtype">void</span>    *s,   </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                      <span class="keywordtype">void</span>    *m,   </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                      <span class="keywordtype">double</span>  t     </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                   )</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00106.html">HyPar</a>           *solver   = (<a class="code" href="a00106.html">HyPar</a>*) s;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="a00108.html#a00444">MPIVariables</a>    *mpi      = (<a class="code" href="a00108.html#a00444">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <a class="code" href="a00109.html#a00446">NavierStokes2D</a>  *physics  = (<a class="code" href="a00109.html#a00446">NavierStokes2D</a>*) solver-&gt;<a class="code" href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">int</span>             i,j,v;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="a00122.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordtype">int</span> ghosts = solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordtype">int</span> imax   = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[0];</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordtype">int</span> jmax   = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[1];</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordtype">int</span> *dim   = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">int</span> nvars  = solver-&gt;<a class="code" href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordtype">int</span> ndims  = solver-&gt;<a class="code" href="a00106.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordtype">int</span> size   = (imax+2*ghosts)*(jmax+2*ghosts)*nvars;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    dir = <a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    A = (param-&gt;<a class="code" href="a00109.html#a14af7516371abe115b3a1aa9269aebb5">fast_jac</a> + 2*JacSize*p + dir*JacSize);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">/* get the eigenvalues, and left &amp; right eigenvectors */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="a00109.html#a5eee028addf376867bf61f188291d9ed">_NavierStokes2DEigenvalues_</a>      ((u+_MODEL_NVARS_*p),D,param,dir); </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="a00109.html#a1c2ecd3e4013b7e37e0f141a3cb16094">_NavierStokes2DLeftEigenvectors_</a> ((u+_MODEL_NVARS_*p),L,param,dir);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="a00109.html#ac319c173962f94706d7c78184a9da4f4">_NavierStokes2DRightEigenvectors_</a>((u+_MODEL_NVARS_*p),R,param,dir);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">/* remove the entropy modes (corresponding to eigenvalues u) */</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    D[2*_MODEL_NVARS_+2] = D[3*_MODEL_NVARS_+3] = 0.0;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">/* assemble the Jacobian */</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="a00127.html#a25b2b3ed3a1c1c8b4b5f23108442cf1f">MatMult4</a>(_MODEL_NVARS_,DL,D,L );</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="a00127.html#a25b2b3ed3a1c1c8b4b5f23108442cf1f">MatMult4</a>(_MODEL_NVARS_,A ,R,DL);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    dir = <a class="code" href="a00100.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    A = (param-&gt;<a class="code" href="a00109.html#a14af7516371abe115b3a1aa9269aebb5">fast_jac</a> + 2*JacSize*p + dir*JacSize);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">/* get the eigenvalues, and left &amp; right eigenvectors */</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="a00109.html#a5eee028addf376867bf61f188291d9ed">_NavierStokes2DEigenvalues_</a>      ((u+_MODEL_NVARS_*p),D,param,dir)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="a00109.html#a1c2ecd3e4013b7e37e0f141a3cb16094">_NavierStokes2DLeftEigenvectors_</a> ((u+_MODEL_NVARS_*p),L,param,dir);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="a00109.html#ac319c173962f94706d7c78184a9da4f4">_NavierStokes2DRightEigenvectors_</a>((u+_MODEL_NVARS_*p),R,param,dir);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">/* remove the entropy modes (corresponding to eigenvalues v) */</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    D[1*_MODEL_NVARS_+1] = D[3*_MODEL_NVARS_+3] = 0.0;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">/* assemble the Jacobian */</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="a00127.html#a25b2b3ed3a1c1c8b4b5f23108442cf1f">MatMult4</a>(_MODEL_NVARS_,DL,D,L );</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="a00127.html#a25b2b3ed3a1c1c8b4b5f23108442cf1f">MatMult4</a>(_MODEL_NVARS_,A ,R,DL);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,index,done);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
-<div class="ttc" id="a00109_html_a14af7516371abe115b3a1aa9269aebb5"><div class="ttname"><a href="a00109.html#a14af7516371abe115b3a1aa9269aebb5">NavierStokes2D::fast_jac</a></div><div class="ttdeci">double * fast_jac</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00393">navierstokes2d.h:393</a></div></div>
-<div class="ttc" id="a00344_html_a11e38123cda69377fd19c569c20d4bf1"><div class="ttname"><a href="a00344.html#a11e38123cda69377fd19c569c20d4bf1">NavierStokes2DPreStep</a></div><div class="ttdeci">int NavierStokes2DPreStep(double *u, void *s, void *m, double waqt)</div><div class="ttdef"><b>Definition:</b> <a href="a00344_source.html#l00031">NavierStokes2DPreStep.c:31</a></div></div>
-<div class="ttc" id="a00106_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00106.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00037">hypar.h:37</a></div></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(par,size,0.0);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">if</span> (physics-&gt;<a class="code" href="a00109.html#a3b92a4b98cedf64473b3c13dfa7674b4">Re</a> &lt;= 0) <span class="keywordflow">return</span>(0); <span class="comment">/* inviscid flow */</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  solver-&gt;<a class="code" href="a00106.html#a6e3288a129bfd334448fbf3089338b69">count_par</a>++;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span> two_third = 2.0/3.0;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keywordtype">double</span>        inv_gamma_m1 = 1.0 / (physics-&gt;<a class="code" href="a00109.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>-1.0);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordtype">double</span>        inv_Re       = 1.0 / physics-&gt;<a class="code" href="a00109.html#a3b92a4b98cedf64473b3c13dfa7674b4">Re</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordtype">double</span>        inv_Pr       = 1.0 / physics-&gt;<a class="code" href="a00109.html#af0f6e03342b9eb912e25f94ce0249a2c">Pr</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordtype">double</span> *Q; <span class="comment">/* primitive variables */</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  Q = (<span class="keywordtype">double</span>*) calloc (size,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordflow">for</span> (i=-ghosts; i&lt;(imax+ghosts); i++) {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">for</span> (j=-ghosts; j&lt;(jmax+ghosts); j++) {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      <span class="keywordtype">int</span> p,index[2]; index[0]=i; index[1]=j;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <span class="keywordtype">double</span> energy,pressure;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <a class="code" href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p); p *= nvars;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <a class="code" href="a00109.html#a90ce369a1f9d490ab6d392a996e5be4c">_NavierStokes2DGetFlowVar_</a>( (u+p),Q[p+0],Q[p+1],Q[p+2],energy,</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                                  pressure,physics);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      Q[p+3] = physics-&gt;<a class="code" href="a00109.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>*pressure/Q[p+0]; <span class="comment">/* temperature */</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">double</span> *QDerivX = (<span class="keywordtype">double</span>*) calloc (size,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordtype">double</span> *QDerivY = (<span class="keywordtype">double</span>*) calloc (size,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <a class="code" href="a00122.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00106.html#a70476d05a40159f61242a8dae0526cc3">FirstDerivativePar</a>(QDerivX,Q,<a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>,1,solver,mpi); <a class="code" href="a00122.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <a class="code" href="a00122.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00106.html#a70476d05a40159f61242a8dae0526cc3">FirstDerivativePar</a>(QDerivY,Q,<a class="code" href="a00100.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>,1,solver,mpi); <a class="code" href="a00122.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <a class="code" href="a00122.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00108.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(solver-&gt;<a class="code" href="a00106.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,dim,</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                               solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,mpi,QDerivX);     <a class="code" href="a00122.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <a class="code" href="a00122.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00108.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(solver-&gt;<a class="code" href="a00106.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,dim,</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                               solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,mpi,QDerivY);     <a class="code" href="a00122.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">for</span> (i=-ghosts; i&lt;(imax+ghosts); i++) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">for</span> (j=-ghosts; j&lt;(jmax+ghosts); j++) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordtype">int</span> p,index[2]; index[0]=i; index[1]=j;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <span class="keywordtype">double</span> dxinv, dyinv;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <a class="code" href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p); p *= nvars;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <a class="code" href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>,index[<a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>],dim,ghosts,solver-&gt;<a class="code" href="a00106.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dxinv);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <a class="code" href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00100.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>,index[<a class="code" href="a00100.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>],dim,ghosts,solver-&gt;<a class="code" href="a00106.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dyinv);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <a class="code" href="a00121.html#a1dab5f429ccd03c4a7fbb605d8ef75b6">_ArrayScale1D_</a>((QDerivX+p),dxinv,nvars);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <a class="code" href="a00121.html#a1dab5f429ccd03c4a7fbb605d8ef75b6">_ArrayScale1D_</a>((QDerivY+p),dyinv,nvars);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordtype">double</span> *FViscous = (<span class="keywordtype">double</span>*) calloc (size,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordtype">double</span> *FDeriv   = (<span class="keywordtype">double</span>*) calloc (size,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="comment">/* Along X */</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keywordflow">for</span> (i=-ghosts; i&lt;(imax+ghosts); i++) {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">for</span> (j=-ghosts; j&lt;(jmax+ghosts); j++) {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordtype">int</span> p,index[2]; index[0]=i; index[1]=j;;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <a class="code" href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p); p *= nvars;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordtype">double</span> uvel, vvel, T, Tx, ux, uy, vx, vy;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      uvel = (Q+p)[1];</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      vvel = (Q+p)[2];</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      T    = (Q+p)[3];</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      Tx   = (QDerivX+p)[3];</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      ux   = (QDerivX+p)[1];</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      vx   = (QDerivX+p)[2];</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      uy   = (QDerivY+p)[1];</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      vy   = (QDerivY+p)[2];</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="comment">/* calculate viscosity coeff based on Sutherland&#39;s law */</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keywordtype">double</span> mu = <a class="code" href="a00127.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(T, 0.76);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      <span class="keywordtype">double</span> tau_xx, tau_xy, qx;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      tau_xx = two_third * (mu*inv_Re) * (2*ux - vy);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      tau_xy = (mu*inv_Re) * (uy + vx);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      qx     = ( (mu*inv_Re) * inv_gamma_m1 * inv_Pr ) * Tx;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      (FViscous+p)[0] = 0.0;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      (FViscous+p)[1] = tau_xx;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      (FViscous+p)[2] = tau_xy;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      (FViscous+p)[3] = uvel*tau_xx + vvel*tau_xy + qx;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <a class="code" href="a00122.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00106.html#a70476d05a40159f61242a8dae0526cc3">FirstDerivativePar</a>(FDeriv,FViscous,<a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>,-1,solver,mpi); <a class="code" href="a00122.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;imax; i++) {</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">for</span> (j=0; j&lt;jmax; j++) {</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      <span class="keywordtype">int</span> p,index[2]; index[0]=i; index[1]=j;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      <span class="keywordtype">double</span> dxinv;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      <a class="code" href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p); p *= nvars;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      <a class="code" href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>,index[<a class="code" href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>],dim,ghosts,solver-&gt;<a class="code" href="a00106.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dxinv);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) (par+p)[v] += (dxinv * (FDeriv+p)[v] );</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    }</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  }</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <span class="comment">/* Along Y */</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keywordflow">for</span> (i=-ghosts; i&lt;(imax+ghosts); i++) {</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">for</span> (j=-ghosts; j&lt;(jmax+ghosts); j++) {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      <span class="keywordtype">int</span> p,index[2]; index[0]=i; index[1]=j;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      <a class="code" href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p); p *= nvars;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordtype">double</span> uvel, vvel, T, Ty, ux, uy, vx, vy;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      uvel = (Q+p)[1];</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      vvel = (Q+p)[2];</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      T    = (Q+p)[3];</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      Ty   = (QDerivY+p)[3];</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      ux   = (QDerivX+p)[1];</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      vx   = (QDerivX+p)[2];</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      uy   = (QDerivY+p)[1];</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;      vy   = (QDerivY+p)[2];</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;      <span class="comment">/* calculate viscosity coeff based on Sutherland&#39;s law */</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      <span class="keywordtype">double</span> mu = <a class="code" href="a00127.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(T, 0.76);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keywordtype">double</span> tau_yx, tau_yy, qy;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      tau_yx = (mu*inv_Re) * (uy + vx);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      tau_yy = two_third * (mu*inv_Re) * (-ux + 2*vy);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      qy     = ( (mu*inv_Re) * inv_gamma_m1 * inv_Pr ) * Ty;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      (FViscous+p)[0] = 0.0;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      (FViscous+p)[1] = tau_yx;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      (FViscous+p)[2] = tau_yy;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      (FViscous+p)[3] = uvel*tau_yx + vvel*tau_yy + qy;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  }</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  <a class="code" href="a00122.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00106.html#a70476d05a40159f61242a8dae0526cc3">FirstDerivativePar</a>(FDeriv,FViscous,<a class="code" href="a00100.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>,-1,solver,mpi); <a class="code" href="a00122.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;imax; i++) {</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordflow">for</span> (j=0; j&lt;jmax; j++) {</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      <span class="keywordtype">int</span> p,index[2]; index[0]=i; index[1]=j;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      <span class="keywordtype">double</span> dyinv;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      <a class="code" href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p); p *= nvars;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      <a class="code" href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00100.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>,index[<a class="code" href="a00100.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>],dim,ghosts,solver-&gt;<a class="code" href="a00106.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dyinv);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) (par+p)[v] += (dyinv * (FDeriv+p)[v] );</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    }</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  }</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  free(Q);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  free(QDerivX);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  free(QDerivY);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  free(FViscous);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  free(FDeriv);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
+<div class="ttc" id="a00122_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00122.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00010">basic.h:10</a></div></div>
+<div class="ttc" id="a00122_html"><div class="ttname"><a href="a00122.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00121_html_a1dab5f429ccd03c4a7fbb605d8ef75b6"><div class="ttname"><a href="a00121.html#a1dab5f429ccd03c4a7fbb605d8ef75b6">_ArrayScale1D_</a></div><div class="ttdeci">#define _ArrayScale1D_(x, a, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00152">arrayfunctions.h:152</a></div></div>
+<div class="ttc" id="a00106_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00106.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00023">hypar.h:23</a></div></div>
 <div class="ttc" id="a00127_html"><div class="ttname"><a href="a00127.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00129_html_a6a44057228e5f4b86e1c4d04b2a28977"><div class="ttname"><a href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a></div><div class="ttdeci">#define _XDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00072">euler1d.h:72</a></div></div>
-<div class="ttc" id="a00121_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00122">arrayfunctions.h:122</a></div></div>
+<div class="ttc" id="a00109_html_a90ce369a1f9d490ab6d392a996e5be4c"><div class="ttname"><a href="a00109.html#a90ce369a1f9d490ab6d392a996e5be4c">_NavierStokes2DGetFlowVar_</a></div><div class="ttdeci">#define _NavierStokes2DGetFlowVar_(u, rho, vx, vy, e, P, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00081">navierstokes2d.h:81</a></div></div>
+<div class="ttc" id="a00109_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00109.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes2D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00377">navierstokes2d.h:377</a></div></div>
+<div class="ttc" id="a00122_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00122.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00011">basic.h:11</a></div></div>
+<div class="ttc" id="a00108_html_a00444"><div class="ttname"><a href="a00108.html#a00444">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00021">mpivars.h:21</a></div></div>
+<div class="ttc" id="a00129_html_a6a44057228e5f4b86e1c4d04b2a28977"><div class="ttname"><a href="a00129.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a></div><div class="ttdeci">#define _XDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00073">euler1d.h:73</a></div></div>
+<div class="ttc" id="a00109_html_af0f6e03342b9eb912e25f94ce0249a2c"><div class="ttname"><a href="a00109.html#af0f6e03342b9eb912e25f94ce0249a2c">NavierStokes2D::Pr</a></div><div class="ttdeci">double Pr</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00384">navierstokes2d.h:384</a></div></div>
 <div class="ttc" id="a00121_html"><div class="ttname"><a href="a00121.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00121_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00281">arrayfunctions.h:281</a></div></div>
+<div class="ttc" id="a00121_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00121.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00036">arrayfunctions.h:36</a></div></div>
 <div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00121_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00079">arrayfunctions.h:79</a></div></div>
 <div class="ttc" id="a00106_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00231">hypar.h:231</a></div></div>
+<div class="ttc" id="a00109_html_a3b92a4b98cedf64473b3c13dfa7674b4"><div class="ttname"><a href="a00109.html#a3b92a4b98cedf64473b3c13dfa7674b4">NavierStokes2D::Re</a></div><div class="ttdeci">double Re</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00383">navierstokes2d.h:383</a></div></div>
 <div class="ttc" id="a00109_html"><div class="ttname"><a href="a00109.html">navierstokes2d.h</a></div><div class="ttdoc">2D Navier Stokes equations (compressible flows) </div></div>
-<div class="ttc" id="a00129_html_a57771c952ec174601addf43e1c0202b2"><div class="ttname"><a href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a></div><div class="ttdeci">#define _MODEL_NDIMS_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00055">euler1d.h:55</a></div></div>
+<div class="ttc" id="a00108_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00108.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00234_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
+<div class="ttc" id="a00344_html_a3b7da8c25125ac4681035c3bcd35c449"><div class="ttname"><a href="a00344.html#a3b7da8c25125ac4681035c3bcd35c449">NavierStokes2DParabolicFunction</a></div><div class="ttdeci">int NavierStokes2DParabolicFunction(double *par, double *u, void *s, void *m, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00344_source.html#l00038">NavierStokes2DParabolicFunction.c:38</a></div></div>
 <div class="ttc" id="a00100_html_a7fd32e06617f4489079bc50ce9bfc00c"><div class="ttname"><a href="a00100.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a></div><div class="ttdeci">#define _YDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00100_source.html#l00041">euler2d.h:41</a></div></div>
-<div class="ttc" id="a00121_html_a197e4f9ce0b056b3f3addbbd9887f703"><div class="ttname"><a href="a00121.html#a197e4f9ce0b056b3f3addbbd9887f703">_ArrayAddCopy1D_</a></div><div class="ttdeci">#define _ArrayAddCopy1D_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00330">arrayfunctions.h:330</a></div></div>
-<div class="ttc" id="a00109_html_a1c2ecd3e4013b7e37e0f141a3cb16094"><div class="ttname"><a href="a00109.html#a1c2ecd3e4013b7e37e0f141a3cb16094">_NavierStokes2DLeftEigenvectors_</a></div><div class="ttdeci">#define _NavierStokes2DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00249">navierstokes2d.h:249</a></div></div>
-<div class="ttc" id="a00109_html_a5eee028addf376867bf61f188291d9ed"><div class="ttname"><a href="a00109.html#a5eee028addf376867bf61f188291d9ed">_NavierStokes2DEigenvalues_</a></div><div class="ttdeci">#define _NavierStokes2DEigenvalues_(u, D, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00214">navierstokes2d.h:214</a></div></div>
+<div class="ttc" id="a00127_html_a840eef18a5986381093ff8c176a2153c"><div class="ttname"><a href="a00127.html#a840eef18a5986381093ff8c176a2153c">raiseto</a></div><div class="ttdeci">#define raiseto(x, a)</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00038">mathfunctions.h:38</a></div></div>
 <div class="ttc" id="a00121_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00142">arrayfunctions.h:142</a></div></div>
 <div class="ttc" id="a00106_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00041">hypar.h:41</a></div></div>
+<div class="ttc" id="a00122_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00122.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00024">basic.h:24</a></div></div>
+<div class="ttc" id="a00106_html_a70476d05a40159f61242a8dae0526cc3"><div class="ttname"><a href="a00106.html#a70476d05a40159f61242a8dae0526cc3">HyPar::FirstDerivativePar</a></div><div class="ttdeci">int(* FirstDerivativePar)(double *, double *, int, int, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00208">hypar.h:208</a></div></div>
 <div class="ttc" id="a00125_html"><div class="ttname"><a href="a00125.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00127_html_a25b2b3ed3a1c1c8b4b5f23108442cf1f"><div class="ttname"><a href="a00127.html#a25b2b3ed3a1c1c8b4b5f23108442cf1f">MatMult4</a></div><div class="ttdeci">#define MatMult4(N, A, X, Y)</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00090">mathfunctions.h:90</a></div></div>
-<div class="ttc" id="a00109_html_a5e98bc441f5d361be0dd5f13bce1257e"><div class="ttname"><a href="a00109.html#a5e98bc441f5d361be0dd5f13bce1257e">NavierStokes2D::solution</a></div><div class="ttdeci">double * solution</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00393">navierstokes2d.h:393</a></div></div>
-<div class="ttc" id="a00109_html_a00445"><div class="ttname"><a href="a00109.html#a00445">NavierStokes2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Navier Stokes equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D Navier-Stokes equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00376">navierstokes2d.h:376</a></div></div>
-<div class="ttc" id="a00129_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00057">euler1d.h:57</a></div></div>
-<div class="ttc" id="a00109_html_ac319c173962f94706d7c78184a9da4f4"><div class="ttname"><a href="a00109.html#ac319c173962f94706d7c78184a9da4f4">_NavierStokes2DRightEigenvectors_</a></div><div class="ttdeci">#define _NavierStokes2DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00311">navierstokes2d.h:311</a></div></div>
+<div class="ttc" id="a00122_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00122.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00009">basic.h:9</a></div></div>
+<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
+<div class="ttc" id="a00109_html_a00446"><div class="ttname"><a href="a00109.html#a00446">NavierStokes2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Navier Stokes equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D Navier-Stokes equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00109_source.html#l00376">navierstokes2d.h:376</a></div></div>
+<div class="ttc" id="a00106_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00106_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00106.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00085">hypar.h:85</a></div></div>
+<div class="ttc" id="a00106_html_a6e3288a129bfd334448fbf3089338b69"><div class="ttname"><a href="a00106.html#a6e3288a129bfd334448fbf3089338b69">HyPar::count_par</a></div><div class="ttdeci">int count_par</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00360">hypar.h:360</a></div></div>
 <div class="ttc" id="a00106_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00032">hypar.h:32</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10897352; 
-var sc_invisible=1; 
-var sc_security="83042f57"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counters" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/10897352/0/83042f57/1/"
-alt="free hit counters"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4f99e73020cfe6ed8a86f0042d0d702a.html">PhysicalModels</a></li><li class="navelem"><a class="el" href="dir_1263317cac276674bc37ab960857d987.html">NavierStokes2D</a></li><li class="navelem"><a class="el" href="a00344.html">NavierStokes2DParabolicFunction.c</a></li>
+    <li class="footer">Generated on Fri Nov 3 2017 13:56:22 for HyPar by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

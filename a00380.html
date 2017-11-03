@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/ShallowWater1D/ShallowWater1DFlux.c File Reference</title>
+<title>HyPar: src/PhysicalModels/ShallowWater1D/ShallowWater1DEigen.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,14 +115,17 @@ $(document).ready(function(){initNavTree('a00380.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">ShallowWater1DFlux.c File Reference</div>  </div>
+<div class="title">ShallowWater1DEigen.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Contains the functions to compute the hyperbolic flux for the 1D shallow water equations over the domain.  
+<p>Contains the functions to compute left and right eigenvectors for the 1D shallow water equations.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00122_source.html">basic.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="a00121_source.html">arrayfunctions.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00127_source.html">mathfunctions.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="a00132_source.html">physicalmodels/shallowwater1d.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="a00125_source.html">hypar.h</a>&gt;</code><br />
 </div>
@@ -130,48 +133,44 @@ $(document).ready(function(){initNavTree('a00380.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab8ef6342f2e68ddffa5fe5d5f50cc4ce"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#ab8ef6342f2e68ddffa5fe5d5f50cc4ce">ShallowWater1DFlux</a> (double *f, double *u, int dir, void *s, double t)</td></tr>
-<tr class="separator:ab8ef6342f2e68ddffa5fe5d5f50cc4ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9519badea39145bc113cba2422016b3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#aa9519badea39145bc113cba2422016b3">ShallowWater1DLeftEigenvectors</a> (double *u, double *L, void *p, int dir)</td></tr>
+<tr class="separator:aa9519badea39145bc113cba2422016b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4a44ab4a02a19c10ad8f4d75f88f8d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#af4a44ab4a02a19c10ad8f4d75f88f8d7">ShallowWater1DRightEigenvectors</a> (double *u, double *R, void *p, int dir)</td></tr>
+<tr class="separator:af4a44ab4a02a19c10ad8f4d75f88f8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains the functions to compute the hyperbolic flux for the 1D shallow water equations over the domain. </p>
+<div class="textblock"><p>Contains the functions to compute left and right eigenvectors for the 1D shallow water equations. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00380_source.html">ShallowWater1DFlux.c</a>.</p>
+<p>Definition in file <a class="el" href="a00380_source.html">ShallowWater1DEigen.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ab8ef6342f2e68ddffa5fe5d5f50cc4ce"></a>
+<a class="anchor" id="aa9519badea39145bc113cba2422016b3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ShallowWater1DFlux </td>
+          <td class="memname">int ShallowWater1DLeftEigenvectors </td>
           <td>(</td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>f</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">double *&#160;</td>
           <td class="paramname"><em>u</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>L</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
+          <td class="paramname"><em>p</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dir</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -180,80 +179,95 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute the hyperbolic flux over the local domain.<br />
- </p><p class="formulaDsp">
-\begin{equation} {\bf F}\left({\bf u}\right) = \left[\begin{array}{c} hu \\ hu^2 + \frac{1}{2} gh^2 \end{array}\right] \end{equation}
-</p>
- <dl class="params"><dt>Parameters</dt><dd>
+<p>Compute the left eigenvections for the 1D shallow water equations. This function just calls the macro <a class="el" href="a00132.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a> and is not used by any functions within the 1D shallow water module. However, it's necessary to define it and provide it to the the solver object (<a class="el" href="a00106.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>) so that it can then send it to interpolation functions for a characteristic-based reconstruction. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">f</td><td>Array to hold the computed flux (same size and layout as u) </td></tr>
-    <tr><td class="paramname">u</td><td>Array containing the conserved solution </td></tr>
-    <tr><td class="paramname">dir</td><td>Spatial dimension (unused since this is a 1D system) </td></tr>
-    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00106.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
-    <tr><td class="paramname">t</td><td>Current time </td></tr>
+    <tr><td class="paramname">u</td><td>Conserved solution at a grid point </td></tr>
+    <tr><td class="paramname">L</td><td>Array of size nvar^2 = 2^2 to save the matrix of left eigenvectors in (row-major format). </td></tr>
+    <tr><td class="paramname">p</td><td>Object of type <a class="el" href="a00114.html" title="Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. ">ShallowWater1D</a> with physics-related variables </td></tr>
+    <tr><td class="paramname">dir</td><td>Spatial dimension (not used, since this is a 1D system) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00380_source.html#l00016">16</a> of file <a class="el" href="a00380_source.html">ShallowWater1DFlux.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00106.html">HyPar</a>             *solver = (<a class="code" href="a00106.html">HyPar</a>*)   s;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00114.html">ShallowWater1D</a>    *param  = (<a class="code" href="a00114.html">ShallowWater1D</a>*) solver-&gt;<a class="code" href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">int</span>               *dim    = solver-&gt;<a class="code" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span>               ghosts  = solver-&gt;<a class="code" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span>  ndims   = <a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span>  nvars   = <a class="code" href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">int</span>        index[<a class="code" href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>], bounds[_MODEL_NDIMS_], offset[_MODEL_NDIMS_];</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="comment">/* set bounds for array index to include ghost points */</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="a00121.html#a197e4f9ce0b056b3f3addbbd9887f703">_ArrayAddCopy1D_</a>(dim,(2*ghosts),bounds,ndims);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="comment">/* set offset such that index is compatible with ghost point arrangement */</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,-ghosts);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">double</span> h, v;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="a00132.html#ab6d0702f0bacbdb3f2644bd1f60938c0">_ShallowWater1DGetFlowVar_</a>((u+nvars*p),h,v);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="a00132.html#adfdf0d9f6cf0e17a83afbfbe6e3013fc">_ShallowWater1DSetFlux_</a>((f+nvars*p),h,v,param-&gt;<a class="code" href="a00114.html#ab30c765b9be1b7776c97c899a12a66bb">g</a>);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,index,done);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
-<div class="ttc" id="a00114_html_ab30c765b9be1b7776c97c899a12a66bb"><div class="ttname"><a href="a00114.html#ab30c765b9be1b7776c97c899a12a66bb">ShallowWater1D::g</a></div><div class="ttdeci">double g</div><div class="ttdef"><b>Definition:</b> <a href="a00132_source.html#l00138">shallowwater1d.h:138</a></div></div>
-<div class="ttc" id="a00121_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00121.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00122">arrayfunctions.h:122</a></div></div>
-<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00121_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00121.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00079">arrayfunctions.h:79</a></div></div>
-<div class="ttc" id="a00106_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00106.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00231">hypar.h:231</a></div></div>
-<div class="ttc" id="a00129_html_a57771c952ec174601addf43e1c0202b2"><div class="ttname"><a href="a00129.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a></div><div class="ttdeci">#define _MODEL_NDIMS_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00055">euler1d.h:55</a></div></div>
+<p>Definition at line <a class="el" href="a00380_source.html#l00019">19</a> of file <a class="el" href="a00380_source.html">ShallowWater1DEigen.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="a00114.html">ShallowWater1D</a> *param  = (<a class="code" href="a00114.html">ShallowWater1D</a>*)  p;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00132.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a>(u,L,param,dir);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
+<div class="ttc" id="a00132_html_ab304d572a9bf352c09735486f88de6f7"><div class="ttname"><a href="a00132.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater1DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00132_source.html#l00106">shallowwater1d.h:106</a></div></div>
 <div class="ttc" id="a00114_html"><div class="ttname"><a href="a00114.html">ShallowWater1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00132_source.html#l00137">shallowwater1d.h:137</a></div></div>
-<div class="ttc" id="a00132_html_ab6d0702f0bacbdb3f2644bd1f60938c0"><div class="ttname"><a href="a00132.html#ab6d0702f0bacbdb3f2644bd1f60938c0">_ShallowWater1DGetFlowVar_</a></div><div class="ttdeci">#define _ShallowWater1DGetFlowVar_(u, h, v)</div><div class="ttdef"><b>Definition:</b> <a href="a00132_source.html#l00054">shallowwater1d.h:54</a></div></div>
-<div class="ttc" id="a00121_html_a197e4f9ce0b056b3f3addbbd9887f703"><div class="ttname"><a href="a00121.html#a197e4f9ce0b056b3f3addbbd9887f703">_ArrayAddCopy1D_</a></div><div class="ttdeci">#define _ArrayAddCopy1D_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00330">arrayfunctions.h:330</a></div></div>
-<div class="ttc" id="a00121_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00121.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00142">arrayfunctions.h:142</a></div></div>
-<div class="ttc" id="a00106_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00041">hypar.h:41</a></div></div>
-<div class="ttc" id="a00132_html_adfdf0d9f6cf0e17a83afbfbe6e3013fc"><div class="ttname"><a href="a00132.html#adfdf0d9f6cf0e17a83afbfbe6e3013fc">_ShallowWater1DSetFlux_</a></div><div class="ttdeci">#define _ShallowWater1DSetFlux_(f, h, v, g)</div><div class="ttdef"><b>Definition:</b> <a href="a00132_source.html#l00064">shallowwater1d.h:64</a></div></div>
-<div class="ttc" id="a00129_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00129_source.html#l00057">euler1d.h:57</a></div></div>
-<div class="ttc" id="a00106_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00032">hypar.h:32</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="af4a44ab4a02a19c10ad8f4d75f88f8d7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ShallowWater1DRightEigenvectors </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>R</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dir</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compute the right eigenvections for the 1D shallow water equations. This function just calls the macro <a class="el" href="a00132.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a> and is not used by any functions within the 1D shallow water module. However, it's necessary to define it and provide it to the the solver object (<a class="el" href="a00106.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>) so that it can then send it to interpolation functions for a characteristic-based reconstruction. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>Conserved solution at a grid point </td></tr>
+    <tr><td class="paramname">R</td><td>Array of size nvar^2 = 2^2 to save the matrix of right eigenvectors in (row-major format). </td></tr>
+    <tr><td class="paramname">p</td><td>Object of type <a class="el" href="a00114.html" title="Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. ">ShallowWater1D</a> with physics-related variables </td></tr>
+    <tr><td class="paramname">dir</td><td>Spatial dimension (not used, since this is a 1D system) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="a00380_source.html#l00038">38</a> of file <a class="el" href="a00380_source.html">ShallowWater1DEigen.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00114.html">ShallowWater1D</a> *param  = (<a class="code" href="a00114.html">ShallowWater1D</a>*)  p;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="a00132.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a>(u,R,param,dir);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="ttc" id="a00114_html"><div class="ttname"><a href="a00114.html">ShallowWater1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00132_source.html#l00137">shallowwater1d.h:137</a></div></div>
+<div class="ttc" id="a00132_html_a3c10806b3d5a56f4d0e9d4607dafcffc"><div class="ttname"><a href="a00132.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater1DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00132_source.html#l00117">shallowwater1d.h:117</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10897352; 
-var sc_invisible=1; 
-var sc_security="83042f57"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counters" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/10897352/0/83042f57/1/"
-alt="free hit counters"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4f99e73020cfe6ed8a86f0042d0d702a.html">PhysicalModels</a></li><li class="navelem"><a class="el" href="dir_b6f0aa81e44ccc52f12bb54d75cc5284.html">ShallowWater1D</a></li><li class="navelem"><a class="el" href="a00380.html">ShallowWater1DEigen.c</a></li>
+    <li class="footer">Generated on Fri Nov 3 2017 13:56:25 for HyPar by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

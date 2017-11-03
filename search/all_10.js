@@ -71,11 +71,11 @@ var searchData=
   ['mpisum_2ec',['MPISum.c',['../a00248.html',1,'']]],
   ['mpisum_5fdouble',['MPISum_double',['../a00108.html#abd61f932b070ee84262d9d98b6dd854f',1,'MPISum_double(double *, double *, int, void *):&#160;MPISum.c'],['../a00248.html#ab72730180adfeeb505a716952545d591',1,'MPISum_double(double *global, double *var, int size, void *comm):&#160;MPISum.c']]],
   ['mpisum_5finteger',['MPISum_integer',['../a00108.html#a25c7df0ff2e4f81a64368ea72894a4f8',1,'MPISum_integer(int *, int *, int, void *):&#160;MPISum.c'],['../a00248.html#a3fdbda19a80373d03b0034694d7309b7',1,'MPISum_integer(int *global, int *var, int size, void *comm):&#160;MPISum.c']]],
-  ['mpivariables',['MPIVariables',['../a00108.html#a00443',1,'']]],
+  ['mpivariables',['MPIVariables',['../a00108.html#a00444',1,'']]],
   ['mpivars_2eh',['mpivars.h',['../a00108.html',1,'']]],
   ['msti',['msti',['../a00106.html#adec095311615891040de11341c01a77f',1,'HyPar']]],
   ['mu',['mu',['../a00111.html#a74577585cf12d1712ab9c57616d49205',1,'Numa2D']]],
   ['musclinitialize',['MUSCLInitialize',['../a00097.html#a22e0ae19117192cae9978a7a741d15a5',1,'MUSCLInitialize(void *, void *):&#160;MUSCLInitialize.c'],['../a00217.html#ab9c0c7ce0e00510c982d1408fc3f8ee7',1,'MUSCLInitialize(void *s, void *m):&#160;MUSCLInitialize.c']]],
   ['musclinitialize_2ec',['MUSCLInitialize.c',['../a00217.html',1,'']]],
-  ['musclparameters',['MUSCLParameters',['../a00097.html#a00444',1,'']]]
+  ['musclparameters',['MUSCLParameters',['../a00097.html#a00445',1,'']]]
 ];

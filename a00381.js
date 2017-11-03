@@ -1,4 +1,4 @@
 var a00381 =
 [
-    [ "ShallowWater1DRoeAverage", "a00381.html#a58a7f69435429c6235c30655236fefd9", null ]
+    [ "ShallowWater1DFlux", "a00381.html#ab8ef6342f2e68ddffa5fe5d5f50cc4ce", null ]
 ];

@@ -233,7 +233,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>5th order hybrid compact-WENO reconstruction (component-wise) on a uniform grid </p>
-<p>Computes the interpolated values of the first primitive of a function \({\bf f}\left({\bf u}\right)\) at the interfaces from the cell-centered values of the function using the fifth order hybrid compact-WENO scheme on a uniform grid. The tridiagonal system is solved using <a class="el" href="a00117.html#a83b53dedf034d67bf2dde46eebf492ee">tridiagLU()</a> (see also <a class="el" href="a00117.html#a00448">TridiagLU</a>, <a class="el" href="a00117.html" title="Header file for TridiagLU. ">tridiagLU.h</a>). See references below for a complete description of the method implemented here.</p>
+<p>Computes the interpolated values of the first primitive of a function \({\bf f}\left({\bf u}\right)\) at the interfaces from the cell-centered values of the function using the fifth order hybrid compact-WENO scheme on a uniform grid. The tridiagonal system is solved using <a class="el" href="a00117.html#a83b53dedf034d67bf2dde46eebf492ee">tridiagLU()</a> (see also <a class="el" href="a00117.html#a00449">TridiagLU</a>, <a class="el" href="a00117.html" title="Header file for TridiagLU. ">tridiagLU.h</a>). See references below for a complete description of the method implemented here.</p>
 <p><b>Implementation</b> <b>Notes:</b> </p><ul>
 <li>This method assumes a uniform grid in the spatial dimension corresponding to the interpolation.</li>
 <li>The scalar interpolation method is applied to the vector function in a component-wise manner.</li>
@@ -263,7 +263,7 @@ Functions</h2></td></tr>
 <tr>
 <td>s </td><td>void* </td><td>Solver object of type <a class="el" href="a00106.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>: the following variables are needed - <a class="el" href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a>, <a class="el" href="a00106.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a>, <a class="el" href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a>, <a class="el" href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a>. </td></tr>
 <tr>
-<td>m </td><td>void* </td><td>MPI object of type <a class="el" href="a00108.html#a00443" title="Structure of MPI-related variables. ">MPIVariables</a>: this is needed only by compact interpolation method that need to solve a global implicit system across MPI ranks. </td></tr>
+<td>m </td><td>void* </td><td>MPI object of type <a class="el" href="a00108.html#a00444" title="Structure of MPI-related variables. ">MPIVariables</a>: this is needed only by compact interpolation method that need to solve a global implicit system across MPI ranks. </td></tr>
 <tr>
 <td>uflag </td><td>int </td><td>A flag indicating if the function being interpolated \({\bf f}\) is the solution itself \({\bf u}\) (if 1, \({\bf f}\left({\bf u}\right) \equiv {\bf u}\)). </td></tr>
 </table>
@@ -280,7 +280,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">upw</td><td>Upwind direction (left or right biased) </td></tr>
     <tr><td class="paramname">dir</td><td>Spatial dimension along which to interpolation </td></tr>
     <tr><td class="paramname">s</td><td>Object of type <a class="el" href="a00106.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> containing solver-related variables </td></tr>
-    <tr><td class="paramname">m</td><td>Object of type <a class="el" href="a00108.html#a00443" title="Structure of MPI-related variables. ">MPIVariables</a> containing MPI-related variables </td></tr>
+    <tr><td class="paramname">m</td><td>Object of type <a class="el" href="a00108.html#a00444" title="Structure of MPI-related variables. ">MPIVariables</a> containing MPI-related variables </td></tr>
     <tr><td class="paramname">uflag</td><td>Flag to indicate if \(f(u) \equiv u\), i.e, if the solution is being reconstructed </td></tr>
   </table>
   </dd>
@@ -289,10 +289,10 @@ Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="a00204_source.html#l00063">63</a> of file <a class="el" href="a00204_source.html">Interp1PrimFifthOrderHCWENO.c</a>.</p>
 <div class="fragment"><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <a class="code" href="a00106.html">HyPar</a>           *solver = (<a class="code" href="a00106.html">HyPar</a>*)          s;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="a00108.html#a00443">MPIVariables</a>    *mpi    = (<a class="code" href="a00108.html#a00443">MPIVariables</a>*)   m;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <a class="code" href="a00097.html#a00430">CompactScheme</a>   *compact= (<a class="code" href="a00097.html#a00430">CompactScheme</a>*)  solver-&gt;<a class="code" href="a00106.html#a56318721d534e74a96b440f8542a0232">compact</a>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <a class="code" href="a00097.html#a00449">WENOParameters</a>  *weno   = (<a class="code" href="a00097.html#a00449">WENOParameters</a>*) solver-&gt;<a class="code" href="a00106.html#a29c46b81ad574e4dfbad5a7211487dcb">interp</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="a00117.html#a00448">TridiagLU</a>       *lu     = (<a class="code" href="a00117.html#a00448">TridiagLU</a>*)      solver-&gt;<a class="code" href="a00106.html#a1dbfa1e479a373073b6ebf72401a7f0f">lusolver</a>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="a00108.html#a00444">MPIVariables</a>    *mpi    = (<a class="code" href="a00108.html#a00444">MPIVariables</a>*)   m;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <a class="code" href="a00097.html#a00431">CompactScheme</a>   *compact= (<a class="code" href="a00097.html#a00431">CompactScheme</a>*)  solver-&gt;<a class="code" href="a00106.html#a56318721d534e74a96b440f8542a0232">compact</a>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <a class="code" href="a00097.html#a00450">WENOParameters</a>  *weno   = (<a class="code" href="a00097.html#a00450">WENOParameters</a>*) solver-&gt;<a class="code" href="a00106.html#a29c46b81ad574e4dfbad5a7211487dcb">interp</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="a00117.html#a00449">TridiagLU</a>       *lu     = (<a class="code" href="a00117.html#a00449">TridiagLU</a>*)      solver-&gt;<a class="code" href="a00106.html#a1dbfa1e479a373073b6ebf72401a7f0f">lusolver</a>;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordtype">int</span>             sys,Nsys,d;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <a class="code" href="a00122.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
@@ -450,7 +450,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="a00097_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00097.html#ad36954709307649365515214a02ab06d">CompactScheme::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00422">interpolation.h:422</a></div></div>
 <div class="ttc" id="a00122_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00122.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00011">basic.h:11</a></div></div>
 <div class="ttc" id="a00097_html_ac900805a486cbb8489e3c176ed6e0d8e"><div class="ttname"><a href="a00097.html#ac900805a486cbb8489e3c176ed6e0d8e">CompactScheme::A</a></div><div class="ttdeci">double * A</div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00422">interpolation.h:422</a></div></div>
-<div class="ttc" id="a00108_html_a00443"><div class="ttname"><a href="a00108.html#a00443">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00021">mpivars.h:21</a></div></div>
+<div class="ttc" id="a00108_html_a00444"><div class="ttname"><a href="a00108.html#a00444">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00021">mpivars.h:21</a></div></div>
 <div class="ttc" id="a00106_html_a56318721d534e74a96b440f8542a0232"><div class="ttname"><a href="a00106.html#a56318721d534e74a96b440f8542a0232">HyPar::compact</a></div><div class="ttdeci">void * compact</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00314">hypar.h:314</a></div></div>
 <div class="ttc" id="a00121_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00121.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00281">arrayfunctions.h:281</a></div></div>
 <div class="ttc" id="a00127_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00127.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00015">mathfunctions.h:15</a></div></div>
@@ -462,15 +462,15 @@ Functions</h2></td></tr>
 <div class="ttc" id="a00108_html_aa3c28612a64b8a97bde66b720e15c700"><div class="ttname"><a href="a00108.html#aa3c28612a64b8a97bde66b720e15c700">MPIVariables::ip</a></div><div class="ttdeci">int * ip</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00025">mpivars.h:25</a></div></div>
 <div class="ttc" id="a00106_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00106.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00041">hypar.h:41</a></div></div>
 <div class="ttc" id="a00108_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00108.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00024">mpivars.h:24</a></div></div>
-<div class="ttc" id="a00097_html_a00430"><div class="ttname"><a href="a00097.html#a00430">CompactScheme</a></div><div class="ttdoc">Structure of variables/parameters needed by the compact schemes. </div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00420">interpolation.h:420</a></div></div>
-<div class="ttc" id="a00097_html_a00449"><div class="ttname"><a href="a00097.html#a00449">WENOParameters</a></div><div class="ttdoc">Structure of variables/parameters needed by the WENO-type scheme. </div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00158">interpolation.h:158</a></div></div>
+<div class="ttc" id="a00097_html_a00450"><div class="ttname"><a href="a00097.html#a00450">WENOParameters</a></div><div class="ttdoc">Structure of variables/parameters needed by the WENO-type scheme. </div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00158">interpolation.h:158</a></div></div>
+<div class="ttc" id="a00097_html_a00431"><div class="ttname"><a href="a00097.html#a00431">CompactScheme</a></div><div class="ttdoc">Structure of variables/parameters needed by the compact schemes. </div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00420">interpolation.h:420</a></div></div>
 <div class="ttc" id="a00121_html_a03f49e4d44ae8aca85cb04cfe91e4ce4"><div class="ttname"><a href="a00121.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a></div><div class="ttdeci">#define _ArrayIndexnD_(N, index, imax, i, ghost)</div><div class="ttdef"><b>Definition:</b> <a href="a00121_source.html#l00017">arrayfunctions.h:17</a></div></div>
 <div class="ttc" id="a00122_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00122.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00009">basic.h:9</a></div></div>
-<div class="ttc" id="a00117_html_a83b53dedf034d67bf2dde46eebf492ee"><div class="ttname"><a href="a00117.html#a83b53dedf034d67bf2dde46eebf492ee">tridiagLU</a></div><div class="ttdeci">int tridiagLU(double *, double *, double *, double *, int, int, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00424_source.html#l00083">tridiagLU.c:83</a></div></div>
+<div class="ttc" id="a00117_html_a83b53dedf034d67bf2dde46eebf492ee"><div class="ttname"><a href="a00117.html#a83b53dedf034d67bf2dde46eebf492ee">tridiagLU</a></div><div class="ttdeci">int tridiagLU(double *, double *, double *, double *, int, int, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00425_source.html#l00083">tridiagLU.c:83</a></div></div>
 <div class="ttc" id="a00097_html_ac06de847603f5cfaec085f6fe500f3c8"><div class="ttname"><a href="a00097.html#ac06de847603f5cfaec085f6fe500f3c8">CompactScheme::R</a></div><div class="ttdeci">double * R</div><div class="ttdef"><b>Definition:</b> <a href="a00097_source.html#l00422">interpolation.h:422</a></div></div>
 <div class="ttc" id="a00106_html_a1dbfa1e479a373073b6ebf72401a7f0f"><div class="ttname"><a href="a00106.html#a1dbfa1e479a373073b6ebf72401a7f0f">HyPar::lusolver</a></div><div class="ttdeci">void * lusolver</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00318">hypar.h:318</a></div></div>
 <div class="ttc" id="a00106_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00117_html_a00448"><div class="ttname"><a href="a00117.html#a00448">TridiagLU</a></div><div class="ttdef"><b>Definition:</b> <a href="a00117_source.html#l00081">tridiagLU.h:81</a></div></div>
+<div class="ttc" id="a00117_html_a00449"><div class="ttname"><a href="a00117.html#a00449">TridiagLU</a></div><div class="ttdef"><b>Definition:</b> <a href="a00117_source.html#l00081">tridiagLU.h:81</a></div></div>
 <div class="ttc" id="a00127_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00127.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00033">mathfunctions.h:33</a></div></div>
 <div class="ttc" id="a00106_html_a29c46b81ad574e4dfbad5a7211487dcb"><div class="ttname"><a href="a00106.html#a29c46b81ad574e4dfbad5a7211487dcb">HyPar::interp</a></div><div class="ttdeci">void * interp</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00312">hypar.h:312</a></div></div>
 <div class="ttc" id="a00106_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00106.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00125_source.html#l00032">hypar.h:32</a></div></div>
@@ -479,20 +479,14 @@ Functions</h2></td></tr>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10897352; 
-var sc_invisible=1; 
-var sc_security="83042f57"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counters" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/10897352/0/83042f57/1/"
-alt="free hit counters"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_75b8c0fc325b34fd7493a1301afe8554.html">InterpolationFunctions</a></li><li class="navelem"><a class="el" href="a00204.html">Interp1PrimFifthOrderHCWENO.c</a></li>
+    <li class="footer">Generated on Fri Nov 3 2017 13:56:24 for HyPar by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,4 +1,10 @@
 var a00281 =
 [
-    [ "Euler2DCleanup", "a00281.html#a3487130c60871e40e78971cfd86e2b6c", null ]
+    [ "Euler1DUpwindRoe", "a00281.html#a6dc9d104ca58ca3ea0da7039fe5323c4", null ],
+    [ "Euler1DUpwindRF", "a00281.html#a803a31978814cfaef298c686b99d6ed0", null ],
+    [ "Euler1DUpwindLLF", "a00281.html#aaafb95c6a0e137263bc9d072444a1fb7", null ],
+    [ "Euler1DUpwindSWFS", "a00281.html#ad6796e7537a610cfeb2efcc62e98d43d", null ],
+    [ "Euler1DUpwinddFRoe", "a00281.html#a661317dfe3032428094f1dc054d207ae", null ],
+    [ "Euler1DUpwinddFRF", "a00281.html#a7efe8a920b95163f2dd3ae308d7c063e", null ],
+    [ "Euler1DUpwinddFLLF", "a00281.html#aefac1195512cb539fbe564a84cc68d43", null ]
 ];

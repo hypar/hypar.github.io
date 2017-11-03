@@ -1,4 +1,5 @@
 var a00389 =
 [
-    [ "ShallowWater1DWriteTopography", "a00389.html#ae50e47efa2c1d1d314c4b2f19fbf4932", null ]
+    [ "ShallowWater1DUpwindRoe", "a00389.html#ace4421562e3ac0bce55ddde7c58d2239", null ],
+    [ "ShallowWater1DUpwindLLF", "a00389.html#a19452a335e50ca04b8d55db58acccc53", null ]
 ];
