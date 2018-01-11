@@ -18,8 +18,8 @@ var NAVTREE =
     ] ],
     [ "License", "a00092.html", null ],
     [ "README", "a00094.html", null ],
-    [ "Data Structures", null, [
-      [ "Data Structures", "annotated.html", "annotated" ],
+    [ "Data Structures", "annotated.html", [
+      [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
       [ "Data Fields", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
@@ -43,7 +43,7 @@ var NAVTREEINDEX =
 [
 "a00002.html",
 "a00100.html#a57771c952ec174601addf43e1c0202b2",
-"a00106.html#abd6886cf9b7ead81e0aaa9ead9aced81",
+"a00106.html#abb50b7a404febaf647f7bd89f873b96e",
 "a00115.html#acf2a05e3d7005c865c3e4f609cf728f8",
 "a00131.html#a6a44057228e5f4b86e1c4d04b2a28977",
 "a00188.html",

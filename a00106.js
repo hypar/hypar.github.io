@@ -59,7 +59,7 @@ var a00106 =
     [ "InterpolateInterfacesPar", "a00106.html#a5b70211377c8260e3f192934a72847df", null ],
     [ "FirstDerivativePar", "a00106.html#a70476d05a40159f61242a8dae0526cc3", null ],
     [ "SecondDerivativePar", "a00106.html#ad620f41c8df5d995ba6304fa21079103", null ],
-    [ "HyperbolicFunction", "a00106.html#ac6e21700e87392a666ef9425981388a2", null ],
+    [ "HyperbolicFunction", "a00106.html#a1a543a57a417b01cda0435e481cc0e51", null ],
     [ "ParabolicFunction", "a00106.html#ad607a144bb3dbf119fd52c47757212dd", null ],
     [ "SourceFunction", "a00106.html#ad8a664f0fe5ef5f928bb259fa5e3657e", null ],
     [ "model", "a00106.html#ad3fe4b266b398f3a7567ac1b241d99a2", null ],

@@ -109,7 +109,7 @@ var searchData=
   ['nfacets_5flocal',['nfacets_local',['../a00096.html#ab3583871695c8f2fc06011d14e092d09',1,'ImmersedBoundary']]],
   ['no_5flimiting',['no_limiting',['../a00097.html#a20e793c98bd33aef1cbbafcf3df48a55',1,'WENOParameters']]],
   ['nonlinearinterp',['NonlinearInterp',['../a00106.html#abfb95b26a10515a77c736845f2c173cc',1,'HyPar']]],
-  ['nonlinearinterpolation',['NonLinearInterpolation',['../a00175.html#a72a765174f8397b09ea5632b33c2563e',1,'NonLinearInterpolation(double *, void *, void *, double, int(*)(double *, double *, int, void *, double)):&#160;NonLinearInterpolation.c'],['../a00177.html#af2e57e55724c44c535903d432a9d6193',1,'NonLinearInterpolation(double *u, void *s, void *m, double t, int(*FluxFunction)(double *, double *, int, void *, double)):&#160;NonLinearInterpolation.c']]],
+  ['nonlinearinterpolation',['NonLinearInterpolation',['../a00175.html#a72a765174f8397b09ea5632b33c2563e',1,'NonLinearInterpolation(double *, void *, void *, double, int(*)(double *, double *, int, void *, double)):&#160;NonLinearInterpolation.c'],['../a00177.html#af0b0d335e8084e9ec2317a413e3102fa',1,'NonLinearInterpolation(double *u, void *s, void *m, double t,   int(*FluxFunction)(double *, double *, int, void *, double)):&#160;NonLinearInterpolation.c']]],
   ['nonlinearinterpolation_2ec',['NonLinearInterpolation.c',['../a00177.html',1,'']]],
   ['norm',['norm',['../a00116.html#a7e8f00a437ef8fd856bc83c9a763d6cc',1,'TimeIntegration']]],
   ['npoints',['npoints',['../a00113.html#a515ec0fe2abce5449e37ae520974cf5f',1,'PETScContext']]],

@@ -8,5 +8,5 @@ var searchData=
   ['hfunction',['HFunction',['../a00106.html#a6e41f429f671ba4548cb84861c021033',1,'HyPar']]],
   ['href',['Href',['../a00105.html#ad89180516350922363ad85315bc3b102',1,'FPPowerSystem3Bus']]],
   ['hyp',['hyp',['../a00106.html#aeadfdde0fbc3058bace813055212dcc3',1,'HyPar']]],
-  ['hyperbolicfunction',['HyperbolicFunction',['../a00106.html#ac6e21700e87392a666ef9425981388a2',1,'HyPar']]]
+  ['hyperbolicfunction',['HyperbolicFunction',['../a00106.html#a1a543a57a417b01cda0435e481cc0e51',1,'HyPar']]]
 ];

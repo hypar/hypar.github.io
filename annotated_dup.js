@@ -1,4 +1,4 @@
-var annotated =
+var annotated_dup =
 [
     [ "BandedMatrix", "a00095.html#a00429", "a00095_a00429" ],
     [ "Body3D", "a00096.html#a00430", "a00096_a00430" ],

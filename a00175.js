@@ -2,7 +2,7 @@ var a00175 =
 [
     [ "ApplyBoundaryConditions", "a00175.html#a09f2c325b30d93f213545636ebc1c725", null ],
     [ "ApplyIBConditions", "a00175.html#a4cf60474c83d29277a8c9060143113ff", null ],
-    [ "HyperbolicFunction", "a00175.html#a742f5c2ef4e49306ef37377a98e0b5ad", null ],
+    [ "HyperbolicFunction", "a00175.html#af0460a9eb2ad3017f5f4eef02da072bc", null ],
     [ "ParabolicFunctionNC1Stage", "a00175.html#aeac475b48b3fe25f426e14ff117db7ba", null ],
     [ "ParabolicFunctionNC2Stage", "a00175.html#a9f5c8ed9c587aa71c9f75209222ad67c", null ],
     [ "ParabolicFunctionNC1_5Stage", "a00175.html#aedd832fdf4002f675da44a840e132456", null ],
