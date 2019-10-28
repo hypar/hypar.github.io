@@ -1,5 +1,5 @@
 var a00279 =
 [
-    [ "Euler1DSourceFunction", "a00279.html#a23bb10e5b44548d3c27b43d0bb954214", null ],
-    [ "Euler1DSource", "a00279.html#a2b851ab206d30609f55154fa1bc0f787", null ]
+    [ "Euler1DJacobian", "a00279.html#ab37022ee06f6873c94049e55a0890fe1", null ],
+    [ "Euler1DStiffJacobian", "a00279.html#a635a7e46a7898c4de6b7a47b1d68c969", null ]
 ];

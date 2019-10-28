@@ -1,23 +1,9 @@
 var a00129 =
 [
-    [ "Euler1D", "a00099.html", "a00099" ],
-    [ "_EULER_1D_", "a00129.html#a076991b7fbc2b9c6330f792bbba182c2", null ],
-    [ "_MODEL_NDIMS_", "a00129.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00129.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "_ROE_", "a00129.html#abffeadaaee7a3a2baeeb28e395411d73", null ],
-    [ "_RF_", "a00129.html#a51e0f9431973e4cf55e6aeee7dab6d83", null ],
-    [ "_LLF_", "a00129.html#a98a6bcc1b69abface4bef84cf0d51955", null ],
-    [ "_SWFS_", "a00129.html#a930e301363fd9f0a570d97c8c3dd3ea3", null ],
-    [ "_XDIR_", "a00129.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
-    [ "_Euler1DGetFlowVar_", "a00129.html#af35510fb1477577f57c57cc2a862b1e7", null ],
-    [ "_Euler1DSetFlux_", "a00129.html#a159a1509b6fbdc57754ca8871d39d97e", null ],
-    [ "_Euler1DSetStiffFlux_", "a00129.html#a5329991de3157d264ef86a1df4ff6bef", null ],
-    [ "_Euler1DSetLinearizedStiffFlux_", "a00129.html#a2f680b65f650c3360682d6f65e4f7321", null ],
-    [ "_Euler1DSetStiffJac_", "a00129.html#a5a41ecdbbb78de026d8541491fb5587f", null ],
-    [ "_Euler1DRoeAverage_", "a00129.html#a9a3e89dcf75e61433735d59b6556c346", null ],
-    [ "_Euler1DEigenvalues_", "a00129.html#a115efdce970884e30c6564701f929092", null ],
-    [ "_Euler1DLeftEigenvectors_", "a00129.html#a413fd3cab5a06c9d7a38334768d81b0f", null ],
-    [ "_Euler1DRightEigenvectors_", "a00129.html#a4449638968eca76bb5631bc75b7dced7", null ],
-    [ "Euler1DInitialize", "a00129.html#a2143f7f3c03f53cf752a344a613fe429", null ],
-    [ "Euler1DCleanup", "a00129.html#a8e310ddd9664225aef72a59b99baaaef", null ]
+    [ "ReadArray", "a00129.html#afaf5b0d6e79b1e8674b397aebcb219dc", null ],
+    [ "WriteArray", "a00129.html#aaf888c739c5200d9c58a7154347069b0", null ],
+    [ "WriteBinary", "a00129.html#a067f454c26d85d6cfb4d7d878b3783c9", null ],
+    [ "WriteText", "a00129.html#a3355a71faf3d87f6715ad627db08ac9e", null ],
+    [ "WriteTecplot2D", "a00129.html#a265b0583afb79edd2f2f5d5087e5c3bf", null ],
+    [ "WriteTecplot3D", "a00129.html#a5bdb048ecc5ae7ab61622e4764f3133e", null ]
 ];

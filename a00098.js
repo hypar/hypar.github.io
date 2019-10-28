@@ -9,7 +9,6 @@ var a00098 =
     [ "is", "a00098.html#a481013ba007a99a4237cde5eeb3c9a29", null ],
     [ "ie", "a00098.html#a7602de5ebb1b59ec35217e78a35a531e", null ],
     [ "BCFunctionU", "a00098.html#af1c333edda90c79d9eff5442ac440942", null ],
-    [ "BCFunctionDU", "a00098.html#aa14c431b18e0c34e2622e1d5c797f9f0", null ],
     [ "DirichletValue", "a00098.html#a6aa65431c39a8d8177f35c338ddb7a0e", null ],
     [ "SpongeValue", "a00098.html#af7eeb4ff3f7c8bc22e0786ddbe62f16d", null ],
     [ "UnsteadyDirichletSize", "a00098.html#ac3b478217419275ad063182f69cb543d", null ],
@@ -18,5 +17,9 @@ var a00098 =
     [ "gamma", "a00098.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
     [ "FlowDensity", "a00098.html#aa92ee9d8efc5ca49f4a83d8dabf0b15d", null ],
     [ "FlowVelocity", "a00098.html#a0d0d92fab642e1d02a9de254e73a3f21", null ],
-    [ "FlowPressure", "a00098.html#a0a3c5af6bdb8fbdb746fd4edb374bb18", null ]
+    [ "FlowPressure", "a00098.html#a0a3c5af6bdb8fbdb746fd4edb374bb18", null ],
+    [ "UnsteadyTemperatureSize", "a00098.html#a6f46fcd429eeb105637c0e14d54d79e7", null ],
+    [ "UnsteadyTimeLevels", "a00098.html#af135619149474c2de735f5482e4d0a0e", null ],
+    [ "UnsteadyTemperatureData", "a00098.html#a23dab9053d40cce5ba488290fb1b41c3", null ],
+    [ "UnsteadyTemperatureFilename", "a00098.html#aad72794e4e965697c3827e2f236b6934", null ]
 ];

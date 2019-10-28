@@ -1,4 +1,4 @@
 var a00226 =
 [
-    [ "WriteTecplot3D", "a00226.html#a3534f57522eaabee8fe3689476abf23c", null ]
+    [ "WriteText", "a00226.html#afc6009d99921e629e20244374914a806", null ]
 ];

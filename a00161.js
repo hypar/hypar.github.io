@@ -1,4 +1,4 @@
 var a00161 =
 [
-    [ "ApplyBoundaryConditions", "a00161.html#a652bd59d2ccc7c0061a9ff9d6aea044a", null ]
+    [ "BCSWSlipWallU", "a00161.html#a7cffeb6ede7dbf886b8970fd0d584961", null ]
 ];

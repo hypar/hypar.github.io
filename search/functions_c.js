@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outputsolution',['OutputSolution',['../a00125.html#abff21fd701b932c05e9e0dac925bcf29',1,'OutputSolution(void *, void *):&#160;OutputSolution.c'],['../a00178.html#a494c9fbf057816a3693f865bf7be671f',1,'OutputSolution(void *s, void *m):&#160;OutputSolution.c']]]
+  ['outputsolution',['OutputSolution',['../a00117.html#a5981de613724cb667e98aa872157534e',1,'OutputSolution(void *, int):&#160;OutputSolution.c'],['../a00416.html#a71b1fa7dd29d05980a5d700ccc0f11d1',1,'OutputSolution(void *s, int nsims):&#160;OutputSolution.c']]]
 ];

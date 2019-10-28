@@ -1,5 +1,4 @@
 var a00302 =
 [
-    [ "FPPowerSystemDissipationFunction", "a00302.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
-    [ "FPPowerSystemDiffusion", "a00302.html#a0210181023c485ae65c8d7983f23303a", null ]
+    [ "FPPowerSystemCleanup", "a00302.html#ac5558f0ce41893640fb0d0d9c30c9dfb", null ]
 ];

@@ -1,4 +1,4 @@
 var a00352 =
 [
-    [ "NavierStokes3DRoeAverage", "a00352.html#a8910dbe2aaf01714c0136e887ab88a89", null ]
+    [ "NavierStokes3DComputeCFL", "a00352.html#ae98f605de061bde1006de5e37e7745bb", null ]
 ];

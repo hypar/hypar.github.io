@@ -1,6 +1,6 @@
 var a00104 =
 [
-    [ "FPPowerSystem1Bus", "a00104.html#a00438", [
+    [ "FPPowerSystem1Bus", "a00104.html#a00453", [
       [ "omegaB", "a00104.html#ac789ae1b1c053a68151c68902fee8ac9", null ],
       [ "omegaS", "a00104.html#a9b6bd0a73a0ef62d17fad2c55823ff29", null ],
       [ "H", "a00104.html#a982cf43f120ff8978010e078bd49d9a3", null ],

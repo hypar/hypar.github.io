@@ -1,5 +1,5 @@
 var a00149 =
 [
-    [ "BCSlipWallU", "a00149.html#abdeb4e91e1441a25130cb2d3a1be09b0", null ],
-    [ "BCSlipWallDU", "a00149.html#ab200c2fba9ceeadcb1eac34fda5ddcb7", null ]
+    [ "BCReadTurbulentInflowData", "a00149.html#ae90485b7beacc863180d194634c9e6d5", null ],
+    [ "BCReadTemperatureData", "a00149.html#a482110904d4b11dd863786c9d425bc7e", null ]
 ];

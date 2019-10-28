@@ -1,4 +1,4 @@
 var a00358 =
 [
-    [ "NavierStokes3DModifiedSolution", "a00358.html#ad034ca1ba58aded96602d83f85691aea", null ]
+    [ "NavierStokes3DImmersedBoundary", "a00358.html#a7420691d461963f76073899aa8f55e0e", null ]
 ];

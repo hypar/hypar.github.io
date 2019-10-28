@@ -1,4 +1,5 @@
 var a00360 =
 [
-    [ "NavierStokes3DPreStep", "a00360.html#ac8eb8d2fcaa813fe63b214ea1b51a46b", null ]
+    [ "NavierStokes3DJacobian", "a00360.html#a6c45dc91596bd65c52421d51d32aa77e", null ],
+    [ "NavierStokes3DStiffJacobian", "a00360.html#a4e52fd52b4a07d5a31ceda8e28fab91a", null ]
 ];

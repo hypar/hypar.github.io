@@ -1,4 +1,4 @@
 var a00246 =
 [
-    [ "MPIRank1D", "a00246.html#a5eb76d97a1620a8446043bba3a8adfe3", null ]
+    [ "MPIPartition1D", "a00246.html#a87127187b566bfa02b692247f9e3c798", null ]
 ];

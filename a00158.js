@@ -1,6 +1,4 @@
 var a00158 =
 [
-    [ "MPIContext", "a00158.html#aef8e1d87c719a4a2a2342213c1721789", null ],
-    [ "SolverContext", "a00158.html#a588e1e74fdbac3dcc2b1258aa0c155c0", null ],
-    [ "FirstDerivativeFirstOrder", "a00158.html#a6e0e65f5323bf9a56988f609a52e6a9c", null ]
+    [ "BCSubsonicOutflowU", "a00158.html#aea51db89a0a00f1c9b8288f9ebc059c6", null ]
 ];

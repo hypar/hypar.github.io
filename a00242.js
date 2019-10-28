@@ -1,5 +1,4 @@
 var a00242 =
 [
-    [ "MPIMin_integer", "a00242.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
-    [ "MPIMin_double", "a00242.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
+    [ "MPICreateIOGroups", "a00242.html#a32033a931111b364a144da26e6a53335", null ]
 ];

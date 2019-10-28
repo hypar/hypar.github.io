@@ -18,8 +18,8 @@ var NAVTREE =
     ] ],
     [ "License", "a00092.html", null ],
     [ "README", "a00094.html", null ],
-    [ "Data Structures", "annotated.html", [
-      [ "Data Structures", "annotated.html", "annotated_dup" ],
+    [ "Data Structures", null, [
+      [ "Data Structures", "annotated.html", "annotated" ],
       [ "Data Structure Index", "classes.html", null ],
       [ "Data Fields", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
@@ -42,15 +42,15 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00002.html",
-"a00100.html#a57771c952ec174601addf43e1c0202b2",
-"a00106.html#abb50b7a404febaf647f7bd89f873b96e",
-"a00115.html#acf2a05e3d7005c865c3e4f609cf728f8",
-"a00131.html#a6a44057228e5f4b86e1c4d04b2a28977",
-"a00188.html",
-"a00254.html#a4b20303804790b5dff4c41ab742749b1",
-"a00308.html",
-"a00356.html#a9795f4f26514c700c22f2182cbe73f9b",
-"a00412_source.html"
+"a00100.html",
+"a00106.html#aafb41b96563d9966e8e9f458751f2960",
+"a00115.html#ab30c765b9be1b7776c97c899a12a66bb",
+"a00133.html#af35510fb1477577f57c57cc2a862b1e7",
+"a00192.html#a6910727d86fc73085545f208fecdece7",
+"a00258_source.html",
+"a00312.html#a8c9cdf60c2e48f10d3d5c07febffb46e",
+"a00359.html#acb5490573b85442e23e4f69f97a6e8cd",
+"a00414.html#a9c9813ef18605823a1c4da67e43e76c3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

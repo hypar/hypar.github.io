@@ -1,5 +1,4 @@
 var a00145 =
 [
-    [ "BCNoFluxU", "a00145.html#a47f15d0ef1040bf42b53bd882d612b54", null ],
-    [ "BCNoFluxDU", "a00145.html#a51559c7d6cc8f9e54ff3cd949d0e3872", null ]
+    [ "BCCleanup", "a00145.html#ad9afaf7734844fb063337e4da2caf4df", null ]
 ];

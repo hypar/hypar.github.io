@@ -1,7 +1,6 @@
 var a00222 =
 [
-    [ "ReadArraySerial", "a00222.html#adad6ec70ca9a4a6fef53b7d2abc8b270", null ],
-    [ "ReadArrayParallel", "a00222.html#adaa1bd7f962777f3b7ce886a94a8338e", null ],
-    [ "ReadArrayMPI_IO", "a00222.html#ac69cac66cd56d57f21a094418a649714", null ],
-    [ "ReadArray", "a00222.html#a61cd8732591552b50c4aeeeb729d8bd3", null ]
+    [ "WriteArraySerial", "a00222.html#a62e3430c806c874df7b65e9ba3da95c7", null ],
+    [ "WriteArrayParallel", "a00222.html#a1548f4cea5254257d93790952941c351", null ],
+    [ "WriteArray", "a00222.html#a39266090467a28f626638e7bfc9957e2", null ]
 ];

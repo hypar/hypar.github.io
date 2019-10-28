@@ -1,4 +1,4 @@
 var a00426 =
 [
-    [ "tridiagLUGS", "a00426.html#ad485d12c99b8c48303b6bef2f86b135d", null ]
+    [ "TimeGetAuxSolutions", "a00426.html#afb7c0aaa510e236f880899a068bbecca", null ]
 ];

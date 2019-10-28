@@ -1,18 +1,10 @@
 var a00132 =
 [
-    [ "ShallowWater1D", "a00114.html", "a00114" ],
-    [ "_SHALLOW_WATER_1D_", "a00132.html#ac280c6ead138670f1f518fad3ea94737", null ],
-    [ "_MODEL_NDIMS_", "a00132.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00132.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "_ROE_", "a00132.html#abffeadaaee7a3a2baeeb28e395411d73", null ],
-    [ "_LLF_", "a00132.html#a98a6bcc1b69abface4bef84cf0d51955", null ],
-    [ "_XDIR_", "a00132.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
-    [ "_ShallowWater1DGetFlowVar_", "a00132.html#ab6d0702f0bacbdb3f2644bd1f60938c0", null ],
-    [ "_ShallowWater1DSetFlux_", "a00132.html#adfdf0d9f6cf0e17a83afbfbe6e3013fc", null ],
-    [ "_ShallowWater1DRoeAverage_", "a00132.html#af465e1911fb6168c0e308a42132deb35", null ],
-    [ "_ShallowWater1DEigenvalues_", "a00132.html#a1faa098b23f173077df8a7c111dca644", null ],
-    [ "_ShallowWater1DLeftEigenvectors_", "a00132.html#ab304d572a9bf352c09735486f88de6f7", null ],
-    [ "_ShallowWater1DRightEigenvectors_", "a00132.html#a3c10806b3d5a56f4d0e9d4607dafcffc", null ],
-    [ "ShallowWater1DInitialize", "a00132.html#a66b9f9e2ed58d68a910cbd5522381fa2", null ],
-    [ "ShallowWater1DCleanup", "a00132.html#ab1bdb73df74d06f2e2aeb940b87fcdcf", null ]
+    [ "_MatrixZero_", "a00132.html#ac7d8b887f87e447fc24749ba3eea95e4", null ],
+    [ "_MatrixMultiply_", "a00132.html#ab6aa501e79620e67e647017307e412f5", null ],
+    [ "_MatrixMultiplyNonSquare_", "a00132.html#a59be919c16cf4ca2fbba0b0370f7f320", null ],
+    [ "_MatrixMultiplySubtract_", "a00132.html#a625c8dc5d5de2ed16dc1a211fc998d36", null ],
+    [ "_MatVecMultiply_", "a00132.html#a1318a4facf7b30129d0509f524a1eb3b", null ],
+    [ "_MatVecMultiplySubtract_", "a00132.html#a41e1094e8869844c3e7bf9d8818b8276", null ],
+    [ "_MatrixInvert_", "a00132.html#a2fc4a6b3bc38a4c6e804076ca1e94de0", null ]
 ];

@@ -1,4 +1,5 @@
 var a00328 =
 [
-    [ "LinearADRComputeCFL", "a00328.html#a483cca53816c96d4d08c12241688f75d", null ]
+    [ "FPPowerSystem3BusDriftFunction", "a00328.html#a96c648e7775486eb94b64ca849329d0e", null ],
+    [ "FPPowerSystem3BusUpwind", "a00328.html#ac1a5f6240ab95ea1019326fb26b76a49", null ]
 ];

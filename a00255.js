@@ -1,5 +1,6 @@
 var a00255 =
 [
-    [ "ApplyPeriodicity", "a00255.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e", null ],
-    [ "PetscGlobalDOF", "a00255.html#a15c41ba7e2d10e4803226f42708a6ef8", null ]
+    [ "__FUNCT__", "a00255.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "absolute", "a00255.html#adf1be5ccbb7a2522b4f3a64043c72880", null ],
+    [ "PetscComputeRHSOperators", "a00255.html#a0f2c1412c41c1c0ca7c4a68827b6e4f0", null ]
 ];

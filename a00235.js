@@ -1,4 +1,5 @@
 var a00235 =
 [
-    [ "MPIGatherArray1D", "a00235.html#afd93c6a00eeb8b35cd7e709de63f5a20", null ]
+    [ "MPICreateCommunicators", "a00235.html#a8f52d58fa2c0c94914befd51b6d413a1", null ],
+    [ "MPIFreeCommunicators", "a00235.html#a56b1ce0eb3d932698ac49d3c3183d39a", null ]
 ];

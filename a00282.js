@@ -1,4 +1,5 @@
 var a00282 =
 [
-    [ "Euler2DCleanup", "a00282.html#a3487130c60871e40e78971cfd86e2b6c", null ]
+    [ "Euler1DSourceFunction", "a00282.html#a23bb10e5b44548d3c27b43d0bb954214", null ],
+    [ "Euler1DSource", "a00282.html#a2b851ab206d30609f55154fa1bc0f787", null ]
 ];

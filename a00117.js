@@ -1,26 +1,19 @@
 var a00117 =
 [
-    [ "TridiagLU", "a00117.html#a00449", [
-      [ "reducedsolvetype", "a00117.html#ae50ec60868beaab2cb84897adefda09f", null ],
-      [ "evaluate_norm", "a00117.html#a584c0fc0b1e845800ad511dffc60e032", null ],
-      [ "maxiter", "a00117.html#a274519264a28477940f161ddb4b61feb", null ],
-      [ "atol", "a00117.html#a60c6dfc476dd9596072f61c2ec8d58ed", null ],
-      [ "rtol", "a00117.html#a4587afeee8941ba7c208b3690a3eeaa7", null ],
-      [ "exititer", "a00117.html#a846172807b19cf19a2587ede74b06828", null ],
-      [ "exitnorm", "a00117.html#a0a20107c06f29ce4d4ac23a4e7cfb17a", null ],
-      [ "verbose", "a00117.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ],
-      [ "total_time", "a00117.html#abc276e47b85df9dd59f248e663b3b971", null ],
-      [ "stage1_time", "a00117.html#a8cd56611f6cd8c71a991c9ed2b97ca29", null ],
-      [ "stage2_time", "a00117.html#ab956b3ef566ffdd35d9ddc39c2662875", null ],
-      [ "stage3_time", "a00117.html#a45e5bf315927ed87c57bcf220ec49861", null ],
-      [ "stage4_time", "a00117.html#ac7df4fddfc5aa2827b346dcfd80346fb", null ]
+    [ "SimulationObject", "a00117.html#a00463", [
+      [ "mpi", "a00117.html#a4afd2c7b3eb8fda452474ebdbe71c8c0", null ],
+      [ "solver", "a00117.html#a523947ce4fa7128c4c767163953253b9", null ]
     ] ],
-    [ "_TRIDIAG_JACOBI_", "a00117.html#a79ddfe354b89d113b72db4b5ae6c6e3d", null ],
-    [ "_TRIDIAG_GS_", "a00117.html#adf756eb923ab79f911e38a82da7a6cab", null ],
-    [ "tridiagLU", "a00117.html#a83b53dedf034d67bf2dde46eebf492ee", null ],
-    [ "tridiagLUGS", "a00117.html#a3d43d79472727ef201c8a48f3073decd", null ],
-    [ "tridiagIterJacobi", "a00117.html#a1b0ccd6fb49ee8efe7c87a78e1bbe0ec", null ],
-    [ "tridiagLUInit", "a00117.html#a52d21dfe1d76916811879bf0d7a29d72", null ],
-    [ "blocktridiagLU", "a00117.html#ad2c404dd44e760ee729740176b186bd0", null ],
-    [ "blocktridiagIterJacobi", "a00117.html#a8c48f135943fe35da85072714d4b1b23", null ]
+    [ "SimWriteErrors", "a00117.html#ad7007f198eeb61eb9f73f7ab0df71900", null ],
+    [ "ReadInputs", "a00117.html#a31fac45bcc0a8e9dd578cc1d8515d173", null ],
+    [ "Initialize", "a00117.html#a74087f11196b3689b296e53eb14b69f3", null ],
+    [ "InitialSolution", "a00117.html#a23523232e5e6dd7cdec11754be4c21aa", null ],
+    [ "InitializeBoundaries", "a00117.html#a3a27bf10eed2122900356dd89b66731b", null ],
+    [ "InitializeImmersedBoundaries", "a00117.html#a6ac8578eb0216a84307bfb3b2fba816f", null ],
+    [ "InitializePhysics", "a00117.html#a5dc056a75d14ab6ba9292bcad6928a72", null ],
+    [ "InitializeSolvers", "a00117.html#ad3f393b89ecd5a544c52e1099722337a", null ],
+    [ "OutputSolution", "a00117.html#a5981de613724cb667e98aa872157534e", null ],
+    [ "Solve", "a00117.html#a7347183ec04d39b43cf35d1fe68ace4d", null ],
+    [ "SolvePETSc", "a00117.html#a1a054e1b92ee41a9e38926d18c6628bf", null ],
+    [ "Cleanup", "a00117.html#a315baa877650032461e4cc97eef45b6f", null ]
 ];

@@ -1,4 +1,4 @@
 var a00425 =
 [
-    [ "tridiagLU", "a00425.html#ac3b3c98c44095c11deba8133e06657c2", null ]
+    [ "TimeForwardEuler", "a00425.html#aa9ef7eaebda92d180aea9b0ef8186935", null ]
 ];

@@ -1,5 +1,6 @@
 var a00354 =
 [
-    [ "WriteSurfaceData", "a00354.html#ac127f59e126fcc45cae78757b1f84fb2", null ],
-    [ "NavierStokes3DIBForces", "a00354.html#ac66d24485c83422b6ec21fdf9e1363e5", null ]
+    [ "NavierStokes3DFlux", "a00354.html#ac0c3d11fce67eca952fcb594ff3930cb", null ],
+    [ "NavierStokes3DStiffFlux", "a00354.html#a028bf569168b6ac14cc51c485fd891ce", null ],
+    [ "NavierStokes3DNonStiffFlux", "a00354.html#ae304378ba0faf692ac352fef0deeb961", null ]
 ];

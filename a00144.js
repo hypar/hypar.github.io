@@ -1,4 +1,4 @@
 var a00144 =
 [
-    [ "BCInitialize", "a00144.html#ae3e7ccd26cf3f58d1e1ae5b7faa684c1", null ]
+    [ "BandedMatrixPreallocate", "a00144.html#ac62d1bac79d03bd2136c4fb87e9045d4", null ]
 ];

@@ -1,9 +1,7 @@
 var a00097 =
 [
-    [ "MUSCLParameters", "a00097.html#a00445", [
-      [ "eps", "a00097.html#a974b448c3d0a13d483d36ef15de369b5", null ]
-    ] ],
-    [ "WENOParameters", "a00097.html#a00450", [
+    [ "MUSCLParameters", "a00109.html", "a00109" ],
+    [ "WENOParameters", "a00097.html#a00465", [
       [ "mapped", "a00097.html#af370a2df117483b6f752da8889a89bb0", null ],
       [ "borges", "a00097.html#af3c02b1dce05b28870fa1994c40cd1f2", null ],
       [ "yc", "a00097.html#a8470a9f95ece04985a5031e745042b7e", null ],
@@ -19,7 +17,7 @@ var a00097 =
       [ "offset", "a00097.html#ad0c30ee1add42468a6d7c022f2efdf70", null ],
       [ "size", "a00097.html#a439227feff9d7f55384e8780cfc2eb82", null ]
     ] ],
-    [ "CompactScheme", "a00097.html#a00431", [
+    [ "CompactScheme", "a00097.html#a00446", [
       [ "A", "a00097.html#ac900805a486cbb8489e3c176ed6e0d8e", null ],
       [ "B", "a00097.html#ad36954709307649365515214a02ab06d", null ],
       [ "C", "a00097.html#a0a26ce8d1878aac6ddc87e3f6290e039", null ],
@@ -29,6 +27,7 @@ var a00097 =
     ] ],
     [ "_FIRST_ORDER_UPWIND_", "a00097.html#a19cc54d502757bfed14b373b443f144c", null ],
     [ "_SECOND_ORDER_CENTRAL_", "a00097.html#a89694dcc7c48314c98b9636759bb8bee", null ],
+    [ "_SECOND_ORDER_MUSCL_", "a00097.html#a32a14b9aa17be670a383e3d539da2afa", null ],
     [ "_THIRD_ORDER_MUSCL_", "a00097.html#a21f7f383e497570fcb71c43f243539d3", null ],
     [ "_FIFTH_ORDER_UPWIND_", "a00097.html#a7bc4a755992e5f68efe365591b7a2c02", null ],
     [ "_FIFTH_ORDER_COMPACT_UPWIND_", "a00097.html#ae832e2314ee85139cec9df4ea82aafa2", null ],
@@ -49,6 +48,7 @@ var a00097 =
     [ "_WENOWeights_v_YC_", "a00097.html#ad98f4bd3af977c9a0bc686ba4e6bb15e", null ],
     [ "Interp1PrimFirstOrderUpwind", "a00097.html#a0a067c9c4745556845b9bcb7f049b59b", null ],
     [ "Interp1PrimSecondOrderCentral", "a00097.html#a697d5c94aa331054c5286492e7fa39c7", null ],
+    [ "Interp1PrimSecondOrderMUSCL", "a00097.html#a25df96c0eccca13167d28045d187db36", null ],
     [ "Interp1PrimThirdOrderMUSCL", "a00097.html#ae7eb6a81a164ca0fa2ace3cab2697847", null ],
     [ "Interp1PrimFifthOrderUpwind", "a00097.html#aea7c973ffe0c37bca0703c1bf6175aaa", null ],
     [ "Interp1PrimFifthOrderCompactUpwind", "a00097.html#a3ac2a77b9fa5a50499c285e49cf91344", null ],
@@ -57,6 +57,7 @@ var a00097 =
     [ "Interp1PrimFifthOrderHCWENO", "a00097.html#ad9c611137cfce1c622c2e9838fb523c8", null ],
     [ "Interp1PrimFirstOrderUpwindChar", "a00097.html#a759e07ba8a484c2c6971fc7c6a81a95a", null ],
     [ "Interp1PrimSecondOrderCentralChar", "a00097.html#a963c82116a2a1d6084af3d519b61b896", null ],
+    [ "Interp1PrimSecondOrderMUSCLChar", "a00097.html#a9cde00a0c916f0cda162b1c03d3f7b6b", null ],
     [ "Interp1PrimThirdOrderMUSCLChar", "a00097.html#a985d08c4fb9bcb71875c697f9e00d6eb", null ],
     [ "Interp1PrimFifthOrderUpwindChar", "a00097.html#ade9ece6e934d70cdf29090494440f505", null ],
     [ "Interp1PrimFifthOrderCompactUpwindChar", "a00097.html#a28b8d3ce17676cec19de4f91f989042d", null ],

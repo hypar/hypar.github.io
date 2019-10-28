@@ -1,5 +1,6 @@
 var a00271 =
 [
-    [ "Euler1DLeftEigenvectors", "a00271.html#a1815fa0e825f5544526165566c75a619", null ],
-    [ "Euler1DRightEigenvectors", "a00271.html#af93bb74bc4643347f59e3bdb722e864b", null ]
+    [ "__FUNCT__", "a00271.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "TransferVecToPETSc", "a00271.html#ade5f8f199ddce54db3bcd559252ac637", null ],
+    [ "TransferMatToPETSc", "a00271.html#abbb95954ce9349ea01f27f0c37af56ff", null ]
 ];

@@ -1,4 +1,6 @@
 var a00189 =
 [
-    [ "IBComputeBoundingBox", "a00189.html#aa84e5f72825ab6682a3fd9daf2934bfe", null ]
+    [ "CountBoundaryPoints", "a00189.html#ac20a15dad8cdc1021b559f08cd60bdf4", null ],
+    [ "SetBoundaryPoints", "a00189.html#a684729950453b8313d61c1731acf5e5c", null ],
+    [ "IBIdentifyBoundary", "a00189.html#a65f57f0636944e8a45906b00c8882a8a", null ]
 ];

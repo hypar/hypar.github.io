@@ -1,4 +1,5 @@
 var a00173 =
 [
-    [ "InitializeImmersedBoundaries", "a00173.html#aa824dfa0ac1653af5b4b62d8c24e55c4", null ]
+    [ "ExactSolution", "a00173.html#aef6e3464d167cab9e23a9eacb8f62882", null ],
+    [ "CalculateError", "a00173.html#a52e8c83d9dad55f9a6b967e63dc5f4bc", null ]
 ];

@@ -1,5 +1,4 @@
 var a00256 =
 [
-    [ "__FUNCT__", "a00256.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscIFunctionIMEX", "a00256.html#a9c3f35134656885f3ef5cc8810efb3b7", null ]
+    [ "PetscCreatePointList", "a00256.html#a1bb8435ce56995de809e6d1bf932e466", null ]
 ];

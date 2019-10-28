@@ -1,5 +1,5 @@
 var a00310 =
 [
-    [ "FPPowerSystem1BusDriftFunction", "a00310.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
-    [ "FPPowerSystem1BusComputeCFL", "a00310.html#a55b31508f49708c46c4bb3e44939f982", null ]
+    [ "FPPowerSystemDriftFunction", "a00310.html#aad5370d85f97a4a03459e9b9a185cfa1", null ],
+    [ "FPPowerSystemUpwind", "a00310.html#a3ff2c216124138f65c2ff0d44c185085", null ]
 ];

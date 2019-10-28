@@ -1,4 +1,5 @@
 var a00419 =
 [
-    [ "TimeRHSFunctionExplicit", "a00419.html#af99ae30a4bb29d79bac872268be6def3", null ]
+    [ "ComputeRHSOperators", "a00419.html#ac36e92835a7778335d6855faae25a575", null ],
+    [ "Solve", "a00419.html#a7252344719299385bb387a001b2a3a38", null ]
 ];

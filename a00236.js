@@ -1,4 +1,4 @@
 var a00236 =
 [
-    [ "MPIGatherArraynD", "a00236.html#a169eaecbc7a45469c78354f9cb1fed64", null ]
+    [ "MPIExchangeBoundaries1D", "a00236.html#af9f32944efd136da82cdc63a893f9b3b", null ]
 ];

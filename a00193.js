@@ -1,4 +1,4 @@
 var a00193 =
 [
-    [ "IBIdentifyMode", "a00193.html#a6a8ad4a1a3ebaa527f0d45d5c6f793dd", null ]
+    [ "IBReadBodySTL", "a00193.html#ab11c40c53b44e72e03b788ab2fa769c2", null ]
 ];
