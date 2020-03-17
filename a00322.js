@@ -1,4 +1,5 @@
 var a00322 =
 [
-    [ "FPPowerSystem3BusCleanup", "a00322.html#ae3739edb84bb838b7917c2b19ee8350c", null ]
+    [ "Euler1DSourceFunction", "a00322.html#a23bb10e5b44548d3c27b43d0bb954214", null ],
+    [ "Euler1DSource", "a00322.html#a2b851ab206d30609f55154fa1bc0f787", null ]
 ];

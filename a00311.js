@@ -1,4 +1,4 @@
 var a00311 =
 [
-    [ "FPPowerSystem1BusAdvection", "a00311.html#ad7e78d17ce9013c5e3929a7c13847d83", null ]
+    [ "BurgersUpwind", "a00311.html#acdb7cb154ca3e4d6c7f9b948df0ea7ef", null ]
 ];

@@ -1,4 +1,4 @@
 var a00413 =
 [
-    [ "InitializePhysics", "a00413.html#ab9a428ff0e9a49a972052289de7dcf0c", null ]
+    [ "Numa2DParabolicFunction", "a00413.html#a572c3429da236f2aeb16775269f0d26b", null ]
 ];

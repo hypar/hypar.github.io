@@ -1,5 +1,5 @@
 var a00345 =
 [
-    [ "NavierStokes2DJacobian", "a00345.html#a343a73d6dce8347a2e56d7302392737a", null ],
-    [ "NavierStokes2DStiffJacobian", "a00345.html#aa3baa96900b3d921ae62b3005c16635c", null ]
+    [ "FPPowerSystemDissipationFunction", "a00345.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
+    [ "FPPowerSystemDiffusion", "a00345.html#a0210181023c485ae65c8d7983f23303a", null ]
 ];

@@ -1,5 +1,6 @@
 var dir_4f99e73020cfe6ed8a86f0042d0d702a =
 [
+    [ "Burgers", "dir_fdc3bbba897391b274d10776a82e48c1.html", "dir_fdc3bbba897391b274d10776a82e48c1" ],
     [ "Euler1D", "dir_a580acf5b82349c5068c63a2b2fdce4e.html", "dir_a580acf5b82349c5068c63a2b2fdce4e" ],
     [ "Euler2D", "dir_89e44fe7f2ed2d50db7b5168be060595.html", "dir_89e44fe7f2ed2d50db7b5168be060595" ],
     [ "FPDoubleWell", "dir_27533903ff8cd50f45bf0b2d8afae3ba.html", "dir_27533903ff8cd50f45bf0b2d8afae3ba" ],

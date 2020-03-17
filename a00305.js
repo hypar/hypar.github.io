@@ -1,5 +1,5 @@
 var a00305 =
 [
-    [ "FPPowerSystemDissipationFunction", "a00305.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
-    [ "FPPowerSystemDiffusion", "a00305.html#a0210181023c485ae65c8d7983f23303a", null ]
+    [ "__FUNCT__", "a00305.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "TransferVecFromPETSc", "a00305.html#abb476449ff310bdfdd082faeb31e36d1", null ]
 ];

@@ -1,4 +1,4 @@
 var a00191 =
 [
-    [ "IBInterpCoeffs", "a00191.html#a55a017ffd535afc3cb077a4ecc568402", null ]
+    [ "BCSubsonicAmbivalentU", "a00191.html#aa06b35b07659fa413f72a90372e325d0", null ]
 ];

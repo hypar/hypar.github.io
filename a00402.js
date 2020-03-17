@@ -1,6 +1,5 @@
 var a00402 =
 [
-    [ "ShallowWater2DSourceFunction1", "a00402.html#a4d5b3f3e933170ce53af12d19ba4ef01", null ],
-    [ "ShallowWater2DSourceFunction2", "a00402.html#a5ed617f0405e97ed489c4843d482e692", null ],
-    [ "ShallowWater2DSource", "a00402.html#a40d3a942960d07b188d08a46bec76768", null ]
+    [ "NavierStokes3DJacobian", "a00402.html#a6c45dc91596bd65c52421d51d32aa77e", null ],
+    [ "NavierStokes3DStiffJacobian", "a00402.html#a4e52fd52b4a07d5a31ceda8e28fab91a", null ]
 ];

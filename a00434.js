@@ -1,4 +1,5 @@
 var a00434 =
 [
-    [ "TimeRHSFunctionExplicit", "a00434.html#af99ae30a4bb29d79bac872268be6def3", null ]
+    [ "ShallowWater1DUpwindRoe", "a00434.html#ace4421562e3ac0bce55ddde7c58d2239", null ],
+    [ "ShallowWater1DUpwindLLF", "a00434.html#a19452a335e50ca04b8d55db58acccc53", null ]
 ];

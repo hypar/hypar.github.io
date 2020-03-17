@@ -1,4 +1,5 @@
 var a00374 =
 [
-    [ "Numa3DCleanup", "a00374.html#af62517a2d64232969b52ddcb4e01c150", null ]
+    [ "LinearADRDiffusionG", "a00374.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
+    [ "LinearADRDiffusionH", "a00374.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
 ];

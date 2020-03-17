@@ -1,5 +1,5 @@
 var a00415 =
 [
-    [ "VolumeIntegral", "a00415.html#a1f30168f72fce94d12bd0cc8d9322494", null ],
-    [ "InitialSolution", "a00415.html#a21908a4de7bd316f468c85e6d7074760", null ]
+    [ "Numa2DRusanovFlux", "a00415.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
+    [ "Numa2DRusanovLinearFlux", "a00415.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
 ];

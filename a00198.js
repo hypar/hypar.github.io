@@ -1,5 +1,4 @@
 var a00198 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00198.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderCompactUpwindChar", "a00198.html#ac2a332a729ea0b4a674b147a60d67f52", null ]
+    [ "BCThermalSlipWallU", "a00198.html#ad95232382b3a4969eb8e2212e00f032a", null ]
 ];

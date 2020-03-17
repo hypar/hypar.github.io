@@ -1,4 +1,5 @@
 var a00382 =
 [
-    [ "ShallowWater1DComputeCFL", "a00382.html#a71431a278135cf3bc23d5a0a393f1c9b", null ]
+    [ "NavierStokes2DLeftEigenvectors", "a00382.html#a497cabf9429ce30c3107d526bc18a798", null ],
+    [ "NavierStokes2DRightEigenvectors", "a00382.html#a2267c0825e485249fdee53ee44981636", null ]
 ];

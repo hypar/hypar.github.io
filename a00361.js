@@ -1,4 +1,4 @@
 var a00361 =
 [
-    [ "NavierStokes3DModifiedSolution", "a00361.html#ad034ca1ba58aded96602d83f85691aea", null ]
+    [ "FPPowerSystem3BusAdvection", "a00361.html#a47826d63ca1c3c5825335a3edee34cfd", null ]
 ];

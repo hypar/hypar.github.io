@@ -1,4 +1,6 @@
 var a00174 =
 [
-    [ "ComputeRHSOperators", "a00174.html#ad14888d0f63cc4137735c200b0687c59", null ]
+    [ "MPIContext", "a00174.html#aef8e1d87c719a4a2a2342213c1721789", null ],
+    [ "SolverContext", "a00174.html#a588e1e74fdbac3dcc2b1258aa0c155c0", null ],
+    [ "FirstDerivativeFirstOrder", "a00174.html#a6e0e65f5323bf9a56988f609a52e6a9c", null ]
 ];

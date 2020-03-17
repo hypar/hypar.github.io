@@ -1,12 +1,14 @@
 var a00113 =
 [
-    [ "gamma", "a00113.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
-    [ "R", "a00113.html#a228eb5e837a644887ac6e7bab3f42485", null ],
-    [ "Omega", "a00113.html#a1b5bf6735b7465aec5c931281d240737", null ],
-    [ "g", "a00113.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
-    [ "init_atmos", "a00113.html#a8033c1255ef443c5e72e120e7519ff6a", null ],
-    [ "Pref", "a00113.html#ad2988f8045b70fe0950d361d8814faa6", null ],
-    [ "Tref", "a00113.html#abfc9a78d9685d39295be4f8cfefed2f2", null ],
-    [ "StandardAtmosphere", "a00113.html#af6fea8fadacd5d3da0d55b76f94d8874", null ],
-    [ "upwind", "a00113.html#aea473d706c30accecfe35e5d76d4b50a", null ]
+    [ "BandedMatrix", "a00113.html#a00505", [
+      [ "nbands", "a00113.html#a30165df2b4e7a3d2b24bfd0963c16172", null ],
+      [ "nrows_local", "a00113.html#ac2b596b16037450673a77da1080b8707", null ],
+      [ "BlockSize", "a00113.html#aeae4e1754c511c08564892d93c83ada1", null ],
+      [ "ncol", "a00113.html#a6db648ed09c7736e77e2c79f2a4514fd", null ],
+      [ "nrow", "a00113.html#a0a58ae803aa8c0ef7cf86577919f205e", null ],
+      [ "data", "a00113.html#a23436a7a2b44939627b59df11be7ad75", null ]
+    ] ],
+    [ "BandedMatrixDestroy", "a00113.html#a7481e8970799d48bf61489d2c8664291", null ],
+    [ "BandedMatrixInitialize", "a00113.html#a2e2999e64538fc1278db51e3a4544c0a", null ],
+    [ "BandedMatrixPreallocate", "a00113.html#a6f340cd6da5050e863142a9a5d3b4276", null ]
 ];

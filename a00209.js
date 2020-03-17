@@ -1,5 +1,4 @@
 var a00209 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00209.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimSecondOrderCentral", "a00209.html#afc9d5bb359f07e2a0af25ba03cb478df", null ]
+    [ "ComputeRHSOperators", "a00209.html#ad14888d0f63cc4137735c200b0687c59", null ]
 ];

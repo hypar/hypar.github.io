@@ -1,5 +1,5 @@
 var a00274 =
 [
-    [ "Euler1DLeftEigenvectors", "a00274.html#a1815fa0e825f5544526165566c75a619", null ],
-    [ "Euler1DRightEigenvectors", "a00274.html#af93bb74bc4643347f59e3bdb722e864b", null ]
+    [ "MPIGatherArraynD", "a00274.html#a169eaecbc7a45469c78354f9cb1fed64", null ],
+    [ "MPIGatherArraynDwGhosts", "a00274.html#a76ea9ac59e9d6a89230273c959adaa1d", null ]
 ];

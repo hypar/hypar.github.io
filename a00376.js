@@ -1,5 +1,4 @@
 var a00376 =
 [
-    [ "Numa3DFlux", "a00376.html#a173a0e31d874adff608b905549a58a11", null ],
-    [ "Numa3DStiffFlux", "a00376.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
+    [ "LinearADRJacobian", "a00376.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf", null ]
 ];

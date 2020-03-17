@@ -1,4 +1,5 @@
 var a00286 =
 [
-    [ "Euler2DComputeCFL", "a00286.html#af4be0dfa0c4017155bb18bfc3e46505a", null ]
+    [ "MPISum_integer", "a00286.html#a3fdbda19a80373d03b0034694d7309b7", null ],
+    [ "MPISum_double", "a00286.html#ab72730180adfeeb505a716952545d591", null ]
 ];

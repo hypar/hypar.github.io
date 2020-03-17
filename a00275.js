@@ -1,5 +1,4 @@
 var a00275 =
 [
-    [ "Euler1DFlux", "a00275.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
-    [ "Euler1DStiffFlux", "a00275.html#a3017a4ade688681fa865c1556fb73f97", null ]
+    [ "MPIGetArrayDatanD", "a00275.html#a85bac139e1cfe7ce1f6d83f8212f5d99", null ]
 ];

@@ -1,6 +1,5 @@
 var a00315 =
 [
-    [ "FPPowerSystem1BusDissipationFunction", "a00315.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
-    [ "FPPowerSystem1BusDiffusionLaplacian", "a00315.html#aab91f803575c434eba177a5b36ddeecc", null ],
-    [ "FPPowerSystem1BusDiffusionGeneral", "a00315.html#a9eaab3023576479a97c08eb308076cf9", null ]
+    [ "Euler1DFlux", "a00315.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
+    [ "Euler1DStiffFlux", "a00315.html#a3017a4ade688681fa865c1556fb73f97", null ]
 ];

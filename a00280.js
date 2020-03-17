@@ -1,4 +1,5 @@
 var a00280 =
 [
-    [ "Euler1DModifiedSolution", "a00280.html#a258df8c9435bff8a343c38c497818f1e", null ]
+    [ "MPIMin_integer", "a00280.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
+    [ "MPIMin_double", "a00280.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
 ];

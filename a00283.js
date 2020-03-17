@@ -1,5 +1,5 @@
 var a00283 =
 [
-    [ "Euler1DSourceUpwindLLF", "a00283.html#a229db12fad7bac6cf5f1223f204fe1f9", null ],
-    [ "Euler1DSourceUpwindRoe", "a00283.html#ad94cc03bc96444b2f8ce0e701fe489f3", null ]
+    [ "MPIPartitionArraynD", "a00283.html#a01e91e5f4675fae1698339a4028c09c1", null ],
+    [ "MPIPartitionArraynDwGhosts", "a00283.html#a43dfd14478735bbae12fbaa10f0403b5", null ]
 ];

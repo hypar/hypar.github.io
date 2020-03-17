@@ -1,4 +1,4 @@
 var a00227 =
 [
-    [ "LimiterGeneralizedMinMod", "a00227.html#acff4747eace2d9f9b3bc66aaa99cb384", null ]
+    [ "IBNearestFacetNormal", "a00227.html#a6910727d86fc73085545f208fecdece7", null ]
 ];

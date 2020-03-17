@@ -16,7 +16,8 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "PhysicalModels", "dir_4f99e73020cfe6ed8a86f0042d0d702a.html", "dir_4f99e73020cfe6ed8a86f0042d0d702a" ],
     [ "SecondDerivative", "dir_b4add87d2a8d96c748fd89c1b30fbbb2.html", "dir_b4add87d2a8d96c748fd89c1b30fbbb2" ],
     [ "Simulation", "dir_c487c1b7f672be8b2885393524f3e6ab.html", "dir_c487c1b7f672be8b2885393524f3e6ab" ],
+    [ "SparseGrids", "dir_3ab61821ed29aee4febb470a268678d4.html", "dir_3ab61821ed29aee4febb470a268678d4" ],
     [ "TimeIntegration", "dir_40c01966df81bf4b0eb262d96c68e6e1.html", "dir_40c01966df81bf4b0eb262d96c68e6e1" ],
     [ "TridiagLU", "dir_157cc1c95f06aeb8b741f2bc7fe7cc3f.html", "dir_157cc1c95f06aeb8b741f2bc7fe7cc3f" ],
-    [ "main.c", "a00231.html", "a00231" ]
+    [ "main.cpp", "a00266.html", "a00266" ]
 ];

@@ -1,4 +1,4 @@
 var a00426 =
 [
-    [ "TimeGetAuxSolutions", "a00426.html#afb7c0aaa510e236f880899a068bbecca", null ]
+    [ "ShallowWater1DFlux", "a00426.html#ab8ef6342f2e68ddffa5fe5d5f50cc4ce", null ]
 ];

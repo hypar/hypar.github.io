@@ -1,19 +1,25 @@
 var a00117 =
 [
-    [ "SimulationObject", "a00117.html#a00463", [
-      [ "mpi", "a00117.html#a4afd2c7b3eb8fda452474ebdbe71c8c0", null ],
-      [ "solver", "a00117.html#a523947ce4fa7128c4c767163953253b9", null ]
-    ] ],
-    [ "SimWriteErrors", "a00117.html#ad7007f198eeb61eb9f73f7ab0df71900", null ],
-    [ "ReadInputs", "a00117.html#a31fac45bcc0a8e9dd578cc1d8515d173", null ],
-    [ "Initialize", "a00117.html#a74087f11196b3689b296e53eb14b69f3", null ],
-    [ "InitialSolution", "a00117.html#a23523232e5e6dd7cdec11754be4c21aa", null ],
-    [ "InitializeBoundaries", "a00117.html#a3a27bf10eed2122900356dd89b66731b", null ],
-    [ "InitializeImmersedBoundaries", "a00117.html#a6ac8578eb0216a84307bfb3b2fba816f", null ],
-    [ "InitializePhysics", "a00117.html#a5dc056a75d14ab6ba9292bcad6928a72", null ],
-    [ "InitializeSolvers", "a00117.html#ad3f393b89ecd5a544c52e1099722337a", null ],
-    [ "OutputSolution", "a00117.html#a5981de613724cb667e98aa872157534e", null ],
-    [ "Solve", "a00117.html#a7347183ec04d39b43cf35d1fe68ace4d", null ],
-    [ "SolvePETSc", "a00117.html#a1a054e1b92ee41a9e38926d18c6628bf", null ],
-    [ "Cleanup", "a00117.html#a315baa877650032461e4cc97eef45b6f", null ]
+    [ "bctype", "a00117.html#a430ec6bfcdd38ab8e86545e25bc22613", null ],
+    [ "dim", "a00117.html#a70b5e28b5bc3d1b63a7435c5fe50b837", null ],
+    [ "face", "a00117.html#a9582c650f117a06449b5ee368b6762ef", null ],
+    [ "xmin", "a00117.html#a1e51e79041d5a3dddffb503277703568", null ],
+    [ "xmax", "a00117.html#a7ea24a733beddff902459a07bf91ca67", null ],
+    [ "on_this_proc", "a00117.html#a2eec7e4ee612d5edc985ba81453346e1", null ],
+    [ "is", "a00117.html#a481013ba007a99a4237cde5eeb3c9a29", null ],
+    [ "ie", "a00117.html#a7602de5ebb1b59ec35217e78a35a531e", null ],
+    [ "BCFunctionU", "a00117.html#af1c333edda90c79d9eff5442ac440942", null ],
+    [ "DirichletValue", "a00117.html#a6aa65431c39a8d8177f35c338ddb7a0e", null ],
+    [ "SpongeValue", "a00117.html#af7eeb4ff3f7c8bc22e0786ddbe62f16d", null ],
+    [ "UnsteadyDirichletSize", "a00117.html#ac3b478217419275ad063182f69cb543d", null ],
+    [ "UnsteadyDirichletData", "a00117.html#a48f59fc59e6a86d0b4aad842daea9106", null ],
+    [ "UnsteadyDirichletFilename", "a00117.html#a81c76294457e5d469798d16ab027c9a2", null ],
+    [ "gamma", "a00117.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "FlowDensity", "a00117.html#aa92ee9d8efc5ca49f4a83d8dabf0b15d", null ],
+    [ "FlowVelocity", "a00117.html#a0d0d92fab642e1d02a9de254e73a3f21", null ],
+    [ "FlowPressure", "a00117.html#a0a3c5af6bdb8fbdb746fd4edb374bb18", null ],
+    [ "UnsteadyTemperatureSize", "a00117.html#a6f46fcd429eeb105637c0e14d54d79e7", null ],
+    [ "UnsteadyTimeLevels", "a00117.html#af135619149474c2de735f5482e4d0a0e", null ],
+    [ "UnsteadyTemperatureData", "a00117.html#a23dab9053d40cce5ba488290fb1b41c3", null ],
+    [ "UnsteadyTemperatureFilename", "a00117.html#aad72794e4e965697c3827e2f236b6934", null ]
 ];

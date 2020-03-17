@@ -1,5 +1,4 @@
 var a00333 =
 [
-    [ "LinearADRDiffusionG", "a00333.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
-    [ "LinearADRDiffusionH", "a00333.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
+    [ "FPDoubleWellCleanup", "a00333.html#aba54bd78f13e1e8074ff6f755d710871", null ]
 ];

@@ -1,4 +1,6 @@
 var a00175 =
 [
-    [ "ExactSolution", "a00175.html#a4e85e6c06e8140c5eb2e6efe6ff33f53", null ]
+    [ "MPIContext", "a00175.html#aef8e1d87c719a4a2a2342213c1721789", null ],
+    [ "SolverContext", "a00175.html#a588e1e74fdbac3dcc2b1258aa0c155c0", null ],
+    [ "FirstDerivativeFourthOrderCentral", "a00175.html#a51fbc513e5461e38c98eeb5a1c03817c", null ]
 ];

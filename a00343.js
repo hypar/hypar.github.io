@@ -1,4 +1,5 @@
 var a00343 =
 [
-    [ "NavierStokes2DGravityField", "a00343.html#a497857737584b09aaedb12e14ce66077", null ]
+    [ "FPPowerSystemDriftFunction", "a00343.html#aad5370d85f97a4a03459e9b9a185cfa1", null ],
+    [ "FPPowerSystemComputeCFL", "a00343.html#aaecb1f794e2a9ffb670810d20f275339", null ]
 ];

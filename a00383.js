@@ -1,5 +1,6 @@
 var a00383 =
 [
-    [ "ShallowWater1DLeftEigenvectors", "a00383.html#aa9519badea39145bc113cba2422016b3", null ],
-    [ "ShallowWater1DRightEigenvectors", "a00383.html#af4a44ab4a02a19c10ad8f4d75f88f8d7", null ]
+    [ "NavierStokes2DFlux", "a00383.html#af9474905c4b501fdee9a18e490f6499d", null ],
+    [ "NavierStokes2DStiffFlux", "a00383.html#ae5da2defa681602a634b5e5455bae4cb", null ],
+    [ "NavierStokes2DNonStiffFlux", "a00383.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
 ];

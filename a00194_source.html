@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/ImmersedBoundaries/IBWriteBodySTL.c Source File</title>
+<title>HyPar: src/BoundaryConditions/BCSupersonicInflow.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,6 +56,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -113,78 +114,119 @@ $(document).ready(function(){initNavTree('a00194_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">IBWriteBodySTL.c</div>  </div>
+<div class="title">BCSupersonicInflow.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00194.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00124.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00096.html">immersedboundaries.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="a00194.html#a562d4a06560fee4b5d1df95736c47fd3">   23</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00194.html#a562d4a06560fee4b5d1df95736c47fd3">IBWriteBodySTL</a>(</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                    <a class="code" href="a00096.html#a00445">Body3D</a> *body,     </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                    <span class="keywordtype">char</span>   *filename, </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                    <span class="keywordtype">void</span>   *m,        </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                    <span class="keywordtype">int</span>    rank,      </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                    <span class="keywordtype">int</span>    *stat      </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                  )</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <a class="code" href="a00108.html#a00459">MPIVariables</a>  *mpi = (<a class="code" href="a00108.html#a00459">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00108.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a> == rank) {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    FILE *out;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    out = fopen(filename,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">if</span> (!out) {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      fprintf(stderr,<span class="stringliteral">&quot;Error in IBWriteBodySTL(): Unable to open file &quot;</span>);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      fprintf(stderr,<span class="stringliteral">&quot;%s for writing on rank %d.\n&quot;</span>,filename,mpi-&gt;<a class="code" href="a00108.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      *stat = 1;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      fprintf(out,<span class="stringliteral">&quot;solid TEST\n&quot;</span>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      <span class="keywordtype">int</span> n;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      <span class="keywordflow">for</span> (n = 0; n &lt; body-&gt;<a class="code" href="a00096.html#afd755b081f4d9ca3558ef9ca9f3c35d0">nfacets</a>; n++) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        fprintf(out,<span class="stringliteral">&quot;  facet normal %1.16e %1.16e %1.16e\n&quot;</span>,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a74d07ed95c86939416c6a88f1daf8e1a">nx</a>,body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a147a8b14bbd79c0f1a3457805e2065ba">ny</a>,body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a463bf8b21578003b62221acf2e522134">nz</a>);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        fprintf(out,<span class="stringliteral">&quot;    outer loop\n&quot;</span>);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        fprintf(out,<span class="stringliteral">&quot;      vertex %1.16e %1.16e %1.16e\n&quot;</span>,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#ac75b803b570527306e1e744bfb7a604f">x1</a>,body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#ac3b72e5b77595ca2340ecf8ccfe5fd99">y1</a>,body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a0e1fe82df628138c8f3907ecddb514ae">z1</a>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        fprintf(out,<span class="stringliteral">&quot;      vertex %1.16e %1.16e %1.16e\n&quot;</span>,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#adcf04f5f1964d18b332643939561da0d">x2</a>,body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a5347e514ebe985fb371754ffd2b5ff83">y2</a>,body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a822ab991099a420eb62b3f0e2b0021a2">z2</a>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        fprintf(out,<span class="stringliteral">&quot;      vertex %1.16e %1.16e %1.16e\n&quot;</span>,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a98e99f64ddf7321e4eae52beca4b580f">x3</a>,body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a786634d3d364cf94d8eb600ce7136355">y3</a>,body-&gt;<a class="code" href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>[n].<a class="code" href="a00096.html#a270503fb34041aa050ec80858f7820a7">z3</a>);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        fprintf(out,<span class="stringliteral">&quot;    endloop\n&quot;</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        fprintf(out,<span class="stringliteral">&quot;  endfacet\n&quot;</span>);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      fprintf(out,<span class="stringliteral">&quot;endsolid TEST\n&quot;</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      *stat = 0;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="ttc" id="a00124_html"><div class="ttname"><a href="a00124.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00096_html_a00445"><div class="ttname"><a href="a00096.html#a00445">Body3D</a></div><div class="ttdoc">Structure defining a body. </div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00097">immersedboundaries.h:97</a></div></div>
-<div class="ttc" id="a00108_html_a00459"><div class="ttname"><a href="a00108.html#a00459">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00021">mpivars.h:21</a></div></div>
-<div class="ttc" id="a00096_html_aa7bdafcc50881d7f0f4db707755698ce"><div class="ttname"><a href="a00096.html#aa7bdafcc50881d7f0f4db707755698ce">Body3D::surface</a></div><div class="ttdeci">Facet3D * surface</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00099">immersedboundaries.h:99</a></div></div>
-<div class="ttc" id="a00096_html"><div class="ttname"><a href="a00096.html">immersedboundaries.h</a></div><div class="ttdoc">Structures and function definitions for immersed boundaries. </div></div>
-<div class="ttc" id="a00096_html_ac75b803b570527306e1e744bfb7a604f"><div class="ttname"><a href="a00096.html#ac75b803b570527306e1e744bfb7a604f">Facet3D::x1</a></div><div class="ttdeci">double x1</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00096_html_a786634d3d364cf94d8eb600ce7136355"><div class="ttname"><a href="a00096.html#a786634d3d364cf94d8eb600ce7136355">Facet3D::y3</a></div><div class="ttdeci">double y3</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00096_html_ac3b72e5b77595ca2340ecf8ccfe5fd99"><div class="ttname"><a href="a00096.html#ac3b72e5b77595ca2340ecf8ccfe5fd99">Facet3D::y1</a></div><div class="ttdeci">double y1</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00108_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00108.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00022">mpivars.h:22</a></div></div>
-<div class="ttc" id="a00096_html_a0e1fe82df628138c8f3907ecddb514ae"><div class="ttname"><a href="a00096.html#a0e1fe82df628138c8f3907ecddb514ae">Facet3D::z1</a></div><div class="ttdeci">double z1</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00096_html_a5347e514ebe985fb371754ffd2b5ff83"><div class="ttname"><a href="a00096.html#a5347e514ebe985fb371754ffd2b5ff83">Facet3D::y2</a></div><div class="ttdeci">double y2</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00096_html_a147a8b14bbd79c0f1a3457805e2065ba"><div class="ttname"><a href="a00096.html#a147a8b14bbd79c0f1a3457805e2065ba">Facet3D::ny</a></div><div class="ttdeci">double ny</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00096_html_adcf04f5f1964d18b332643939561da0d"><div class="ttname"><a href="a00096.html#adcf04f5f1964d18b332643939561da0d">Facet3D::x2</a></div><div class="ttdeci">double x2</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00096_html_a463bf8b21578003b62221acf2e522134"><div class="ttname"><a href="a00096.html#a463bf8b21578003b62221acf2e522134">Facet3D::nz</a></div><div class="ttdeci">double nz</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00194_html_a562d4a06560fee4b5d1df95736c47fd3"><div class="ttname"><a href="a00194.html#a562d4a06560fee4b5d1df95736c47fd3">IBWriteBodySTL</a></div><div class="ttdeci">int IBWriteBodySTL(Body3D *body, char *filename, void *m, int rank, int *stat)</div><div class="ttdef"><b>Definition:</b> <a href="a00194_source.html#l00023">IBWriteBodySTL.c:23</a></div></div>
-<div class="ttc" id="a00096_html_a822ab991099a420eb62b3f0e2b0021a2"><div class="ttname"><a href="a00096.html#a822ab991099a420eb62b3f0e2b0021a2">Facet3D::z2</a></div><div class="ttdeci">double z2</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
-<div class="ttc" id="a00096_html_a74d07ed95c86939416c6a88f1daf8e1a"><div class="ttname"><a href="a00096.html#a74d07ed95c86939416c6a88f1daf8e1a">Facet3D::nx</a></div><div class="ttdeci">double nx</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00096_html_a270503fb34041aa050ec80858f7820a7"><div class="ttname"><a href="a00096.html#a270503fb34041aa050ec80858f7820a7">Facet3D::z3</a></div><div class="ttdeci">double z3</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
-<div class="ttc" id="a00096_html_afd755b081f4d9ca3558ef9ca9f3c35d0"><div class="ttname"><a href="a00096.html#afd755b081f4d9ca3558ef9ca9f3c35d0">Body3D::nfacets</a></div><div class="ttdeci">int nfacets</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00098">immersedboundaries.h:98</a></div></div>
-<div class="ttc" id="a00096_html_a98e99f64ddf7321e4eae52beca4b580f"><div class="ttname"><a href="a00096.html#a98e99f64ddf7321e4eae52beca4b580f">Facet3D::x3</a></div><div class="ttdeci">double x3</div><div class="ttdef"><b>Definition:</b> <a href="a00096_source.html#l00037">immersedboundaries.h:37</a></div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00147.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00146.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00148.html">boundaryconditions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00120.html">physicalmodels/euler2d.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00131.html">physicalmodels/navierstokes3d.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="a00194.html#a27201c4605999bdb8b84e8e19426de85">   24</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00194.html#a27201c4605999bdb8b84e8e19426de85">BCSupersonicInflowU</a>(</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                        <span class="keywordtype">void</span>    *b,     </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                        <span class="keywordtype">void</span>    *m,     </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                        <span class="keywordtype">int</span>     ndims,  </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                        <span class="keywordtype">int</span>     nvars,  </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                        <span class="keywordtype">int</span>     *size,  </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                        <span class="keywordtype">int</span>     ghosts, </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                        <span class="keywordtype">double</span>  *phi,   </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                        <span class="keywordtype">double</span>  waqt    </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                       )</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00117.html">DomainBoundary</a> *boundary = (<a class="code" href="a00117.html">DomainBoundary</a>*) b;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">if</span> (ndims == 2) {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">double</span> gamma;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    gamma = boundary-&gt;<a class="code" href="a00117.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">double</span> inv_gamma_m1 = 1.0/(gamma-1.0);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a2eec7e4ee612d5edc985ba81453346e1">on_this_proc</a>) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      <span class="keywordtype">int</span> bounds[ndims], indexb[ndims];</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      <a class="code" href="a00146.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a>(bounds,boundary-&gt;<a class="code" href="a00117.html#a7602de5ebb1b59ec35217e78a35a531e">ie</a>,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,ndims,0);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      <span class="keywordtype">int</span> done = 0;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">int</span> p1; <a class="code" href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,size,indexb,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ghosts,p1);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="comment">/* set the ghost point values */</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">double</span> rho_gpt, uvel_gpt, vvel_gpt, energy_gpt, pressure_gpt;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        rho_gpt      = boundary-&gt;<a class="code" href="a00117.html#aa92ee9d8efc5ca49f4a83d8dabf0b15d">FlowDensity</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        pressure_gpt = boundary-&gt;<a class="code" href="a00117.html#a0a3c5af6bdb8fbdb746fd4edb374bb18">FlowPressure</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        uvel_gpt     = boundary-&gt;<a class="code" href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">FlowVelocity</a>[0];</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        vvel_gpt     = boundary-&gt;<a class="code" href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">FlowVelocity</a>[1];</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        energy_gpt   = inv_gamma_m1*pressure_gpt</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                       + 0.5 * rho_gpt * (uvel_gpt*uvel_gpt + vvel_gpt*vvel_gpt);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        phi[nvars*p1+0] = rho_gpt;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        phi[nvars*p1+1] = rho_gpt * uvel_gpt;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        phi[nvars*p1+2] = rho_gpt * vvel_gpt;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        phi[nvars*p1+3] = energy_gpt;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,indexb,done);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ndims == 3) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">double</span> gamma;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    gamma = boundary-&gt;<a class="code" href="a00117.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">double</span> inv_gamma_m1 = 1.0/(gamma-1.0);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a2eec7e4ee612d5edc985ba81453346e1">on_this_proc</a>) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <span class="keywordtype">int</span> bounds[ndims], indexb[ndims];</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <a class="code" href="a00146.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a>(bounds,boundary-&gt;<a class="code" href="a00117.html#a7602de5ebb1b59ec35217e78a35a531e">ie</a>,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,ndims,0);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      <span class="keywordtype">int</span> done = 0;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordtype">int</span> p1; <a class="code" href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,size,indexb,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ghosts,p1);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="comment">/* set the ghost point values */</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordtype">double</span> rho_gpt, uvel_gpt, vvel_gpt, wvel_gpt, energy_gpt, pressure_gpt;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        rho_gpt      = boundary-&gt;<a class="code" href="a00117.html#aa92ee9d8efc5ca49f4a83d8dabf0b15d">FlowDensity</a>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        pressure_gpt = boundary-&gt;<a class="code" href="a00117.html#a0a3c5af6bdb8fbdb746fd4edb374bb18">FlowPressure</a>;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        uvel_gpt     = boundary-&gt;<a class="code" href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">FlowVelocity</a>[0];</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        vvel_gpt     = boundary-&gt;<a class="code" href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">FlowVelocity</a>[1];</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        wvel_gpt     = boundary-&gt;<a class="code" href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">FlowVelocity</a>[2];</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        energy_gpt   = inv_gamma_m1*pressure_gpt</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                       + 0.5 * rho_gpt </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                       * (uvel_gpt*uvel_gpt + vvel_gpt*vvel_gpt + wvel_gpt*wvel_gpt);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        phi[nvars*p1+0] = rho_gpt;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        phi[nvars*p1+1] = rho_gpt * uvel_gpt;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        phi[nvars*p1+2] = rho_gpt * vvel_gpt;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        phi[nvars*p1+3] = rho_gpt * wvel_gpt;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        phi[nvars*p1+4] = energy_gpt;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,indexb,done);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
+<div class="ttc" id="a00117_html_a0a3c5af6bdb8fbdb746fd4edb374bb18"><div class="ttname"><a href="a00117.html#a0a3c5af6bdb8fbdb746fd4edb374bb18">DomainBoundary::FlowPressure</a></div><div class="ttdeci">double FlowPressure</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00096">boundaryconditions.h:96</a></div></div>
+<div class="ttc" id="a00146_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00168">arrayfunctions.h:168</a></div></div>
+<div class="ttc" id="a00194_html_a27201c4605999bdb8b84e8e19426de85"><div class="ttname"><a href="a00194.html#a27201c4605999bdb8b84e8e19426de85">BCSupersonicInflowU</a></div><div class="ttdeci">int BCSupersonicInflowU(void *b, void *m, int ndims, int nvars, int *size, int ghosts, double *phi, double waqt)</div><div class="ttdef"><b>Definition:</b> <a href="a00194_source.html#l00024">BCSupersonicInflow.c:24</a></div></div>
+<div class="ttc" id="a00147_html"><div class="ttname"><a href="a00147.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00146_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00125">arrayfunctions.h:125</a></div></div>
+<div class="ttc" id="a00117_html_a481013ba007a99a4237cde5eeb3c9a29"><div class="ttname"><a href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">DomainBoundary::is</a></div><div class="ttdeci">int * is</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00082">boundaryconditions.h:82</a></div></div>
+<div class="ttc" id="a00117_html_a7602de5ebb1b59ec35217e78a35a531e"><div class="ttname"><a href="a00117.html#a7602de5ebb1b59ec35217e78a35a531e">DomainBoundary::ie</a></div><div class="ttdeci">int * ie</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00082">boundaryconditions.h:82</a></div></div>
+<div class="ttc" id="a00146_html"><div class="ttname"><a href="a00146.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00117_html"><div class="ttname"><a href="a00117.html">DomainBoundary</a></div><div class="ttdoc">Structure containing the variables and function pointers defining a boundary. </div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00068">boundaryconditions.h:68</a></div></div>
+<div class="ttc" id="a00117_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00117.html#a72f9e01745b3a8203067ab84aefc9aea">DomainBoundary::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00096">boundaryconditions.h:96</a></div></div>
+<div class="ttc" id="a00120_html"><div class="ttname"><a href="a00120.html">euler2d.h</a></div></div>
+<div class="ttc" id="a00146_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00082">arrayfunctions.h:82</a></div></div>
+<div class="ttc" id="a00117_html_a0d0d92fab642e1d02a9de254e73a3f21"><div class="ttname"><a href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">DomainBoundary::FlowVelocity</a></div><div class="ttdeci">double * FlowVelocity</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00096">boundaryconditions.h:96</a></div></div>
+<div class="ttc" id="a00131_html"><div class="ttname"><a href="a00131.html">navierstokes3d.h</a></div><div class="ttdoc">3D Navier Stokes equations (compressible flows) </div></div>
+<div class="ttc" id="a00117_html_aa92ee9d8efc5ca49f4a83d8dabf0b15d"><div class="ttname"><a href="a00117.html#aa92ee9d8efc5ca49f4a83d8dabf0b15d">DomainBoundary::FlowDensity</a></div><div class="ttdeci">double FlowDensity</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00096">boundaryconditions.h:96</a></div></div>
+<div class="ttc" id="a00148_html"><div class="ttname"><a href="a00148.html">boundaryconditions.h</a></div><div class="ttdoc">Containts the structures and definitions for boundary condition implementation. </div></div>
+<div class="ttc" id="a00146_html_ab49d0f261ea751a17d6beca0504daf78"><div class="ttname"><a href="a00146.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a></div><div class="ttdeci">#define _ArraySubtract1D_(x, a, b, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00200">arrayfunctions.h:200</a></div></div>
+<div class="ttc" id="a00117_html_a2eec7e4ee612d5edc985ba81453346e1"><div class="ttname"><a href="a00117.html#a2eec7e4ee612d5edc985ba81453346e1">DomainBoundary::on_this_proc</a></div><div class="ttdeci">int on_this_proc</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00081">boundaryconditions.h:81</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

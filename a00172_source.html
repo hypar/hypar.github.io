@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/HyParFunctions/CalculateConservationError.c Source File</title>
+<title>HyPar: include/timeintegration.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,6 +56,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -113,52 +114,51 @@ $(document).ready(function(){initNavTree('a00172_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">CalculateConservationError.c</div>  </div>
+<div class="title">timeintegration.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00172.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00124.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00131.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00108.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00128.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _TIME_INTEGRATION_H_</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _TIME_INTEGRATION_H_</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00121.html">timeintegration_struct.h</a>&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00414.html#a59bed56c53d29cca4a7c25a28d38e7b5">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#aef9a903e2e2870dbadbae56ab1b62eb7">CalculateConservationError</a>(</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                                <span class="keywordtype">void</span> *s, </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                                <span class="keywordtype">void</span> *m  </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                              )</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="a00106.html">HyPar</a>         *solver = (<a class="code" href="a00106.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">int</span>           v,nvars = solver-&gt;<a class="code" href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordtype">double</span>        error;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">double</span> base[nvars];</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="a00131.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(solver-&gt;<a class="code" href="a00106.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]) &gt; 1.0)</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      base[v] = <a class="code" href="a00131.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(solver-&gt;<a class="code" href="a00106.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">else</span> base[v] = 1.0;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    error =  (solver-&gt;<a class="code" href="a00106.html#a57f7bff1d8bf27f2ca5c00270da00d05">VolumeIntegral</a>[v]+solver-&gt;<a class="code" href="a00106.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>[v]-solver-&gt;<a class="code" href="a00106.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]) </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;           * (solver-&gt;<a class="code" href="a00106.html#a57f7bff1d8bf27f2ca5c00270da00d05">VolumeIntegral</a>[v]+solver-&gt;<a class="code" href="a00106.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>[v]-solver-&gt;<a class="code" href="a00106.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    solver-&gt;<a class="code" href="a00106.html#a965363cd64ce50ae17705dfb285dd0ab">ConservationError</a>[v] = sqrt(error)/base[v];</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="ttc" id="a00124_html"><div class="ttname"><a href="a00124.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00106_html_a965363cd64ce50ae17705dfb285dd0ab"><div class="ttname"><a href="a00106.html#a965363cd64ce50ae17705dfb285dd0ab">HyPar::ConservationError</a></div><div class="ttdeci">double * ConservationError</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00330">hypar.h:330</a></div></div>
-<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00131_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00131.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00033">mathfunctions.h:33</a></div></div>
-<div class="ttc" id="a00106_html_a644ed0ed36ed4af1c396c0af6aca043d"><div class="ttname"><a href="a00106.html#a644ed0ed36ed4af1c396c0af6aca043d">HyPar::TotalBoundaryIntegral</a></div><div class="ttdeci">double * TotalBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00342">hypar.h:342</a></div></div>
-<div class="ttc" id="a00108_html"><div class="ttname"><a href="a00108.html">mpivars.h</a></div><div class="ttdoc">MPI related structure and function definitions. </div></div>
-<div class="ttc" id="a00131_html"><div class="ttname"><a href="a00131.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00106_html_a57f7bff1d8bf27f2ca5c00270da00d05"><div class="ttname"><a href="a00106.html#a57f7bff1d8bf27f2ca5c00270da00d05">HyPar::VolumeIntegral</a></div><div class="ttdeci">double * VolumeIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00334">hypar.h:334</a></div></div>
-<div class="ttc" id="a00106_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00106.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00128_html"><div class="ttname"><a href="a00128.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00172_html_aef9a903e2e2870dbadbae56ab1b62eb7"><div class="ttname"><a href="a00172.html#aef9a903e2e2870dbadbae56ab1b62eb7">CalculateConservationError</a></div><div class="ttdeci">int CalculateConservationError(void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00016">CalculateConservationError.c:16</a></div></div>
-<div class="ttc" id="a00106_html_a3aec36aeb5caac1e87f5b4f5f75d5a23"><div class="ttname"><a href="a00106.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">HyPar::VolumeIntegralInitial</a></div><div class="ttdeci">double * VolumeIntegralInitial</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00336">hypar.h:336</a></div></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a966855c31cad0395c350b9a77add7ab8">TimeExplicitRKInitialize</a>(<span class="keywordtype">char</span>*,<span class="keywordtype">char</span>*,<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a9da14408e0e1ce563553ac6638c48456">TimeExplicitRKCleanup</a>   (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#ad7d778f0d388a120492e4901c3319d51">TimeGLMGEEInitialize</a>(<span class="keywordtype">char</span>*,<span class="keywordtype">char</span>*,<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a600e683b5282f669c7128044f55b2ec4">TimeGLMGEECleanup</a>   (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a2ca35809be0e351ff2ad94532c2c0d68">TimeInitialize</a>      (<span class="keywordtype">void</span>*,<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a85984dec08cd43570151a625ab62f8d9">TimeCleanup</a>         (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a2afba6dcdd13eb929ad4cb54a71eb470">TimePreStep</a>         (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#acb00956b2e195653e3f8107b1ab1dc4d">TimeStep</a>            (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a25f8d76bc92804608cd299e63e23291c">TimePostStep</a>        (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#aa1ffb2050f4788b7c49b4576a9fe52ca">TimePrintStep</a>       (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#aacd05babc2fa0650f3047f955c38319c">TimeError</a>           (<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*,<span class="keywordtype">double</span>*);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a> (<span class="keywordtype">int</span>*,<span class="keywordtype">double</span>**,<span class="keywordtype">void</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a5fe3d9828c6afcbc00cf6fdd940ebe4b">TimeForwardEuler</a>  (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK</a>            (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00172.html#a7b76988ab950d39d505042dc1f09b875">TimeGLMGEE</a>        (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00172_html_a25f8d76bc92804608cd299e63e23291c"><div class="ttname"><a href="a00172.html#a25f8d76bc92804608cd299e63e23291c">TimePostStep</a></div><div class="ttdeci">int TimePostStep(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00491_source.html#l00024">TimePostStep.c:24</a></div></div>
+<div class="ttc" id="a00172_html_a9da14408e0e1ce563553ac6638c48456"><div class="ttname"><a href="a00172.html#a9da14408e0e1ce563553ac6638c48456">TimeExplicitRKCleanup</a></div><div class="ttdeci">int TimeExplicitRKCleanup(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00483_source.html#l00012">TimeExplicitRKCleanup.c:12</a></div></div>
+<div class="ttc" id="a00172_html_ad7d778f0d388a120492e4901c3319d51"><div class="ttname"><a href="a00172.html#ad7d778f0d388a120492e4901c3319d51">TimeGLMGEEInitialize</a></div><div class="ttdeci">int TimeGLMGEEInitialize(char *, char *, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00489_source.html#l00024">TimeGLMGEEInitialize.c:24</a></div></div>
+<div class="ttc" id="a00172_html_a966855c31cad0395c350b9a77add7ab8"><div class="ttname"><a href="a00172.html#a966855c31cad0395c350b9a77add7ab8">TimeExplicitRKInitialize</a></div><div class="ttdeci">int TimeExplicitRKInitialize(char *, char *, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00484_source.html#l00017">TimeExplicitRKInitialize.c:17</a></div></div>
+<div class="ttc" id="a00172_html_a5fe3d9828c6afcbc00cf6fdd940ebe4b"><div class="ttname"><a href="a00172.html#a5fe3d9828c6afcbc00cf6fdd940ebe4b">TimeForwardEuler</a></div><div class="ttdeci">int TimeForwardEuler(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00485_source.html#l00025">TimeForwardEuler.c:25</a></div></div>
+<div class="ttc" id="a00121_html"><div class="ttname"><a href="a00121.html">timeintegration_struct.h</a></div><div class="ttdoc">Contains structures for time integration. </div></div>
+<div class="ttc" id="a00172_html_a7b76988ab950d39d505042dc1f09b875"><div class="ttname"><a href="a00172.html#a7b76988ab950d39d505042dc1f09b875">TimeGLMGEE</a></div><div class="ttdeci">int TimeGLMGEE(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00487_source.html#l00045">TimeGLMGEE.c:45</a></div></div>
+<div class="ttc" id="a00172_html_aacd05babc2fa0650f3047f955c38319c"><div class="ttname"><a href="a00172.html#aacd05babc2fa0650f3047f955c38319c">TimeError</a></div><div class="ttdeci">int TimeError(void *, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00482_source.html#l00027">TimeError.c:27</a></div></div>
+<div class="ttc" id="a00172_html_a85984dec08cd43570151a625ab62f8d9"><div class="ttname"><a href="a00172.html#a85984dec08cd43570151a625ab62f8d9">TimeCleanup</a></div><div class="ttdeci">int TimeCleanup(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00481_source.html#l00015">TimeCleanup.c:15</a></div></div>
+<div class="ttc" id="a00172_html_a9bff7fe5ca4249dd82bfad78a1fa09dd"><div class="ttname"><a href="a00172.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a></div><div class="ttdeci">int TimeGetAuxSolutions(int *, double **, void *, int, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00486_source.html#l00029">TimeGetAuxSolutions.c:29</a></div></div>
+<div class="ttc" id="a00172_html_a2ca35809be0e351ff2ad94532c2c0d68"><div class="ttname"><a href="a00172.html#a2ca35809be0e351ff2ad94532c2c0d68">TimeInitialize</a></div><div class="ttdeci">int TimeInitialize(void *, int, int, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00490_source.html#l00024">TimeInitialize.c:24</a></div></div>
+<div class="ttc" id="a00172_html_a2afba6dcdd13eb929ad4cb54a71eb470"><div class="ttname"><a href="a00172.html#a2afba6dcdd13eb929ad4cb54a71eb470">TimePreStep</a></div><div class="ttdeci">int TimePreStep(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00492_source.html#l00018">TimePreStep.c:18</a></div></div>
+<div class="ttc" id="a00172_html_acb00956b2e195653e3f8107b1ab1dc4d"><div class="ttname"><a href="a00172.html#acb00956b2e195653e3f8107b1ab1dc4d">TimeStep</a></div><div class="ttdeci">int TimeStep(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00496_source.html#l00012">TimeStep.c:12</a></div></div>
+<div class="ttc" id="a00172_html_aca6ebec6e6998f0c509bb38fa91f3321"><div class="ttname"><a href="a00172.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK</a></div><div class="ttdeci">int TimeRK(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00495_source.html#l00029">TimeRK.c:29</a></div></div>
+<div class="ttc" id="a00172_html_a600e683b5282f669c7128044f55b2ec4"><div class="ttname"><a href="a00172.html#a600e683b5282f669c7128044f55b2ec4">TimeGLMGEECleanup</a></div><div class="ttdeci">int TimeGLMGEECleanup(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00488_source.html#l00014">TimeGLMGEECleanup.c:14</a></div></div>
+<div class="ttc" id="a00172_html_aa1ffb2050f4788b7c49b4576a9fe52ca"><div class="ttname"><a href="a00172.html#aa1ffb2050f4788b7c49b4576a9fe52ca">TimePrintStep</a></div><div class="ttdeci">int TimePrintStep(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00493_source.html#l00016">TimePrintStep.c:16</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

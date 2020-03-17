@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: 1D Euler Equations - Shu-Osher Problem</title>
+<title>HyPar: 1D Euler Equations - Sod Shock Tube</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,6 +56,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -107,44 +108,44 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">1D Euler Equations - Shu-Osher Problem </div>  </div>
+<div class="title">1D Euler Equations - Sod Shock Tube </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h2>Description: </h2>
-<p>Location: <b>hypar/Examples/1D/Euler1D/ShuOsherProblem</b> (This directory contains all the input files needed to run this case. If there is a <em>Run.m</em>, run it in MATLAB to quickly set up, run, and visualize the example).</p>
-<p>Governing equations: 1D Euler equations (<a class="el" href="a00133.html" title="1D Euler Equations (inviscid, compressible flows) ">euler1d.h</a>)</p>
+<p>Location: <b>hypar/Examples/1D/Euler1D/SodShockTube</b> (This directory contains all the input files needed to run this case. If there is a <em>Run.m</em>, run it in MATLAB to quickly set up, run, and visualize the example).</p>
+<p>Governing equations: 1D Euler equations (<a class="el" href="a00161.html" title="1D Euler Equations (inviscid, compressible flows) ">euler1d.h</a>)</p>
 <p>References:</p><ul>
-<li>C.-W. Shu and S. Osher, "Efficient implementation of
-    essentially non-oscillatory schemes ,II," J. Comput. Phys., 83 (1989), pp. 32–78</li>
+<li>G.A. Sod, "A survey of several finite difference methods 
+    for systems of nonlinear hyperbolic conservation laws," J. Comput. Phys., 27, 1 (1978).</li>
+<li>C. B. Laney, "Computational Gasdynamics", Cambridge University Press, 1998.</li>
 </ul>
-<p>Domain: \(-5 \le x \le 5\), <em>"extrapolate"</em> (<a class="el" href="a00125.html#a53da239cc00a2394faa0637dad4d0a0c">_EXTRAPOLATE_</a>) boundary conditions</p>
+<p>Domain: \(0 \le x \le 1.0\), <em>"extrapolate"</em> (<a class="el" href="a00148.html#a53da239cc00a2394faa0637dad4d0a0c">_EXTRAPOLATE_</a>) boundary conditions</p>
 <p>Initial Solution:</p><ul>
-<li>\( -5 \le x &lt; -4\): \(\rho = 27/7, u = 4\sqrt{35}/7, p = 31/3\)</li>
-<li>\( -4 \le x \le 5\): \(\rho = 1 + 0.2\sin\left(5x\right), u = 0, p = 1\)</li>
+<li>\( 0 \le x &lt; 0.5\): \(\rho = 1, u = 0, p = 1\)</li>
+<li>\( 0.5 \le x \le 1\): \(\rho = 0.125, u = 0, p = 0.1\)</li>
 </ul>
 <p>Numerical Method:</p><ul>
-<li>Spatial discretization (hyperbolic): Characteristic-based 5th order WENO (<a class="el" href="a00097.html#abf3b032fdc8c0e84b86909db9e0b93c3" title="5th order WENO reconstruction (characteristic-based) on a uniform grid ">Interp1PrimFifthOrderWENOChar()</a>)</li>
-<li>Time integration: RK4 (<a class="el" href="a00101.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00101.html#a47de987716954223b3c26bb842b21bf8">_RK_44_</a>)</li>
+<li>Spatial discretization (hyperbolic): Characteristic-based 5th order WENO (<a class="el" href="a00116.html#abf3b032fdc8c0e84b86909db9e0b93c3" title="5th order WENO reconstruction (characteristic-based) on a uniform grid ">Interp1PrimFifthOrderWENOChar()</a>)</li>
+<li>Time integration: RK4 (<a class="el" href="a00172.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00121.html#a47de987716954223b3c26bb842b21bf8">_RK_44_</a>)</li>
 </ul>
 <h2>Input files required: </h2>
 <p><b>solver.inp:</b> </p><div class="fragment"><div class="line">begin</div>
-<div class="line">  ndims               1</div>
-<div class="line">  nvars               3</div>
-<div class="line">  size                201</div>
-<div class="line">  iproc               1</div>
-<div class="line">  ghost               3</div>
-<div class="line">  n_iter              180</div>
-<div class="line">  time_scheme         rk</div>
-<div class="line">  time_scheme_type    44</div>
-<div class="line">  hyp_space_scheme    weno5</div>
-<div class="line">  hyp_interp_type     characteristic</div>
-<div class="line">  conservation_check  yes</div>
-<div class="line">  dt                  0.01</div>
-<div class="line">  screen_op_iter      10</div>
-<div class="line">  file_op_iter        9999</div>
-<div class="line">  op_file_format      text</div>
-<div class="line">  op_overwrite        no</div>
-<div class="line">  model               euler1d</div>
+<div class="line">  ndims             1</div>
+<div class="line">  nvars             3</div>
+<div class="line">  size              201</div>
+<div class="line">  iproc             1</div>
+<div class="line">  ghost             3</div>
+<div class="line">  n_iter            80</div>
+<div class="line">  time_scheme       rk</div>
+<div class="line">  time_scheme_type  44</div>
+<div class="line">  hyp_space_scheme  weno5</div>
+<div class="line">  hyp_interp_type   characteristic</div>
+<div class="line">  dt                0.0025</div>
+<div class="line">  screen_op_iter    1</div>
+<div class="line">  file_op_iter      9999</div>
+<div class="line">  op_file_format    text</div>
+<div class="line">  op_overwrite      no</div>
+<div class="line">  model             euler1d</div>
 <div class="line">end</div>
 </div><!-- fragment --><p><b>boundary.inp</b> </p><div class="fragment"><div class="line">2</div>
 <div class="line">extrapolate      0     1     0     0</div>
@@ -153,22 +154,12 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="line">  gamma       1.4</div>
 <div class="line">  upwinding   rf-char</div>
 <div class="line">end</div>
-</div><!-- fragment --><p><b>weno.inp</b> (optional) </p><div class="fragment"><div class="line">begin</div>
-<div class="line">  mapped        1</div>
-<div class="line">  borges        0</div>
-<div class="line">  yc            0</div>
-<div class="line">  no_limiting   0</div>
-<div class="line">  epsilon       0.000001</div>
-<div class="line">  p             2.0</div>
-<div class="line">  rc            0.3</div>
-<div class="line">  xi            0.001</div>
-<div class="line">end</div>
 </div><!-- fragment --><p>To generate <b>initial.inp</b>, compile and run the following code in the run directory: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00231.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00266.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
 <div class="line">  </div>
 <div class="line">    <span class="keywordtype">int</span> NI=101,ndims=1;</div>
 <div class="line">  FILE *in;</div>
@@ -200,7 +191,7 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="line">    printf(<span class="stringliteral">&quot;Grid:\t\t\t%d\n&quot;</span>,NI);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">int</span> i;</div>
-<div class="line">    <span class="keywordtype">double</span> dx = 10.0 / ((double)(NI-1));</div>
+<div class="line">    <span class="keywordtype">double</span> dx = 1.0 / ((double)(NI-1));</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">double</span> *x, *rho,*rhou,*e;</div>
 <div class="line">    x    = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
@@ -209,16 +200,16 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="line">    e    = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++){</div>
-<div class="line">        x[i] = -5.0 + i*dx;</div>
+<div class="line">        x[i] = i*dx;</div>
 <div class="line">    <span class="keywordtype">double</span> RHO,U,P;</div>
-<div class="line">    <span class="keywordflow">if</span> (x[i] &lt; -4.0) {</div>
-<div class="line">      RHO = 27.0/7.0;</div>
-<div class="line">      U   = 4.0*sqrt(35.0)/9.0;</div>
-<div class="line">      P   = 31.0/3.0;</div>
+<div class="line">    <span class="keywordflow">if</span> (x[i] &lt; 0.5) {</div>
+<div class="line">      RHO = 1.0;</div>
+<div class="line">      U   = 0.0;</div>
+<div class="line">      P   = 1.0;</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
-<div class="line">      RHO = 1.0+0.2*sin(5*x[i]);</div>
+<div class="line">      RHO = 0.125;</div>
 <div class="line">      U   = 0;</div>
-<div class="line">      P   = 1;</div>
+<div class="line">      P   = 0.1;</div>
 <div class="line">    }</div>
 <div class="line">    rho[i]  = RHO;</div>
 <div class="line">    rhou[i] = RHO*U;</div>
@@ -250,12 +241,10 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2>Output: </h2>
-<p>After running the code, there should be two solution output files <b>op_00000.dat</b> and <b>op_00001.dat</b>; the first one is the initial solution, and the latter is the final solution. Both these files are ASCII text (<a class="el" href="a00106.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>text</em> in <b>solver.inp</b>). In these files, the first column is grid index, the second column is x-coordinate, and the remaining columns are the solution components.</p>
-<p>Final solution at t=1.8: The following figure is obtained by plotting <em>op_00001.dat</em>. Note that the output is in terms of the conserved variables, so they have to converted to the primitive variables (density, velocity, and pressure). </p><div class="image">
-<img src="Solution_1DShuOsherProblem.png" alt="Solution_1DShuOsherProblem.png"/>
+<p>After running the code, there should be two solution output files <b>op_00000.dat</b> and <b>op_00001.dat</b>; the first one is the initial solution, and the latter is the final solution. Both these files are ASCII text (<a class="el" href="a00126.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>text</em> in <b>solver.inp</b>). In these files, the first column is grid index, the second column is x-coordinate, and the remaining columns are the solution components.</p>
+<p>Final solution at t=0.2: The following figure is obtained by plotting <em>op_00001.dat</em>. Note that the output is in terms of the conserved variables, so they have to converted to the primitive variables (density, velocity, and pressure). </p><div class="image">
+<img src="Solution_1DSodShockTube.png" alt="Solution_1DSodShockTube.png"/>
 </div>
-<p>Since <a class="el" href="a00106.html#ac92c34fe456d92c694eacd2231f5a7b1">HyPar::ConservationCheck</a> is set to <em>yes</em> in <b>solver.inp</b>, the code checks for conservation error and prints it to screen, as well as the file <b>conservation.dat:</b> </p><div class="fragment"><div class="line"> 201    1 1.0000000000000000E-02  1.7930858824116804E-15 2.6272672109858204E-15 2.4147912130226402E-15 </div>
-</div><!-- fragment --><p> The numbers are: number of grid points (<a class="el" href="a00106.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors (<a class="el" href="a00108.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00106.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), and conservation error (<a class="el" href="a00106.html#a965363cd64ce50ae17705dfb285dd0ab">HyPar::ConservationError</a>) for each component.</p>
 <p>Expected screen output: </p><div class="fragment"><div class="line">HyPar - Parallel (MPI) version with 1 processes</div>
 <div class="line">Compiled with PETSc time integration.</div>
 <div class="line">Reading solver inputs from file &quot;solver.inp&quot;.</div>
@@ -264,7 +253,7 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="line">    Domain size                                : 201 </div>
 <div class="line">    Processes along each dimension             : 1 </div>
 <div class="line">    No. of ghosts pts                          : 3</div>
-<div class="line">    No. of iter.                               : 180</div>
+<div class="line">    No. of iter.                               : 80</div>
 <div class="line">    Restart iteration                          : 0</div>
 <div class="line">    Time integration scheme                    : rk (44)</div>
 <div class="line">    Spatial discretization scheme (hyperbolic) : weno5</div>
@@ -272,9 +261,9 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="line">    Interpolation type for hyperbolic term     : characteristic</div>
 <div class="line">    Spatial discretization type   (parabolic ) : nonconservative-1stage</div>
 <div class="line">    Spatial discretization scheme (parabolic ) : 2</div>
-<div class="line">    Time Step                                  : 1.000000E-02</div>
-<div class="line">    Check for conservation                     : yes</div>
-<div class="line">    Screen output iterations                   : 10</div>
+<div class="line">    Time Step                                  : 2.500000E-03</div>
+<div class="line">    Check for conservation                     : no</div>
+<div class="line">    Screen output iterations                   : 1</div>
 <div class="line">    File output iterations                     : 9999</div>
 <div class="line">    Initial solution file type                 : ascii</div>
 <div class="line">    Initial solution read mode                 : serial</div>
@@ -286,9 +275,9 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="line">Allocating data arrays.</div>
 <div class="line">Reading array from ASCII file initial.inp (Serial mode).</div>
 <div class="line">Volume integral of the initial solution:</div>
-<div class="line"> 0:  1.2878713250000002E+01</div>
-<div class="line"> 1:  1.0141851000000001E+01</div>
-<div class="line"> 2:  6.1791666999999997E+01</div>
+<div class="line"> 0:  5.6312499999999899E-01</div>
+<div class="line"> 1:  0.0000000000000000E+00</div>
+<div class="line"> 2:  1.3762499999999946E+00</div>
 <div class="line">Reading boundary conditions from &quot;boundary.inp&quot;.</div>
 <div class="line">  Boundary                    extrapolate:  Along dimension  0 and face +1</div>
 <div class="line">  Boundary                    extrapolate:  Along dimension  0 and face -1</div>
@@ -298,38 +287,100 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="line">Initializing physics. Model = &quot;euler1d&quot;</div>
 <div class="line">Reading physical model inputs from file &quot;physics.inp&quot;.</div>
 <div class="line">Setting up time integration.</div>
-<div class="line">Solving in time (from 0 to 180 iterations)</div>
+<div class="line">Solving in time (from 0 to 80 iterations)</div>
 <div class="line">Writing solution file op_00000.dat.</div>
-<div class="line">Iteration:      10  Time: 1.000E-01  Max CFL: 9.364E-01  Max Diff. No.: -1.000E+00  Norm: 1.1915E+00  Conservation loss: 2.0952E-16</div>
-<div class="line">Iteration:      20  Time: 2.000E-01  Max CFL: 9.331E-01  Max Diff. No.: -1.000E+00  Norm: 1.2028E+00  Conservation loss: 6.0450E-16</div>
-<div class="line">Iteration:      30  Time: 3.000E-01  Max CFL: 9.336E-01  Max Diff. No.: -1.000E+00  Norm: 1.1819E+00  Conservation loss: 5.4325E-16</div>
-<div class="line">Iteration:      40  Time: 4.000E-01  Max CFL: 9.371E-01  Max Diff. No.: -1.000E+00  Norm: 1.1560E+00  Conservation loss: 9.1589E-16</div>
-<div class="line">Iteration:      50  Time: 5.000E-01  Max CFL: 9.404E-01  Max Diff. No.: -1.000E+00  Norm: 1.2418E+00  Conservation loss: 5.5529E-16</div>
-<div class="line">Iteration:      60  Time: 6.000E-01  Max CFL: 9.380E-01  Max Diff. No.: -1.000E+00  Norm: 1.2077E+00  Conservation loss: 1.2533E-15</div>
-<div class="line">Iteration:      70  Time: 7.000E-01  Max CFL: 9.336E-01  Max Diff. No.: -1.000E+00  Norm: 1.2324E+00  Conservation loss: 1.3792E-15</div>
-<div class="line">Iteration:      80  Time: 8.000E-01  Max CFL: 9.392E-01  Max Diff. No.: -1.000E+00  Norm: 1.1441E+00  Conservation loss: 1.7333E-15</div>
-<div class="line">Iteration:      90  Time: 9.000E-01  Max CFL: 9.461E-01  Max Diff. No.: -1.000E+00  Norm: 1.2901E+00  Conservation loss: 3.0728E-15</div>
-<div class="line">Iteration:     100  Time: 1.000E+00  Max CFL: 9.335E-01  Max Diff. No.: -1.000E+00  Norm: 1.2508E+00  Conservation loss: 3.6711E-15</div>
-<div class="line">Iteration:     110  Time: 1.100E+00  Max CFL: 9.392E-01  Max Diff. No.: -1.000E+00  Norm: 1.0874E+00  Conservation loss: 1.9831E-15</div>
-<div class="line">Iteration:     120  Time: 1.200E+00  Max CFL: 9.466E-01  Max Diff. No.: -1.000E+00  Norm: 1.2405E+00  Conservation loss: 2.1550E-15</div>
-<div class="line">Iteration:     130  Time: 1.300E+00  Max CFL: 9.452E-01  Max Diff. No.: -1.000E+00  Norm: 1.2300E+00  Conservation loss: 5.4132E-15</div>
-<div class="line">Iteration:     140  Time: 1.400E+00  Max CFL: 9.402E-01  Max Diff. No.: -1.000E+00  Norm: 1.1943E+00  Conservation loss: 3.1801E-15</div>
-<div class="line">Iteration:     150  Time: 1.500E+00  Max CFL: 9.418E-01  Max Diff. No.: -1.000E+00  Norm: 1.1908E+00  Conservation loss: 1.2276E-15</div>
-<div class="line">Iteration:     160  Time: 1.600E+00  Max CFL: 9.494E-01  Max Diff. No.: -1.000E+00  Norm: 1.2747E+00  Conservation loss: 5.5747E-15</div>
-<div class="line">Iteration:     170  Time: 1.700E+00  Max CFL: 9.359E-01  Max Diff. No.: -1.000E+00  Norm: 1.2182E+00  Conservation loss: 4.8435E-15</div>
-<div class="line">Iteration:     180  Time: 1.800E+00  Max CFL: 9.432E-01  Max Diff. No.: -1.000E+00  Norm: 1.1543E+00  Conservation loss: 3.9936E-15</div>
+<div class="line">Iteration:       1  Time: 2.500E-03  Max CFL: 5.916E-01  Max Diff. No.: -1.000E+00  Norm: 6.1151E-02  </div>
+<div class="line">Iteration:       2  Time: 5.000E-03  Max CFL: 9.584E-01  Max Diff. No.: -1.000E+00  Norm: 4.3446E-02  </div>
+<div class="line">Iteration:       3  Time: 7.500E-03  Max CFL: 9.870E-01  Max Diff. No.: -1.000E+00  Norm: 3.8010E-02  </div>
+<div class="line">Iteration:       4  Time: 1.000E-02  Max CFL: 1.049E+00  Max Diff. No.: -1.000E+00  Norm: 3.6686E-02  </div>
+<div class="line">Iteration:       5  Time: 1.250E-02  Max CFL: 1.058E+00  Max Diff. No.: -1.000E+00  Norm: 3.5086E-02  </div>
+<div class="line">Iteration:       6  Time: 1.500E-02  Max CFL: 1.065E+00  Max Diff. No.: -1.000E+00  Norm: 3.4562E-02  </div>
+<div class="line">Iteration:       7  Time: 1.750E-02  Max CFL: 1.076E+00  Max Diff. No.: -1.000E+00  Norm: 3.2523E-02  </div>
+<div class="line">Iteration:       8  Time: 2.000E-02  Max CFL: 1.070E+00  Max Diff. No.: -1.000E+00  Norm: 3.1750E-02  </div>
+<div class="line">Iteration:       9  Time: 2.250E-02  Max CFL: 1.081E+00  Max Diff. No.: -1.000E+00  Norm: 3.0478E-02  </div>
+<div class="line">Iteration:      10  Time: 2.500E-02  Max CFL: 1.086E+00  Max Diff. No.: -1.000E+00  Norm: 2.9967E-02  </div>
+<div class="line">Iteration:      11  Time: 2.750E-02  Max CFL: 1.082E+00  Max Diff. No.: -1.000E+00  Norm: 2.9607E-02  </div>
+<div class="line">Iteration:      12  Time: 3.000E-02  Max CFL: 1.087E+00  Max Diff. No.: -1.000E+00  Norm: 2.8842E-02  </div>
+<div class="line">Iteration:      13  Time: 3.250E-02  Max CFL: 1.092E+00  Max Diff. No.: -1.000E+00  Norm: 2.9168E-02  </div>
+<div class="line">Iteration:      14  Time: 3.500E-02  Max CFL: 1.090E+00  Max Diff. No.: -1.000E+00  Norm: 2.8462E-02  </div>
+<div class="line">Iteration:      15  Time: 3.750E-02  Max CFL: 1.092E+00  Max Diff. No.: -1.000E+00  Norm: 2.8497E-02  </div>
+<div class="line">Iteration:      16  Time: 4.000E-02  Max CFL: 1.095E+00  Max Diff. No.: -1.000E+00  Norm: 2.7755E-02  </div>
+<div class="line">Iteration:      17  Time: 4.250E-02  Max CFL: 1.095E+00  Max Diff. No.: -1.000E+00  Norm: 2.8055E-02  </div>
+<div class="line">Iteration:      18  Time: 4.500E-02  Max CFL: 1.095E+00  Max Diff. No.: -1.000E+00  Norm: 2.7469E-02  </div>
+<div class="line">Iteration:      19  Time: 4.750E-02  Max CFL: 1.096E+00  Max Diff. No.: -1.000E+00  Norm: 2.7545E-02  </div>
+<div class="line">Iteration:      20  Time: 5.000E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.7406E-02  </div>
+<div class="line">Iteration:      21  Time: 5.250E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.8021E-02  </div>
+<div class="line">Iteration:      22  Time: 5.500E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.7158E-02  </div>
+<div class="line">Iteration:      23  Time: 5.750E-02  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.8027E-02  </div>
+<div class="line">Iteration:      24  Time: 6.000E-02  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.7904E-02  </div>
+<div class="line">Iteration:      25  Time: 6.250E-02  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.7724E-02  </div>
+<div class="line">Iteration:      26  Time: 6.500E-02  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.8462E-02  </div>
+<div class="line">Iteration:      27  Time: 6.750E-02  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.8093E-02  </div>
+<div class="line">Iteration:      28  Time: 7.000E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.8698E-02  </div>
+<div class="line">Iteration:      29  Time: 7.250E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.6849E-02  </div>
+<div class="line">Iteration:      30  Time: 7.500E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.7387E-02  </div>
+<div class="line">Iteration:      31  Time: 7.750E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.7097E-02  </div>
+<div class="line">Iteration:      32  Time: 8.000E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.6961E-02  </div>
+<div class="line">Iteration:      33  Time: 8.250E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.6190E-02  </div>
+<div class="line">Iteration:      34  Time: 8.500E-02  Max CFL: 1.096E+00  Max Diff. No.: -1.000E+00  Norm: 2.5864E-02  </div>
+<div class="line">Iteration:      35  Time: 8.750E-02  Max CFL: 1.096E+00  Max Diff. No.: -1.000E+00  Norm: 2.5936E-02  </div>
+<div class="line">Iteration:      36  Time: 9.000E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5769E-02  </div>
+<div class="line">Iteration:      37  Time: 9.250E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.6352E-02  </div>
+<div class="line">Iteration:      38  Time: 9.500E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5643E-02  </div>
+<div class="line">Iteration:      39  Time: 9.750E-02  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.6066E-02  </div>
+<div class="line">Iteration:      40  Time: 1.000E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5388E-02  </div>
+<div class="line">Iteration:      41  Time: 1.025E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5457E-02  </div>
+<div class="line">Iteration:      42  Time: 1.050E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5003E-02  </div>
+<div class="line">Iteration:      43  Time: 1.075E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5102E-02  </div>
+<div class="line">Iteration:      44  Time: 1.100E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5569E-02  </div>
+<div class="line">Iteration:      45  Time: 1.125E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4938E-02  </div>
+<div class="line">Iteration:      46  Time: 1.150E-01  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.5769E-02  </div>
+<div class="line">Iteration:      47  Time: 1.175E-01  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.5214E-02  </div>
+<div class="line">Iteration:      48  Time: 1.200E-01  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.5413E-02  </div>
+<div class="line">Iteration:      49  Time: 1.225E-01  Max CFL: 1.098E+00  Max Diff. No.: -1.000E+00  Norm: 2.5137E-02  </div>
+<div class="line">Iteration:      50  Time: 1.250E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5137E-02  </div>
+<div class="line">Iteration:      51  Time: 1.275E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5023E-02  </div>
+<div class="line">Iteration:      52  Time: 1.300E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4544E-02  </div>
+<div class="line">Iteration:      53  Time: 1.325E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5432E-02  </div>
+<div class="line">Iteration:      54  Time: 1.350E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5062E-02  </div>
+<div class="line">Iteration:      55  Time: 1.375E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5366E-02  </div>
+<div class="line">Iteration:      56  Time: 1.400E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4937E-02  </div>
+<div class="line">Iteration:      57  Time: 1.425E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5276E-02  </div>
+<div class="line">Iteration:      58  Time: 1.450E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4837E-02  </div>
+<div class="line">Iteration:      59  Time: 1.475E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4371E-02  </div>
+<div class="line">Iteration:      60  Time: 1.500E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5103E-02  </div>
+<div class="line">Iteration:      61  Time: 1.525E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4960E-02  </div>
+<div class="line">Iteration:      62  Time: 1.550E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5354E-02  </div>
+<div class="line">Iteration:      63  Time: 1.575E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5298E-02  </div>
+<div class="line">Iteration:      64  Time: 1.600E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5768E-02  </div>
+<div class="line">Iteration:      65  Time: 1.625E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.6217E-02  </div>
+<div class="line">Iteration:      66  Time: 1.650E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.6573E-02  </div>
+<div class="line">Iteration:      67  Time: 1.675E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.6386E-02  </div>
+<div class="line">Iteration:      68  Time: 1.700E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.7103E-02  </div>
+<div class="line">Iteration:      69  Time: 1.725E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5373E-02  </div>
+<div class="line">Iteration:      70  Time: 1.750E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5861E-02  </div>
+<div class="line">Iteration:      71  Time: 1.775E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5059E-02  </div>
+<div class="line">Iteration:      72  Time: 1.800E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.5321E-02  </div>
+<div class="line">Iteration:      73  Time: 1.825E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4656E-02  </div>
+<div class="line">Iteration:      74  Time: 1.850E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4633E-02  </div>
+<div class="line">Iteration:      75  Time: 1.875E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4376E-02  </div>
+<div class="line">Iteration:      76  Time: 1.900E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4108E-02  </div>
+<div class="line">Iteration:      77  Time: 1.925E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4844E-02  </div>
+<div class="line">Iteration:      78  Time: 1.950E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4352E-02  </div>
+<div class="line">Iteration:      79  Time: 1.975E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4893E-02  </div>
+<div class="line">Iteration:      80  Time: 2.000E-01  Max CFL: 1.097E+00  Max Diff. No.: -1.000E+00  Norm: 2.4159E-02  </div>
 <div class="line">Writing solution file op_00001.dat.</div>
-<div class="line">Completed time integration (Final time: 1.800000).</div>
+<div class="line">Completed time integration (Final time: 0.200000).</div>
 <div class="line">Computed errors:</div>
 <div class="line">  L1         Error           : 0.0000000000000000E+00</div>
 <div class="line">  L2         Error           : 0.0000000000000000E+00</div>
 <div class="line">  Linfinity  Error           : 0.0000000000000000E+00</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    1.7930858824116804E-15</div>
-<div class="line">    2.6272672109858204E-15</div>
-<div class="line">    2.4147912130226402E-15</div>
-<div class="line">Solver runtime (in seconds): 5.1926499999999998E-01</div>
-<div class="line">Total  runtime (in seconds): 5.2030600000000005E-01</div>
+<div class="line">    0.0000000000000000E+00</div>
+<div class="line">    0.0000000000000000E+00</div>
+<div class="line">    0.0000000000000000E+00</div>
+<div class="line">Solver runtime (in seconds): 2.2494000000000000E-01</div>
+<div class="line">Total  runtime (in seconds): 2.2597999999999999E-01</div>
 <div class="line">Deallocating arrays.</div>
 <div class="line">Finished.</div>
 </div><!-- fragment --> </div></div><!-- contents -->

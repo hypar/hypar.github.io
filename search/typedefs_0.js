@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mpicontext',['MPIContext',['../a00166.html#aef8e1d87c719a4a2a2342213c1721789',1,'MPIContext():&#160;FirstDerivativeFirstOrder.c'],['../a00167.html#aef8e1d87c719a4a2a2342213c1721789',1,'MPIContext():&#160;FirstDerivativeFourthOrder.c'],['../a00168.html#aef8e1d87c719a4a2a2342213c1721789',1,'MPIContext():&#160;FirstDerivativeSecondOrder.c']]]
+  ['griddimensions',['GridDimensions',['../a00170.html#a00167df288a1ca2c6c32af8d911975e0',1,'sparse_grids_simulation.h']]]
 ];

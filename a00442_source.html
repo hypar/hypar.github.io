@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/TridiagLU/tridiagLUInit.c Source File</title>
+<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DJacobian.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,6 +56,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -113,98 +114,52 @@ $(document).ready(function(){initNavTree('a00442_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">tridiagLUInit.c</div>  </div>
+<div class="title">ShallowWater2DJacobian.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00442.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00119.html">tridiagLU.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;mpi.h&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a00442.html#af4e80f0b187c9e7e6272a460f4a05fab">   39</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00442.html#af4e80f0b187c9e7e6272a460f4a05fab">tridiagLUInit</a>(</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                    <span class="keywordtype">void</span> *r,  </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                    <span class="keywordtype">void</span> *c   </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                 ) </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="a00119.html#a00464">TridiagLU</a> *t = (<a class="code" href="a00119.html#a00464">TridiagLU</a>*) r;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">int</span>       rank,ierr;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifdef serial</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  rank  = 0;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  MPI_Comm  *comm = (MPI_Comm*) c;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordflow">if</span> (!comm) rank = 0;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">else</span> MPI_Comm_rank(*comm,&amp;rank);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">/* default values */</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  strcpy(t-&gt;<a class="code" href="a00119.html#ae50ec60868beaab2cb84897adefda09f">reducedsolvetype</a>,<a class="code" href="a00119.html#a79ddfe354b89d113b72db4b5ae6c6e3d">_TRIDIAG_JACOBI_</a>);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  t-&gt;<a class="code" href="a00119.html#a584c0fc0b1e845800ad511dffc60e032">evaluate_norm</a> = 1;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  t-&gt;<a class="code" href="a00119.html#a274519264a28477940f161ddb4b61feb">maxiter</a>       = 10;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  t-&gt;<a class="code" href="a00119.html#a60c6dfc476dd9596072f61c2ec8d58ed">atol</a>          = 1e-12;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  t-&gt;<a class="code" href="a00119.html#a4587afeee8941ba7c208b3690a3eeaa7">rtol</a>          = 1e-10;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  t-&gt;<a class="code" href="a00119.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a>       = 0;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">/* read from file, if available */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">if</span> (!rank) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    FILE *in;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    in = fopen(<span class="stringliteral">&quot;lusolver.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span> (!in) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      printf(<span class="stringliteral">&quot;tridiagLUInit: File \&quot;lusolver.inp\&quot; not found. Using default values.\n&quot;</span>);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      <span class="keywordtype">char</span> word[100];</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      ierr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word); <span class="keywordflow">if</span> (ierr != 1) <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)) {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;          <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;              ierr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word); <span class="keywordflow">if</span> (ierr != 1) <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                <span class="keywordflow">if</span>      (!strcmp(word, <span class="stringliteral">&quot;evaluate_norm&quot;</span>   )) ierr = fscanf(in,<span class="stringliteral">&quot;%d&quot;</span> ,&amp;t-&gt;<a class="code" href="a00119.html#a584c0fc0b1e845800ad511dffc60e032">evaluate_norm</a>  );</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;maxiter&quot;</span>         )) ierr = fscanf(in,<span class="stringliteral">&quot;%d&quot;</span> ,&amp;t-&gt;<a class="code" href="a00119.html#a274519264a28477940f161ddb4b61feb">maxiter</a>        );</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;atol&quot;</span>            )) ierr = fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;t-&gt;<a class="code" href="a00119.html#a60c6dfc476dd9596072f61c2ec8d58ed">atol</a>           );</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;rtol&quot;</span>            )) ierr = fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;t-&gt;<a class="code" href="a00119.html#a4587afeee8941ba7c208b3690a3eeaa7">rtol</a>           );</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;              <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;verbose&quot;</span>         ))   ierr = fscanf(in,<span class="stringliteral">&quot;%d&quot;</span> ,&amp;t-&gt;<a class="code" href="a00119.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a>        );</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;              <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;reducedsolvetype&quot;</span>))   ierr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span> ,t-&gt;<a class="code" href="a00119.html#ae50ec60868beaab2cb84897adefda09f">reducedsolvetype</a>);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;          <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(word,<span class="stringliteral">&quot;end&quot;</span>)) {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordtype">char</span> useless[100];</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            ierr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,useless);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            printf(<span class="stringliteral">&quot;Warning: keyword %s in file \&quot;lusolver.inp\&quot; with value %s not recognized or extraneous. Ignoring.\n&quot;</span>,word,useless);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;          }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;          <span class="keywordflow">if</span> (ierr != 1) <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;          fprintf(stderr,<span class="stringliteral">&quot;Error: Illegal format in file \&quot;solver.inp\&quot;.\n&quot;</span>);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      fclose(in);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="comment">/* broadcast to all processes */</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordflow">if</span> (comm) {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    MPI_Bcast(t-&gt;<a class="code" href="a00119.html#ae50ec60868beaab2cb84897adefda09f">reducedsolvetype</a>,50,MPI_CHAR,0,*comm);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    MPI_Bcast(&amp;t-&gt;<a class="code" href="a00119.html#a584c0fc0b1e845800ad511dffc60e032">evaluate_norm</a>,1,MPI_INT,0,*comm);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    MPI_Bcast(&amp;t-&gt;<a class="code" href="a00119.html#a274519264a28477940f161ddb4b61feb">maxiter</a>,1,MPI_INT,0,*comm);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    MPI_Bcast(&amp;t-&gt;<a class="code" href="a00119.html#a0b2caeb4b6f130be43e5a2f0267dd453">verbose</a>,1,MPI_INT,0,*comm);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    MPI_Bcast(&amp;t-&gt;<a class="code" href="a00119.html#a60c6dfc476dd9596072f61c2ec8d58ed">atol</a>,1,MPI_DOUBLE,0,*comm);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    MPI_Bcast(&amp;t-&gt;<a class="code" href="a00119.html#a4587afeee8941ba7c208b3690a3eeaa7">rtol</a>,1,MPI_DOUBLE,0,*comm);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="ttc" id="a00119_html_a60c6dfc476dd9596072f61c2ec8d58ed"><div class="ttname"><a href="a00119.html#a60c6dfc476dd9596072f61c2ec8d58ed">TridiagLU::atol</a></div><div class="ttdeci">double atol</div><div class="ttdef"><b>Definition:</b> <a href="a00119_source.html#l00092">tridiagLU.h:92</a></div></div>
-<div class="ttc" id="a00119_html_ae50ec60868beaab2cb84897adefda09f"><div class="ttname"><a href="a00119.html#ae50ec60868beaab2cb84897adefda09f">TridiagLU::reducedsolvetype</a></div><div class="ttdeci">char reducedsolvetype[50]</div><div class="ttdef"><b>Definition:</b> <a href="a00119_source.html#l00088">tridiagLU.h:88</a></div></div>
-<div class="ttc" id="a00119_html_a0b2caeb4b6f130be43e5a2f0267dd453"><div class="ttname"><a href="a00119.html#a0b2caeb4b6f130be43e5a2f0267dd453">TridiagLU::verbose</a></div><div class="ttdeci">int verbose</div><div class="ttdef"><b>Definition:</b> <a href="a00119_source.html#l00096">tridiagLU.h:96</a></div></div>
-<div class="ttc" id="a00442_html_af4e80f0b187c9e7e6272a460f4a05fab"><div class="ttname"><a href="a00442.html#af4e80f0b187c9e7e6272a460f4a05fab">tridiagLUInit</a></div><div class="ttdeci">int tridiagLUInit(void *r, void *c)</div><div class="ttdef"><b>Definition:</b> <a href="a00442_source.html#l00039">tridiagLUInit.c:39</a></div></div>
-<div class="ttc" id="a00119_html_a4587afeee8941ba7c208b3690a3eeaa7"><div class="ttname"><a href="a00119.html#a4587afeee8941ba7c208b3690a3eeaa7">TridiagLU::rtol</a></div><div class="ttdeci">double rtol</div><div class="ttdef"><b>Definition:</b> <a href="a00119_source.html#l00092">tridiagLU.h:92</a></div></div>
-<div class="ttc" id="a00119_html_a79ddfe354b89d113b72db4b5ae6c6e3d"><div class="ttname"><a href="a00119.html#a79ddfe354b89d113b72db4b5ae6c6e3d">_TRIDIAG_JACOBI_</a></div><div class="ttdeci">#define _TRIDIAG_JACOBI_</div><div class="ttdef"><b>Definition:</b> <a href="a00119_source.html#l00071">tridiagLU.h:71</a></div></div>
-<div class="ttc" id="a00119_html_a584c0fc0b1e845800ad511dffc60e032"><div class="ttname"><a href="a00119.html#a584c0fc0b1e845800ad511dffc60e032">TridiagLU::evaluate_norm</a></div><div class="ttdeci">int evaluate_norm</div><div class="ttdef"><b>Definition:</b> <a href="a00119_source.html#l00090">tridiagLU.h:90</a></div></div>
-<div class="ttc" id="a00119_html_a274519264a28477940f161ddb4b61feb"><div class="ttname"><a href="a00119.html#a274519264a28477940f161ddb4b61feb">TridiagLU::maxiter</a></div><div class="ttdeci">int maxiter</div><div class="ttdef"><b>Definition:</b> <a href="a00119_source.html#l00091">tridiagLU.h:91</a></div></div>
-<div class="ttc" id="a00119_html_a00464"><div class="ttname"><a href="a00119.html#a00464">TridiagLU</a></div><div class="ttdef"><b>Definition:</b> <a href="a00119_source.html#l00081">tridiagLU.h:81</a></div></div>
-<div class="ttc" id="a00119_html"><div class="ttname"><a href="a00119.html">tridiagLU.h</a></div><div class="ttdoc">Header file for TridiagLU. </div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00157.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00165.html">physicalmodels/shallowwater2d.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00442.html#ac9578045deced429c673bb5e6a1cf034">   13</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00442.html#ac9578045deced429c673bb5e6a1cf034">ShallowWater2DJacobian</a>(</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                    <span class="keywordtype">double</span>  *Jac, </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">double</span>  *u,   </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">void</span>    *p,   </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span>     dir,  </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    <span class="keywordtype">int</span>     upw   </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                   )</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00136.html">ShallowWater2D</a>  *param = (<a class="code" href="a00136.html">ShallowWater2D</a>*) p;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span>   R[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], D[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                  L[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], DL[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="comment">/* get the eigenvalues and left,right eigenvectors */</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00165.html#ab51465579037455f044ab58f387caf15">_ShallowWater2DEigenvalues_</a>      (u,D,param,dir);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00165.html#a9fedf0f1165028b0f256b59e72fc5e9a">_ShallowWater2DLeftEigenvectors_</a> (u,L,param,dir);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00165.html#ac2a20407c8e10d3f59b52281ae4e0f39">_ShallowWater2DRightEigenvectors_</a>(u,R,param,dir);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> aupw = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw), k;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  k = 0; D[k] = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  k = 4; D[k] = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  k = 8; D[k] = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00157.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,DL,D,L);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00157.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,Jac,R,DL);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
+<div class="ttc" id="a00165_html_ab51465579037455f044ab58f387caf15"><div class="ttname"><a href="a00165.html#ab51465579037455f044ab58f387caf15">_ShallowWater2DEigenvalues_</a></div><div class="ttdeci">#define _ShallowWater2DEigenvalues_(u, D, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00129">shallowwater2d.h:129</a></div></div>
+<div class="ttc" id="a00161_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00058">euler1d.h:58</a></div></div>
+<div class="ttc" id="a00157_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00015">mathfunctions.h:15</a></div></div>
+<div class="ttc" id="a00442_html_ac9578045deced429c673bb5e6a1cf034"><div class="ttname"><a href="a00442.html#ac9578045deced429c673bb5e6a1cf034">ShallowWater2DJacobian</a></div><div class="ttdeci">int ShallowWater2DJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00442_source.html#l00013">ShallowWater2DJacobian.c:13</a></div></div>
+<div class="ttc" id="a00157_html_ad08720847b0aef444876b608b7af9a5c"><div class="ttname"><a href="a00157.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a></div><div class="ttdeci">#define MatMult3(N, A, X, Y)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00089">mathfunctions.h:89</a></div></div>
+<div class="ttc" id="a00157_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00019">mathfunctions.h:19</a></div></div>
+<div class="ttc" id="a00165_html_ac2a20407c8e10d3f59b52281ae4e0f39"><div class="ttname"><a href="a00165.html#ac2a20407c8e10d3f59b52281ae4e0f39">_ShallowWater2DRightEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater2DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00197">shallowwater2d.h:197</a></div></div>
+<div class="ttc" id="a00157_html"><div class="ttname"><a href="a00157.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00165_html"><div class="ttname"><a href="a00165.html">shallowwater2d.h</a></div><div class="ttdoc">2D Shallow Water Equations </div></div>
+<div class="ttc" id="a00165_html_a9fedf0f1165028b0f256b59e72fc5e9a"><div class="ttname"><a href="a00165.html#a9fedf0f1165028b0f256b59e72fc5e9a">_ShallowWater2DLeftEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater2DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00154">shallowwater2d.h:154</a></div></div>
+<div class="ttc" id="a00157_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00033">mathfunctions.h:33</a></div></div>
+<div class="ttc" id="a00136_html"><div class="ttname"><a href="a00136.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00240">shallowwater2d.h:240</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

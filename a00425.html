@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/TimeIntegration/TimeForwardEuler.c File Reference</title>
+<title>HyPar: src/PhysicalModels/ShallowWater1D/ShallowWater1DEigen.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,6 +56,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -115,132 +116,146 @@ $(document).ready(function(){initNavTree('a00425.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">TimeForwardEuler.c File Reference</div>  </div>
+<div class="title">ShallowWater1DEigen.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Forward Euler method.  
+<p>Contains the functions to compute left and right eigenvectors for the 1D shallow water equations.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00124_source.html">basic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00123_source.html">arrayfunctions.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00117_source.html">simulation.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00101_source.html">timeintegration.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00147_source.html">basic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00146_source.html">arrayfunctions.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00157_source.html">mathfunctions.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00164_source.html">physicalmodels/shallowwater1d.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00153_source.html">hypar.h</a>&gt;</code><br />
 </div>
 <p><a href="a00425_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa9ef7eaebda92d180aea9b0ef8186935"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#aa9ef7eaebda92d180aea9b0ef8186935">TimeForwardEuler</a> (void *ts)</td></tr>
-<tr class="separator:aa9ef7eaebda92d180aea9b0ef8186935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9519badea39145bc113cba2422016b3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#aa9519badea39145bc113cba2422016b3">ShallowWater1DLeftEigenvectors</a> (double *u, double *L, void *p, int dir)</td></tr>
+<tr class="separator:aa9519badea39145bc113cba2422016b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4a44ab4a02a19c10ad8f4d75f88f8d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#af4a44ab4a02a19c10ad8f4d75f88f8d7">ShallowWater1DRightEigenvectors</a> (double *u, double *R, void *p, int dir)</td></tr>
+<tr class="separator:af4a44ab4a02a19c10ad8f4d75f88f8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Forward Euler method. </p>
+<div class="textblock"><p>Contains the functions to compute left and right eigenvectors for the 1D shallow water equations. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00425_source.html">TimeForwardEuler.c</a>.</p>
+<p>Definition in file <a class="el" href="a00425_source.html">ShallowWater1DEigen.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aa9ef7eaebda92d180aea9b0ef8186935"></a>
+<a class="anchor" id="aa9519badea39145bc113cba2422016b3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int TimeForwardEuler </td>
+          <td class="memname">int ShallowWater1DLeftEigenvectors </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>ts</em></td><td>)</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>L</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dir</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Advance the ODE given by </p><p class="formulaDsp">
-\begin{equation} \frac{d{\bf u}}{dt} = {\bf F} \left({\bf u}\right) \end{equation}
-</p>
-<p> by one time step of size <a class="el" href="a00106.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a> using the forward Euler method given by </p><p class="formulaDsp">
-\begin{equation} {\bf u}^{n+1} = {\bf u}^n + \Delta t {\bf F}\left( {\bf u}^n \right) \end{equation}
-</p>
-<p> where the superscript represents the time level, \(\Delta t\) is the time step size <a class="el" href="a00106.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>, and \({\bf F}\left({\bf u}\right)\) is computed by <a class="el" href="a00118.html#a0339c3e521ebb08df7edc73dbf78dc2d">TimeIntegration::RHSFunction</a>. </p>
+<p>Compute the left eigenvections for the 1D shallow water equations. This function just calls the macro <a class="el" href="a00164.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a> and is not used by any functions within the 1D shallow water module. However, it's necessary to define it and provide it to the the solver object (<a class="el" href="a00126.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>) so that it can then send it to interpolation functions for a characteristic-based reconstruction. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ts</td><td>Time integrator object of type <a class="el" href="a00118.html" title="Structure of variables/parameters and function pointers for time integration. ">TimeIntegration</a> </td></tr>
+    <tr><td class="paramname">u</td><td>Conserved solution at a grid point </td></tr>
+    <tr><td class="paramname">L</td><td>Array of size nvar^2 = 2^2 to save the matrix of left eigenvectors in (row-major format). </td></tr>
+    <tr><td class="paramname">p</td><td>Object of type <a class="el" href="a00135.html" title="Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. ">ShallowWater1D</a> with physics-related variables </td></tr>
+    <tr><td class="paramname">dir</td><td>Spatial dimension (not used, since this is a 1D system) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00425_source.html#l00025">25</a> of file <a class="el" href="a00425_source.html">TimeForwardEuler.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00118.html">TimeIntegration</a>* TS = (<a class="code" href="a00118.html">TimeIntegration</a>*) ts;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00117.html#a00463">SimulationObject</a>* sim = (<a class="code" href="a00117.html#a00463">SimulationObject</a>*) TS-&gt;<a class="code" href="a00118.html#addc618f703eab837da44852e69399e04">simulation</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">int</span> ns, nsims = TS-&gt;<a class="code" href="a00118.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <a class="code" href="a00124.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  for (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="a00106.html">HyPar</a>* solver = &amp;(sim[ns].<a class="code" href="a00117.html#a523947ce4fa7128c4c767163953253b9">solver</a>);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="a00108.html#a00459">MPIVariables</a>* mpi = &amp;(sim[ns].<a class="code" href="a00117.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00106.html#aec0a2fa1fab1467466c58d8b2b3dc18c">PreStage</a>) { </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      <a class="code" href="a00124.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00106.html#aec0a2fa1fab1467466c58d8b2b3dc18c">PreStage</a>(  0,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                              &amp;solver-&gt;<a class="code" href="a00106.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                              solver,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                              mpi,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                              TS-&gt;<a class="code" href="a00118.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a> );   <a class="code" href="a00124.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">double</span>* rhs = TS-&gt;<a class="code" href="a00118.html#ade4650485fe35fd3e12fea272fc80209">rhs</a> + TS-&gt;<a class="code" href="a00118.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns];</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">/* Evaluate right-hand side */</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00124.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> TS-&gt;<a class="code" href="a00118.html#a0339c3e521ebb08df7edc73dbf78dc2d">RHSFunction</a>( rhs,</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                          solver-&gt;<a class="code" href="a00106.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                          solver,</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                          mpi,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                          TS-&gt;<a class="code" href="a00118.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a>  );   <a class="code" href="a00124.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">/* update solution */</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="a00123.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(  rhs,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                  TS-&gt;<a class="code" href="a00118.html#a03e28be41881b703c836edbfe9b51b17">dt</a>,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                  solver-&gt;<a class="code" href="a00106.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                  TS-&gt;<a class="code" href="a00118.html#aaf135d2fee365f4aedd983fe509d19d2">u_sizes</a>[ns] );</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="a00123.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a>( solver-&gt;<a class="code" href="a00106.html#ac3326fc53477d445133072e3f1fe6b59">StageBoundaryIntegral</a>,</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                        TS-&gt;<a class="code" href="a00118.html#a03e28be41881b703c836edbfe9b51b17">dt</a>,</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                        solver-&gt;<a class="code" href="a00106.html#a6dfeed442d18083b68fd0f28d5f63fa7">StepBoundaryIntegral</a>,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                        TS-&gt;<a class="code" href="a00118.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">bf_sizes</a>[ns] );</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00106.html#a9112897c69ff035c4f780013884cc0cb">PostStage</a>) { </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="a00124.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00106.html#a9112897c69ff035c4f780013884cc0cb">PostStage</a>( solver-&gt;<a class="code" href="a00106.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                                solver,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                                mpi,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                                TS-&gt;<a class="code" href="a00118.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a> ); <a class="code" href="a00124.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr); </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
-<div class="ttc" id="a00118_html_a03e28be41881b703c836edbfe9b51b17"><div class="ttname"><a href="a00118.html#a03e28be41881b703c836edbfe9b51b17">TimeIntegration::dt</a></div><div class="ttdeci">double dt</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00035">timeintegration.h:35</a></div></div>
-<div class="ttc" id="a00118_html_a0339c3e521ebb08df7edc73dbf78dc2d"><div class="ttname"><a href="a00118.html#a0339c3e521ebb08df7edc73dbf78dc2d">TimeIntegration::RHSFunction</a></div><div class="ttdeci">int(* RHSFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00094">timeintegration.h:94</a></div></div>
-<div class="ttc" id="a00118_html_aed62497ac51211784e9bfa2608cc7413"><div class="ttname"><a href="a00118.html#aed62497ac51211784e9bfa2608cc7413">TimeIntegration::u_offsets</a></div><div class="ttdeci">long * u_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00050">timeintegration.h:50</a></div></div>
-<div class="ttc" id="a00108_html_a00459"><div class="ttname"><a href="a00108.html#a00459">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00108_source.html#l00021">mpivars.h:21</a></div></div>
-<div class="ttc" id="a00118_html_addc618f703eab837da44852e69399e04"><div class="ttname"><a href="a00118.html#addc618f703eab837da44852e69399e04">TimeIntegration::simulation</a></div><div class="ttdeci">void * simulation</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00044">timeintegration.h:44</a></div></div>
-<div class="ttc" id="a00123_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00123.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00123_source.html#l00233">arrayfunctions.h:233</a></div></div>
-<div class="ttc" id="a00124_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00124.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00124_source.html#l00010">basic.h:10</a></div></div>
-<div class="ttc" id="a00118_html"><div class="ttname"><a href="a00118.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00025">timeintegration.h:25</a></div></div>
-<div class="ttc" id="a00106_html"><div class="ttname"><a href="a00106.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00020">hypar.h:20</a></div></div>
-<div class="ttc" id="a00118_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00118.html#a9a0e87291e0e8b9c1445e5482e814c92">TimeIntegration::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00046">timeintegration.h:46</a></div></div>
-<div class="ttc" id="a00106_html_aec0a2fa1fab1467466c58d8b2b3dc18c"><div class="ttname"><a href="a00106.html#aec0a2fa1fab1467466c58d8b2b3dc18c">HyPar::PreStage</a></div><div class="ttdeci">int(* PreStage)(int, double **, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00295">hypar.h:295</a></div></div>
-<div class="ttc" id="a00106_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00106.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00097">hypar.h:97</a></div></div>
-<div class="ttc" id="a00106_html_ac3326fc53477d445133072e3f1fe6b59"><div class="ttname"><a href="a00106.html#ac3326fc53477d445133072e3f1fe6b59">HyPar::StageBoundaryIntegral</a></div><div class="ttdeci">double * StageBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00338">hypar.h:338</a></div></div>
-<div class="ttc" id="a00118_html_aaf135d2fee365f4aedd983fe509d19d2"><div class="ttname"><a href="a00118.html#aaf135d2fee365f4aedd983fe509d19d2">TimeIntegration::u_sizes</a></div><div class="ttdeci">long * u_sizes</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00053">timeintegration.h:53</a></div></div>
-<div class="ttc" id="a00118_html_a28e4e78c0bf258662bef21d26c51fc0b"><div class="ttname"><a href="a00118.html#a28e4e78c0bf258662bef21d26c51fc0b">TimeIntegration::waqt</a></div><div class="ttdeci">double waqt</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00033">timeintegration.h:33</a></div></div>
-<div class="ttc" id="a00124_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00124.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00124_source.html#l00009">basic.h:9</a></div></div>
-<div class="ttc" id="a00118_html_ade4650485fe35fd3e12fea272fc80209"><div class="ttname"><a href="a00118.html#ade4650485fe35fd3e12fea272fc80209">TimeIntegration::rhs</a></div><div class="ttdeci">double * rhs</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00066">timeintegration.h:66</a></div></div>
-<div class="ttc" id="a00124_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00124.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00124_source.html#l00011">basic.h:11</a></div></div>
-<div class="ttc" id="a00117_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00117.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00117_source.html#l00023">simulation.h:23</a></div></div>
-<div class="ttc" id="a00123_html_a7d97d4914726fa7cca339356dae28473"><div class="ttname"><a href="a00123.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a></div><div class="ttdeci">#define _ArrayScaleCopy1D_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00123_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00106_html_a9112897c69ff035c4f780013884cc0cb"><div class="ttname"><a href="a00106.html#a9112897c69ff035c4f780013884cc0cb">HyPar::PostStage</a></div><div class="ttdeci">int(* PostStage)(double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00297">hypar.h:297</a></div></div>
-<div class="ttc" id="a00106_html_a6dfeed442d18083b68fd0f28d5f63fa7"><div class="ttname"><a href="a00106.html#a6dfeed442d18083b68fd0f28d5f63fa7">HyPar::StepBoundaryIntegral</a></div><div class="ttdeci">double * StepBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00340">hypar.h:340</a></div></div>
-<div class="ttc" id="a00118_html_a5b5bc95bd2b8eee821f73cb8427e9c4c"><div class="ttname"><a href="a00118.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">TimeIntegration::bf_sizes</a></div><div class="ttdeci">int * bf_sizes</div><div class="ttdef"><b>Definition:</b> <a href="a00101_source.html#l00060">timeintegration.h:60</a></div></div>
-<div class="ttc" id="a00117_html_a00463"><div class="ttname"><a href="a00117.html#a00463">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00117_source.html#l00020">simulation.h:20</a></div></div>
-<div class="ttc" id="a00117_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00117.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00117_source.html#l00022">simulation.h:22</a></div></div>
+<p>Definition at line <a class="el" href="a00425_source.html#l00019">19</a> of file <a class="el" href="a00425_source.html">ShallowWater1DEigen.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="a00135.html">ShallowWater1D</a> *param  = (<a class="code" href="a00135.html">ShallowWater1D</a>*)  p;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00164.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a>(u,L,param,dir);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
+<div class="ttc" id="a00135_html"><div class="ttname"><a href="a00135.html">ShallowWater1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00164_source.html#l00137">shallowwater1d.h:137</a></div></div>
+<div class="ttc" id="a00164_html_ab304d572a9bf352c09735486f88de6f7"><div class="ttname"><a href="a00164.html#ab304d572a9bf352c09735486f88de6f7">_ShallowWater1DLeftEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater1DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00164_source.html#l00106">shallowwater1d.h:106</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="af4a44ab4a02a19c10ad8f4d75f88f8d7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ShallowWater1DRightEigenvectors </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>R</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dir</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compute the right eigenvections for the 1D shallow water equations. This function just calls the macro <a class="el" href="a00164.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a> and is not used by any functions within the 1D shallow water module. However, it's necessary to define it and provide it to the the solver object (<a class="el" href="a00126.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>) so that it can then send it to interpolation functions for a characteristic-based reconstruction. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>Conserved solution at a grid point </td></tr>
+    <tr><td class="paramname">R</td><td>Array of size nvar^2 = 2^2 to save the matrix of right eigenvectors in (row-major format). </td></tr>
+    <tr><td class="paramname">p</td><td>Object of type <a class="el" href="a00135.html" title="Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. ">ShallowWater1D</a> with physics-related variables </td></tr>
+    <tr><td class="paramname">dir</td><td>Spatial dimension (not used, since this is a 1D system) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="a00425_source.html#l00038">38</a> of file <a class="el" href="a00425_source.html">ShallowWater1DEigen.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00135.html">ShallowWater1D</a> *param  = (<a class="code" href="a00135.html">ShallowWater1D</a>*)  p;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="a00164.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a>(u,R,param,dir);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="ttc" id="a00135_html"><div class="ttname"><a href="a00135.html">ShallowWater1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 1D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00164_source.html#l00137">shallowwater1d.h:137</a></div></div>
+<div class="ttc" id="a00164_html_a3c10806b3d5a56f4d0e9d4607dafcffc"><div class="ttname"><a href="a00164.html#a3c10806b3d5a56f4d0e9d4607dafcffc">_ShallowWater1DRightEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater1DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00164_source.html#l00117">shallowwater1d.h:117</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

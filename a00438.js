@@ -1,4 +1,5 @@
 var a00438 =
 [
-    [ "blocktridiagLU", "a00438.html#a55888a62483c0754cf6e4e030ffe2023", null ]
+    [ "ShallowWater2DLeftEigenvectors", "a00438.html#aedb92b59af4004f2a2905d741bffd00a", null ],
+    [ "ShallowWater2DRightEigenvectors", "a00438.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
 ];

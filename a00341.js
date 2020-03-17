@@ -1,6 +1,4 @@
 var a00341 =
 [
-    [ "NavierStokes2DFlux", "a00341.html#af9474905c4b501fdee9a18e490f6499d", null ],
-    [ "NavierStokes2DStiffFlux", "a00341.html#ae5da2defa681602a634b5e5455bae4cb", null ],
-    [ "NavierStokes2DNonStiffFlux", "a00341.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
+    [ "FPPowerSystemAdvection", "a00341.html#a83601f46a5cf657cb5adf2e34a926a6a", null ]
 ];

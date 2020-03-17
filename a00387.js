@@ -1,4 +1,5 @@
 var a00387 =
 [
-    [ "ShallowWater1DJacobian", "a00387.html#a0afc6ad3b8af530bd24834cf3c4e374d", null ]
+    [ "NavierStokes2DJacobian", "a00387.html#a343a73d6dce8347a2e56d7302392737a", null ],
+    [ "NavierStokes2DStiffJacobian", "a00387.html#aa3baa96900b3d921ae62b3005c16635c", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/LimiterFunctions/LimiterVanLeer.c Source File</title>
+<title>HyPar: src/InterpolationFunctions/CompactSchemeCleanup.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,6 +56,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -113,24 +114,40 @@ $(document).ready(function(){initNavTree('a00230_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LimiterVanLeer.c</div>  </div>
+<div class="title">CompactSchemeCleanup.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00230.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00131.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00130.html">limiters.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="a00230.html#a722f80eaa30391d5f57600c51b68e1ab">   17</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="a00230.html#a722f80eaa30391d5f57600c51b68e1ab">LimiterVanLeer</a> ( </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                        <span class="keywordtype">double</span> r </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                      )</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordtype">double</span> retval = (r+<a class="code" href="a00131.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(r)) / (1.0+<a class="code" href="a00131.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(r));</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">return</span> retval;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
-<div class="ttc" id="a00130_html"><div class="ttname"><a href="a00130.html">limiters.h</a></div><div class="ttdoc">Definitions for limiter functions used in MUSCL-type reconstruction schemes. </div></div>
-<div class="ttc" id="a00230_html_a722f80eaa30391d5f57600c51b68e1ab"><div class="ttname"><a href="a00230.html#a722f80eaa30391d5f57600c51b68e1ab">LimiterVanLeer</a></div><div class="ttdeci">double LimiterVanLeer(double r)</div><div class="ttdef"><b>Definition:</b> <a href="a00230_source.html#l00017">LimiterVanLeer.c:17</a></div></div>
-<div class="ttc" id="a00131_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00131.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00033">mathfunctions.h:33</a></div></div>
-<div class="ttc" id="a00131_html"><div class="ttname"><a href="a00131.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00116.html">interpolation.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00159.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00153.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00230.html#a528af16d6f4744046af63cb2d5520437">   14</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00230.html#a528af16d6f4744046af63cb2d5520437">CompactSchemeCleanup</a>(<span class="keywordtype">void</span> *s  )</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <a class="code" href="a00116.html#a00508">CompactScheme</a> *compact   = (<a class="code" href="a00116.html#a00508">CompactScheme</a>*) s;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>) free(compact-&gt;<a class="code" href="a00116.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#ad36954709307649365515214a02ab06d">B</a>) free(compact-&gt;<a class="code" href="a00116.html#ad36954709307649365515214a02ab06d">B</a>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a>) free(compact-&gt;<a class="code" href="a00116.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a>);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#ac06de847603f5cfaec085f6fe500f3c8">R</a>) free(compact-&gt;<a class="code" href="a00116.html#ac06de847603f5cfaec085f6fe500f3c8">R</a>);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#aba3b15034da676474db917f9f5533085">sendbuf</a>) free(compact-&gt;<a class="code" href="a00116.html#aba3b15034da676474db917f9f5533085">sendbuf</a>);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#afc23e46e08649e112e8d64d780cea5cb">recvbuf</a>) free(compact-&gt;<a class="code" href="a00116.html#afc23e46e08649e112e8d64d780cea5cb">recvbuf</a>);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="ttc" id="a00159_html"><div class="ttname"><a href="a00159.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="ttc" id="a00116_html_afc23e46e08649e112e8d64d780cea5cb"><div class="ttname"><a href="a00116.html#afc23e46e08649e112e8d64d780cea5cb">CompactScheme::recvbuf</a></div><div class="ttdeci">double * recvbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00444">interpolation.h:444</a></div></div>
+<div class="ttc" id="a00230_html_a528af16d6f4744046af63cb2d5520437"><div class="ttname"><a href="a00230.html#a528af16d6f4744046af63cb2d5520437">CompactSchemeCleanup</a></div><div class="ttdeci">int CompactSchemeCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00230_source.html#l00014">CompactSchemeCleanup.c:14</a></div></div>
+<div class="ttc" id="a00116_html_ac900805a486cbb8489e3c176ed6e0d8e"><div class="ttname"><a href="a00116.html#ac900805a486cbb8489e3c176ed6e0d8e">CompactScheme::A</a></div><div class="ttdeci">double * A</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00439">interpolation.h:439</a></div></div>
+<div class="ttc" id="a00116_html_ac06de847603f5cfaec085f6fe500f3c8"><div class="ttname"><a href="a00116.html#ac06de847603f5cfaec085f6fe500f3c8">CompactScheme::R</a></div><div class="ttdeci">double * R</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00439">interpolation.h:439</a></div></div>
+<div class="ttc" id="a00153_html"><div class="ttname"><a href="a00153.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00116_html_a00508"><div class="ttname"><a href="a00116.html#a00508">CompactScheme</a></div><div class="ttdoc">Structure of variables/parameters needed by the compact schemes. </div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00437">interpolation.h:437</a></div></div>
+<div class="ttc" id="a00116_html"><div class="ttname"><a href="a00116.html">interpolation.h</a></div><div class="ttdoc">Definitions for the functions computing the interpolated value of the primitive at the cell interface...</div></div>
+<div class="ttc" id="a00116_html_aba3b15034da676474db917f9f5533085"><div class="ttname"><a href="a00116.html#aba3b15034da676474db917f9f5533085">CompactScheme::sendbuf</a></div><div class="ttdeci">double * sendbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00444">interpolation.h:444</a></div></div>
+<div class="ttc" id="a00116_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00116.html#ad36954709307649365515214a02ab06d">CompactScheme::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00439">interpolation.h:439</a></div></div>
+<div class="ttc" id="a00116_html_a0a26ce8d1878aac6ddc87e3f6290e039"><div class="ttname"><a href="a00116.html#a0a26ce8d1878aac6ddc87e3f6290e039">CompactScheme::C</a></div><div class="ttdeci">double * C</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00439">interpolation.h:439</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

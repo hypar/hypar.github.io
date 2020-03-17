@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['readme',['README',['../a00094.html',1,'']]]
+  ['petsc_20examples',['PETSc Examples',['../a00062.html',1,'md_doc_Examples']]]
 ];

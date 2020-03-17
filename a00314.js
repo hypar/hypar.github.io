@@ -1,5 +1,5 @@
 var a00314 =
 [
-    [ "FPPowerSystem1BusDissipationFunction", "a00314.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
-    [ "FPPowerSystem1BusComputeDiffNumber", "a00314.html#a443e2757428e35f3818ba01dec4c20cd", null ]
+    [ "Euler1DLeftEigenvectors", "a00314.html#a1815fa0e825f5544526165566c75a619", null ],
+    [ "Euler1DRightEigenvectors", "a00314.html#af93bb74bc4643347f59e3bdb722e864b", null ]
 ];
