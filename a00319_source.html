@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/Euler1D/Euler1DJacobian.c Source File</title>
+<title>HyPar: src/PETScFunctions/PetscCreatePointList.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,81 +114,94 @@ $(document).ready(function(){initNavTree('a00319_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Euler1DJacobian.c</div>  </div>
+<div class="title">PetscCreatePointList.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00319.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00157.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00161.html">physicalmodels/euler1d.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00319.html#ab37022ee06f6873c94049e55a0890fe1">   13</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00319.html#ab37022ee06f6873c94049e55a0890fe1">Euler1DJacobian</a>(</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                    <span class="keywordtype">double</span>  *Jac, </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">double</span>  *u,   </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">void</span>    *p,   </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span>     dir,  </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    <span class="keywordtype">int</span>     upw   </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                   )</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00119.html">Euler1D</a>       *param = (<a class="code" href="a00119.html">Euler1D</a>*) p;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span> R[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], D[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                L[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], DL[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="comment">/* get the eigenvalues and left,right eigenvectors */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00161.html#a115efdce970884e30c6564701f929092">_Euler1DEigenvalues_</a>      (u,D,param,0);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00161.html#a413fd3cab5a06c9d7a38334768d81b0f">_Euler1DLeftEigenvectors_</a> (u,L,param,0);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00161.html#a4449638968eca76bb5631bc75b7dced7">_Euler1DRightEigenvectors_</a>(u,R,param,0);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> aupw = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw), k;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  k = 0; D[k] = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  k = 4; D[k] = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  k = 8; D[k] = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00157.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(3,DL,D,L);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00157.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(3,Jac,R,DL);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a00319.html#a635a7e46a7898c4de6b7a47b1d68c969">   48</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00319.html#a635a7e46a7898c4de6b7a47b1d68c969">Euler1DStiffJacobian</a>(</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                          <span class="keywordtype">double</span>  *Jac, </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                          <span class="keywordtype">double</span>  *u,   </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                          <span class="keywordtype">void</span>    *p,   </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                          <span class="keywordtype">int</span>     dir,  </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                          <span class="keywordtype">int</span>     upw   </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                   )</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;{</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <a class="code" href="a00119.html">Euler1D</a>       *param = (<a class="code" href="a00119.html">Euler1D</a>*) p;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span> R[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], D[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                L[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], DL[<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifdef with_petsc</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00165.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00181.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00172.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00152.html">petscinterface.h</a>&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="a00319.html#a1bb8435ce56995de809e6d1bf932e466">   23</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00319.html#a1bb8435ce56995de809e6d1bf932e466">PetscCreatePointList</a>(<span class="keywordtype">void</span> *obj )</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00152.html#a00562">PETScContext</a>  *ctxt    = (<a class="code" href="a00152.html#a00562">PETScContext</a>*) obj;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <a class="code" href="a00144.html">HyPar</a>         *solver  = (<a class="code" href="a00144.html">HyPar</a>*) ctxt-&gt;<a class="code" href="a00152.html#ade1bc5cad8c6735a891a28f637cbfb06">solver</a>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="a00146.html#a00559">MPIVariables</a>  *mpi     = (<a class="code" href="a00146.html#a00559">MPIVariables</a>*) ctxt-&gt;<a class="code" href="a00152.html#abaa15763a88d05dc68ff230ce570eee9">mpi</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">int</span> *dim  = solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;      ndims = solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;      ghosts= solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;      done, index[ndims], npoints;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="comment">/* count the number of computational points */</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  npoints = 0; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  done    = 0; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00165.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00165.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span> (1) npoints++;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">//if (solver-&gt;iblank[p] == 1) npoints++;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="a00165.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  ctxt-&gt;<a class="code" href="a00152.html#a515ec0fe2abce5449e37ae520974cf5f">npoints</a> = npoints;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span> nv = ndims+1;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  ctxt-&gt;<a class="code" href="a00152.html#ab991f69858c9aada0736623db264237e">points</a> = (<span class="keywordtype">int</span>*) calloc (ctxt-&gt;<a class="code" href="a00152.html#a515ec0fe2abce5449e37ae520974cf5f">npoints</a>*nv,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  npoints = 0; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  done    = 0; <a class="code" href="a00165.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00165.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">//if (solver-&gt;iblank[p] == 1) {</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">if</span> (1) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <a class="code" href="a00165.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index,(ctxt-&gt;<a class="code" href="a00152.html#ab991f69858c9aada0736623db264237e">points</a>+npoints*nv),ndims);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      (ctxt-&gt;<a class="code" href="a00152.html#ab991f69858c9aada0736623db264237e">points</a>+npoints*nv)[ndims] = p;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      npoints++;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="a00165.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">/* get the eigenvalues and left,right eigenvectors */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <a class="code" href="a00161.html#a115efdce970884e30c6564701f929092">_Euler1DEigenvalues_</a>      (u,D,param,0);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <a class="code" href="a00161.html#a413fd3cab5a06c9d7a38334768d81b0f">_Euler1DLeftEigenvectors_</a> (u,L,param,0);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="a00161.html#a4449638968eca76bb5631bc75b7dced7">_Euler1DRightEigenvectors_</a>(u,R,param,0);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordtype">int</span> aupw = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw), k;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  k = 0; D[k] = 0.0; <span class="comment">/* remove the entropy eigenmode */</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  k = 4; D[k] = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  k = 8; D[k] = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <a class="code" href="a00157.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(3,DL,D,L);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <a class="code" href="a00157.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(3,Jac,R,DL);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
-<div class="ttc" id="a00319_html_ab37022ee06f6873c94049e55a0890fe1"><div class="ttname"><a href="a00319.html#ab37022ee06f6873c94049e55a0890fe1">Euler1DJacobian</a></div><div class="ttdeci">int Euler1DJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00319_source.html#l00013">Euler1DJacobian.c:13</a></div></div>
-<div class="ttc" id="a00161_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00058">euler1d.h:58</a></div></div>
-<div class="ttc" id="a00157_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00015">mathfunctions.h:15</a></div></div>
-<div class="ttc" id="a00319_html_a635a7e46a7898c4de6b7a47b1d68c969"><div class="ttname"><a href="a00319.html#a635a7e46a7898c4de6b7a47b1d68c969">Euler1DStiffJacobian</a></div><div class="ttdeci">int Euler1DStiffJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00319_source.html#l00048">Euler1DJacobian.c:48</a></div></div>
-<div class="ttc" id="a00161_html"><div class="ttname"><a href="a00161.html">euler1d.h</a></div><div class="ttdoc">1D Euler Equations (inviscid, compressible flows) </div></div>
-<div class="ttc" id="a00157_html_ad08720847b0aef444876b608b7af9a5c"><div class="ttname"><a href="a00157.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a></div><div class="ttdeci">#define MatMult3(N, A, X, Y)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00089">mathfunctions.h:89</a></div></div>
-<div class="ttc" id="a00157_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00019">mathfunctions.h:19</a></div></div>
-<div class="ttc" id="a00161_html_a413fd3cab5a06c9d7a38334768d81b0f"><div class="ttname"><a href="a00161.html#a413fd3cab5a06c9d7a38334768d81b0f">_Euler1DLeftEigenvectors_</a></div><div class="ttdeci">#define _Euler1DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00225">euler1d.h:225</a></div></div>
-<div class="ttc" id="a00157_html"><div class="ttname"><a href="a00157.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00161_html_a115efdce970884e30c6564701f929092"><div class="ttname"><a href="a00161.html#a115efdce970884e30c6564701f929092">_Euler1DEigenvalues_</a></div><div class="ttdeci">#define _Euler1DEigenvalues_(u, D, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00207">euler1d.h:207</a></div></div>
-<div class="ttc" id="a00157_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00033">mathfunctions.h:33</a></div></div>
-<div class="ttc" id="a00161_html_a4449638968eca76bb5631bc75b7dced7"><div class="ttname"><a href="a00161.html#a4449638968eca76bb5631bc75b7dced7">_Euler1DRightEigenvectors_</a></div><div class="ttdeci">#define _Euler1DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00249">euler1d.h:249</a></div></div>
-<div class="ttc" id="a00119_html"><div class="ttname"><a href="a00119.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00273">euler1d.h:273</a></div></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">if</span> (npoints != ctxt-&gt;<a class="code" href="a00152.html#a515ec0fe2abce5449e37ae520974cf5f">npoints</a>) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in PetscCreatePointList() on rank %d: Inconsistency in point count - %d, %d.\n&quot;</span>,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            mpi-&gt;rank, ctxt-&gt;<a class="code" href="a00152.html#a515ec0fe2abce5449e37ae520974cf5f">npoints</a>, npoints);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordtype">int</span> global_npoints;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="a00181.html#a25c7df0ff2e4f81a64368ea72894a4f8">MPISum_integer</a>(&amp;global_npoints,&amp;npoints,1,&amp;mpi-&gt;world);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">if</span> (!mpi-&gt;rank) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    printf(<span class="stringliteral">&quot;PETSc: total number of computational points is %d.\n&quot;</span>,global_npoints);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00144_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00035">hypar.h:35</a></div></div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00165_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00165.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00318">arrayfunctions.h:318</a></div></div>
+<div class="ttc" id="a00165_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00165.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00168">arrayfunctions.h:168</a></div></div>
+<div class="ttc" id="a00165_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00165.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00125">arrayfunctions.h:125</a></div></div>
+<div class="ttc" id="a00319_html_a1bb8435ce56995de809e6d1bf932e466"><div class="ttname"><a href="a00319.html#a1bb8435ce56995de809e6d1bf932e466">PetscCreatePointList</a></div><div class="ttdeci">int PetscCreatePointList(void *obj)</div><div class="ttdef"><b>Definition:</b> <a href="a00319_source.html#l00023">PetscCreatePointList.c:23</a></div></div>
+<div class="ttc" id="a00144_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00144.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00181_html"><div class="ttname"><a href="a00181.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="ttc" id="a00152_html_a00562"><div class="ttname"><a href="a00152.html#a00562">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00035">petscinterface.h:35</a></div></div>
+<div class="ttc" id="a00152_html"><div class="ttname"><a href="a00152.html">petscinterface.h</a></div><div class="ttdoc">Contains variables and function definitions for time integration with PETSc (http://www.mcs.anl.gov/petsc/) </div></div>
+<div class="ttc" id="a00152_html_ade1bc5cad8c6735a891a28f637cbfb06"><div class="ttname"><a href="a00152.html#ade1bc5cad8c6735a891a28f637cbfb06">PETScContext::solver</a></div><div class="ttdeci">void * solver</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00037">petscinterface.h:37</a></div></div>
+<div class="ttc" id="a00152_html_abaa15763a88d05dc68ff230ce570eee9"><div class="ttname"><a href="a00152.html#abaa15763a88d05dc68ff230ce570eee9">PETScContext::mpi</a></div><div class="ttdeci">void * mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00039">petscinterface.h:39</a></div></div>
+<div class="ttc" id="a00152_html_ab991f69858c9aada0736623db264237e"><div class="ttname"><a href="a00152.html#ab991f69858c9aada0736623db264237e">PETScContext::points</a></div><div class="ttdeci">int * points</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00056">petscinterface.h:56</a></div></div>
+<div class="ttc" id="a00172_html"><div class="ttname"><a href="a00172.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00144_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00044">hypar.h:44</a></div></div>
+<div class="ttc" id="a00165_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00165.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00039">arrayfunctions.h:39</a></div></div>
+<div class="ttc" id="a00165_html"><div class="ttname"><a href="a00165.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00146_html_a00559"><div class="ttname"><a href="a00146.html#a00559">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00152_html_a515ec0fe2abce5449e37ae520974cf5f"><div class="ttname"><a href="a00152.html#a515ec0fe2abce5449e37ae520974cf5f">PETScContext::npoints</a></div><div class="ttdeci">int npoints</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00051">petscinterface.h:51</a></div></div>
+<div class="ttc" id="a00181_html_a25c7df0ff2e4f81a64368ea72894a4f8"><div class="ttname"><a href="a00181.html#a25c7df0ff2e4f81a64368ea72894a4f8">MPISum_integer</a></div><div class="ttdeci">int MPISum_integer(int *, int *, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00314_source.html#l00016">MPISum.c:16</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

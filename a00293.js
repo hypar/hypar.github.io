@@ -1,5 +1,4 @@
 var a00293 =
 [
-    [ "ApplyPeriodicity", "a00293.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e", null ],
-    [ "PetscGlobalDOF", "a00293.html#a15c41ba7e2d10e4803226f42708a6ef8", null ]
+    [ "fillGhostCells", "a00293.html#a0495098f3dc0ec9d7cd78f9f7d0eaa37", null ]
 ];

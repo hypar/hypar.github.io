@@ -1,4 +1,5 @@
 var a00466 =
 [
-    [ "ExactSolution", "a00466.html#aef6e3464d167cab9e23a9eacb8f62882", null ]
+    [ "ShallowWater2DLeftEigenvectors", "a00466.html#aedb92b59af4004f2a2905d741bffd00a", null ],
+    [ "ShallowWater2DRightEigenvectors", "a00466.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
 ];

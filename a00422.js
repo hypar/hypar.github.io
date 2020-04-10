@@ -1,5 +1,4 @@
 var a00422 =
 [
-    [ "Numa3DRusanovFlux", "a00422.html#adee29df467d83a11708cc55884ddfce8", null ],
-    [ "Numa3DRusanovLinearFlux", "a00422.html#aa3a3b4411941091b8333256e032dea99", null ]
+    [ "NavierStokes3DComputeCFL", "a00422.html#ae98f605de061bde1006de5e37e7745bb", null ]
 ];

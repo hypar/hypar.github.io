@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/LinearADR/LinearADRAdvectionField.c Source File</title>
+<title>HyPar: src/PhysicalModels/FPPowerSystem/FPPowerSystemCleanup.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,173 +114,18 @@ $(document).ready(function(){initNavTree('a00370_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LinearADRAdvectionField.c</div>  </div>
+<div class="title">FPPowerSystemCleanup.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00370.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00146.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00154.html">io.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00127.html">physicalmodels/linearadr.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00153.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00159.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="a00375.html#ad09df1a01eac02309070e133675eb17d">   18</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00370.html#af07a821484972247dc80c0a17ee76f85">LinearADRAdvectionField</a>(</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                            <span class="keywordtype">void</span> *s, </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                            <span class="keywordtype">void</span> *m  </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                           )</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00126.html">HyPar</a>         *solver = (<a class="code" href="a00126.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00128.html#a00521">MPIVariables</a>  *mpi    = (<a class="code" href="a00128.html#a00521">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00127.html#a00520">LinearADR</a>     *param  = (<a class="code" href="a00127.html#a00520">LinearADR</a>*) solver-&gt;<a class="code" href="a00126.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">double</span>        *adv    = param-&gt;<a class="code" href="a00127.html#a1c93565457c6d07aa9691346f0086e14">a</a>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="comment">/* sanity checks */</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  if (param-&gt;<a class="code" href="a00127.html#a857e5fcb8a5cb035175f21e4dc3de26f">constant_advection</a> == 1) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in LinearADRAdvectionField(): param-&gt;constant_advection == 1!\n&quot;</span>);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">if</span> (!strcmp(param-&gt;<a class="code" href="a00127.html#a143c0b09170c16ca8af49f337e5f672d">adv_filename</a>,<span class="stringliteral">&quot;none&quot;</span>)) {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in LinearADRAdvectionField(): param-&gt;adv_filename is \&quot;none\&quot;!\n&quot;</span>);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">int</span> d, done, flag;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordtype">int</span> *dim = solver-&gt;<a class="code" href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">int</span> ghosts = solver-&gt;<a class="code" href="a00126.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="comment">/* number of advection field components at a grid point is</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">   * number of spatial dimensions times number of solution </span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">   * components */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">int</span> adv_nvar = solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a> * solver-&gt;<a class="code" href="a00126.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">if</span> (param-&gt;<a class="code" href="a00127.html#a6faf530242605d8f7a3dd4b2bf46693d">adv_arr_size</a> != adv_nvar*solver-&gt;<a class="code" href="a00126.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in LinearADRAdvectionField(): Incorrect adv_arr_size\n&quot;</span>);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="comment">/* read spatially-varying advection field from provided file */</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="a00147.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00154.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a>( solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                  adv_nvar,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                  solver-&gt;<a class="code" href="a00126.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                  solver-&gt;<a class="code" href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                  solver-&gt;<a class="code" href="a00126.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                  solver,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                  mpi,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                  NULL,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                  adv,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                  param-&gt;<a class="code" href="a00127.html#a143c0b09170c16ca8af49f337e5f672d">adv_filename</a>,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                  &amp;flag);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordflow">if</span> (!flag) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">/* if advection file not available, set it to zero */</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(adv,solver-&gt;<a class="code" href="a00126.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>*adv_nvar,0.0);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="comment">/* if parallel, exchange MPI-boundary ghost point data */</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <a class="code" href="a00147.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00159.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>( solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                                adv_nvar,</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                                solver-&gt;<a class="code" href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                                solver-&gt;<a class="code" href="a00126.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                                mpi,</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                                adv );</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="comment">/* Along each dimension:</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">     - If boundaries are periodic, then set ghost points accordingly if</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">       number of MPI ranks along that dimension is 1 (if more than 1, </span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">       MPIExchangeBoundariesnD() called above has taken care of it).</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">     - Else, extrapolate at the boundaries. */</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">int</span> indexb[solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>], </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      indexi[solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>], </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      bounds[solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>], </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      offset[solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>];</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00126.html#a40e3f67b1530d5ea4e913fc60b594802">isPeriodic</a>[d] &amp;&amp; (mpi-&gt;<a class="code" href="a00128.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[d] == 1)) {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>); bounds[d] = ghosts;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      <span class="comment">/* left boundary */</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      done = 0; <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,0);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,0); offset[d] = -ghosts;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>); indexi[d] = indexb[d] + dim[d] - ghosts;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordtype">int</span> p1; <a class="code" href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,dim,indexb,offset,ghosts,p1);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordtype">int</span> p2; <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,dim,indexi,ghosts,p2);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>((adv+p2*adv_nvar), (adv+p1*adv_nvar), adv_nvar);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,bounds,indexb,done);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="comment">/* right boundary */</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      done = 0; <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,0);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,0); offset[d] = dim[d];</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordtype">int</span> p1; <a class="code" href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,dim,indexb,offset,ghosts,p1);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordtype">int</span> p2; <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,dim,indexi,ghosts,p2);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>((adv+p2*adv_nvar), (adv+p1*adv_nvar), adv_nvar);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,bounds,indexb,done);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      <span class="comment">/* left boundary */</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00128.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[d]) {</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>); bounds[d] = ghosts;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,0); offset[d] = -ghosts;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        done = 0; <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,0);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;          <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>); indexi[d] = ghosts-1-indexb[d];</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;          <span class="keywordtype">int</span> p1; <a class="code" href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,dim,indexb,offset,ghosts,p1);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;          <span class="keywordtype">int</span> p2; <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,dim,indexi,ghosts,p2);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;          <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>((adv+p2*adv_nvar), (adv+p1*adv_nvar), adv_nvar);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;          <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,bounds,indexb,done);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      <span class="comment">/* right boundary */</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00128.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[d] == mpi-&gt;<a class="code" href="a00128.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[d]-1) {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>); bounds[d] = ghosts;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,0); offset[d] = dim[d];</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        done = 0; <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,0);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;          <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>); indexi[d] = dim[d]-1-indexb[d];</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;          <span class="keywordtype">int</span> p1; <a class="code" href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,dim,indexb,offset,ghosts,p1);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;          <span class="keywordtype">int</span> p2; <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>  (solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,dim,indexi,ghosts,p2);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;          <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>((adv+p2*adv_nvar), (adv+p1*adv_nvar), adv_nvar);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;          <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,bounds,indexb,done);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        }</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      }</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;}</div>
-<div class="ttc" id="a00127_html_a1c93565457c6d07aa9691346f0086e14"><div class="ttname"><a href="a00127.html#a1c93565457c6d07aa9691346f0086e14">LinearADR::a</a></div><div class="ttdeci">double * a</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00050">linearadr.h:50</a></div></div>
-<div class="ttc" id="a00127_html"><div class="ttname"><a href="a00127.html">linearadr.h</a></div><div class="ttdoc">Linear Advection-Diffusion-Reaction model. </div></div>
-<div class="ttc" id="a00146_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00168">arrayfunctions.h:168</a></div></div>
-<div class="ttc" id="a00159_html"><div class="ttname"><a href="a00159.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
-<div class="ttc" id="a00126_html_aa989ebb755986852177779cdf7bd8c85"><div class="ttname"><a href="a00126.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a></div><div class="ttdeci">int * dim_global</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00032">hypar.h:32</a></div></div>
-<div class="ttc" id="a00126_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00035">hypar.h:35</a></div></div>
-<div class="ttc" id="a00146_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00125">arrayfunctions.h:125</a></div></div>
-<div class="ttc" id="a00146_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00126_html"><div class="ttname"><a href="a00126.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00128_html_aa3c28612a64b8a97bde66b720e15c700"><div class="ttname"><a href="a00128.html#aa3c28612a64b8a97bde66b720e15c700">MPIVariables::ip</a></div><div class="ttdeci">int * ip</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00028">mpivars_struct.h:28</a></div></div>
-<div class="ttc" id="a00147_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00147.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00147_source.html#l00012">basic.h:12</a></div></div>
-<div class="ttc" id="a00127_html_a00520"><div class="ttname"><a href="a00127.html#a00520">LinearADR</a></div><div class="ttdoc">Structure containing variables and parameters specific to the linear advection-diffusion-reaction mod...</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00037">linearadr.h:37</a></div></div>
-<div class="ttc" id="a00159_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00159.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00272_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
-<div class="ttc" id="a00146_html"><div class="ttname"><a href="a00146.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00126_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00126.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00154_html_afaf5b0d6e79b1e8674b397aebcb219dc"><div class="ttname"><a href="a00154.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a></div><div class="ttdeci">int ReadArray(int, int, int *, int *, int, void *, void *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00256_source.html#l00025">ReadArray.c:25</a></div></div>
-<div class="ttc" id="a00146_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00082">arrayfunctions.h:82</a></div></div>
-<div class="ttc" id="a00127_html_a857e5fcb8a5cb035175f21e4dc3de26f"><div class="ttname"><a href="a00127.html#a857e5fcb8a5cb035175f21e4dc3de26f">LinearADR::constant_advection</a></div><div class="ttdeci">int constant_advection</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00040">linearadr.h:40</a></div></div>
-<div class="ttc" id="a00154_html"><div class="ttname"><a href="a00154.html">io.h</a></div><div class="ttdoc">Function declarations for file I/O functions. </div></div>
-<div class="ttc" id="a00126_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00126.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00044">hypar.h:44</a></div></div>
-<div class="ttc" id="a00126_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00126.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00245">hypar.h:245</a></div></div>
-<div class="ttc" id="a00370_html_af07a821484972247dc80c0a17ee76f85"><div class="ttname"><a href="a00370.html#af07a821484972247dc80c0a17ee76f85">LinearADRAdvectionField</a></div><div class="ttdeci">int LinearADRAdvectionField(void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00370_source.html#l00018">LinearADRAdvectionField.c:18</a></div></div>
-<div class="ttc" id="a00128_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00128.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00027">mpivars_struct.h:27</a></div></div>
-<div class="ttc" id="a00146_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00128_html_a00521"><div class="ttname"><a href="a00128.html#a00521">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00126_html_a40e3f67b1530d5ea4e913fc60b594802"><div class="ttname"><a href="a00126.html#a40e3f67b1530d5ea4e913fc60b594802">HyPar::isPeriodic</a></div><div class="ttdeci">int * isPeriodic</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00146">hypar.h:146</a></div></div>
-<div class="ttc" id="a00126_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00126.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00040">hypar.h:40</a></div></div>
-<div class="ttc" id="a00153_html"><div class="ttname"><a href="a00153.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00127_html_a6faf530242605d8f7a3dd4b2bf46693d"><div class="ttname"><a href="a00127.html#a6faf530242605d8f7a3dd4b2bf46693d">LinearADR::adv_arr_size</a></div><div class="ttdeci">int adv_arr_size</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00047">linearadr.h:47</a></div></div>
-<div class="ttc" id="a00126_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00126.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00127_html_a143c0b09170c16ca8af49f337e5f672d"><div class="ttname"><a href="a00127.html#a143c0b09170c16ca8af49f337e5f672d">LinearADR::adv_filename</a></div><div class="ttdeci">char adv_filename[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00127_source.html#l00043">linearadr.h:43</a></div></div>
+<a href="a00370.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00141.html">physicalmodels/fppowersystem.h</a>&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
+<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="a00370.html#ac5558f0ce41893640fb0d0d9c30c9dfb">    4</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00370.html#ac5558f0ce41893640fb0d0d9c30c9dfb">FPPowerSystemCleanup</a>(<span class="keywordtype">void</span> *s)</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;}</div>
+<div class="ttc" id="a00141_html"><div class="ttname"><a href="a00141.html">fppowersystem.h</a></div></div>
+<div class="ttc" id="a00370_html_ac5558f0ce41893640fb0d0d9c30c9dfb"><div class="ttname"><a href="a00370.html#ac5558f0ce41893640fb0d0d9c30c9dfb">FPPowerSystemCleanup</a></div><div class="ttdeci">int FPPowerSystemCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00370_source.html#l00004">FPPowerSystemCleanup.c:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

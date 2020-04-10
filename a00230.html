@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/InterpolationFunctions/CompactSchemeCleanup.c File Reference</title>
+<title>HyPar: src/HyParFunctions/CalculateError.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -116,72 +116,272 @@ $(document).ready(function(){initNavTree('a00230.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CompactSchemeCleanup.c File Reference</div>  </div>
+<div class="title">CalculateError.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Cleans up allocations specific to compact finite-difference methods.  
+<p>Computes the error in the solution.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00116_source.html">interpolation.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00159_source.html">mpivars.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00153_source.html">hypar.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00166_source.html">basic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00168_source.html">common.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00165_source.html">arrayfunctions.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00194_source.html">timeintegration.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00181_source.html">mpivars.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00172_source.html">hypar.h</a>&gt;</code><br />
 </div>
 <p><a href="a00230_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a528af16d6f4744046af63cb2d5520437"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a528af16d6f4744046af63cb2d5520437">CompactSchemeCleanup</a> (void *s)</td></tr>
-<tr class="separator:a528af16d6f4744046af63cb2d5520437"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef6e3464d167cab9e23a9eacb8f62882"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#aef6e3464d167cab9e23a9eacb8f62882">ExactSolution</a> (void *, void *, double *, char *, int *)</td></tr>
+<tr class="separator:aef6e3464d167cab9e23a9eacb8f62882"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52e8c83d9dad55f9a6b967e63dc5f4bc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a52e8c83d9dad55f9a6b967e63dc5f4bc">CalculateError</a> (void *s, void *m)</td></tr>
+<tr class="separator:a52e8c83d9dad55f9a6b967e63dc5f4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Cleans up allocations specific to compact finite-difference methods. </p>
+<div class="textblock"><p>Computes the error in the solution. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00230_source.html">CompactSchemeCleanup.c</a>.</p>
+<p>Definition in file <a class="el" href="a00230_source.html">CalculateError.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a528af16d6f4744046af63cb2d5520437"></a>
+<a class="anchor" id="aef6e3464d167cab9e23a9eacb8f62882"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int CompactSchemeCleanup </td>
+          <td class="memname">int ExactSolution </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>uex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>flag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cleans up all allocations related to the compact finite difference methods. </p>
+<p>Read in the exact solution, if available. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td><a class="el" href="a00116.html#a00508" title="Structure of variables/parameters needed by the compact schemes. ">CompactScheme</a> object of type <a class="el" href="a00116.html#a00508" title="Structure of variables/parameters needed by the compact schemes. ">CompactScheme</a> </td></tr>
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00144.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00146.html#a00559" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
+    <tr><td class="paramname">uex</td><td>Array to hold the exact solution, if available </td></tr>
+    <tr><td class="paramname">fname</td><td>Filename root from which to read exact solution </td></tr>
+    <tr><td class="paramname">flag</td><td>Flag to indicate if exact solution was available </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00230_source.html#l00014">14</a> of file <a class="el" href="a00230_source.html">CompactSchemeCleanup.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <a class="code" href="a00116.html#a00508">CompactScheme</a> *compact   = (<a class="code" href="a00116.html#a00508">CompactScheme</a>*) s;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>) free(compact-&gt;<a class="code" href="a00116.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#ad36954709307649365515214a02ab06d">B</a>) free(compact-&gt;<a class="code" href="a00116.html#ad36954709307649365515214a02ab06d">B</a>);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a>) free(compact-&gt;<a class="code" href="a00116.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a>);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#ac06de847603f5cfaec085f6fe500f3c8">R</a>) free(compact-&gt;<a class="code" href="a00116.html#ac06de847603f5cfaec085f6fe500f3c8">R</a>);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#aba3b15034da676474db917f9f5533085">sendbuf</a>) free(compact-&gt;<a class="code" href="a00116.html#aba3b15034da676474db917f9f5533085">sendbuf</a>);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">if</span> (compact-&gt;<a class="code" href="a00116.html#afc23e46e08649e112e8d64d780cea5cb">recvbuf</a>) free(compact-&gt;<a class="code" href="a00116.html#afc23e46e08649e112e8d64d780cea5cb">recvbuf</a>);</div>
+<p>Definition at line <a class="el" href="a00232_source.html#l00016">16</a> of file <a class="el" href="a00232_source.html">ExactSolution.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00144.html">HyPar</a>  *solver = (<a class="code" href="a00144.html">HyPar</a>*) s;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
-<div class="ttc" id="a00116_html_afc23e46e08649e112e8d64d780cea5cb"><div class="ttname"><a href="a00116.html#afc23e46e08649e112e8d64d780cea5cb">CompactScheme::recvbuf</a></div><div class="ttdeci">double * recvbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00444">interpolation.h:444</a></div></div>
-<div class="ttc" id="a00116_html_ac900805a486cbb8489e3c176ed6e0d8e"><div class="ttname"><a href="a00116.html#ac900805a486cbb8489e3c176ed6e0d8e">CompactScheme::A</a></div><div class="ttdeci">double * A</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00439">interpolation.h:439</a></div></div>
-<div class="ttc" id="a00116_html_ac06de847603f5cfaec085f6fe500f3c8"><div class="ttname"><a href="a00116.html#ac06de847603f5cfaec085f6fe500f3c8">CompactScheme::R</a></div><div class="ttdeci">double * R</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00439">interpolation.h:439</a></div></div>
-<div class="ttc" id="a00116_html_a00508"><div class="ttname"><a href="a00116.html#a00508">CompactScheme</a></div><div class="ttdoc">Structure of variables/parameters needed by the compact schemes. </div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00437">interpolation.h:437</a></div></div>
-<div class="ttc" id="a00116_html_aba3b15034da676474db917f9f5533085"><div class="ttname"><a href="a00116.html#aba3b15034da676474db917f9f5533085">CompactScheme::sendbuf</a></div><div class="ttdeci">double * sendbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00444">interpolation.h:444</a></div></div>
-<div class="ttc" id="a00116_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00116.html#ad36954709307649365515214a02ab06d">CompactScheme::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00439">interpolation.h:439</a></div></div>
-<div class="ttc" id="a00116_html_a0a26ce8d1878aac6ddc87e3f6290e039"><div class="ttname"><a href="a00116.html#a0a26ce8d1878aac6ddc87e3f6290e039">CompactScheme::C</a></div><div class="ttdeci">double * C</div><div class="ttdef"><b>Definition:</b> <a href="a00116_source.html#l00439">interpolation.h:439</a></div></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <a class="code" href="a00173.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a>(  solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;              solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;              solver-&gt;<a class="code" href="a00144.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>,</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;              solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;              solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;              solver,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;              m,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;              NULL,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;              uex,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;              fname,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;              flag);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="ttc" id="a00144_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00035">hypar.h:35</a></div></div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00144_html_aa989ebb755986852177779cdf7bd8c85"><div class="ttname"><a href="a00144.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a></div><div class="ttdeci">int * dim_global</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00032">hypar.h:32</a></div></div>
+<div class="ttc" id="a00144_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00144_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00144.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00173_html_afaf5b0d6e79b1e8674b397aebcb219dc"><div class="ttname"><a href="a00173.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a></div><div class="ttdeci">int ReadArray(int, int, int *, int *, int, void *, void *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00281_source.html#l00025">ReadArray.c:25</a></div></div>
+<div class="ttc" id="a00144_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00044">hypar.h:44</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a52e8c83d9dad55f9a6b967e63dc5f4bc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CalculateError </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>m</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculates the error in the solution if the exact solution is available. If the exact solution is not available, the errors are reported as zero. The exact solution should be provided in the file "exact.inp" in the same format as the initial solution. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00144.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00146.html#a00559" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="a00230_source.html#l00025">25</a> of file <a class="el" href="a00230_source.html">CalculateError.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00144.html">HyPar</a>         *solver     = (<a class="code" href="a00144.html">HyPar</a>*)        s;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <a class="code" href="a00146.html#a00559">MPIVariables</a>  *mpi        = (<a class="code" href="a00146.html#a00559">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span>           exact_flag  = 0, i, size;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">double</span>        <a class="code" href="a00542.html#aca1295e3cf52d990f4cd1d5872f1385a">sum</a>         = 0, global_sum = 0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">double</span>        *uex        = NULL;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00166.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  size = solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">for</span> (i = 0; i &lt; solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; i++) </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    size *= (solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[i]+2*solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  uex = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">char</span> fname_root[<a class="code" href="a00166.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>] = <span class="stringliteral">&quot;exact&quot;</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00144.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a> &gt; 1) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">char</span> index[<a class="code" href="a00166.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="a00168.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a>(solver-&gt;<a class="code" href="a00144.html#a34488172a8ec6e0aaa03cbea46092d3a">my_idx</a>, index, (<span class="keywordtype">int</span>)log10(solver-&gt;<a class="code" href="a00144.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>)+1);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    strcat(fname_root, <span class="stringliteral">&quot;_&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    strcat(fname_root, index);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">double</span> tolerance = 1e-15;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <a class="code" href="a00166.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00230.html#aef6e3464d167cab9e23a9eacb8f62882">ExactSolution</a>( solver,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                      mpi,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                      uex,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                      fname_root,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                      &amp;exact_flag ); <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">if</span> (!exact_flag) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">/* No exact solution */</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="a00166.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00194.html#aacd05babc2fa0650f3047f955c38319c">TimeError</a>(solver,mpi,NULL); <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[0] = solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[1] = solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[2] = -1;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="a00166.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00194.html#aacd05babc2fa0650f3047f955c38319c">TimeError</a>(solver,mpi,uex); <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="comment">/* calculate solution norms (for relative error) */</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">double</span> solution_norm[3] = {0.0,0.0,0.0};</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">/* L1 */</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    sum = <a class="code" href="a00165.html#a60a3d838d95d860a21de20936f7bb910">ArraySumAbsnD</a>   (solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                           solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,solver-&gt;<a class="code" href="a00144.html#a95e9e0f8a692321b83a2e0ce2789c485">index</a>,uex);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    global_sum = 0; <a class="code" href="a00181.html#abd61f932b070ee84262d9d98b6dd854f">MPISum_double</a>(&amp;global_sum,&amp;sum,1,&amp;mpi-&gt;<a class="code" href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    solution_norm[0] = global_sum/((double)solver-&gt;<a class="code" href="a00144.html#a4e67f54563a3c4ff005dfaf0130f957c">npoints_global</a>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">/* L2 */</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    sum = <a class="code" href="a00165.html#a8c279db0af78d8ff386cf1a023a405dd">ArraySumSquarenD</a>(solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                           solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,solver-&gt;<a class="code" href="a00144.html#a95e9e0f8a692321b83a2e0ce2789c485">index</a>,uex);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    global_sum = 0; <a class="code" href="a00181.html#abd61f932b070ee84262d9d98b6dd854f">MPISum_double</a>(&amp;global_sum,&amp;sum,1,&amp;mpi-&gt;<a class="code" href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    solution_norm[1] = sqrt(global_sum/((<span class="keywordtype">double</span>)solver-&gt;<a class="code" href="a00144.html#a4e67f54563a3c4ff005dfaf0130f957c">npoints_global</a>));</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment">/* Linf */</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    sum = <a class="code" href="a00165.html#ac20bd4916c6169956e5bf80777c6ab8f">ArrayMaxnD</a>      (solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                           solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,solver-&gt;<a class="code" href="a00144.html#a95e9e0f8a692321b83a2e0ce2789c485">index</a>,uex);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    global_sum = 0; <a class="code" href="a00181.html#a33aa37e0050ec72dadb8d63851df51ec">MPIMax_double</a>(&amp;global_sum,&amp;sum,1,&amp;mpi-&gt;<a class="code" href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    solution_norm[2] = global_sum;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">/* compute error = difference between exact and numerical solution */</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00144.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,-1.0,uex,size);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="comment">/* calculate L1 norm of error */</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    sum = <a class="code" href="a00165.html#a60a3d838d95d860a21de20936f7bb910">ArraySumAbsnD</a>   (solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                           solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,solver-&gt;<a class="code" href="a00144.html#a95e9e0f8a692321b83a2e0ce2789c485">index</a>,uex);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    global_sum = 0; <a class="code" href="a00181.html#abd61f932b070ee84262d9d98b6dd854f">MPISum_double</a>(&amp;global_sum,&amp;sum,1,&amp;mpi-&gt;<a class="code" href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[0] = global_sum/((double)solver-&gt;<a class="code" href="a00144.html#a4e67f54563a3c4ff005dfaf0130f957c">npoints_global</a>);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">/* calculate L2 norm of error */</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    sum = <a class="code" href="a00165.html#a8c279db0af78d8ff386cf1a023a405dd">ArraySumSquarenD</a>(solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                           solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,solver-&gt;<a class="code" href="a00144.html#a95e9e0f8a692321b83a2e0ce2789c485">index</a>,uex);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    global_sum = 0; <a class="code" href="a00181.html#abd61f932b070ee84262d9d98b6dd854f">MPISum_double</a>(&amp;global_sum,&amp;sum,1,&amp;mpi-&gt;<a class="code" href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[1] = sqrt(global_sum/((<span class="keywordtype">double</span>)solver-&gt;<a class="code" href="a00144.html#a4e67f54563a3c4ff005dfaf0130f957c">npoints_global</a>));</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="comment">/* calculate Linf norm of error */</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    sum = <a class="code" href="a00165.html#ac20bd4916c6169956e5bf80777c6ab8f">ArrayMaxnD</a>      (solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                           solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,solver-&gt;<a class="code" href="a00144.html#a95e9e0f8a692321b83a2e0ce2789c485">index</a>,uex);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    global_sum = 0; <a class="code" href="a00181.html#a33aa37e0050ec72dadb8d63851df51ec">MPIMax_double</a>(&amp;global_sum,&amp;sum,1,&amp;mpi-&gt;<a class="code" href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[2] = global_sum;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="comment">/* </span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">      decide whether to normalize and report relative errors, </span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">      or report absolute errors.</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">if</span> (    (solution_norm[0] &gt; tolerance) </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        &amp;&amp;  (solution_norm[1] &gt; tolerance) </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        &amp;&amp;  (solution_norm[2] &gt; tolerance) ) {</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[0] /= solution_norm[0];</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[1] /= solution_norm[1];</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      solver-&gt;<a class="code" href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[2] /= solution_norm[2];</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  free(uex);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
+<div class="ttc" id="a00194_html_aacd05babc2fa0650f3047f955c38319c"><div class="ttname"><a href="a00194.html#aacd05babc2fa0650f3047f955c38319c">TimeError</a></div><div class="ttdeci">int TimeError(void *, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00520_source.html#l00027">TimeError.c:27</a></div></div>
+<div class="ttc" id="a00165_html_ac20bd4916c6169956e5bf80777c6ab8f"><div class="ttname"><a href="a00165.html#ac20bd4916c6169956e5bf80777c6ab8f">ArrayMaxnD</a></div><div class="ttdeci">INLINE double ArrayMaxnD(int, int, int *, int, int *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00439">arrayfunctions.h:439</a></div></div>
+<div class="ttc" id="a00168_html_a3e3ad5aed581d9ae563190c365dadc41"><div class="ttname"><a href="a00168.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a></div><div class="ttdeci">void GetStringFromInteger(int, char *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00222_source.html#l00015">CommonFunctions.c:15</a></div></div>
+<div class="ttc" id="a00144_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00035">hypar.h:35</a></div></div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00542_html_aca1295e3cf52d990f4cd1d5872f1385a"><div class="ttname"><a href="a00542.html#aca1295e3cf52d990f4cd1d5872f1385a">StdVecOps::sum</a></div><div class="ttdeci">long sum(const std::vector&lt; int &gt; &amp;a_iv)</div><div class="ttdef"><b>Definition:</b> <a href="a00193_source.html#l00018">std_vec_ops.h:18</a></div></div>
+<div class="ttc" id="a00181_html_a33aa37e0050ec72dadb8d63851df51ec"><div class="ttname"><a href="a00181.html#a33aa37e0050ec72dadb8d63851df51ec">MPIMax_double</a></div><div class="ttdeci">int MPIMax_double(double *, double *, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00307_source.html#l00038">MPIMax.c:38</a></div></div>
+<div class="ttc" id="a00166_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00014">basic.h:14</a></div></div>
+<div class="ttc" id="a00144_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00165_html_a8c279db0af78d8ff386cf1a023a405dd"><div class="ttname"><a href="a00165.html#a8c279db0af78d8ff386cf1a023a405dd">ArraySumSquarenD</a></div><div class="ttdeci">INLINE double ArraySumSquarenD(int, int, int *, int, int *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00482">arrayfunctions.h:482</a></div></div>
+<div class="ttc" id="a00144_html_a95e9e0f8a692321b83a2e0ce2789c485"><div class="ttname"><a href="a00144.html#a95e9e0f8a692321b83a2e0ce2789c485">HyPar::index</a></div><div class="ttdeci">int * index</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00086">hypar.h:86</a></div></div>
+<div class="ttc" id="a00165_html_a60a3d838d95d860a21de20936f7bb910"><div class="ttname"><a href="a00165.html#a60a3d838d95d860a21de20936f7bb910">ArraySumAbsnD</a></div><div class="ttdeci">INLINE double ArraySumAbsnD(int, int, int *, int, int *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00463">arrayfunctions.h:463</a></div></div>
+<div class="ttc" id="a00144_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00144.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00166_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00166.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00013">basic.h:13</a></div></div>
+<div class="ttc" id="a00144_html_a4e67f54563a3c4ff005dfaf0130f957c"><div class="ttname"><a href="a00144.html#a4e67f54563a3c4ff005dfaf0130f957c">HyPar::npoints_global</a></div><div class="ttdeci">int npoints_global</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00038">hypar.h:38</a></div></div>
+<div class="ttc" id="a00166_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00166.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00012">basic.h:12</a></div></div>
+<div class="ttc" id="a00144_html_a34488172a8ec6e0aaa03cbea46092d3a"><div class="ttname"><a href="a00144.html#a34488172a8ec6e0aaa03cbea46092d3a">HyPar::my_idx</a></div><div class="ttdeci">int my_idx</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00053">hypar.h:53</a></div></div>
+<div class="ttc" id="a00166_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00166.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00010">basic.h:10</a></div></div>
+<div class="ttc" id="a00146_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00037">mpivars_struct.h:37</a></div></div>
+<div class="ttc" id="a00181_html_abd61f932b070ee84262d9d98b6dd854f"><div class="ttname"><a href="a00181.html#abd61f932b070ee84262d9d98b6dd854f">MPISum_double</a></div><div class="ttdeci">int MPISum_double(double *, double *, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00314_source.html#l00039">MPISum.c:39</a></div></div>
+<div class="ttc" id="a00144_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00144.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00100">hypar.h:100</a></div></div>
+<div class="ttc" id="a00144_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00044">hypar.h:44</a></div></div>
+<div class="ttc" id="a00230_html_aef6e3464d167cab9e23a9eacb8f62882"><div class="ttname"><a href="a00230.html#aef6e3464d167cab9e23a9eacb8f62882">ExactSolution</a></div><div class="ttdeci">int ExactSolution(void *, void *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00232_source.html#l00016">ExactSolution.c:16</a></div></div>
+<div class="ttc" id="a00144_html_aa40f27cb2afa2db0f0468962be8b3679"><div class="ttname"><a href="a00144.html#aa40f27cb2afa2db0f0468962be8b3679">HyPar::error</a></div><div class="ttdeci">double error[3]</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00339">hypar.h:339</a></div></div>
+<div class="ttc" id="a00165_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00270">arrayfunctions.h:270</a></div></div>
+<div class="ttc" id="a00144_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00144.html#a9a0e87291e0e8b9c1445e5482e814c92">HyPar::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00056">hypar.h:56</a></div></div>
+<div class="ttc" id="a00146_html_a00559"><div class="ttname"><a href="a00146.html#a00559">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00024">mpivars_struct.h:24</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

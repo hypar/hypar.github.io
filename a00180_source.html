@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/BoundaryConditions/BCCleanup.c Source File</title>
+<title>HyPar: include/matops.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,47 +114,101 @@ $(document).ready(function(){initNavTree('a00180_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BCCleanup.c</div>  </div>
+<div class="title">matops.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00180.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00148.html">boundaryconditions.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _MATOPS_H_</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _MATOPS_H_</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00180.html#ad9afaf7734844fb063337e4da2caf4df">   10</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00180.html#ad9afaf7734844fb063337e4da2caf4df">BCCleanup</a>(<span class="keywordtype">void</span> *b )</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <a class="code" href="a00117.html">DomainBoundary</a> *boundary = (<a class="code" href="a00117.html">DomainBoundary</a>*) b;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  free(boundary-&gt;<a class="code" href="a00117.html#a1e51e79041d5a3dddffb503277703568">xmin</a>);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  free(boundary-&gt;<a class="code" href="a00117.html#a7ea24a733beddff902459a07bf91ca67">xmax</a>);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  free(boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  free(boundary-&gt;<a class="code" href="a00117.html#a7602de5ebb1b59ec35217e78a35a531e">ie</a>);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a6aa65431c39a8d8177f35c338ddb7a0e">DirichletValue</a>) free(boundary-&gt;<a class="code" href="a00117.html#a6aa65431c39a8d8177f35c338ddb7a0e">DirichletValue</a>);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#af7eeb4ff3f7c8bc22e0786ddbe62f16d">SpongeValue</a>   ) free(boundary-&gt;<a class="code" href="a00117.html#af7eeb4ff3f7c8bc22e0786ddbe62f16d">SpongeValue</a>   );</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">FlowVelocity</a>  ) free(boundary-&gt;<a class="code" href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">FlowVelocity</a>  );</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="a00180.html#ac7d8b887f87e447fc24749ba3eea95e4">   15</a></span>&#160;<span class="preprocessor">#define _MatrixZero_(A,N) \</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">    int arraycounter; \</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">    for (arraycounter=0; arraycounter&lt;(N)*(N); arraycounter++) *((A)+arraycounter) = 0.0; \</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">  }</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#ac3b478217419275ad063182f69cb543d">UnsteadyDirichletSize</a>) free(boundary-&gt;<a class="code" href="a00117.html#ac3b478217419275ad063182f69cb543d">UnsteadyDirichletSize</a>);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a48f59fc59e6a86d0b4aad842daea9106">UnsteadyDirichletData</a>) free(boundary-&gt;<a class="code" href="a00117.html#a48f59fc59e6a86d0b4aad842daea9106">UnsteadyDirichletData</a>);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a6f46fcd429eeb105637c0e14d54d79e7">UnsteadyTemperatureSize</a>)  free(boundary-&gt;<a class="code" href="a00117.html#a6f46fcd429eeb105637c0e14d54d79e7">UnsteadyTemperatureSize</a>);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#af135619149474c2de735f5482e4d0a0e">UnsteadyTimeLevels</a>)       free(boundary-&gt;<a class="code" href="a00117.html#af135619149474c2de735f5482e4d0a0e">UnsteadyTimeLevels</a>);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a23dab9053d40cce5ba488290fb1b41c3">UnsteadyTemperatureData</a>)  free(boundary-&gt;<a class="code" href="a00117.html#a23dab9053d40cce5ba488290fb1b41c3">UnsteadyTemperatureData</a>);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="ttc" id="a00117_html_a7ea24a733beddff902459a07bf91ca67"><div class="ttname"><a href="a00117.html#a7ea24a733beddff902459a07bf91ca67">DomainBoundary::xmax</a></div><div class="ttdeci">double * xmax</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00079">boundaryconditions.h:79</a></div></div>
-<div class="ttc" id="a00180_html_ad9afaf7734844fb063337e4da2caf4df"><div class="ttname"><a href="a00180.html#ad9afaf7734844fb063337e4da2caf4df">BCCleanup</a></div><div class="ttdeci">int BCCleanup(void *b)</div><div class="ttdef"><b>Definition:</b> <a href="a00180_source.html#l00010">BCCleanup.c:10</a></div></div>
-<div class="ttc" id="a00117_html_a481013ba007a99a4237cde5eeb3c9a29"><div class="ttname"><a href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">DomainBoundary::is</a></div><div class="ttdeci">int * is</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00082">boundaryconditions.h:82</a></div></div>
-<div class="ttc" id="a00117_html_a7602de5ebb1b59ec35217e78a35a531e"><div class="ttname"><a href="a00117.html#a7602de5ebb1b59ec35217e78a35a531e">DomainBoundary::ie</a></div><div class="ttdeci">int * ie</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00082">boundaryconditions.h:82</a></div></div>
-<div class="ttc" id="a00117_html_ac3b478217419275ad063182f69cb543d"><div class="ttname"><a href="a00117.html#ac3b478217419275ad063182f69cb543d">DomainBoundary::UnsteadyDirichletSize</a></div><div class="ttdeci">int * UnsteadyDirichletSize</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00090">boundaryconditions.h:90</a></div></div>
-<div class="ttc" id="a00117_html_a6f46fcd429eeb105637c0e14d54d79e7"><div class="ttname"><a href="a00117.html#a6f46fcd429eeb105637c0e14d54d79e7">DomainBoundary::UnsteadyTemperatureSize</a></div><div class="ttdeci">int * UnsteadyTemperatureSize</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00102">boundaryconditions.h:102</a></div></div>
-<div class="ttc" id="a00117_html_af7eeb4ff3f7c8bc22e0786ddbe62f16d"><div class="ttname"><a href="a00117.html#af7eeb4ff3f7c8bc22e0786ddbe62f16d">DomainBoundary::SpongeValue</a></div><div class="ttdeci">double * SpongeValue</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00088">boundaryconditions.h:88</a></div></div>
-<div class="ttc" id="a00117_html"><div class="ttname"><a href="a00117.html">DomainBoundary</a></div><div class="ttdoc">Structure containing the variables and function pointers defining a boundary. </div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00068">boundaryconditions.h:68</a></div></div>
-<div class="ttc" id="a00117_html_af135619149474c2de735f5482e4d0a0e"><div class="ttname"><a href="a00117.html#af135619149474c2de735f5482e4d0a0e">DomainBoundary::UnsteadyTimeLevels</a></div><div class="ttdeci">double * UnsteadyTimeLevels</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00103">boundaryconditions.h:103</a></div></div>
-<div class="ttc" id="a00117_html_a48f59fc59e6a86d0b4aad842daea9106"><div class="ttname"><a href="a00117.html#a48f59fc59e6a86d0b4aad842daea9106">DomainBoundary::UnsteadyDirichletData</a></div><div class="ttdeci">double * UnsteadyDirichletData</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00091">boundaryconditions.h:91</a></div></div>
-<div class="ttc" id="a00117_html_a6aa65431c39a8d8177f35c338ddb7a0e"><div class="ttname"><a href="a00117.html#a6aa65431c39a8d8177f35c338ddb7a0e">DomainBoundary::DirichletValue</a></div><div class="ttdeci">double * DirichletValue</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00087">boundaryconditions.h:87</a></div></div>
-<div class="ttc" id="a00117_html_a0d0d92fab642e1d02a9de254e73a3f21"><div class="ttname"><a href="a00117.html#a0d0d92fab642e1d02a9de254e73a3f21">DomainBoundary::FlowVelocity</a></div><div class="ttdeci">double * FlowVelocity</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00096">boundaryconditions.h:96</a></div></div>
-<div class="ttc" id="a00117_html_a1e51e79041d5a3dddffb503277703568"><div class="ttname"><a href="a00117.html#a1e51e79041d5a3dddffb503277703568">DomainBoundary::xmin</a></div><div class="ttdeci">double * xmin</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00077">boundaryconditions.h:77</a></div></div>
-<div class="ttc" id="a00117_html_a23dab9053d40cce5ba488290fb1b41c3"><div class="ttname"><a href="a00117.html#a23dab9053d40cce5ba488290fb1b41c3">DomainBoundary::UnsteadyTemperatureData</a></div><div class="ttdeci">double * UnsteadyTemperatureData</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00104">boundaryconditions.h:104</a></div></div>
-<div class="ttc" id="a00148_html"><div class="ttname"><a href="a00148.html">boundaryconditions.h</a></div><div class="ttdoc">Containts the structures and definitions for boundary condition implementation. </div></div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="a00180.html#ab6aa501e79620e67e647017307e412f5">   25</a></span>&#160;<span class="preprocessor">#define _MatrixMultiply_(A,B,C,N) \</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">    int matopsi,matopsj,matopsk; \</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;(N); matopsi++) \</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">      for (matopsj=0; matopsj&lt;(N); matopsj++) { \</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">        *((C)+matopsi*(N)+matopsj) = 0; \</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">        for (matopsk=0; matopsk&lt;(N); matopsk++) *((C)+matopsi*(N)+matopsj) += ((*((A)+matopsi*(N)+matopsk)) * (*((B)+matopsk*(N)+matopsj))); \</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">      } \</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00180.html#a59be919c16cf4ca2fbba0b0370f7f320">   40</a></span>&#160;<span class="preprocessor">#define _MatrixMultiplyNonSquare_(A,B,C,NRowA,NColA,NColB) \</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">    int matopsi,matopsj,matopsk; \</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;(NRowA); matopsi++) \</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">      for (matopsj=0; matopsj&lt;(NColB); matopsj++) { \</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">        *((C)+matopsi*(NColB)+matopsj) = 0; \</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">        for (matopsk=0; matopsk&lt;(NColA); matopsk++) *((C)+matopsi*(NColB)+matopsj) += ((*((A)+matopsi*(NColA)+matopsk)) * (*((B)+matopsk*(NColB)+matopsj))); \</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">      } \</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="a00180.html#a625c8dc5d5de2ed16dc1a211fc998d36">   54</a></span>&#160;<span class="preprocessor">#define _MatrixMultiplySubtract_(C,A,B,N) \</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">    int matopsi,matopsj,matopsk; \</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;(N); matopsi++) \</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">      for (matopsj=0; matopsj&lt;(N); matopsj++) \</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">        for (matopsk=0; matopsk&lt;(N); matopsk++) *((C)+matopsi*(N)+matopsj) -= ((*((A)+matopsi*(N)+matopsk)) * (*((B)+matopsk*(N)+matopsj))); \</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">  } \</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="a00180.html#a1318a4facf7b30129d0509f524a1eb3b">   67</a></span>&#160;<span class="preprocessor">#define _MatVecMultiply_(A,x,y,N) \</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">    int matopsi,matopsj; \</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;(N); matopsi++) { \</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">      *((y)+matopsi) = 0; \</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">      for (matopsj=0; matopsj&lt;(N); matopsj++) *((y)+matopsi) += (*((A)+matopsi*N+matopsj) * *((x)+matopsj)); \</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">    } \</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="a00180.html#a41e1094e8869844c3e7bf9d8818b8276">   81</a></span>&#160;<span class="preprocessor">#define _MatVecMultiplySubtract_(y,A,x,N) \</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">    int matopsi,matopsj; \</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;N; matopsi++) \</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">      for (matopsj=0; matopsj&lt;(N); matopsj++) *((y)+matopsi) -= (*((A)+matopsi*N+matopsj) * *((x)+matopsj)); \</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="a00180.html#a2fc4a6b3bc38a4c6e804076ca1e94de0">   93</a></span>&#160;<span class="preprocessor">#define _MatrixInvert_(A,B,N)  \</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">    int matopsi,matopsj,matopsk; \</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">    double matopsfactor, matopssum, matopsAc[(N)*(N)]; \</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">    \</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">    </span><span class="comment">/* make a copy of A */</span><span class="preprocessor"> \</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;(N)*(N); matopsi++) *(matopsAc+matopsi) = *((A)+matopsi); \</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">    \</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">    </span><span class="comment">/* set B as the identity matrix */</span><span class="preprocessor">  \</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;(N)*(N); matopsi++) *((B)+matopsi)             = 0.0; \</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;(N)    ; matopsi++) *((B)+matopsi*(N)+matopsi) = 1.0; \</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">    \</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">    </span><span class="comment">/* LU Decomposition - Forward Sweep */</span><span class="preprocessor"> \</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">    for (matopsi=0; matopsi&lt;(N)-1; matopsi++) { \</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">      if (*(matopsAc+matopsi*(N)+matopsi) == 0) fprintf(stderr,&quot;Error in MatrixInvert(): Matrix is singular.\n&quot;); \</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">      for (matopsj=matopsi+1; matopsj&lt;(N); matopsj++) { \</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">        matopsfactor = *(matopsAc+matopsj*(N)+matopsi) / *(matopsAc+matopsi*(N)+matopsi); \</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">        for (matopsk=matopsi+1; matopsk&lt;(N); matopsk++) *(matopsAc+matopsj*(N)+matopsk) -= (matopsfactor * *(matopsAc +matopsi*(N)+matopsk)); \</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">        for (matopsk=0; matopsk&lt;matopsj; matopsk++) *((B)+matopsj*(N)+matopsk) -= (matopsfactor * *((B)+matopsi*(N)+matopsk)); \</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">      } \</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">    } \</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">    \</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">    </span><span class="comment">/* LU Decomposition - Backward Sweep */</span><span class="preprocessor"> \</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">    for (matopsi=(N)-1; matopsi&gt;=0; matopsi--) { \</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">      for (matopsk=0; matopsk&lt;(N); matopsk++) { \</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">        matopssum = 0.0; \</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">        for (matopsj=matopsi+1; matopsj&lt;(N); matopsj++) matopssum += (*(matopsAc+matopsi*(N)+matopsj) * *((B)+matopsj*(N)+matopsk)); \</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">        *((B)+matopsi*(N)+matopsk) = (*((B)+matopsi*(N)+matopsk) - matopssum) / *(matopsAc+matopsi*(N)+matopsi); \</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">      } \</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">    } \</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">    \</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">    </span><span class="comment">/* Done - B contains A^{-1} now */</span><span class="preprocessor"> \</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

@@ -1,6 +1,6 @@
 var a00383 =
 [
-    [ "NavierStokes2DFlux", "a00383.html#af9474905c4b501fdee9a18e490f6499d", null ],
-    [ "NavierStokes2DStiffFlux", "a00383.html#ae5da2defa681602a634b5e5455bae4cb", null ],
-    [ "NavierStokes2DNonStiffFlux", "a00383.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
+    [ "FPPowerSystem1BusDissipationFunction", "a00383.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
+    [ "FPPowerSystem1BusDiffusionLaplacian", "a00383.html#aab91f803575c434eba177a5b36ddeecc", null ],
+    [ "FPPowerSystem1BusDiffusionGeneral", "a00383.html#a9eaab3023576479a97c08eb308076cf9", null ]
 ];

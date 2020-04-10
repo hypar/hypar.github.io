@@ -1,5 +1,4 @@
 var a00353 =
 [
-    [ "FPPowerSystem1BusDriftFunction", "a00353.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
-    [ "FPPowerSystem1BusComputeCFL", "a00353.html#a55b31508f49708c46c4bb3e44939f982", null ]
+    [ "Euler2DCleanup", "a00353.html#a3487130c60871e40e78971cfd86e2b6c", null ]
 ];

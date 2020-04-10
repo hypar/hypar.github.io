@@ -13,5 +13,6 @@ var dir_4f99e73020cfe6ed8a86f0042d0d702a =
     [ "Numa2D", "dir_6c19582ceac6888ee974f90d6b50f3c1.html", "dir_6c19582ceac6888ee974f90d6b50f3c1" ],
     [ "Numa3D", "dir_493b87128faf27e7e62df6ccd1375a53.html", "dir_493b87128faf27e7e62df6ccd1375a53" ],
     [ "ShallowWater1D", "dir_b6f0aa81e44ccc52f12bb54d75cc5284.html", "dir_b6f0aa81e44ccc52f12bb54d75cc5284" ],
-    [ "ShallowWater2D", "dir_8db71c5f107fbf311f37f42c07caf45f.html", "dir_8db71c5f107fbf311f37f42c07caf45f" ]
+    [ "ShallowWater2D", "dir_8db71c5f107fbf311f37f42c07caf45f.html", "dir_8db71c5f107fbf311f37f42c07caf45f" ],
+    [ "Vlasov", "dir_5c3cfd3bd2abfb3cf15e75227131a027.html", "dir_5c3cfd3bd2abfb3cf15e75227131a027" ]
 ];

@@ -1,5 +1,5 @@
 var a00298 =
 [
-    [ "__FUNCT__", "a00298.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscPostTimeStep", "a00298.html#a624085839298ab49e9bdf47745993844", null ]
+    [ "MPICreateCommunicators", "a00298.html#a8f52d58fa2c0c94914befd51b6d413a1", null ],
+    [ "MPIFreeCommunicators", "a00298.html#a56b1ce0eb3d932698ac49d3c3183d39a", null ]
 ];

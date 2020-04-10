@@ -1,4 +1,4 @@
 var a00452 =
 [
-    [ "blocktridiagLU", "a00452.html#a55888a62483c0754cf6e4e030ffe2023", null ]
+    [ "ShallowWater1DComputeCFL", "a00452.html#a71431a278135cf3bc23d5a0a393f1c9b", null ]
 ];

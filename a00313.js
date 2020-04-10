@@ -1,4 +1,4 @@
 var a00313 =
 [
-    [ "Euler1DComputeCFL", "a00313.html#a820145e91372888fca738bcf320495d9", null ]
+    [ "MPIRanknD", "a00313.html#aa849b75c6eefcd0c18231a625638eaa4", null ]
 ];

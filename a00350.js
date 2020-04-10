@@ -1,5 +1,5 @@
 var a00350 =
 [
-    [ "FPPowerSystemDriftFunction", "a00350.html#aad5370d85f97a4a03459e9b9a185cfa1", null ],
-    [ "FPPowerSystemUpwind", "a00350.html#a3ff2c216124138f65c2ff0d44c185085", null ]
+    [ "Euler1DSourceFunction", "a00350.html#a23bb10e5b44548d3c27b43d0bb954214", null ],
+    [ "Euler1DSource", "a00350.html#a2b851ab206d30609f55154fa1bc0f787", null ]
 ];

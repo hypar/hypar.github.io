@@ -1,5 +1,6 @@
 var a00411 =
 [
-    [ "Numa2DCalculateStandardAtmosphere_1", "a00411.html#a63e7a4dc0f7cb9263a16c05431e03dc8", null ],
-    [ "Numa2DCalculateStandardAtmosphere_2", "a00411.html#a5b324327c40edaecca557cfa76c9cd2b", null ]
+    [ "NavierStokes2DFlux", "a00411.html#af9474905c4b501fdee9a18e490f6499d", null ],
+    [ "NavierStokes2DStiffFlux", "a00411.html#ae5da2defa681602a634b5e5455bae4cb", null ],
+    [ "NavierStokes2DNonStiffFlux", "a00411.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
 ];

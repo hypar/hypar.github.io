@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/SparseGrids/SparseGridsInitializationWrapup.cpp Source File</title>
+<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DJacobian.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,83 +114,54 @@ $(document).ready(function(){initNavTree('a00470_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SparseGridsInitializationWrapup.cpp</div>  </div>
+<div class="title">ShallowWater2DJacobian.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00470.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00146.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00170.html">sparse_grids_simulation.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00470.html#a1f30168f72fce94d12bd0cc8d9322494">VolumeIntegral</a> (<span class="keywordtype">double</span>*,<span class="keywordtype">double</span>*,<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*);</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="a00140.html#a6009f77fd5b9738911ebf3196682316d">   15</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00140.html#a6009f77fd5b9738911ebf3196682316d">SparseGridsSimulation::InitializationWrapup</a>()</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keywordtype">int</span> ierr;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; <a class="code" href="a00140.html#acd95922d6bb09419fb66435d114cdb5c">m_nsims_sg</a>; n++) {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="a00140.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a>) {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;      printf(<span class="stringliteral">&quot;Interpolating initial solution to sparse grids domain %d.\n&quot;</span>, n);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    }</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="a00140.html#a96da5797b40184e2da41e3d1abfc9697">interpolate</a>( &amp;<a class="code" href="a00140.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n], <a class="code" href="a00140.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a> );</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="a00126.html">HyPar</a>* solver = &amp;(<a class="code" href="a00140.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="a00128.html#a00521">MPIVariables</a>* mpi = &amp;(<a class="code" href="a00140.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].mpi);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">int</span> nvars = solver-&gt;<a class="code" href="a00126.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">int</span> ghosts = solver-&gt;<a class="code" href="a00126.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">int</span> *dim_local = solver-&gt;<a class="code" href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00177.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00179.html">matmult_native.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00187.html">physicalmodels/shallowwater2d.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00470.html#ac9578045deced429c673bb5e6a1cf034">   14</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00470.html#ac9578045deced429c673bb5e6a1cf034">ShallowWater2DJacobian</a>(</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">double</span>  *Jac, </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">double</span>  *u,   </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">void</span>    *p,   </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    <span class="keywordtype">int</span>     dir,  </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                    <span class="keywordtype">int</span>     upw   </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                   )</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00154.html">ShallowWater2D</a>  *param = (<a class="code" href="a00154.html">ShallowWater2D</a>*) p;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span>   R[<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], D[<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                  L[<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>], DL[<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="comment">/* get the eigenvalues and left,right eigenvectors */</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00187.html#ab51465579037455f044ab58f387caf15">_ShallowWater2DEigenvalues_</a>      (u,D,param,dir);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00187.html#a9fedf0f1165028b0f256b59e72fc5e9a">_ShallowWater2DLeftEigenvectors_</a> (u,L,param,dir);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <a class="code" href="a00187.html#ac2a20407c8e10d3f59b52281ae4e0f39">_ShallowWater2DRightEigenvectors_</a>(u,R,param,dir);</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="comment">/* exchange MPI-boundary values of u between processors */</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="a00159.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(  <a class="code" href="a00140.html#af3c229deae2a8e788c823dcc6f020b65">m_ndims</a>,</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                              nvars,</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                              dim_local,</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                              ghosts,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                              mpi,</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                              solver-&gt;<a class="code" href="a00126.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>  );</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">int</span> aupw = <a class="code" href="a00176.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(upw), k;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  k = 0; D[k] = <a class="code" href="a00176.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00176.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00176.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  k = 4; D[k] = <a class="code" href="a00176.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00176.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00176.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  k = 8; D[k] = <a class="code" href="a00176.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>( (1-aupw)*D[k] + 0.5*aupw*(1+upw)*<a class="code" href="a00176.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0,D[k]) + 0.5*aupw*(1-upw)*<a class="code" href="a00176.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(0,D[k]) );</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00179.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,DL,D,L);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00179.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a>(<a class="code" href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,Jac,R,DL);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="comment">/* calculate volume integral of the initial solution */</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    ierr = <a class="code" href="a00470.html#a1f30168f72fce94d12bd0cc8d9322494">::VolumeIntegral</a>(solver-&gt;<a class="code" href="a00126.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                            solver-&gt;<a class="code" href="a00126.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                            solver,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                            mpi );</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">if</span> (ierr) <span class="keywordflow">return</span> ierr;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00128.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      printf(<span class="stringliteral">&quot;  Volume integral of the initial solution on sparse grids domain %d:\n&quot;</span>, n);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> d=0; d&lt;nvars; d++) {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        printf(<span class="stringliteral">&quot;    %2d:  %1.16E\n&quot;</span>,d,solver-&gt;<a class="code" href="a00126.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[d]);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">/* Set initial total boundary flux integral to zero */</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>( solver-&gt;<a class="code" href="a00126.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>, nvars, 0 );</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordflow">return</span> 0; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
-<div class="ttc" id="a00126_html_a644ed0ed36ed4af1c396c0af6aca043d"><div class="ttname"><a href="a00126.html#a644ed0ed36ed4af1c396c0af6aca043d">HyPar::TotalBoundaryIntegral</a></div><div class="ttdeci">double * TotalBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00350">hypar.h:350</a></div></div>
-<div class="ttc" id="a00126_html_a3aec36aeb5caac1e87f5b4f5f75d5a23"><div class="ttname"><a href="a00126.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">HyPar::VolumeIntegralInitial</a></div><div class="ttdeci">double * VolumeIntegralInitial</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00344">hypar.h:344</a></div></div>
-<div class="ttc" id="a00128_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00128.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00025">mpivars_struct.h:25</a></div></div>
-<div class="ttc" id="a00140_html_a41a86f682aa37c28c671759a11a494a8"><div class="ttname"><a href="a00140.html#a41a86f682aa37c28c671759a11a494a8">SparseGridsSimulation::m_sim_fg</a></div><div class="ttdeci">SimulationObject * m_sim_fg</div><div class="ttdef"><b>Definition:</b> <a href="a00170_source.html#l00210">sparse_grids_simulation.h:210</a></div></div>
-<div class="ttc" id="a00146_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00168">arrayfunctions.h:168</a></div></div>
-<div class="ttc" id="a00140_html_afd006361179964b4e2c2cc65526247bd"><div class="ttname"><a href="a00140.html#afd006361179964b4e2c2cc65526247bd">SparseGridsSimulation::m_sims_sg</a></div><div class="ttdeci">std::vector&lt; SimulationObject &gt; m_sims_sg</div><div class="ttdef"><b>Definition:</b> <a href="a00170_source.html#l00211">sparse_grids_simulation.h:211</a></div></div>
-<div class="ttc" id="a00126_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00035">hypar.h:35</a></div></div>
-<div class="ttc" id="a00170_html"><div class="ttname"><a href="a00170.html">sparse_grids_simulation.h</a></div></div>
-<div class="ttc" id="a00140_html_a6009f77fd5b9738911ebf3196682316d"><div class="ttname"><a href="a00140.html#a6009f77fd5b9738911ebf3196682316d">SparseGridsSimulation::InitializationWrapup</a></div><div class="ttdeci">int InitializationWrapup()</div><div class="ttdef"><b>Definition:</b> <a href="a00470_source.html#l00015">SparseGridsInitializationWrapup.cpp:15</a></div></div>
-<div class="ttc" id="a00126_html"><div class="ttname"><a href="a00126.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00140_html_a96da5797b40184e2da41e3d1abfc9697"><div class="ttname"><a href="a00140.html#a96da5797b40184e2da41e3d1abfc9697">SparseGridsSimulation::interpolate</a></div><div class="ttdeci">void interpolate(SimulationObject *const, const SimulationObject *const)</div><div class="ttdef"><b>Definition:</b> <a href="a00473_source.html#l00015">SparseGridsInterpolate.cpp:15</a></div></div>
-<div class="ttc" id="a00159_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00159.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00272_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
-<div class="ttc" id="a00146_html"><div class="ttname"><a href="a00146.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00126_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00126.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00100">hypar.h:100</a></div></div>
-<div class="ttc" id="a00126_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00126.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00126_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00126.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00044">hypar.h:44</a></div></div>
-<div class="ttc" id="a00128_html_a00521"><div class="ttname"><a href="a00128.html#a00521">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00140_html_ac6a822dc76382e4027cf94ac3e510056"><div class="ttname"><a href="a00140.html#ac6a822dc76382e4027cf94ac3e510056">SparseGridsSimulation::m_rank</a></div><div class="ttdeci">int m_rank</div><div class="ttdef"><b>Definition:</b> <a href="a00170_source.html#l00196">sparse_grids_simulation.h:196</a></div></div>
-<div class="ttc" id="a00140_html_acd95922d6bb09419fb66435d114cdb5c"><div class="ttname"><a href="a00140.html#acd95922d6bb09419fb66435d114cdb5c">SparseGridsSimulation::m_nsims_sg</a></div><div class="ttdeci">int m_nsims_sg</div><div class="ttdef"><b>Definition:</b> <a href="a00170_source.html#l00194">sparse_grids_simulation.h:194</a></div></div>
-<div class="ttc" id="a00140_html_af3c229deae2a8e788c823dcc6f020b65"><div class="ttname"><a href="a00140.html#af3c229deae2a8e788c823dcc6f020b65">SparseGridsSimulation::m_ndims</a></div><div class="ttdeci">int m_ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00170_source.html#l00195">sparse_grids_simulation.h:195</a></div></div>
-<div class="ttc" id="a00470_html_a1f30168f72fce94d12bd0cc8d9322494"><div class="ttname"><a href="a00470.html#a1f30168f72fce94d12bd0cc8d9322494">VolumeIntegral</a></div><div class="ttdeci">int VolumeIntegral(double *, double *, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00014">VolumeIntegral.c:14</a></div></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
+<div class="ttc" id="a00183_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00183.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00058">euler1d.h:58</a></div></div>
+<div class="ttc" id="a00187_html_ac2a20407c8e10d3f59b52281ae4e0f39"><div class="ttname"><a href="a00187.html#ac2a20407c8e10d3f59b52281ae4e0f39">_ShallowWater2DRightEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater2DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00197">shallowwater2d.h:197</a></div></div>
+<div class="ttc" id="a00179_html"><div class="ttname"><a href="a00179.html">matmult_native.h</a></div><div class="ttdoc">Contains macros and function definitions for common matrix multiplication. </div></div>
+<div class="ttc" id="a00187_html_ab51465579037455f044ab58f387caf15"><div class="ttname"><a href="a00187.html#ab51465579037455f044ab58f387caf15">_ShallowWater2DEigenvalues_</a></div><div class="ttdeci">#define _ShallowWater2DEigenvalues_(u, D, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00129">shallowwater2d.h:129</a></div></div>
+<div class="ttc" id="a00187_html"><div class="ttname"><a href="a00187.html">shallowwater2d.h</a></div><div class="ttdoc">2D Shallow Water Equations </div></div>
+<div class="ttc" id="a00176_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00176.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00176_source.html#l00032">math_ops.h:32</a></div></div>
+<div class="ttc" id="a00154_html"><div class="ttname"><a href="a00154.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00240">shallowwater2d.h:240</a></div></div>
+<div class="ttc" id="a00176_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00176.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00176_source.html#l00014">math_ops.h:14</a></div></div>
+<div class="ttc" id="a00177_html"><div class="ttname"><a href="a00177.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00179_html_ad08720847b0aef444876b608b7af9a5c"><div class="ttname"><a href="a00179.html#ad08720847b0aef444876b608b7af9a5c">MatMult3</a></div><div class="ttdeci">#define MatMult3(N, A, X, Y)</div><div class="ttdef"><b>Definition:</b> <a href="a00179_source.html#l00043">matmult_native.h:43</a></div></div>
+<div class="ttc" id="a00470_html_ac9578045deced429c673bb5e6a1cf034"><div class="ttname"><a href="a00470.html#ac9578045deced429c673bb5e6a1cf034">ShallowWater2DJacobian</a></div><div class="ttdeci">int ShallowWater2DJacobian(double *Jac, double *u, void *p, int dir, int upw)</div><div class="ttdef"><b>Definition:</b> <a href="a00470_source.html#l00014">ShallowWater2DJacobian.c:14</a></div></div>
+<div class="ttc" id="a00187_html_a9fedf0f1165028b0f256b59e72fc5e9a"><div class="ttname"><a href="a00187.html#a9fedf0f1165028b0f256b59e72fc5e9a">_ShallowWater2DLeftEigenvectors_</a></div><div class="ttdeci">#define _ShallowWater2DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00154">shallowwater2d.h:154</a></div></div>
+<div class="ttc" id="a00176_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00176.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00176_source.html#l00018">math_ops.h:18</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

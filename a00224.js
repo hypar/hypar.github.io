@@ -1,6 +1,6 @@
 var a00224 =
 [
-    [ "CountBoundaryPoints", "a00224.html#ac20a15dad8cdc1021b559f08cd60bdf4", null ],
-    [ "SetBoundaryPoints", "a00224.html#a684729950453b8313d61c1731acf5e5c", null ],
-    [ "IBIdentifyBoundary", "a00224.html#a65f57f0636944e8a45906b00c8882a8a", null ]
+    [ "MPIContext", "a00224.html#aef8e1d87c719a4a2a2342213c1721789", null ],
+    [ "SolverContext", "a00224.html#a588e1e74fdbac3dcc2b1258aa0c155c0", null ],
+    [ "FirstDerivativeFourthOrderCentral", "a00224.html#a51fbc513e5461e38c98eeb5a1c03817c", null ]
 ];

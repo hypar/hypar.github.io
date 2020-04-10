@@ -1,5 +1,6 @@
 var a00249 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00249.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimThirdOrderMUSCLChar", "a00249.html#aef318a3caa68e37228d169fde39cae91", null ]
+    [ "CountBoundaryPoints", "a00249.html#ac20a15dad8cdc1021b559f08cd60bdf4", null ],
+    [ "SetBoundaryPoints", "a00249.html#a684729950453b8313d61c1731acf5e5c", null ],
+    [ "IBIdentifyBoundary", "a00249.html#a65f57f0636944e8a45906b00c8882a8a", null ]
 ];

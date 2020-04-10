@@ -1,5 +1,6 @@
 var a00425 =
 [
-    [ "ShallowWater1DLeftEigenvectors", "a00425.html#aa9519badea39145bc113cba2422016b3", null ],
-    [ "ShallowWater1DRightEigenvectors", "a00425.html#af4a44ab4a02a19c10ad8f4d75f88f8d7", null ]
+    [ "NavierStokes3DRoeAverage", "a00425.html#a8910dbe2aaf01714c0136e887ab88a89", null ],
+    [ "NavierStokes3DComputePressure", "a00425.html#aad0938e55e9fc3c10fe5451ff8f2ee1c", null ],
+    [ "NavierStokes3DComputeTemperature", "a00425.html#a6d78f90f0c4b9a283c603518407a5336", null ]
 ];

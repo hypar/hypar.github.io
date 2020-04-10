@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: 2D Euler Equations (with gravitational force) - Inertia-Gravity Waves</title>
+<title>HyPar: 2D Euler Equations - Radial Expansion Wave</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -108,926 +108,357 @@ $(document).ready(function(){initNavTree('a00042.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">2D Euler Equations (with gravitational force) - Inertia-Gravity Waves </div>  </div>
+<div class="title">2D Euler Equations - Radial Expansion Wave </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Location: <b>hypar/Examples/2D/NavierStokes2D/InertiaGravityWave</b> (This directory contains all the input files needed to run this case. If there is a <em>Run.m</em>, run it in MATLAB to quickly set up, run, and visualize the example).</p>
-<p>Governing equations: 2D Euler Equations (<a class="el" href="a00130.html" title="2D Navier Stokes equations (compressible flows) ">navierstokes2d.h</a> - By default, <a class="el" href="a00130.html#a3b92a4b98cedf64473b3c13dfa7674b4">NavierStokes2D::Re</a> is set to <b>-1</b> which makes the code skip the parabolic terms, i.e., the 2D Euler equations are solved.)</p>
-<p>Reference:</p><ul>
-<li>W. C. Skamarock and J. B. Klemp, "Efficiency and accuracy of 
-    the Klemp-Wilhelmson timesplitting technique", Monthly Weather Review, 122 (1994), pp. 2623–2630.</li>
-<li>Giraldo, F.X., Restelli, M., "A study of spectral element and discontinuous Galerkin methods for the Navier–Stokes equations in nonhydrostatic mesoscale atmospheric modeling: Equation sets and test cases", J. Comput. Phys., 227, 2008, 3849&ndash;3877, (Section 3.1).</li>
-</ul>
-<p>Domain: \(0 \le x \le 300,000\,m, 0 \le y \le 10,000\,m\), <em>"periodic"</em> (<a class="el" href="a00148.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundary conditions along \(x\), "slip-wall" (<a class="el" href="a00148.html#af3a9f3ba15bc914ed0a88295aee147e8">_SLIP_WALL_</a>) boundary conditions along \(y\).</p>
-<p>Initial solution: See references above.</p>
-<p>Other parameters (all dimensional quantities are in SI units):</p><ul>
-<li>Specific heat ratio \(\gamma = 1.4\) (<a class="el" href="a00130.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes2D::gamma</a>)</li>
-<li>Universal gas constant \(R = 287.058\) (<a class="el" href="a00130.html#a228eb5e837a644887ac6e7bab3f42485">NavierStokes2D::R</a>)</li>
-<li>Gravitational force per unit mass \(g = 9.8\) along <em>y-axis</em> (<a class="el" href="a00130.html#adf08e308b453bd2d4e117576e493ed03">NavierStokes2D::grav_y</a>)</li>
-<li>Reference density (at zero altitude) \(\rho_{ref} = 1.1612055171196529\) (<a class="el" href="a00130.html#a1e6f66261d19a1c1c272e8808bd2657b">NavierStokes2D::rho0</a>)</li>
-<li>Reference pressure (at zero altitude) \(P_{ref} = 100000\) (<a class="el" href="a00130.html#a8be9de5ac626cddcd15c5ec181619694">NavierStokes2D::p0</a>)</li>
-<li>Hydrostatic balance type 3 (<a class="el" href="a00130.html#a2e01ef077b0fedaea9e286ccdf2fe259">NavierStokes2D::HB</a>)</li>
-<li>Brunt-Vaisala frequency 0.01 (<a class="el" href="a00130.html#aa79c64518f6e9127d9b201bacd398174">NavierStokes2D::N_bv</a>)</li>
-</ul>
+<div class="textblock"><p>Location: <b>hypar/Examples/2D/NavierStokes2D/RadialExpansionWave</b> (This directory contains all the input files needed to run this case. If there is a <em>Run.m</em>, run it in MATLAB to quickly set up, run, and visualize the example).</p>
+<p>Governing equations: 2D Euler Equations (<a class="el" href="a00148.html" title="2D Navier Stokes equations (compressible flows) ">navierstokes2d.h</a> - By default, <a class="el" href="a00148.html#a3b92a4b98cedf64473b3c13dfa7674b4">NavierStokes2D::Re</a> is set to <b>-1</b> which makes the code skip the parabolic terms, i.e., the 2D Euler equations are solved.)</p>
+<p>Reference: <a href="http://www.as.dlr.de/hiocfd/case_c1.5.html">http://www.as.dlr.de/hiocfd/case_c1.5.html</a></p>
+<p>Domain: \(-0.4 \le x,y \le 0.4\), <em>"extrapolate"</em> (<a class="el" href="a00167.html#a53da239cc00a2394faa0637dad4d0a0c">_EXTRAPOLATE_</a>) boundary conditions (supersonic outflow).</p>
+<p>Initial solution: see reference above.</p>
 <p>Numerical method:</p><ul>
-<li>Spatial discretization (hyperbolic): 5th order WENO (<a class="el" href="a00116.html#af2195885ad055989a1b2b11655843343" title="5th order WENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderWENO()</a>)</li>
-<li>Time integration: SSPRK3 (<a class="el" href="a00172.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00121.html#a97e67bb275d6a2dad40b184579559f82">_RK_SSP3_</a>)</li>
+<li>Spatial discretization (hyperbolic): Characteristic-based 3rd order WENO (<a class="el" href="a00134.html#abf3b032fdc8c0e84b86909db9e0b93c3" title="5th order WENO reconstruction (characteristic-based) on a uniform grid ">Interp1PrimFifthOrderWENOChar()</a>)</li>
+<li>Time integration: SSPRK3 (<a class="el" href="a00194.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00139.html#a97e67bb275d6a2dad40b184579559f82">_RK_SSP3_</a>)</li>
 </ul>
 <h2>Input files required: </h2>
 <p><b>solver.inp</b> </p><div class="fragment"><div class="line">begin</div>
-<div class="line">  ndims               2</div>
-<div class="line">  nvars               4</div>
-<div class="line">  size                1200 50</div>
-<div class="line">  iproc               12 1</div>
-<div class="line">  ghost               3</div>
-<div class="line">  n_iter              6000</div>
-<div class="line">  restart_iter        0</div>
-<div class="line">  time_scheme         rk</div>
-<div class="line">  time_scheme_type    ssprk3</div>
-<div class="line">  hyp_space_scheme    weno5</div>
-<div class="line">  hyp_flux_split      no</div>
-<div class="line">  hyp_interp_type     components</div>
-<div class="line">  par_space_type      nonconservative-2stage</div>
-<div class="line">  par_space_scheme    4</div>
-<div class="line">  dt                  0.5</div>
-<div class="line">  conservation_check  no</div>
-<div class="line">  screen_op_iter      40</div>
-<div class="line">  file_op_iter        240</div>
-<div class="line">  input_mode          serial</div>
-<div class="line">  ip_file_type        binary</div>
-<div class="line">  output_mode         serial</div>
-<div class="line">  op_file_format      binary</div>
-<div class="line">  op_overwrite        no</div>
-<div class="line">  model               navierstokes2d</div>
+<div class="line">  ndims             2</div>
+<div class="line">  nvars             4</div>
+<div class="line">  size              65 65</div>
+<div class="line">  iproc             2 2</div>
+<div class="line">  ghost             3</div>
+<div class="line">  n_iter            100</div>
+<div class="line">  time_scheme       rk</div>
+<div class="line">  time_scheme_type  ssprk3</div>
+<div class="line">  hyp_space_scheme  weno5</div>
+<div class="line">  hyp_interp_type   characteristic</div>
+<div class="line">  dt                0.01</div>
+<div class="line">  screen_op_iter    1</div>
+<div class="line">  file_op_iter      10</div>
+<div class="line">  op_file_format    tecplot2d</div>
+<div class="line">  op_overwrite      no</div>
+<div class="line">  model             navierstokes2d</div>
 <div class="line">end</div>
 </div><!-- fragment --><p><b>boundary.inp</b> </p><div class="fragment"><div class="line">4</div>
-<div class="line">periodic      0     1     0          0    0.0     10000.0</div>
-<div class="line">periodic      0    -1     0          0    0.0     10000.0</div>
-<div class="line">slip-wall     1     1   0.0   300000.0    0.0         0.0</div>
-<div class="line">0.0 0.0</div>
-<div class="line">slip-wall     1    -1   0.0   300000.0    0.0         0.0</div>
-<div class="line">0.0 0.0</div>
+<div class="line">extrapolate      0     1     0     0   -4.0    4.0</div>
+<div class="line">extrapolate      0    -1     0     0   -4.0    4.0</div>
+<div class="line">extrapolate      1     1  -4.0   4.0      0      0</div>
+<div class="line">extrapolate      1    -1  -4.0   4.0      0      0</div>
 </div><!-- fragment --><p><b>physics.inp</b> </p><div class="fragment"><div class="line">begin</div>
 <div class="line">  gamma     1.4</div>
-<div class="line">  upwinding rusanov</div>
-<div class="line">  gravity   0.0 9.8</div>
-<div class="line">  rho_ref   1.1612055171196529</div>
-<div class="line">  p_ref     100000.0</div>
-<div class="line">  HB        3 0.01</div>
-<div class="line">  R         287.058</div>
+<div class="line">  upwinding rf-char</div>
 <div class="line">end</div>
 </div><!-- fragment --><p><b>weno.inp</b> (optional) </p><div class="fragment"><div class="line">begin</div>
-<div class="line">  mapped        0</div>
+<div class="line">  mapped        1</div>
 <div class="line">  borges        0</div>
 <div class="line">  yc            0</div>
-<div class="line">  no_limiting   1</div>
+<div class="line">  no_limiting   0</div>
 <div class="line">  epsilon       0.000001</div>
 <div class="line">  p             2.0</div>
 <div class="line">  rc            0.3</div>
 <div class="line">  xi            0.001</div>
 <div class="line">end</div>
-</div><!-- fragment --><p> <b>Note:</b> <em>no_limiting</em> is set to 1, i.e., since this is a smooth problem, WENO limiting is turned off, and the spatial discretization uses a 5th order polynomial.</p>
-<p>To generate <b>initial.inp</b> (initial solution), compile and run the following code in the run directory. </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+</div><!-- fragment --><p>To generate <b>initial.inp</b>, compile and run the following code in the run directory. </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">double</span> <a class="code" href="a00157.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> a)</div>
+<div class="line"><span class="keywordtype">double</span> power(<span class="keywordtype">double</span> x,<span class="keywordtype">double</span> a)</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span>(exp(a*log(x)));</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00266.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordtype">double</span> gamma    = 1.4;</div>
-<div class="line">  <span class="keywordtype">double</span> R        = 287.058;</div>
-<div class="line">  <span class="keywordtype">double</span> rho_ref  = 1.1612055171196529;</div>
-<div class="line">  <span class="keywordtype">double</span> p_ref    = 100000.0;</div>
-<div class="line">  <span class="keywordtype">double</span> grav_x   = 0.0;</div>
-<div class="line">  <span class="keywordtype">double</span> grav_y   = 9.8;</div>
-<div class="line">  <span class="keywordtype">int</span>    HB       = 0;</div>
-<div class="line">  <span class="keywordtype">double</span> BV       = 0.0;</div>
-<div class="line">  </div>
-<div class="line">    <span class="keywordtype">int</span> NI,NK,ndims;</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00292.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">double</span> pi     = 4.0*atan(1.0);</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">double</span> GAMMA  = 1.4;</div>
+<div class="line">    <span class="keywordtype">int</span> NI=101,NJ=101,ndims=2;</div>
 <div class="line">  <span class="keywordtype">char</span> ip_file_type[50];</div>
 <div class="line">  strcpy(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>);</div>
+<div class="line">  FILE *in, *out;</div>
 <div class="line"></div>
-<div class="line">  FILE *in;</div>
 <div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;solver.inp\&quot;...\n&quot;</span>);</div>
 <div class="line">  in = fopen(<span class="stringliteral">&quot;solver.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!in) {</div>
-<div class="line">    printf (<span class="stringliteral">&quot;Error: Input file \&quot;solver.inp\&quot; not found.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span>(1);</div>
-<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">  <span class="keywordflow">if</span> (!in) printf(<span class="stringliteral">&quot;Error: Input file \&quot;solver.inp\&quot; not found. Default values will be used.\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">else</span> {</div>
 <div class="line">    <span class="keywordtype">char</span> word[500];</div>
 <div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
 <div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
 <div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
 <div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
+<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>))     fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
 <div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>)) {</div>
 <div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NI);</div>
-<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NK);</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NJ);</div>
 <div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ip_file_type&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,ip_file_type);</div>
 <div class="line">      }</div>
 <div class="line">    } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
 <div class="line">  }</div>
 <div class="line">  fclose(in);</div>
-<div class="line"></div>
-<div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;physics.inp\&quot;...\n&quot;</span>);</div>
-<div class="line">  in = fopen(<span class="stringliteral">&quot;physics.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!in) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Input file \&quot;physics.inp\&quot; not found.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span>(0);</div>
-<div class="line">  } <span class="keywordflow">else</span> {</div>
-<div class="line">    <span class="keywordtype">char</span> word[500];</div>
-<div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)) {</div>
-<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)) {</div>
-<div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">        <span class="keywordflow">if</span>      (!strcmp(word, <span class="stringliteral">&quot;rho_ref&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;rho_ref);</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;p_ref&quot;</span>  )) fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;p_ref  );</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;gamma&quot;</span>  )) fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;gamma  );</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;R&quot;</span>      )) fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;R      );</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;HB&quot;</span>     )) {</div>
-<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span> ,&amp;HB     );</div>
-<div class="line">          <span class="keywordflow">if</span> (HB == 3) fscanf(in, <span class="stringliteral">&quot;%lf&quot;</span>, &amp;BV);</div>
-<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;gravity&quot;</span>)) {</div>
-<div class="line">          fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;grav_x );</div>
-<div class="line">          fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;grav_y );</div>
-<div class="line">        }</div>
-<div class="line">      }</div>
-<div class="line">    } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;Error: Illegal format in physics.inp. Crash and burn!\n&quot;</span>);</div>
-<div class="line">  }</div>
-<div class="line">  fclose(in);</div>
-<div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (ndims != 2) {</div>
 <div class="line">    printf(<span class="stringliteral">&quot;ndims is not 2 in solver.inp. this code is to generate 2D initial conditions\n&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordflow">if</span> (HB != 3) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Specify \&quot;HB\&quot; as 3 in physics.inp.\n&quot;</span>);</div>
-<div class="line">  }</div>
-<div class="line">    <span class="keywordflow">if</span> (grav_x != 0.0) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Gravity force along x must be zero for HB = 3.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span>(0);</div>
-<div class="line">  }</div>
-<div class="line">  printf(<span class="stringliteral">&quot;Grid:\t\t\t%d X %d\n&quot;</span>,NI,NK);</div>
-<div class="line">  printf(<span class="stringliteral">&quot;Reference density and pressure: %lf, %lf.\n&quot;</span>,rho_ref,p_ref);</div>
+<div class="line">    printf(<span class="stringliteral">&quot;Grid:\t\t\t%d X %d\n&quot;</span>,NI,NJ);</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* Define the domain */</span></div>
-<div class="line">  <span class="keywordtype">double</span> xmin, xmax, zmin, zmax;</div>
-<div class="line">  xmin    =  0.0;</div>
-<div class="line">  xmax    =  300000;</div>
-<div class="line">  zmin    =  0.0;</div>
-<div class="line">  zmax    =  10000.0 ;</div>
+<div class="line">    <span class="keywordtype">int</span> i,j;</div>
+<div class="line">    <span class="keywordtype">double</span> dx = 8.0 / ((double)(NI-1));</div>
+<div class="line">    <span class="keywordtype">double</span> dy = 8.0 / ((double)(NJ-1));</div>
 <div class="line"></div>
-<div class="line">  <span class="keywordtype">double</span> Lx = xmax - xmin;</div>
-<div class="line">  <span class="keywordtype">double</span> Lz = zmax - zmin;</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordtype">int</span> i,k;</div>
-<div class="line">    <span class="keywordtype">double</span> dx = Lx / ((double)NI-1);</div>
-<div class="line">    <span class="keywordtype">double</span> dz = Lz / ((double)NK-1);</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordtype">double</span> *x, *z, *U;</div>
-<div class="line">  FILE *out;</div>
-<div class="line"></div>
-<div class="line">    x   = (<span class="keywordtype">double</span>*) calloc (NI     , <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    z   = (<span class="keywordtype">double</span>*) calloc (NK     , <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    U   = (<span class="keywordtype">double</span>*) calloc (4*NI*NK, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordtype">double</span> inv_gamma_m1 = 1.0 / (gamma-1.0);</div>
-<div class="line">  <span class="keywordtype">double</span> Cp = gamma * R * inv_gamma_m1;</div>
-<div class="line">  <span class="keywordtype">double</span> Cv =         R * inv_gamma_m1;</div>
-<div class="line">  <span class="keywordtype">double</span> T_ref = p_ref / (R*rho_ref);</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* initial perturbation parameters */</span></div>
-<div class="line">  <span class="keywordtype">double</span> pi = 4.0*atan(1.0);</div>
-<div class="line">  <span class="keywordtype">double</span> tc = 0.01;</div>
-<div class="line">  <span class="keywordtype">double</span> hc = 10000;</div>
-<div class="line">  <span class="keywordtype">double</span> ac = 5000;</div>
-<div class="line">  <span class="keywordtype">double</span> xc = 100000;</div>
-<div class="line">  <span class="keywordtype">double</span> uc = 20.0;</div>
+<div class="line">    <span class="keywordtype">double</span> *x, *y, *u0, *u1, *u2, *u3;</div>
+<div class="line">    x   = (<span class="keywordtype">double</span>*) calloc (NI   , <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    y   = (<span class="keywordtype">double</span>*) calloc (NJ   , <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    u0  = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    u1  = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    u2  = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    u3  = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++){</div>
-<div class="line">    <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++){</div>
-<div class="line">        x[i] = xmin + i*dx;</div>
-<div class="line">        z[k] = zmin + k*dz;</div>
-<div class="line">      <span class="keywordtype">int</span> p = i + NI*k;</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++){</div>
+<div class="line">        x[i] = -4.0 + i*dx;</div>
+<div class="line">        y[j] = -4.0 + j*dy;</div>
+<div class="line">      <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">      <span class="keywordtype">double</span> r = sqrt(x[i]*x[i] + y[j]*y[j]);</div>
 <div class="line"></div>
-<div class="line">      <span class="comment">/* temperature peturbation */</span></div>
-<div class="line">      <span class="keywordtype">double</span> dtheta = tc * sin(pi*z[k]/hc) / (1.0 + ((x[i]-xc)/ac)*((x[i]-xc)/ac));</div>
+<div class="line">      <span class="keywordtype">double</span> q;</div>
+<div class="line">      <span class="keywordflow">if</span>      (r &lt; 0.5)  q = 0.0;</div>
+<div class="line">      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (r &lt; 1.5)  q = (1.0/GAMMA) * (1.0 + tanh((r-1)/(0.25-(r-1)*(r-1))));</div>
+<div class="line">      <span class="keywordflow">else</span>               q = 2.0/GAMMA;</div>
 <div class="line"></div>
-<div class="line">      <span class="keywordtype">double</span> theta  = T_ref*exp(BV*BV*z[k]/grav_y) + dtheta;</div>
-<div class="line">      <span class="keywordtype">double</span> Pexner = 1.0 + ((grav_y*grav_y)/(Cp*T_ref*BV*BV))*(exp(-BV*BV*z[k]/grav_y)-1.0);</div>
-<div class="line">      <span class="keywordtype">double</span> rho    = (p_ref/(R*theta)) * <a class="code" href="a00157.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(Pexner,inv_gamma_m1);</div>
-<div class="line">      <span class="keywordtype">double</span> E      = Cv * theta * Pexner + 0.5 * (uc * uc);</div>
+<div class="line">      <span class="keywordtype">double</span> rho, u, v, P, a;</div>
 <div class="line"></div>
-<div class="line">      U[4*p+0] = rho;</div>
-<div class="line">      U[4*p+1] = rho*uc;</div>
-<div class="line">      U[4*p+2] = 0.0;</div>
-<div class="line">      U[4*p+3] = rho*E;</div>
-<div class="line">    }</div>
+<div class="line">      <span class="keywordflow">if</span> (r == 0) u = v = 0;</div>
+<div class="line">      <span class="keywordflow">else</span> {</div>
+<div class="line">        u = x[i]*q/r;</div>
+<div class="line">        v = y[j]*q/r;</div>
+<div class="line">      }</div>
+<div class="line"></div>
+<div class="line">      a = 1.0 - (GAMMA-1.0)*q/2.0;</div>
+<div class="line"></div>
+<div class="line">      rho = GAMMA*power(a,2/(GAMMA-1.0));</div>
+<div class="line">      P   = rho*a*a/GAMMA;</div>
+<div class="line"></div>
+<div class="line">      u0[p] = rho;</div>
+<div class="line">      u1[p] = rho*u;</div>
+<div class="line">      u2[p] = rho*v;</div>
+<div class="line">      u3[p] = P/(GAMMA-1.0) + 0.5*rho*(u*u+v*v);</div>
+<div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (!strcmp(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>)) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;ASCII not supported. Use binary format\n&quot;</span>);</div>
+<div class="line">      out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,x[i]);</div>
+<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,y[j]);</div>
+<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
+<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
+<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u0[p]);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
+<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
+<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u1[p]);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
+<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
+<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u2[p]);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
+<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
+<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u3[p]);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">      fclose(out);</div>
 <div class="line">  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((!strcmp(ip_file_type,<span class="stringliteral">&quot;binary&quot;</span>)) || (!strcmp(ip_file_type,<span class="stringliteral">&quot;bin&quot;</span>))) {</div>
-<div class="line"></div>
-<div class="line">    printf(<span class="stringliteral">&quot;Writing binary initial solution file initial.inp\n&quot;</span>);</div>
-<div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;wb&quot;</span>);</div>
-<div class="line">    fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
-<div class="line">    fwrite(z,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NK,out);</div>
-<div class="line">    fwrite(U,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),4*NI*NK,out);</div>
-<div class="line">    fclose(out);</div>
-<div class="line"></div>
+<div class="line">    printf(<span class="stringliteral">&quot;Error: Writing binary initial solution file not implemented. &quot;</span>);</div>
+<div class="line">    printf(<span class="stringliteral">&quot;Please choose ip_file_type in solver.inp as \&quot;ascii\&quot;.\n&quot;</span>);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">    free(x);</div>
-<div class="line">    free(z);</div>
-<div class="line">    free(U);</div>
+<div class="line">    free(y);</div>
+<div class="line">    free(u0);</div>
+<div class="line">    free(u1);</div>
+<div class="line">    free(u2);</div>
+<div class="line">    free(u3);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2>Output: </h2>
-<p>Note that <b>iproc</b> is set to </p><pre class="fragment">  12 1
-</pre><p>in <b>solver.inp</b> (i.e., 12 processors along <em>x</em>, and 1 processor along <em>y</em>). Thus, this example should be run with 12 MPI ranks (or change <b>iproc</b>).</p>
-<p>After running the code, there should be 26 output files <b>op_00000.bin</b>, <b>op_00001.bin</b>, ... <b>op_00025.bin</b>; the first one is the solution at \(t=0s\) and the final one is the solution at \(t=3000s\). Since <a class="el" href="a00126.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, separate files are written for solutions at each output time.</p>
-<p><a class="el" href="a00126.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>binary</em> in <b>solver.inp</b>, and thus, all the files are written out in the binary format, see <a class="el" href="a00154.html#a067f454c26d85d6cfb4d7d878b3783c9">WriteBinary()</a>. The binary file contains the conserved variables \(\left(\rho, \rho u, \rho v, e\right)\). The following code converts these variables to the primitive variables of interest to atmospheric flows \(\left(\rho, u, v, p, \theta\right)\). It also writes out the hydrostatically balanced quantities \(\left(\rho_0,\pi_0, \theta_0\right)\) for this case that can be used to compute and plot the temperature and density perturbations. These variables are then written to either a tecplot2d or text file. (compile and run it in the run directory): </p><div class="fragment"><div class="line"><span class="comment">/*</span></div>
-<div class="line"><span class="comment">  Inertia-Gravity Waves:-</span></div>
-<div class="line"><span class="comment">  The code takes a binary solution file (that contains the </span></div>
-<div class="line"><span class="comment">  conserved variable (rho, rho*u, rho*v, e) as its input </span></div>
-<div class="line"><span class="comment">  and calculates the primitive atmospheric flow variables:</span></div>
-<div class="line"><span class="comment">  rho, u, v, P, theta, pi, rho0, P0, theta0, pi0</span></div>
-<div class="line"><span class="comment">  and writes them to a tecplot file.</span></div>
-<div class="line"><span class="comment">*/</span></div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"></div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>_parameters_{</div>
-<div class="line">  <span class="keywordtype">double</span> g, R, gamma, P_ref, rho_ref, Nbv;</div>
-<div class="line">  <span class="keywordtype">int</span> HB;</div>
-<div class="line">} Parameters;</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> <a class="code" href="a00212.html#a8cd1b33d1c7898304be76c9fc01066e2">IncrementFilename</a>(<span class="keywordtype">char</span> *f)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">if</span> (f[7] == <span class="charliteral">&#39;9&#39;</span>) {</div>
-<div class="line">    f[7] = <span class="charliteral">&#39;0&#39;</span>;</div>
-<div class="line">    <span class="keywordflow">if</span> (f[6] == <span class="charliteral">&#39;9&#39;</span>) {</div>
-<div class="line">      f[6] = <span class="charliteral">&#39;0&#39;</span>;</div>
-<div class="line">      <span class="keywordflow">if</span> (f[5] == <span class="charliteral">&#39;9&#39;</span>) {</div>
-<div class="line">        f[5] = <span class="charliteral">&#39;0&#39;</span>;</div>
-<div class="line">        <span class="keywordflow">if</span> (f[4] == <span class="charliteral">&#39;9&#39;</span>) {</div>
-<div class="line">          f[4] = <span class="charliteral">&#39;0&#39;</span>;</div>
-<div class="line">          <span class="keywordflow">if</span> (f[3] == <span class="charliteral">&#39;9&#39;</span>) {</div>
-<div class="line">            f[3] = <span class="charliteral">&#39;0&#39;</span>;</div>
-<div class="line">            fprintf(stderr,<span class="stringliteral">&quot;Warning: file increment hit max limit. Resetting to zero.\n&quot;</span>);</div>
-<div class="line">          } <span class="keywordflow">else</span> {</div>
-<div class="line">            f[3]++;</div>
-<div class="line">          }</div>
-<div class="line">        } <span class="keywordflow">else</span> {</div>
-<div class="line">          f[4]++;</div>
-<div class="line">        }</div>
-<div class="line">      } <span class="keywordflow">else</span> {</div>
-<div class="line">        f[5]++;</div>
-<div class="line">      }</div>
-<div class="line">    } <span class="keywordflow">else</span> {</div>
-<div class="line">      f[6]++;</div>
-<div class="line">    }</div>
-<div class="line">  } <span class="keywordflow">else</span> {</div>
-<div class="line">    f[7]++;</div>
-<div class="line">  }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">double</span> <a class="code" href="a00157.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> a)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span>(exp(a*log(x)));</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> <a class="code" href="a00154.html#a265b0583afb79edd2f2f5d5087e5c3bf">WriteTecplot2D</a>(<span class="keywordtype">int</span> nvars,<span class="keywordtype">int</span> imax, <span class="keywordtype">int</span> jmax,<span class="keywordtype">double</span> *x,<span class="keywordtype">double</span> *u,<span class="keywordtype">char</span> *f)</div>
-<div class="line">{</div>
-<div class="line">  printf(<span class="stringliteral">&quot;\tWriting tecplot solution file %s.\n&quot;</span>,f);</div>
-<div class="line">  FILE *out;</div>
-<div class="line">  out = fopen(f,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!out) {</div>
-<div class="line">    fprintf(stderr,<span class="stringliteral">&quot;Error: could not open %s for writing.\n&quot;</span>,f);</div>
-<div class="line">    <span class="keywordflow">return</span>;</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordtype">double</span> *X = x;</div>
-<div class="line">  <span class="keywordtype">double</span> *Y = x+imax;</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* writing tecplot data file headers */</span></div>
-<div class="line">  fprintf(out,<span class="stringliteral">&quot;VARIABLES=\&quot;I\&quot;,\&quot;J\&quot;,\&quot;X\&quot;,\&quot;Y\&quot;,&quot;</span>);</div>
-<div class="line">  fprintf(out,<span class="stringliteral">&quot;\&quot;RHO\&quot;,\&quot;U\&quot;,\&quot;V\&quot;,\&quot;P\&quot;,&quot;</span>);</div>
-<div class="line">  fprintf(out,<span class="stringliteral">&quot;\&quot;THETA\&quot;,\&quot;RHO0\&quot;,\&quot;P0\&quot;,&quot;</span>);</div>
-<div class="line">  fprintf(out,<span class="stringliteral">&quot;\&quot;PI0\&quot;,\&quot;THETA0\&quot;,\n&quot;</span>);</div>
-<div class="line">  fprintf(out,<span class="stringliteral">&quot;ZONE I=%d,J=%d,F=POINT\n&quot;</span>,imax,jmax);</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* writing the data */</span></div>
-<div class="line">  <span class="keywordtype">int</span> i,j;</div>
-<div class="line">  <span class="keywordflow">for</span> (j=0; j&lt;jmax; j++) {</div>
-<div class="line">    <span class="keywordflow">for</span> (i=0; i&lt;imax; i++) {</div>
-<div class="line">      <span class="keywordtype">int</span> v, p = i + imax*j;</div>
-<div class="line">      fprintf(out,<span class="stringliteral">&quot;%4d %4d &quot;</span>,i,j);</div>
-<div class="line">      fprintf(out,<span class="stringliteral">&quot;%1.16E %1.16E &quot;</span>,X[i],Y[j]);</div>
-<div class="line">      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,u[nvars*p+v]);</div>
-<div class="line">      fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    }</div>
-<div class="line">  }</div>
-<div class="line">  fclose(out);</div>
-<div class="line">  <span class="keywordflow">return</span>;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> WriteText2D(<span class="keywordtype">int</span> nvars,<span class="keywordtype">int</span> imax, <span class="keywordtype">int</span> jmax,<span class="keywordtype">double</span> *x,<span class="keywordtype">double</span> *u,<span class="keywordtype">char</span> *f)</div>
-<div class="line">{</div>
-<div class="line">  printf(<span class="stringliteral">&quot;\tWriting text solution file %s.\n&quot;</span>,f);</div>
-<div class="line">  FILE *out;</div>
-<div class="line">  out = fopen(f,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!out) {</div>
-<div class="line">    fprintf(stderr,<span class="stringliteral">&quot;Error: could not open %s for writing.\n&quot;</span>,f);</div>
-<div class="line">    <span class="keywordflow">return</span>;</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordtype">double</span> *X = x;</div>
-<div class="line">  <span class="keywordtype">double</span> *Y = x+imax;</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* writing the data */</span></div>
-<div class="line">  <span class="keywordtype">int</span> i,j;</div>
-<div class="line">  <span class="keywordflow">for</span> (j=0; j&lt;jmax; j++) {</div>
-<div class="line">    <span class="keywordflow">for</span> (i=0; i&lt;imax; i++) {</div>
-<div class="line">      <span class="keywordtype">int</span> v, p = i + imax*j;</div>
-<div class="line">      fprintf(out,<span class="stringliteral">&quot;%4d %4d &quot;</span>,i,j);</div>
-<div class="line">      fprintf(out,<span class="stringliteral">&quot;%1.16E %1.16E &quot;</span>,X[i],Y[j]);</div>
-<div class="line">      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,u[nvars*p+v]);</div>
-<div class="line">      fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    }</div>
-<div class="line">  }</div>
-<div class="line">  fclose(out);</div>
-<div class="line">  <span class="keywordflow">return</span>;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> PostProcess(<span class="keywordtype">char</span> *fname, <span class="keywordtype">char</span> *oname, <span class="keywordtype">void</span> *p, <span class="keywordtype">int</span> flag)</div>
-<div class="line">{</div>
-<div class="line">  Parameters *params = (Parameters*) p;</div>
-<div class="line">  FILE *in; in = fopen(fname,<span class="stringliteral">&quot;rb&quot;</span>);</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">if</span> (!in) <span class="keywordflow">return</span>(-1);</div>
-<div class="line"></div>
-<div class="line">  printf(<span class="stringliteral">&quot;Reading file %s.\n&quot;</span>,fname);</div>
-<div class="line">  <span class="keywordtype">int</span> ndims, nvars;</div>
-<div class="line">  <span class="keywordtype">double</span> *U,*x;</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* read the file headers */</span></div>
-<div class="line">  fread(&amp;ndims,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>),1,in);</div>
-<div class="line">  fread(&amp;nvars,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>),1,in);</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* some checks */</span></div>
-<div class="line">  <span class="keywordflow">if</span> (ndims != 2) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: ndims in %s not equal to 2!\n&quot;</span>,fname);</div>
-<div class="line">    <span class="keywordflow">return</span>(1);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">if</span> (nvars != 4) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: nvars in %s not equal to 4!\n&quot;</span>,fname);</div>
-<div class="line">    <span class="keywordflow">return</span>(1);</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* read dimensions */</span></div>
-<div class="line">  <span class="keywordtype">int</span> dims[ndims];</div>
-<div class="line">  fread(dims,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>),ndims,in);</div>
-<div class="line">  printf(<span class="stringliteral">&quot;Dimensions: %d x %d\n&quot;</span>,dims[0],dims[1]);</div>
-<div class="line">  printf(<span class="stringliteral">&quot;Nvars     : %d\n&quot;</span>,nvars);</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* allocate grid and solution arrays */</span></div>
-<div class="line">  x = (<span class="keywordtype">double</span>*) calloc (dims[0]+dims[1]       ,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">  U = (<span class="keywordtype">double</span>*) calloc (dims[0]*dims[1]*nvars ,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* read grid and solution */</span></div>
-<div class="line">  fread(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),dims[0]+dims[1]      ,in);</div>
-<div class="line">  fread(U,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),dims[0]*dims[1]*nvars,in);</div>
-<div class="line">  <span class="comment">/* done reading */</span></div>
-<div class="line">  fclose(in);</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordtype">int</span> imax = dims[0];</div>
-<div class="line">  <span class="keywordtype">int</span> jmax = dims[1];</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* allocate primitive variable array (rho, u, v, P, theta, rho0, P0, pi0, theta0) */</span></div>
-<div class="line">  <span class="keywordtype">int</span> evars = 5;</div>
-<div class="line">  <span class="keywordtype">double</span> *Q = (<span class="keywordtype">double</span>*) calloc ((nvars+evars)*imax*jmax,<span class="keyword">sizeof</span>(double));</div>
-<div class="line">    </div>
-<div class="line">  <span class="comment">/* calculate primitive variables */</span></div>
-<div class="line">  <span class="keywordtype">int</span> i, j;</div>
-<div class="line">  <span class="keywordtype">double</span> *X           = x;</div>
-<div class="line">  <span class="keywordtype">double</span> *Y           = x+imax;</div>
-<div class="line">  <span class="keywordtype">double</span> g            = params-&gt;g;</div>
-<div class="line">  <span class="keywordtype">double</span> R            = params-&gt;R;</div>
-<div class="line">  <span class="keywordtype">double</span> gamma        = params-&gt;gamma;</div>
-<div class="line">  <span class="keywordtype">double</span> P_ref        = params-&gt;P_ref;</div>
-<div class="line">  <span class="keywordtype">double</span> rho_ref      = params-&gt;rho_ref;</div>
-<div class="line">  <span class="keywordtype">double</span> T_ref        = P_ref / (R*rho_ref);</div>
-<div class="line">  <span class="keywordtype">double</span> inv_gamma_m1 = 1.0 / (gamma-1.0);</div>
-<div class="line">  <span class="keywordtype">double</span> Cp           = gamma * inv_gamma_m1 * R;</div>
-<div class="line">  <span class="keywordtype">double</span> BV           = params-&gt;Nbv;</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;imax; i++) {</div>
-<div class="line">    <span class="keywordflow">for</span> (j=0; j&lt;jmax; j++) {</div>
-<div class="line">      <span class="keywordtype">int</span> p = i + imax*j;</div>
-<div class="line"></div>
-<div class="line">      <span class="keywordtype">double</span> rho0, theta0, Pexner, P0;</div>
-<div class="line">      Pexner = 1.0 + ((g*g)/(Cp*T_ref*BV*BV))*(exp(-BV*BV*Y[j]/g)-1.0);</div>
-<div class="line">      theta0 = T_ref   * exp(BV*BV*Y[j]/g);</div>
-<div class="line">      P0     = P_ref   * <a class="code" href="a00157.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(Pexner, gamma*inv_gamma_m1);</div>
-<div class="line">      rho0   = rho_ref * <a class="code" href="a00157.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(Pexner, inv_gamma_m1      ) * exp(-BV*BV*Y[j]/g);</div>
-<div class="line"></div>
-<div class="line">      <span class="keywordtype">double</span> rho, uvel, vvel, E, P, theta;</div>
-<div class="line">      rho   = U[nvars*p+0];</div>
-<div class="line">      uvel  = U[nvars*p+1] / rho;</div>
-<div class="line">      vvel  = U[nvars*p+2] / rho;</div>
-<div class="line">      E     = U[nvars*p+3];</div>
-<div class="line">      P     = (gamma-1.0) * (E - 0.5*rho*(uvel*uvel+vvel*vvel));</div>
-<div class="line">      theta = (E-0.5*rho*(uvel*uvel+vvel*vvel))/(Pexner*rho) * ((gamma-1.0)/R);</div>
-<div class="line"></div>
-<div class="line">      Q[(nvars+evars)*p+0] = rho;</div>
-<div class="line">      Q[(nvars+evars)*p+1] = uvel;</div>
-<div class="line">      Q[(nvars+evars)*p+2] = vvel;</div>
-<div class="line">      Q[(nvars+evars)*p+3] = P;</div>
-<div class="line">      Q[(nvars+evars)*p+4] = theta;</div>
-<div class="line">      Q[(nvars+evars)*p+5] = rho0;</div>
-<div class="line">      Q[(nvars+evars)*p+6] = P0;</div>
-<div class="line">      Q[(nvars+evars)*p+7] = Pexner;</div>
-<div class="line">      Q[(nvars+evars)*p+8] = theta0;</div>
-<div class="line">    }</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* write Tecplot/Text file */</span></div>
-<div class="line">  <span class="keywordflow">if</span> (flag) <a class="code" href="a00154.html#a265b0583afb79edd2f2f5d5087e5c3bf">WriteTecplot2D</a>(nvars+evars,imax,jmax,x,Q,oname);</div>
-<div class="line">  <span class="keywordflow">else</span>      WriteText2D   (nvars+evars,imax,jmax,x,Q,oname);</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* clean up */</span></div>
-<div class="line">  free(U);</div>
-<div class="line">  free(Q);</div>
-<div class="line">  free(x);</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00266.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>()</div>
-<div class="line">{</div>
-<div class="line">  FILE *out1, *out2, *in, *inputs;</div>
-<div class="line">  <span class="keywordtype">char</span> filename[50], op_file_format[50], tecfile[50], overwrite[50];</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordtype">int</span> flag;</div>
-<div class="line">  printf(<span class="stringliteral">&quot;Write tecplot file (1) or plain text file (0): &quot;</span>);</div>
-<div class="line">  scanf(<span class="stringliteral">&quot;%d&quot;</span>,&amp;flag);</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">if</span> ((flag != 1) &amp;&amp; (flag != 0)) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Invalid input. Should be 1 or 0.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span>(0);</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  printf(<span class="stringliteral">&quot;Reading solver.inp.\n&quot;</span>);</div>
-<div class="line">  inputs = fopen(<span class="stringliteral">&quot;solver.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!inputs) {</div>
-<div class="line">    fprintf(stderr,<span class="stringliteral">&quot;Error: File \&quot;solver.inp\&quot; not found.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span>(1);</div>
-<div class="line">  } <span class="keywordflow">else</span> {</div>
-<div class="line">      <span class="keywordtype">char</span> word[100];</div>
-<div class="line">    fscanf(inputs,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
-<div class="line">        <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
-<div class="line">            fscanf(inputs,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">            <span class="keywordflow">if</span>      (!strcmp(word, <span class="stringliteral">&quot;op_file_format&quot;</span>   ))  fscanf(inputs,<span class="stringliteral">&quot;%s&quot;</span> ,op_file_format);</div>
-<div class="line">            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;op_overwrite&quot;</span>     ))  fscanf(inputs,<span class="stringliteral">&quot;%s&quot;</span> ,overwrite      );</div>
-<div class="line">      }</div>
-<div class="line">    }</div>
-<div class="line">    fclose(inputs);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">if</span> (strcmp(op_file_format,<span class="stringliteral">&quot;binary&quot;</span>) &amp;&amp; strcmp(op_file_format,<span class="stringliteral">&quot;bin&quot;</span>)) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: solution output needs to be in binary files.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span>(0);</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  Parameters params;</div>
-<div class="line">  <span class="comment">/* default values */</span></div>
-<div class="line">  params.g        = 9.8;</div>
-<div class="line">  params.R        = 287.058;</div>
-<div class="line">  params.gamma    = 1.4;</div>
-<div class="line">  params.P_ref    = 100000.0;</div>
-<div class="line">  params.rho_ref  = 100000.0 / (params.R * 300.0);</div>
-<div class="line">  params.HB       = 0;</div>
-<div class="line">  params.Nbv      = 0.0;</div>
-<div class="line">  <span class="comment">/* read these parameters from file */</span></div>
-<div class="line">  printf(<span class="stringliteral">&quot;Reading physics.inp.\n&quot;</span>);</div>
-<div class="line">  inputs = fopen(<span class="stringliteral">&quot;physics.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!inputs) {</div>
-<div class="line">    fprintf(stderr,<span class="stringliteral">&quot;Error: File \&quot;physics.inp\&quot; not found.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span>(1);</div>
-<div class="line">  } <span class="keywordflow">else</span> {</div>
-<div class="line">      <span class="keywordtype">char</span> word[100];</div>
-<div class="line">    fscanf(inputs,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
-<div class="line">        <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
-<div class="line">            fscanf(inputs,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">            <span class="keywordflow">if</span>      (!strcmp(word, <span class="stringliteral">&quot;gamma&quot;</span>))    fscanf(inputs,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;params.gamma);</div>
-<div class="line">            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;gravity&quot;</span>)) {</div>
-<div class="line">          <span class="keywordtype">double</span> crap; fscanf(inputs,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;crap);</div>
-<div class="line">          fscanf(inputs,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;params.g);</div>
-<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word,<span class="stringliteral">&quot;p_ref&quot;</span>))   fscanf(inputs,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;params.P_ref);</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span>   (!strcmp(word,<span class="stringliteral">&quot;rho_ref&quot;</span>)) fscanf(inputs,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;params.rho_ref);</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span>   (!strcmp(word,<span class="stringliteral">&quot;HB&quot;</span>)) {</div>
-<div class="line">          fscanf(inputs,<span class="stringliteral">&quot;%d&quot;</span>,&amp;params.HB);</div>
-<div class="line">          <span class="keywordflow">if</span> (params.HB == 3) fscanf(inputs,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;params.Nbv);</div>
-<div class="line">        }</div>
-<div class="line">      }</div>
-<div class="line">    }</div>
-<div class="line">    fclose(inputs);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">if</span> (params.HB != 3) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: \&quot;HB\&quot; must be specified as 3 in physics.inp.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span>(0);</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">if</span> (!strcmp(overwrite,<span class="stringliteral">&quot;no&quot;</span>)) {</div>
-<div class="line">    strcpy(filename,<span class="stringliteral">&quot;op_00000.bin&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">while</span>(1) {</div>
-<div class="line">      <span class="comment">/* set filename */</span></div>
-<div class="line">      strcpy(tecfile,filename);</div>
-<div class="line">      tecfile[9]  = <span class="charliteral">&#39;d&#39;</span>;</div>
-<div class="line">      tecfile[10] = <span class="charliteral">&#39;a&#39;</span>;</div>
-<div class="line">      tecfile[11] = <span class="charliteral">&#39;t&#39;</span>;</div>
-<div class="line">      <span class="keywordtype">int</span> err = PostProcess(filename, tecfile, &amp;params, flag);</div>
-<div class="line">      <span class="keywordflow">if</span> (err == -1) {</div>
-<div class="line">        printf(<span class="stringliteral">&quot;No more files found. Exiting.\n&quot;</span>);</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">      }</div>
-<div class="line">      <a class="code" href="a00212.html#a8cd1b33d1c7898304be76c9fc01066e2">IncrementFilename</a>(filename);</div>
-<div class="line">    }</div>
-<div class="line">  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(overwrite,<span class="stringliteral">&quot;yes&quot;</span>)) {</div>
-<div class="line">    strcpy(filename,<span class="stringliteral">&quot;op.bin&quot;</span>);</div>
-<div class="line">    <span class="comment">/* set filename */</span></div>
-<div class="line">    strcpy(tecfile,filename);</div>
-<div class="line">    tecfile[3] = <span class="charliteral">&#39;d&#39;</span>;</div>
-<div class="line">    tecfile[4] = <span class="charliteral">&#39;a&#39;</span>;</div>
-<div class="line">    tecfile[5] = <span class="charliteral">&#39;t&#39;</span>;</div>
-<div class="line">    <span class="keywordtype">int</span> err = PostProcess(filename, tecfile, &amp;params, flag);</div>
-<div class="line">    <span class="keywordflow">if</span> (err == -1) {</div>
-<div class="line">      printf(<span class="stringliteral">&quot;Error: op.bin not found.\n&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">return</span>(0);</div>
-<div class="line">    }</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">return</span>(0);</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>The following plot shows the potential temperature perturbation contours at the final time t=3000. It was plotted using VisIt (<a href="https://wci.llnl.gov/simulation/computer-codes/visit/">https://wci.llnl.gov/simulation/computer-codes/visit/</a>) with tecplot2d format chosen in the above postprocessing code. </p><div class="image">
-<img src="Solution_2DNavStokIGWave.png" alt="Solution_2DNavStokIGWave.png"/>
+<p>Note that <b>iproc</b> is set to </p><pre class="fragment">  2 2
+</pre><p>in <b>solver.inp</b> (i.e., 2 processors along <em>x</em>, and 2 processors along <em>y</em>). Thus, this example should be run with 4 MPI ranks (or change <b>iproc</b>).</p>
+<p>After running the code, there should be 11 output files <b>op_00000.dat</b>, <b>op_00001.dat</b>, ... <b>op_00010.dat</b>; the first one is the solution at \(t=0\) and the final one is the solution at \(t=1\). Since <a class="el" href="a00144.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, separate files are written for solutions at each output time.</p>
+<p><a class="el" href="a00144.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>tecplot2d</em> in <b>solver.inp</b>, and thus, all the files are in a format that Tecplot (<a href="http://www.tecplot.com/">http://www.tecplot.com/</a>) or other visualization software supporting the Tecplot format (e.g. VisIt - <a href="https://wci.llnl.gov/simulation/computer-codes/visit/">https://wci.llnl.gov/simulation/computer-codes/visit/</a>) can read. In these files, the first two lines are the Tecplot headers, after which the data is written out as: the first two columns are grid indices, the next two columns are x and y coordinates, and the remaining columns are the solution components. <a class="el" href="a00144.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>text</em> to get the solution files in plain text format (which can be read in and visualized in MATLAB for example).</p>
+<p>The following plot shows the density contours at the final time t=1, obtained from plotting <b>op_00010.dat:</b> </p><div class="image">
+<img src="Solution_2DNavStokRadialExpansion.png" alt="Solution_2DNavStokRadialExpansion.png"/>
 </div>
-<p>If the postprocessing code above was used to write out files in text format, the following MATLAB script can be used to generate plots and visualize the solution: </p><div class="fragment"><div class="line">% Script to plot the solution of the inertia-gravity wave</div>
-<div class="line">% problem. </div>
-<div class="line"></div>
-<div class="line">% Compile and run aux/PostProcess.c after simulation is</div>
-<div class="line">% completed and choose text output.</div>
-<div class="line"></div>
-<div class="line">clear all;</div>
-<div class="line">close all;</div>
-<div class="line"></div>
-<div class="line">flag = 1;</div>
-<div class="line"><span class="keywordflow">if</span> (exist(<span class="stringliteral">&#39;op.dat&#39;</span>,<span class="stringliteral">&#39;file&#39;</span>))</div>
-<div class="line">    flag = 0;</div>
-<div class="line">elseif (exist(<span class="stringliteral">&#39;op_00000.dat&#39;</span>,<span class="stringliteral">&#39;file&#39;</span>))</div>
-<div class="line">    flag = 1;</div>
-<div class="line">else</div>
-<div class="line">  fprintf(&#39;Error: No solution files exist.\n&#39;);</div>
-<div class="line">  return;</div>
-<div class="line">end</div>
-<div class="line"></div>
-<div class="line">% get physical domain dimensions from any one solution file</div>
-<div class="line">if (flag)</div>
-<div class="line">    data = load(&#39;op_00000.dat&#39;);</div>
-<div class="line">else</div>
-<div class="line">    data = load(&#39;op.dat&#39;);</div>
-<div class="line">end</div>
-<div class="line">imax    = <a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(data(:,1)) + 1;</div>
-<div class="line">jmax    = <a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(data(:,2)) + 1;</div>
-<div class="line">xcoord  = reshape(data(:,3),imax,jmax);</div>
-<div class="line">ycoord  = reshape(data(:,4),imax,jmax);</div>
-<div class="line">xlen    = <a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(xcoord(:,1)) - <a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(xcoord(:,1));</div>
-<div class="line">zlen    = <a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(ycoord(1,:)) - <a class="code" href="a00157.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(ycoord(1,:));</div>
-<div class="line"></div>
-<div class="line">% Get screen size</div>
-<div class="line">scrsz = get(0,&#39;ScreenSize&#39;);</div>
-<div class="line">width = <a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(scrsz(3),1000);</div>
-<div class="line">height = width * <a class="code" href="a00157.html#affe776513b24d84b39af8ab0930fef7f">max</a>(10*zlen/xlen,0.1);</div>
-<div class="line"></div>
-<div class="line">% open figure window</div>
-<div class="line">scrsz = get(0,&#39;ScreenSize&#39;);</div>
-<div class="line">figSolution = figure(&#39;Position&#39;,[1 scrsz(4)/2 width height]);</div>
-<div class="line">figCrossSec = figure(&#39;Position&#39;,[1 scrsz(4)/2 width 0.67*width]);</div>
-<div class="line"></div>
-<div class="line">maxfiles = 1000;</div>
-<div class="line">if (flag)</div>
-<div class="line">    for n = 1:maxfiles</div>
-<div class="line">        filename = [&#39;op_&#39;,sprintf(&#39;%05d&#39;,n-1),&#39;.dat&#39;];</div>
-<div class="line">        if (~exist(filename,&#39;file&#39;))</div>
-<div class="line">            fprintf(&#39;No more files found.\n&#39;);</div>
-<div class="line">            break;</div>
-<div class="line">        end</div>
-<div class="line">        fprintf(&#39;Plotting %s.\n&#39;,filename);</div>
-<div class="line">        % read in the solution</div>
-<div class="line">        data    = load(filename);</div>
-<div class="line">        rho     = reshape(data(:, 5),imax,jmax);</div>
-<div class="line">        uvel    = reshape(data(:, 6),imax,jmax);</div>
-<div class="line">        vvel    = reshape(data(:, 7),imax,jmax);</div>
-<div class="line">        P       = reshape(data(:, 8),imax,jmax);</div>
-<div class="line">        theta   = reshape(data(:, 9),imax,jmax);</div>
-<div class="line">        rho0    = reshape(data(:,10),imax,jmax);</div>
-<div class="line">        P0      = reshape(data(:,11),imax,jmax);</div>
-<div class="line">        Pexner  = reshape(data(:,12),imax,jmax);</div>
-<div class="line">        theta0  = reshape(data(:,13),imax,jmax);</div>
-<div class="line"></div>
-<div class="line">        % plot the solution</div>
-<div class="line">        figure(figSolution);</div>
-<div class="line">        handle = contourf(xcoord,ycoord,theta-theta0,&#39;LineColor&#39;,&#39;none&#39;, ...</div>
-<div class="line">                          &#39;LevelList&#39;,-0.0015:0.0005:0.003);</div>
-<div class="line">        colorbar;</div>
-<div class="line">        xlabel(&#39;x&#39;,&#39;FontName&#39;,&#39;Times&#39;,&#39;FontSize&#39;,20,&#39;FontWeight&#39;,&#39;normal&#39;);</div>
-<div class="line">        ylabel(&#39;y&#39;,&#39;FontName&#39;,&#39;Times&#39;,&#39;FontSize&#39;,20,&#39;FontWeight&#39;,&#39;normal&#39;);</div>
-<div class="line">        set(gca,&#39;FontSize&#39;,14,&#39;FontName&#39;,&#39;Times&#39;);</div>
-<div class="line">        % plot the cross section</div>
-<div class="line">        figure(figCrossSec);</div>
-<div class="line">        plot(xcoord(:,1),(theta(:,jmax/2)-theta0(:,jmax/2)),&#39;-ko&#39;,&#39;LineWidth&#39;,2, ...</div>
-<div class="line">             &#39;MarkerSize&#39;,10);</div>
-<div class="line">        xlabel(&#39;x&#39;,&#39;FontName&#39;,&#39;Times&#39;,&#39;FontSize&#39;,20,&#39;FontWeight&#39;,&#39;normal&#39;);</div>
-<div class="line">        ylabel(&#39;\Delta\theta&#39;,&#39;FontName&#39;,&#39;Times&#39;,&#39;FontSize&#39;,20,&#39;FontWeight&#39;,&#39;normal&#39;);</div>
-<div class="line">        set(gca,&#39;FontSize&#39;,14,&#39;FontName&#39;,&#39;Times&#39;);</div>
-<div class="line">        axis([0 300000 0 0.003]);</div>
-<div class="line"></div>
-<div class="line">        % write plot to files</div>
-<div class="line">        print(figSolution,&#39;-depsc&#39;,[&#39;Contour_&#39;,sprintf(&#39;%05d&#39;,n-1),&#39;.eps&#39;]);</div>
-<div class="line">        print(figCrossSec,&#39;-depsc&#39;,[&#39;CrossSc_&#39;,sprintf(&#39;%05d&#39;,n-1),&#39;.eps&#39;]);</div>
-<div class="line">    end</div>
-<div class="line">else</div>
-<div class="line">    filename = &#39;op.dat&#39;;</div>
-<div class="line">    if (~exist(filename,&#39;file&#39;))</div>
-<div class="line">        break;</div>
-<div class="line">    end</div>
-<div class="line">    fprintf(&#39;Plotting %s.\n&#39;,filename);</div>
-<div class="line">    % read in the solution</div>
-<div class="line">    data    = load(filename);</div>
-<div class="line">    rho     = reshape(data(:, 5),imax,jmax);</div>
-<div class="line">    uvel    = reshape(data(:, 6),imax,jmax);</div>
-<div class="line">    vvel    = reshape(data(:, 7),imax,jmax);</div>
-<div class="line">    P       = reshape(data(:, 8),imax,jmax);</div>
-<div class="line">    theta   = reshape(data(:, 9),imax,jmax);</div>
-<div class="line">    rho0    = reshape(data(:,10),imax,jmax);</div>
-<div class="line">    P0      = reshape(data(:,11),imax,jmax);</div>
-<div class="line">    Pexner  = reshape(data(:,12),imax,jmax);</div>
-<div class="line">    theta0  = reshape(data(:,13),imax,jmax);</div>
-<div class="line">    </div>
-<div class="line">    % plot the solution</div>
-<div class="line">    figure(figSolution);</div>
-<div class="line">    handle = contourf(xcoord,ycoord,theta-theta0,&#39;LineColor&#39;,&#39;none&#39;, ...</div>
-<div class="line">                      &#39;LevelList&#39;,-0.0015:0.0005:0.003);</div>
-<div class="line">    colorbar;</div>
-<div class="line">    xlabel(&#39;x&#39;,&#39;FontName&#39;,&#39;Times&#39;,&#39;FontSize&#39;,20,&#39;FontWeight&#39;,&#39;normal&#39;);</div>
-<div class="line">    ylabel(&#39;y&#39;,&#39;FontName&#39;,&#39;Times&#39;,&#39;FontSize&#39;,20,&#39;FontWeight&#39;,&#39;normal&#39;);</div>
-<div class="line">    set(gca,&#39;FontSize&#39;,14,&#39;FontName&#39;,&#39;Times&#39;);</div>
-<div class="line">    % plot the cross section</div>
-<div class="line">    figure(figCrossSec);</div>
-<div class="line">    plot(xcoord(:,1),(theta(:,jmax/2)-theta0(:,jmax/2)),&#39;-k.&#39;,&#39;LineWidth&#39;,2, ...</div>
-<div class="line">         &#39;MarkerSize&#39;,10);</div>
-<div class="line">    xlabel(&#39;x&#39;,&#39;FontName&#39;,&#39;Times&#39;,&#39;FontSize&#39;,20,&#39;FontWeight&#39;,&#39;normal&#39;);</div>
-<div class="line">    ylabel(&#39;\Delta\theta&#39;,&#39;FontName&#39;,&#39;Times&#39;,&#39;FontSize&#39;,20,&#39;FontWeight&#39;,&#39;normal&#39;);</div>
-<div class="line">    set(gca,&#39;FontSize&#39;,14,&#39;FontName&#39;,&#39;Times&#39;);</div>
-<div class="line">    axis([0 300000 -0.002 0.003]);</div>
-<div class="line">    grid on;</div>
-<div class="line"></div>
-<div class="line">    % write plot to files</div>
-<div class="line">    print(figSolution,&#39;-depsc&#39;,[&#39;Contour.eps&#39;]);</div>
-<div class="line">    print(figCrossSec,&#39;-depsc&#39;,[&#39;CrossSc.eps&#39;]);</div>
-<div class="line">end</div>
-</div><!-- fragment --><p>Expected screen output: </p><div class="fragment"><div class="line">HyPar - Parallel (MPI) version with 12 processes</div>
+<p>Expected screen output: </p><div class="fragment"><div class="line">HyPar - Parallel (MPI) version with 4 processes</div>
+<div class="line">Compiled with PETSc time integration.</div>
 <div class="line">Reading solver inputs from file &quot;solver.inp&quot;.</div>
 <div class="line">    No. of dimensions                          : 2</div>
 <div class="line">    No. of variables                           : 4</div>
-<div class="line">    Domain size                                : 1200 50 </div>
-<div class="line">    Processes along each dimension             : 12 1 </div>
+<div class="line">    Domain size                                : 65 65 </div>
+<div class="line">    Processes along each dimension             : 2 2 </div>
 <div class="line">    No. of ghosts pts                          : 3</div>
-<div class="line">    No. of iter.                               : 6000</div>
+<div class="line">    No. of iter.                               : 100</div>
 <div class="line">    Restart iteration                          : 0</div>
 <div class="line">    Time integration scheme                    : rk (ssprk3)</div>
 <div class="line">    Spatial discretization scheme (hyperbolic) : weno5</div>
 <div class="line">    Split hyperbolic flux term?                : no</div>
-<div class="line">    Interpolation type for hyperbolic term     : components</div>
-<div class="line">    Spatial discretization type   (parabolic ) : nonconservative-2stage</div>
-<div class="line">    Spatial discretization scheme (parabolic ) : 4</div>
-<div class="line">    Time Step                                  : 5.000000E-01</div>
+<div class="line">    Interpolation type for hyperbolic term     : characteristic</div>
+<div class="line">    Spatial discretization type   (parabolic ) : nonconservative-1stage</div>
+<div class="line">    Spatial discretization scheme (parabolic ) : 2</div>
+<div class="line">    Time Step                                  : 1.000000E-02</div>
 <div class="line">    Check for conservation                     : no</div>
-<div class="line">    Screen output iterations                   : 40</div>
-<div class="line">    File output iterations                     : 240</div>
-<div class="line">    Initial solution file type                 : binary</div>
+<div class="line">    Screen output iterations                   : 1</div>
+<div class="line">    File output iterations                     : 10</div>
+<div class="line">    Initial solution file type                 : ascii</div>
 <div class="line">    Initial solution read mode                 : serial</div>
 <div class="line">    Solution file write mode                   : serial</div>
-<div class="line">    Solution file format                       : binary</div>
+<div class="line">    Solution file format                       : tecplot2d</div>
 <div class="line">    Overwrite solution file                    : no</div>
 <div class="line">    Physical model                             : navierstokes2d</div>
 <div class="line">Partitioning domain.</div>
 <div class="line">Allocating data arrays.</div>
-<div class="line">Reading array from binary file initial.inp (Serial mode).</div>
+<div class="line">Reading array from ASCII file initial.inp (Serial mode).</div>
 <div class="line">Volume integral of the initial solution:</div>
-<div class="line"> 0:  2.2722878895077519E+09</div>
-<div class="line"> 1:  4.5445757790155090E+10</div>
-<div class="line"> 2:  0.0000000000000000E+00</div>
-<div class="line"> 3:  4.4309563899845662E+14</div>
+<div class="line"> 0:  2.0432255062500285E+01</div>
+<div class="line"> 1:  8.8817841970012523E-16</div>
+<div class="line"> 2:  1.7763568394002505E-15</div>
+<div class="line"> 3:  3.8482601062500848E+01</div>
 <div class="line">Reading boundary conditions from &quot;boundary.inp&quot;.</div>
-<div class="line">  Boundary                       periodic:  Along dimension  0 and face +1</div>
-<div class="line">  Boundary                       periodic:  Along dimension  0 and face -1</div>
-<div class="line">  Boundary                      slip-wall:  Along dimension  1 and face +1</div>
-<div class="line">  Boundary                      slip-wall:  Along dimension  1 and face -1</div>
+<div class="line">  Boundary                    extrapolate:  Along dimension  0 and face +1</div>
+<div class="line">  Boundary                    extrapolate:  Along dimension  0 and face -1</div>
+<div class="line">  Boundary                    extrapolate:  Along dimension  1 and face +1</div>
+<div class="line">  Boundary                    extrapolate:  Along dimension  1 and face -1</div>
 <div class="line">4 boundary condition(s) read.</div>
 <div class="line">Initializing solvers.</div>
-<div class="line">Reading WENO parameters from weno.inp.</div>
+<div class="line">Warning: File weno.inp not found. Using default parameters for WENO5/CRWENO5/HCWENO5 scheme.</div>
 <div class="line">Initializing physics. Model = &quot;navierstokes2d&quot;</div>
 <div class="line">Reading physical model inputs from file &quot;physics.inp&quot;.</div>
 <div class="line">Setting up time integration.</div>
-<div class="line">Solving in time (from 0 to 6000 iterations)</div>
-<div class="line">Writing solution file op_00000.bin.</div>
-<div class="line">Iteration:      40  Time: 2.000E+01  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.0492E-03  </div>
-<div class="line">Iteration:      80  Time: 4.000E+01  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.0930E-03  </div>
-<div class="line">Iteration:     120  Time: 6.000E+01  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 3.4991E-03  </div>
-<div class="line">Iteration:     160  Time: 8.000E+01  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.1797E-03  </div>
-<div class="line">Iteration:     200  Time: 1.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.4168E-03  </div>
-<div class="line">Iteration:     240  Time: 1.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 4.5509E-03  </div>
-<div class="line">Writing solution file op_00001.bin.</div>
-<div class="line">Iteration:     280  Time: 1.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.4985E-03  </div>
-<div class="line">Iteration:     320  Time: 1.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.8418E-03  </div>
-<div class="line">Iteration:     360  Time: 1.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.3790E-03  </div>
-<div class="line">Iteration:     400  Time: 2.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.7174E-03  </div>
-<div class="line">Iteration:     440  Time: 2.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.3556E-03  </div>
-<div class="line">Iteration:     480  Time: 2.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.0681E-03  </div>
-<div class="line">Writing solution file op_00002.bin.</div>
-<div class="line">Iteration:     520  Time: 2.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.7763E-03  </div>
-<div class="line">Iteration:     560  Time: 2.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.9905E-03  </div>
-<div class="line">Iteration:     600  Time: 3.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.6221E-03  </div>
-<div class="line">Iteration:     640  Time: 3.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.6419E-03  </div>
-<div class="line">Iteration:     680  Time: 3.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.7744E-03  </div>
-<div class="line">Iteration:     720  Time: 3.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.0585E-03  </div>
-<div class="line">Writing solution file op_00003.bin.</div>
-<div class="line">Iteration:     760  Time: 3.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.3068E-03  </div>
-<div class="line">Iteration:     800  Time: 4.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.7069E-03  </div>
-<div class="line">Iteration:     840  Time: 4.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.4018E-03  </div>
-<div class="line">Iteration:     880  Time: 4.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.8105E-03  </div>
-<div class="line">Iteration:     920  Time: 4.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.7679E-03  </div>
-<div class="line">Iteration:     960  Time: 4.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.6621E-03  </div>
-<div class="line">Writing solution file op_00004.bin.</div>
-<div class="line">Iteration:    1000  Time: 5.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.2269E-03  </div>
-<div class="line">Iteration:    1040  Time: 5.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.9413E-03  </div>
-<div class="line">Iteration:    1080  Time: 5.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.8331E-03  </div>
-<div class="line">Iteration:    1120  Time: 5.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7049E-03  </div>
-<div class="line">Iteration:    1160  Time: 5.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.2985E-03  </div>
-<div class="line">Iteration:    1200  Time: 6.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.9478E-03  </div>
-<div class="line">Writing solution file op_00005.bin.</div>
-<div class="line">Iteration:    1240  Time: 6.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.3055E-03  </div>
-<div class="line">Iteration:    1280  Time: 6.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7137E-03  </div>
-<div class="line">Iteration:    1320  Time: 6.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.9739E-03  </div>
-<div class="line">Iteration:    1360  Time: 6.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.8813E-03  </div>
-<div class="line">Iteration:    1400  Time: 7.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.0079E-03  </div>
-<div class="line">Iteration:    1440  Time: 7.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.6260E-03  </div>
-<div class="line">Writing solution file op_00006.bin.</div>
-<div class="line">Iteration:    1480  Time: 7.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.6920E-03  </div>
-<div class="line">Iteration:    1520  Time: 7.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.6613E-03  </div>
-<div class="line">Iteration:    1560  Time: 7.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.7596E-03  </div>
-<div class="line">Iteration:    1600  Time: 8.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.7542E-03  </div>
-<div class="line">Iteration:    1640  Time: 8.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.6336E-03  </div>
-<div class="line">Iteration:    1680  Time: 8.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.3057E-03  </div>
-<div class="line">Writing solution file op_00007.bin.</div>
-<div class="line">Iteration:    1720  Time: 8.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.2239E-03  </div>
-<div class="line">Iteration:    1760  Time: 8.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.1612E-03  </div>
-<div class="line">Iteration:    1800  Time: 9.000E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.8415E-03  </div>
-<div class="line">Iteration:    1840  Time: 9.200E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.9011E-03  </div>
-<div class="line">Iteration:    1880  Time: 9.400E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.2880E-03  </div>
-<div class="line">Iteration:    1920  Time: 9.600E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.0046E-03  </div>
-<div class="line">Writing solution file op_00008.bin.</div>
-<div class="line">Iteration:    1960  Time: 9.800E+02  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.0716E-03  </div>
-<div class="line">Iteration:    2000  Time: 1.000E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.8161E-03  </div>
-<div class="line">Iteration:    2040  Time: 1.020E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.9994E-03  </div>
-<div class="line">Iteration:    2080  Time: 1.040E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.8182E-03  </div>
-<div class="line">Iteration:    2120  Time: 1.060E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.2835E-03  </div>
-<div class="line">Iteration:    2160  Time: 1.080E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.5020E-03  </div>
-<div class="line">Writing solution file op_00009.bin.</div>
-<div class="line">Iteration:    2200  Time: 1.100E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.5126E-03  </div>
-<div class="line">Iteration:    2240  Time: 1.120E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.0553E-03  </div>
-<div class="line">Iteration:    2280  Time: 1.140E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.8663E-03  </div>
-<div class="line">Iteration:    2320  Time: 1.160E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.8308E-03  </div>
-<div class="line">Iteration:    2360  Time: 1.180E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.0075E-03  </div>
-<div class="line">Iteration:    2400  Time: 1.200E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.5326E-03  </div>
-<div class="line">Writing solution file op_00010.bin.</div>
-<div class="line">Iteration:    2440  Time: 1.220E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.8712E-03  </div>
-<div class="line">Iteration:    2480  Time: 1.240E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.0134E-03  </div>
-<div class="line">Iteration:    2520  Time: 1.260E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.7395E-03  </div>
-<div class="line">Iteration:    2560  Time: 1.280E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.8065E-03  </div>
-<div class="line">Iteration:    2600  Time: 1.300E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.9950E-03  </div>
-<div class="line">Iteration:    2640  Time: 1.320E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.3216E-03  </div>
-<div class="line">Writing solution file op_00011.bin.</div>
-<div class="line">Iteration:    2680  Time: 1.340E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.7634E-03  </div>
-<div class="line">Iteration:    2720  Time: 1.360E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.9083E-03  </div>
-<div class="line">Iteration:    2760  Time: 1.380E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7745E-03  </div>
-<div class="line">Iteration:    2800  Time: 1.400E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.3969E-03  </div>
-<div class="line">Iteration:    2840  Time: 1.420E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.6665E-03  </div>
-<div class="line">Iteration:    2880  Time: 1.440E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.1802E-03  </div>
-<div class="line">Writing solution file op_00012.bin.</div>
-<div class="line">Iteration:    2920  Time: 1.460E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.3113E-03  </div>
-<div class="line">Iteration:    2960  Time: 1.480E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7526E-03  </div>
-<div class="line">Iteration:    3000  Time: 1.500E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.6473E-03  </div>
-<div class="line">Iteration:    3040  Time: 1.520E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.8820E-03  </div>
-<div class="line">Iteration:    3080  Time: 1.540E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.4255E-03  </div>
-<div class="line">Iteration:    3120  Time: 1.560E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.8367E-03  </div>
-<div class="line">Writing solution file op_00013.bin.</div>
-<div class="line">Iteration:    3160  Time: 1.580E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7348E-03  </div>
-<div class="line">Iteration:    3200  Time: 1.600E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7502E-03  </div>
-<div class="line">Iteration:    3240  Time: 1.620E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.9119E-03  </div>
-<div class="line">Iteration:    3280  Time: 1.640E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.9841E-03  </div>
-<div class="line">Iteration:    3320  Time: 1.660E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.8226E-03  </div>
-<div class="line">Iteration:    3360  Time: 1.680E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.1863E-03  </div>
-<div class="line">Writing solution file op_00014.bin.</div>
-<div class="line">Iteration:    3400  Time: 1.700E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.7891E-03  </div>
-<div class="line">Iteration:    3440  Time: 1.720E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7612E-03  </div>
-<div class="line">Iteration:    3480  Time: 1.740E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.9748E-03  </div>
-<div class="line">Iteration:    3520  Time: 1.760E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.8516E-03  </div>
-<div class="line">Iteration:    3560  Time: 1.780E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.2774E-03  </div>
-<div class="line">Iteration:    3600  Time: 1.800E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.7318E-03  </div>
-<div class="line">Writing solution file op_00015.bin.</div>
-<div class="line">Iteration:    3640  Time: 1.820E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.4708E-03  </div>
-<div class="line">Iteration:    3680  Time: 1.840E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.6319E-03  </div>
-<div class="line">Iteration:    3720  Time: 1.860E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.7854E-03  </div>
-<div class="line">Iteration:    3760  Time: 1.880E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.3108E-03  </div>
-<div class="line">Iteration:    3800  Time: 1.900E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.5171E-03  </div>
-<div class="line">Iteration:    3840  Time: 1.920E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.7782E-03  </div>
-<div class="line">Writing solution file op_00016.bin.</div>
-<div class="line">Iteration:    3880  Time: 1.940E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.7655E-03  </div>
-<div class="line">Iteration:    3920  Time: 1.960E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.4810E-03  </div>
-<div class="line">Iteration:    3960  Time: 1.980E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.3749E-03  </div>
-<div class="line">Iteration:    4000  Time: 2.000E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.2824E-03  </div>
-<div class="line">Iteration:    4040  Time: 2.020E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.7673E-03  </div>
-<div class="line">Iteration:    4080  Time: 2.040E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.0755E-03  </div>
-<div class="line">Writing solution file op_00017.bin.</div>
-<div class="line">Iteration:    4120  Time: 2.060E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.3418E-03  </div>
-<div class="line">Iteration:    4160  Time: 2.080E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.9120E-03  </div>
-<div class="line">Iteration:    4200  Time: 2.100E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7470E-03  </div>
-<div class="line">Iteration:    4240  Time: 2.120E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.0379E-03  </div>
-<div class="line">Iteration:    4280  Time: 2.140E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.7933E-03  </div>
-<div class="line">Iteration:    4320  Time: 2.160E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.0900E-03  </div>
-<div class="line">Writing solution file op_00018.bin.</div>
-<div class="line">Iteration:    4360  Time: 2.180E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.2293E-03  </div>
-<div class="line">Iteration:    4400  Time: 2.200E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.4596E-03  </div>
-<div class="line">Iteration:    4440  Time: 2.220E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.1880E-03  </div>
-<div class="line">Iteration:    4480  Time: 2.240E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.2352E-03  </div>
-<div class="line">Iteration:    4520  Time: 2.260E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.9434E-03  </div>
-<div class="line">Iteration:    4560  Time: 2.280E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.3993E-03  </div>
-<div class="line">Writing solution file op_00019.bin.</div>
-<div class="line">Iteration:    4600  Time: 2.300E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.8661E-03  </div>
-<div class="line">Iteration:    4640  Time: 2.320E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.6328E-03  </div>
-<div class="line">Iteration:    4680  Time: 2.340E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.1297E-03  </div>
-<div class="line">Iteration:    4720  Time: 2.360E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.9183E-03  </div>
-<div class="line">Iteration:    4760  Time: 2.380E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.5863E-03  </div>
-<div class="line">Iteration:    4800  Time: 2.400E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.3185E-03  </div>
-<div class="line">Writing solution file op_00020.bin.</div>
-<div class="line">Iteration:    4840  Time: 2.420E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.1014E-03  </div>
-<div class="line">Iteration:    4880  Time: 2.440E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.4552E-03  </div>
-<div class="line">Iteration:    4920  Time: 2.460E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.1292E-03  </div>
-<div class="line">Iteration:    4960  Time: 2.480E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.1676E-03  </div>
-<div class="line">Iteration:    5000  Time: 2.500E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.9563E-03  </div>
-<div class="line">Iteration:    5040  Time: 2.520E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.1401E-03  </div>
-<div class="line">Writing solution file op_00021.bin.</div>
-<div class="line">Iteration:    5080  Time: 2.540E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.7855E-03  </div>
-<div class="line">Iteration:    5120  Time: 2.560E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.2147E-03  </div>
-<div class="line">Iteration:    5160  Time: 2.580E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.4744E-03  </div>
-<div class="line">Iteration:    5200  Time: 2.600E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.4789E-03  </div>
-<div class="line">Iteration:    5240  Time: 2.620E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.2548E-03  </div>
-<div class="line">Iteration:    5280  Time: 2.640E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.2823E-03  </div>
-<div class="line">Writing solution file op_00022.bin.</div>
-<div class="line">Iteration:    5320  Time: 2.660E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.3434E-03  </div>
-<div class="line">Iteration:    5360  Time: 2.680E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.6574E-03  </div>
-<div class="line">Iteration:    5400  Time: 2.700E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.2298E-03  </div>
-<div class="line">Iteration:    5440  Time: 2.720E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.9320E-03  </div>
-<div class="line">Iteration:    5480  Time: 2.740E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.0715E-03  </div>
-<div class="line">Iteration:    5520  Time: 2.760E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.3989E-03  </div>
-<div class="line">Writing solution file op_00023.bin.</div>
-<div class="line">Iteration:    5560  Time: 2.780E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.4500E-03  </div>
-<div class="line">Iteration:    5600  Time: 2.800E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.9551E-03  </div>
-<div class="line">Iteration:    5640  Time: 2.820E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.3300E-03  </div>
-<div class="line">Iteration:    5680  Time: 2.840E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 5.6365E-03  </div>
-<div class="line">Iteration:    5720  Time: 2.860E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.9183E-03  </div>
-<div class="line">Iteration:    5760  Time: 2.880E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.1257E-03  </div>
-<div class="line">Writing solution file op_00024.bin.</div>
-<div class="line">Iteration:    5800  Time: 2.900E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.1300E-03  </div>
-<div class="line">Iteration:    5840  Time: 2.920E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 7.9849E-03  </div>
-<div class="line">Iteration:    5880  Time: 2.940E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.4976E-03  </div>
-<div class="line">Iteration:    5920  Time: 2.960E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.1624E-03  </div>
-<div class="line">Iteration:    5960  Time: 2.980E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 8.2216E-03  </div>
-<div class="line">Iteration:    6000  Time: 3.000E+03  Max CFL: 8.507E-01  Max Diff. No.: -1.000E+00  Norm: 6.5231E-03  </div>
-<div class="line">Writing solution file op_00025.bin.</div>
-<div class="line">Completed time integration (Final time: 3000.000000).</div>
+<div class="line">Solving in time (from 0 to 100 iterations)</div>
+<div class="line">Writing solution file op_00000.dat.</div>
+<div class="line">Iteration:       1  Time: 1.000E-02  Max CFL: 1.714E-01  Max Diff. No.: -1.000E+00  Norm: 7.5863E-03  </div>
+<div class="line">Iteration:       2  Time: 2.000E-02  Max CFL: 1.714E-01  Max Diff. No.: -1.000E+00  Norm: 7.4698E-03  </div>
+<div class="line">Iteration:       3  Time: 3.000E-02  Max CFL: 1.713E-01  Max Diff. No.: -1.000E+00  Norm: 7.3598E-03  </div>
+<div class="line">Iteration:       4  Time: 4.000E-02  Max CFL: 1.713E-01  Max Diff. No.: -1.000E+00  Norm: 7.2576E-03  </div>
+<div class="line">Iteration:       5  Time: 5.000E-02  Max CFL: 1.713E-01  Max Diff. No.: -1.000E+00  Norm: 7.1639E-03  </div>
+<div class="line">Iteration:       6  Time: 6.000E-02  Max CFL: 1.712E-01  Max Diff. No.: -1.000E+00  Norm: 7.0781E-03  </div>
+<div class="line">Iteration:       7  Time: 7.000E-02  Max CFL: 1.712E-01  Max Diff. No.: -1.000E+00  Norm: 6.9990E-03  </div>
+<div class="line">Iteration:       8  Time: 8.000E-02  Max CFL: 1.711E-01  Max Diff. No.: -1.000E+00  Norm: 6.9256E-03  </div>
+<div class="line">Iteration:       9  Time: 9.000E-02  Max CFL: 1.711E-01  Max Diff. No.: -1.000E+00  Norm: 6.8574E-03  </div>
+<div class="line">Iteration:      10  Time: 1.000E-01  Max CFL: 1.710E-01  Max Diff. No.: -1.000E+00  Norm: 6.7924E-03  </div>
+<div class="line">Writing solution file op_00001.dat.</div>
+<div class="line">Iteration:      11  Time: 1.100E-01  Max CFL: 1.710E-01  Max Diff. No.: -1.000E+00  Norm: 6.7287E-03  </div>
+<div class="line">Iteration:      12  Time: 1.200E-01  Max CFL: 1.710E-01  Max Diff. No.: -1.000E+00  Norm: 6.6650E-03  </div>
+<div class="line">Iteration:      13  Time: 1.300E-01  Max CFL: 1.709E-01  Max Diff. No.: -1.000E+00  Norm: 6.6022E-03  </div>
+<div class="line">Iteration:      14  Time: 1.400E-01  Max CFL: 1.709E-01  Max Diff. No.: -1.000E+00  Norm: 6.5416E-03  </div>
+<div class="line">Iteration:      15  Time: 1.500E-01  Max CFL: 1.708E-01  Max Diff. No.: -1.000E+00  Norm: 6.4845E-03  </div>
+<div class="line">Iteration:      16  Time: 1.600E-01  Max CFL: 1.708E-01  Max Diff. No.: -1.000E+00  Norm: 6.4309E-03  </div>
+<div class="line">Iteration:      17  Time: 1.700E-01  Max CFL: 1.707E-01  Max Diff. No.: -1.000E+00  Norm: 6.3806E-03  </div>
+<div class="line">Iteration:      18  Time: 1.800E-01  Max CFL: 1.707E-01  Max Diff. No.: -1.000E+00  Norm: 6.3327E-03  </div>
+<div class="line">Iteration:      19  Time: 1.900E-01  Max CFL: 1.706E-01  Max Diff. No.: -1.000E+00  Norm: 6.2867E-03  </div>
+<div class="line">Iteration:      20  Time: 2.000E-01  Max CFL: 1.706E-01  Max Diff. No.: -1.000E+00  Norm: 6.2420E-03  </div>
+<div class="line">Writing solution file op_00002.dat.</div>
+<div class="line">Iteration:      21  Time: 2.100E-01  Max CFL: 1.705E-01  Max Diff. No.: -1.000E+00  Norm: 6.1982E-03  </div>
+<div class="line">Iteration:      22  Time: 2.200E-01  Max CFL: 1.705E-01  Max Diff. No.: -1.000E+00  Norm: 6.1552E-03  </div>
+<div class="line">Iteration:      23  Time: 2.300E-01  Max CFL: 1.704E-01  Max Diff. No.: -1.000E+00  Norm: 6.1128E-03  </div>
+<div class="line">Iteration:      24  Time: 2.400E-01  Max CFL: 1.704E-01  Max Diff. No.: -1.000E+00  Norm: 6.0714E-03  </div>
+<div class="line">Iteration:      25  Time: 2.500E-01  Max CFL: 1.703E-01  Max Diff. No.: -1.000E+00  Norm: 6.0310E-03  </div>
+<div class="line">Iteration:      26  Time: 2.600E-01  Max CFL: 1.703E-01  Max Diff. No.: -1.000E+00  Norm: 5.9919E-03  </div>
+<div class="line">Iteration:      27  Time: 2.700E-01  Max CFL: 1.702E-01  Max Diff. No.: -1.000E+00  Norm: 5.9539E-03  </div>
+<div class="line">Iteration:      28  Time: 2.800E-01  Max CFL: 1.701E-01  Max Diff. No.: -1.000E+00  Norm: 5.9169E-03  </div>
+<div class="line">Iteration:      29  Time: 2.900E-01  Max CFL: 1.701E-01  Max Diff. No.: -1.000E+00  Norm: 5.8808E-03  </div>
+<div class="line">Iteration:      30  Time: 3.000E-01  Max CFL: 1.700E-01  Max Diff. No.: -1.000E+00  Norm: 5.8457E-03  </div>
+<div class="line">Writing solution file op_00003.dat.</div>
+<div class="line">Iteration:      31  Time: 3.100E-01  Max CFL: 1.700E-01  Max Diff. No.: -1.000E+00  Norm: 5.8115E-03  </div>
+<div class="line">Iteration:      32  Time: 3.200E-01  Max CFL: 1.699E-01  Max Diff. No.: -1.000E+00  Norm: 5.7783E-03  </div>
+<div class="line">Iteration:      33  Time: 3.300E-01  Max CFL: 1.699E-01  Max Diff. No.: -1.000E+00  Norm: 5.7457E-03  </div>
+<div class="line">Iteration:      34  Time: 3.400E-01  Max CFL: 1.698E-01  Max Diff. No.: -1.000E+00  Norm: 5.7136E-03  </div>
+<div class="line">Iteration:      35  Time: 3.500E-01  Max CFL: 1.697E-01  Max Diff. No.: -1.000E+00  Norm: 5.6819E-03  </div>
+<div class="line">Iteration:      36  Time: 3.600E-01  Max CFL: 1.697E-01  Max Diff. No.: -1.000E+00  Norm: 5.6507E-03  </div>
+<div class="line">Iteration:      37  Time: 3.700E-01  Max CFL: 1.696E-01  Max Diff. No.: -1.000E+00  Norm: 5.6198E-03  </div>
+<div class="line">Iteration:      38  Time: 3.800E-01  Max CFL: 1.696E-01  Max Diff. No.: -1.000E+00  Norm: 5.5895E-03  </div>
+<div class="line">Iteration:      39  Time: 3.900E-01  Max CFL: 1.695E-01  Max Diff. No.: -1.000E+00  Norm: 5.5599E-03  </div>
+<div class="line">Iteration:      40  Time: 4.000E-01  Max CFL: 1.694E-01  Max Diff. No.: -1.000E+00  Norm: 5.5311E-03  </div>
+<div class="line">Writing solution file op_00004.dat.</div>
+<div class="line">Iteration:      41  Time: 4.100E-01  Max CFL: 1.694E-01  Max Diff. No.: -1.000E+00  Norm: 5.5033E-03  </div>
+<div class="line">Iteration:      42  Time: 4.200E-01  Max CFL: 1.693E-01  Max Diff. No.: -1.000E+00  Norm: 5.4762E-03  </div>
+<div class="line">Iteration:      43  Time: 4.300E-01  Max CFL: 1.692E-01  Max Diff. No.: -1.000E+00  Norm: 5.4497E-03  </div>
+<div class="line">Iteration:      44  Time: 4.400E-01  Max CFL: 1.692E-01  Max Diff. No.: -1.000E+00  Norm: 5.4236E-03  </div>
+<div class="line">Iteration:      45  Time: 4.500E-01  Max CFL: 1.691E-01  Max Diff. No.: -1.000E+00  Norm: 5.3979E-03  </div>
+<div class="line">Iteration:      46  Time: 4.600E-01  Max CFL: 1.690E-01  Max Diff. No.: -1.000E+00  Norm: 5.3727E-03  </div>
+<div class="line">Iteration:      47  Time: 4.700E-01  Max CFL: 1.690E-01  Max Diff. No.: -1.000E+00  Norm: 5.3480E-03  </div>
+<div class="line">Iteration:      48  Time: 4.800E-01  Max CFL: 1.689E-01  Max Diff. No.: -1.000E+00  Norm: 5.3239E-03  </div>
+<div class="line">Iteration:      49  Time: 4.900E-01  Max CFL: 1.688E-01  Max Diff. No.: -1.000E+00  Norm: 5.3004E-03  </div>
+<div class="line">Iteration:      50  Time: 5.000E-01  Max CFL: 1.688E-01  Max Diff. No.: -1.000E+00  Norm: 5.2777E-03  </div>
+<div class="line">Writing solution file op_00005.dat.</div>
+<div class="line">Iteration:      51  Time: 5.100E-01  Max CFL: 1.687E-01  Max Diff. No.: -1.000E+00  Norm: 5.2558E-03  </div>
+<div class="line">Iteration:      52  Time: 5.200E-01  Max CFL: 1.686E-01  Max Diff. No.: -1.000E+00  Norm: 5.2346E-03  </div>
+<div class="line">Iteration:      53  Time: 5.300E-01  Max CFL: 1.685E-01  Max Diff. No.: -1.000E+00  Norm: 5.2142E-03  </div>
+<div class="line">Iteration:      54  Time: 5.400E-01  Max CFL: 1.685E-01  Max Diff. No.: -1.000E+00  Norm: 5.1945E-03  </div>
+<div class="line">Iteration:      55  Time: 5.500E-01  Max CFL: 1.684E-01  Max Diff. No.: -1.000E+00  Norm: 5.1755E-03  </div>
+<div class="line">Iteration:      56  Time: 5.600E-01  Max CFL: 1.683E-01  Max Diff. No.: -1.000E+00  Norm: 5.1570E-03  </div>
+<div class="line">Iteration:      57  Time: 5.700E-01  Max CFL: 1.682E-01  Max Diff. No.: -1.000E+00  Norm: 5.1390E-03  </div>
+<div class="line">Iteration:      58  Time: 5.800E-01  Max CFL: 1.682E-01  Max Diff. No.: -1.000E+00  Norm: 5.1216E-03  </div>
+<div class="line">Iteration:      59  Time: 5.900E-01  Max CFL: 1.681E-01  Max Diff. No.: -1.000E+00  Norm: 5.1047E-03  </div>
+<div class="line">Iteration:      60  Time: 6.000E-01  Max CFL: 1.680E-01  Max Diff. No.: -1.000E+00  Norm: 5.0883E-03  </div>
+<div class="line">Writing solution file op_00006.dat.</div>
+<div class="line">Iteration:      61  Time: 6.100E-01  Max CFL: 1.679E-01  Max Diff. No.: -1.000E+00  Norm: 5.0723E-03  </div>
+<div class="line">Iteration:      62  Time: 6.200E-01  Max CFL: 1.678E-01  Max Diff. No.: -1.000E+00  Norm: 5.0567E-03  </div>
+<div class="line">Iteration:      63  Time: 6.300E-01  Max CFL: 1.678E-01  Max Diff. No.: -1.000E+00  Norm: 5.0412E-03  </div>
+<div class="line">Iteration:      64  Time: 6.400E-01  Max CFL: 1.677E-01  Max Diff. No.: -1.000E+00  Norm: 5.0259E-03  </div>
+<div class="line">Iteration:      65  Time: 6.500E-01  Max CFL: 1.676E-01  Max Diff. No.: -1.000E+00  Norm: 5.0104E-03  </div>
+<div class="line">Iteration:      66  Time: 6.600E-01  Max CFL: 1.675E-01  Max Diff. No.: -1.000E+00  Norm: 4.9945E-03  </div>
+<div class="line">Iteration:      67  Time: 6.700E-01  Max CFL: 1.674E-01  Max Diff. No.: -1.000E+00  Norm: 4.9782E-03  </div>
+<div class="line">Iteration:      68  Time: 6.800E-01  Max CFL: 1.673E-01  Max Diff. No.: -1.000E+00  Norm: 4.9612E-03  </div>
+<div class="line">Iteration:      69  Time: 6.900E-01  Max CFL: 1.672E-01  Max Diff. No.: -1.000E+00  Norm: 4.9434E-03  </div>
+<div class="line">Iteration:      70  Time: 7.000E-01  Max CFL: 1.671E-01  Max Diff. No.: -1.000E+00  Norm: 4.9247E-03  </div>
+<div class="line">Writing solution file op_00007.dat.</div>
+<div class="line">Iteration:      71  Time: 7.100E-01  Max CFL: 1.671E-01  Max Diff. No.: -1.000E+00  Norm: 4.9051E-03  </div>
+<div class="line">Iteration:      72  Time: 7.200E-01  Max CFL: 1.670E-01  Max Diff. No.: -1.000E+00  Norm: 4.8844E-03  </div>
+<div class="line">Iteration:      73  Time: 7.300E-01  Max CFL: 1.669E-01  Max Diff. No.: -1.000E+00  Norm: 4.8627E-03  </div>
+<div class="line">Iteration:      74  Time: 7.400E-01  Max CFL: 1.668E-01  Max Diff. No.: -1.000E+00  Norm: 4.8398E-03  </div>
+<div class="line">Iteration:      75  Time: 7.500E-01  Max CFL: 1.667E-01  Max Diff. No.: -1.000E+00  Norm: 4.8155E-03  </div>
+<div class="line">Iteration:      76  Time: 7.600E-01  Max CFL: 1.666E-01  Max Diff. No.: -1.000E+00  Norm: 4.7899E-03  </div>
+<div class="line">Iteration:      77  Time: 7.700E-01  Max CFL: 1.665E-01  Max Diff. No.: -1.000E+00  Norm: 4.7628E-03  </div>
+<div class="line">Iteration:      78  Time: 7.800E-01  Max CFL: 1.664E-01  Max Diff. No.: -1.000E+00  Norm: 4.7342E-03  </div>
+<div class="line">Iteration:      79  Time: 7.900E-01  Max CFL: 1.663E-01  Max Diff. No.: -1.000E+00  Norm: 4.7042E-03  </div>
+<div class="line">Iteration:      80  Time: 8.000E-01  Max CFL: 1.662E-01  Max Diff. No.: -1.000E+00  Norm: 4.6729E-03  </div>
+<div class="line">Writing solution file op_00008.dat.</div>
+<div class="line">Iteration:      81  Time: 8.100E-01  Max CFL: 1.661E-01  Max Diff. No.: -1.000E+00  Norm: 4.6406E-03  </div>
+<div class="line">Iteration:      82  Time: 8.200E-01  Max CFL: 1.660E-01  Max Diff. No.: -1.000E+00  Norm: 4.6072E-03  </div>
+<div class="line">Iteration:      83  Time: 8.300E-01  Max CFL: 1.659E-01  Max Diff. No.: -1.000E+00  Norm: 4.5729E-03  </div>
+<div class="line">Iteration:      84  Time: 8.400E-01  Max CFL: 1.658E-01  Max Diff. No.: -1.000E+00  Norm: 4.5378E-03  </div>
+<div class="line">Iteration:      85  Time: 8.500E-01  Max CFL: 1.657E-01  Max Diff. No.: -1.000E+00  Norm: 4.5019E-03  </div>
+<div class="line">Iteration:      86  Time: 8.600E-01  Max CFL: 1.656E-01  Max Diff. No.: -1.000E+00  Norm: 4.4653E-03  </div>
+<div class="line">Iteration:      87  Time: 8.700E-01  Max CFL: 1.654E-01  Max Diff. No.: -1.000E+00  Norm: 4.4281E-03  </div>
+<div class="line">Iteration:      88  Time: 8.800E-01  Max CFL: 1.653E-01  Max Diff. No.: -1.000E+00  Norm: 4.3903E-03  </div>
+<div class="line">Iteration:      89  Time: 8.900E-01  Max CFL: 1.652E-01  Max Diff. No.: -1.000E+00  Norm: 4.3521E-03  </div>
+<div class="line">Iteration:      90  Time: 9.000E-01  Max CFL: 1.651E-01  Max Diff. No.: -1.000E+00  Norm: 4.3135E-03  </div>
+<div class="line">Writing solution file op_00009.dat.</div>
+<div class="line">Iteration:      91  Time: 9.100E-01  Max CFL: 1.651E-01  Max Diff. No.: -1.000E+00  Norm: 4.2747E-03  </div>
+<div class="line">Iteration:      92  Time: 9.200E-01  Max CFL: 1.650E-01  Max Diff. No.: -1.000E+00  Norm: 4.2357E-03  </div>
+<div class="line">Iteration:      93  Time: 9.300E-01  Max CFL: 1.650E-01  Max Diff. No.: -1.000E+00  Norm: 4.1966E-03  </div>
+<div class="line">Iteration:      94  Time: 9.400E-01  Max CFL: 1.649E-01  Max Diff. No.: -1.000E+00  Norm: 4.1575E-03  </div>
+<div class="line">Iteration:      95  Time: 9.500E-01  Max CFL: 1.649E-01  Max Diff. No.: -1.000E+00  Norm: 4.1184E-03  </div>
+<div class="line">Iteration:      96  Time: 9.600E-01  Max CFL: 1.650E-01  Max Diff. No.: -1.000E+00  Norm: 4.0793E-03  </div>
+<div class="line">Iteration:      97  Time: 9.700E-01  Max CFL: 1.650E-01  Max Diff. No.: -1.000E+00  Norm: 4.0404E-03  </div>
+<div class="line">Iteration:      98  Time: 9.800E-01  Max CFL: 1.650E-01  Max Diff. No.: -1.000E+00  Norm: 4.0016E-03  </div>
+<div class="line">Iteration:      99  Time: 9.900E-01  Max CFL: 1.650E-01  Max Diff. No.: -1.000E+00  Norm: 3.9630E-03  </div>
+<div class="line">Iteration:     100  Time: 1.000E+00  Max CFL: 1.650E-01  Max Diff. No.: -1.000E+00  Norm: 3.9246E-03  </div>
+<div class="line">Writing solution file op_00010.dat.</div>
+<div class="line">Completed time integration (Final time: 1.000000).</div>
 <div class="line">Computed errors:</div>
 <div class="line">  L1         Error           : 0.0000000000000000E+00</div>
 <div class="line">  L2         Error           : 0.0000000000000000E+00</div>
@@ -1037,8 +468,8 @@ $(document).ready(function(){initNavTree('a00042.html','');});
 <div class="line">    0.0000000000000000E+00</div>
 <div class="line">    0.0000000000000000E+00</div>
 <div class="line">    0.0000000000000000E+00</div>
-<div class="line">Solver runtime (in seconds): 2.5231180100000000E+02</div>
-<div class="line">Total  runtime (in seconds): 2.5233552900000001E+02</div>
+<div class="line">Solver runtime (in seconds): 2.7592850000000002E+00</div>
+<div class="line">Total  runtime (in seconds): 2.7687179999999998E+00</div>
 <div class="line">Deallocating arrays.</div>
 <div class="line">Finished.</div>
 </div><!-- fragment --> </div></div><!-- contents -->

@@ -1,4 +1,5 @@
 var a00308 =
 [
-    [ "BurgersCleanup", "a00308.html#aa1c99cef648d3cdcf4d6c6f86e60c513", null ]
+    [ "MPIMin_integer", "a00308.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
+    [ "MPIMin_double", "a00308.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
 ];

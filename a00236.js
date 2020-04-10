@@ -1,5 +1,4 @@
 var a00236 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00236.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderHCWENO", "a00236.html#a0bba15d3eb27ae63e0b876465c2731a3", null ]
+    [ "ParabolicFunctionCons1Stage", "a00236.html#a5e79cc5efd6d3e4c93717a67e0fbf918", null ]
 ];

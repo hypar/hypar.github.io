@@ -1,4 +1,4 @@
 var a00389 =
 [
-    [ "NavierStokes2DParabolicFunction", "a00389.html#a3b7da8c25125ac4681035c3bcd35c449", null ]
+    [ "FPPowerSystem3BusAdvection", "a00389.html#a47826d63ca1c3c5825335a3edee34cfd", null ]
 ];

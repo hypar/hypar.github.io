@@ -1,5 +1,5 @@
 var a00343 =
 [
-    [ "FPPowerSystemDriftFunction", "a00343.html#aad5370d85f97a4a03459e9b9a185cfa1", null ],
-    [ "FPPowerSystemComputeCFL", "a00343.html#aaecb1f794e2a9ffb670810d20f275339", null ]
+    [ "Euler1DFlux", "a00343.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
+    [ "Euler1DStiffFlux", "a00343.html#a3017a4ade688681fa865c1556fb73f97", null ]
 ];

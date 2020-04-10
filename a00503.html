@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/TridiagLU/tridiagScaLPK.c File Reference</title>
+<title>HyPar: src/Simulation/WriteInputs.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,21 +113,162 @@ $(document).ready(function(){initNavTree('a00503.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">tridiagScaLPK.c File Reference</div>  </div>
+<div class="title">WriteInputs.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Wrapper function to solve tridiagonal systems using ScaLAPACK's pddtsv.  
-<a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00166_source.html">basic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00194_source.html">timeintegration.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00181_source.html">mpivars.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00156_source.html">simulation_object.h</a>&gt;</code><br />
+</div>
 <p><a href="a00503_source.html">Go to the source code of this file.</a></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper function to solve tridiagonal systems using ScaLAPACK's pddtsv. </p>
-<dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a6566e35d7154199c120533ea849800e8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00503.html#a6566e35d7154199c120533ea849800e8">WriteInputs</a> (void *s, int nsims, int rank)</td></tr>
+<tr class="separator:a6566e35d7154199c120533ea849800e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a6566e35d7154199c120533ea849800e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int WriteInputs </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nsims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rank</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write the simulation inputs read from the file <b>solver.inp</b>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Array of simulation objects of type <a class="el" href="a00156.html#a00563" title="Structure defining a simulation. ">SimulationObject</a> of size nsims </td></tr>
+    <tr><td class="paramname">nsims</td><td>Number of simulation objects </td></tr>
+    <tr><td class="paramname">rank</td><td>MPI rank of this process </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition in file <a class="el" href="a00503_source.html">tridiagScaLPK.c</a>.</p>
-</div></div><!-- contents -->
+<p>Definition at line <a class="el" href="a00503_source.html#l00015">15</a> of file <a class="el" href="a00503_source.html">WriteInputs.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="a00156.html#a00563">SimulationObject</a> *sim = (<a class="code" href="a00156.html#a00563">SimulationObject</a>*) s;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">int</span> n;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">if</span> (sim == NULL)  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">if</span> (!rank) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    printf(<span class="stringliteral">&quot;  No. of dimensions                          : %d\n&quot;</span>,sim[0].solver.ndims);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    printf(<span class="stringliteral">&quot;  No. of variables                           : %d\n&quot;</span>,sim[0].solver.nvars);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordflow">if</span> (nsims &gt; 1) {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;      <span class="keywordtype">int</span> n;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;      printf(<span class="stringliteral">&quot;  Domain sizes:\n&quot;</span>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nsims; n++) {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        printf(<span class="stringliteral">&quot;    domain %3d - &quot;</span>, n);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">for</span> (i=0; i&lt;sim[n].<a class="code" href="a00156.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; i++) printf (<span class="stringliteral">&quot;%d &quot;</span>,sim[n].solver.dim_global[i]);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      }</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        printf(<span class="stringliteral">&quot;  Processes along each dimension:\n&quot;</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nsims; n++) {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        printf(<span class="stringliteral">&quot;    domain %3d - &quot;</span>, n);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">for</span> (i=0; i&lt;sim[n].<a class="code" href="a00156.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; i++) printf (<span class="stringliteral">&quot;%d &quot;</span>,sim[n].mpi.iproc[i]);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        printf(<span class="stringliteral">&quot;  Domain size                                : &quot;</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;sim[0].<a class="code" href="a00156.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; i++) printf (<span class="stringliteral">&quot;%d &quot;</span>,sim[0].solver.dim_global[i]);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        printf(<span class="stringliteral">&quot;  Processes along each dimension             : &quot;</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;sim[0].<a class="code" href="a00156.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; i++) printf (<span class="stringliteral">&quot;%d &quot;</span>,sim[0].mpi.iproc[i]);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      printf(<span class="stringliteral">&quot;  No. of ghosts pts                          : %d\n&quot;</span>     ,sim[0].solver.ghosts              );</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      printf(<span class="stringliteral">&quot;  No. of iter.                               : %d\n&quot;</span>     ,sim[0].solver.n_iter              );</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      printf(<span class="stringliteral">&quot;  Restart iteration                          : %d\n&quot;</span>     ,sim[0].solver.restart_iter        );</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#ifdef with_petsc</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">if</span> (sim[0].solver.use_petscTS)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      printf(<span class="stringliteral">&quot;  Time integration scheme                    : PETSc \n&quot;</span>                            );</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      printf(<span class="stringliteral">&quot;  Time integration scheme                    : %s &quot;</span>,sim[0].solver.time_scheme             );</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <span class="keywordflow">if</span> (strcmp(sim[0].solver.time_scheme,<a class="code" href="a00139.html#af9b1e641532cff8859c5c5a8377f5feb">_FORWARD_EULER_</a>)) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        printf(<span class="stringliteral">&quot;(%s)&quot;</span>,sim[0].solver.time_scheme_type                                                    );</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    printf(<span class="stringliteral">&quot;  Time integration scheme                    : %s &quot;</span>,sim[0].solver.time_scheme               );</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">if</span> (strcmp(sim[0].solver.time_scheme,<a class="code" href="a00139.html#af9b1e641532cff8859c5c5a8377f5feb">_FORWARD_EULER_</a>)) {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      printf(<span class="stringliteral">&quot;(%s)&quot;</span>,sim[0].solver.time_scheme_type                                                      );</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    printf(<span class="stringliteral">&quot;  Spatial discretization scheme (hyperbolic) : %s\n&quot;</span>     ,sim[0].solver.spatial_scheme_hyp  );</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    printf(<span class="stringliteral">&quot;  Split hyperbolic flux term?                : %s\n&quot;</span>     ,sim[0].solver.SplitHyperbolicFlux );</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    printf(<span class="stringliteral">&quot;  Interpolation type for hyperbolic term     : %s\n&quot;</span>     ,sim[0].solver.interp_type         );</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    printf(<span class="stringliteral">&quot;  Spatial discretization type   (parabolic ) : %s\n&quot;</span>     ,sim[0].solver.spatial_type_par    );</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    printf(<span class="stringliteral">&quot;  Spatial discretization scheme (parabolic ) : %s\n&quot;</span>     ,sim[0].solver.spatial_scheme_par  );</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    printf(<span class="stringliteral">&quot;  Time Step                                  : %E\n&quot;</span>     ,sim[0].solver.dt                  );</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    printf(<span class="stringliteral">&quot;  Check for conservation                     : %s\n&quot;</span>     ,sim[0].solver.ConservationCheck   );</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    printf(<span class="stringliteral">&quot;  Screen output iterations                   : %d\n&quot;</span>     ,sim[0].solver.screen_op_iter      );</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    printf(<span class="stringliteral">&quot;  File output iterations                     : %d\n&quot;</span>     ,sim[0].solver.file_op_iter        );</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    printf(<span class="stringliteral">&quot;  Initial solution file type                 : %s\n&quot;</span>     ,sim[0].solver.ip_file_type        );</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    printf(<span class="stringliteral">&quot;  Initial solution read mode                 : %s&quot;</span>       ,sim[0].solver.input_mode          );</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">if</span> (strcmp(sim[0].solver.input_mode,<span class="stringliteral">&quot;serial&quot;</span>))    printf(<span class="stringliteral">&quot;  [%d file IO rank(s)]\n&quot;</span>,sim[0].mpi.N_IORanks  );</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">else</span>                                        printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    printf(<span class="stringliteral">&quot;  Solution file write mode                   : %s&quot;</span>       ,sim[0].solver.output_mode         );</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">if</span> (strcmp(sim[0].solver.output_mode,<span class="stringliteral">&quot;serial&quot;</span>))   printf(<span class="stringliteral">&quot;  [%d file IO rank(s)]\n&quot;</span>,sim[0].mpi.N_IORanks  );</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">else</span>                                        printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    printf(<span class="stringliteral">&quot;  Solution file format                       : %s\n&quot;</span>     ,sim[0].solver.op_file_format      );</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    printf(<span class="stringliteral">&quot;  Overwrite solution file                    : %s\n&quot;</span>     ,sim[0].solver.op_overwrite        );</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    printf(<span class="stringliteral">&quot;  Physical model                             : %s\n&quot;</span>     ,sim[0].solver.model               );</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">if</span> (sim[0].solver.flag_ib) {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      printf(<span class="stringliteral">&quot;  Immersed Body                              : %s\n&quot;</span>     ,sim[0].solver.ib_filename         );</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
+<div class="ttc" id="a00156_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00156.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00156_source.html#l00026">simulation_object.h:26</a></div></div>
+<div class="ttc" id="a00144_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00144.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00139_html_af9b1e641532cff8859c5c5a8377f5feb"><div class="ttname"><a href="a00139.html#af9b1e641532cff8859c5c5a8377f5feb">_FORWARD_EULER_</a></div><div class="ttdeci">#define _FORWARD_EULER_</div><div class="ttdef"><b>Definition:</b> <a href="a00139_source.html#l00013">timeintegration_struct.h:13</a></div></div>
+<div class="ttc" id="a00156_html_a00563"><div class="ttname"><a href="a00156.html#a00563">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00156_source.html#l00023">simulation_object.h:23</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->
 <script type="text/javascript">

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/BoundaryConditions/BCSupersonicOutflow.c Source File</title>
+<title>HyPar: include/timeintegration_cpp.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,154 +114,34 @@ $(document).ready(function(){initNavTree('a00195_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BCSupersonicOutflow.c</div>  </div>
+<div class="title">timeintegration_cpp.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00195.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00147.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00146.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00148.html">boundaryconditions.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _TIME_INTEGRATION_CPP_H_</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _TIME_INTEGRATION_CPP_H_</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00139.html">timeintegration_struct.h</a>&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00120.html">physicalmodels/euler2d.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00131.html">physicalmodels/navierstokes3d.h</a>&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="a00195.html#a791e37fae3c9489d0fc039102c57409e">   24</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00195.html#a791e37fae3c9489d0fc039102c57409e">BCSupersonicOutflowU</a>(</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                          <span class="keywordtype">void</span>    *b,     </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                          <span class="keywordtype">void</span>    *m,     </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                          <span class="keywordtype">int</span>     ndims,  </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                          <span class="keywordtype">int</span>     nvars,  </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                          <span class="keywordtype">int</span>     *size,  </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                          <span class="keywordtype">int</span>     ghosts, </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                          <span class="keywordtype">double</span>  *phi,   </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                          <span class="keywordtype">double</span>  waqt    </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                        )</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00117.html">DomainBoundary</a> *boundary = (<a class="code" href="a00117.html">DomainBoundary</a>*) b;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">int</span> dim   = boundary-&gt;<a class="code" href="a00117.html#a70b5e28b5bc3d1b63a7435c5fe50b837">dim</a>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">int</span> face  = boundary-&gt;<a class="code" href="a00117.html#a9582c650f117a06449b5ee368b6762ef">face</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">if</span> (ndims == 2) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">/* create a fake physics object */</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="a00120.html#a00509">Euler2D</a> physics; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">double</span> gamma;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    gamma = physics.<a class="code" href="a00120.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a> = boundary-&gt;<a class="code" href="a00117.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">double</span> inv_gamma_m1 = 1.0/(gamma-1.0);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a2eec7e4ee612d5edc985ba81453346e1">on_this_proc</a>) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      <span class="keywordtype">int</span> bounds[ndims], indexb[ndims], indexi[ndims];</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      <a class="code" href="a00146.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a>(bounds,boundary-&gt;<a class="code" href="a00117.html#a7602de5ebb1b59ec35217e78a35a531e">ie</a>,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,ndims,0);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      <span class="keywordtype">int</span> done = 0;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">int</span> p1, p2;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,ndims);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="a00146.html#a98a3bb5fda2fcafb70a6288d100a0924">_ArrayAdd1D_</a>(indexi,indexi,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">if</span>      (face ==  1) indexi[dim] = ghosts-1-indexb[dim];</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (face == -1) indexi[dim] = size[dim]-indexb[dim]-1;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,size,indexb,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ghosts,p1);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,size,indexi,ghosts,p2);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">/* flow variables in the interior */</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">double</span> rho, uvel, vvel, energy, pressure;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">double</span> rho_gpt, uvel_gpt, vvel_gpt, energy_gpt, pressure_gpt;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="a00120.html#afff338b9964cae67fd9b3f4dc224e77b">_Euler2DGetFlowVar_</a>((phi+nvars*p2),rho,uvel,vvel,energy,pressure,(&amp;physics));</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="comment">/* set the ghost point values */</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        rho_gpt       = rho;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        pressure_gpt  = pressure;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        uvel_gpt      = uvel;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        vvel_gpt      = vvel;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        energy_gpt    = inv_gamma_m1*pressure_gpt</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                        + 0.5 * rho_gpt * (uvel_gpt*uvel_gpt + vvel_gpt*vvel_gpt);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        phi[nvars*p1+0] = rho_gpt;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        phi[nvars*p1+1] = rho_gpt * uvel_gpt;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        phi[nvars*p1+2] = rho_gpt * vvel_gpt;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        phi[nvars*p1+3] = energy_gpt;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,indexb,done);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ndims == 3) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">/* create a fake physics object */</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="a00131.html#a00523">NavierStokes3D</a> physics;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">double</span> gamma;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    gamma = physics.<a class="code" href="a00131.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a> = boundary-&gt;<a class="code" href="a00117.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">double</span> inv_gamma_m1 = 1.0/(gamma-1.0);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00117.html#a2eec7e4ee612d5edc985ba81453346e1">on_this_proc</a>) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordtype">int</span> bounds[ndims], indexb[ndims], indexi[ndims];</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <a class="code" href="a00146.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a>(bounds,boundary-&gt;<a class="code" href="a00117.html#a7602de5ebb1b59ec35217e78a35a531e">ie</a>,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,ndims,0);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <span class="keywordtype">int</span> done = 0;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordtype">int</span> p1, p2;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,ndims);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="a00146.html#a98a3bb5fda2fcafb70a6288d100a0924">_ArrayAdd1D_</a>(indexi,indexi,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">if</span>      (face ==  1) indexi[dim] = ghosts-1-indexb[dim];</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (face == -1) indexi[dim] = size[dim]-indexb[dim]-1;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,size,indexb,boundary-&gt;<a class="code" href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ghosts,p1);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,size,indexi,ghosts,p2);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="comment">/* flow variables in the interior */</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordtype">double</span> rho, uvel, vvel, wvel, energy, pressure;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordtype">double</span> rho_gpt, uvel_gpt, vvel_gpt, wvel_gpt, energy_gpt, pressure_gpt;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="a00131.html#a47cfbfdecf13cd3336cc049cfe93ed45">_NavierStokes3DGetFlowVar_</a>((phi+nvars*p2),rho,uvel,vvel,wvel,energy,pressure,(&amp;physics));</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="comment">/* set the ghost point values */</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        rho_gpt       = rho;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        pressure_gpt  = pressure;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        uvel_gpt      = uvel;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        vvel_gpt      = vvel;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        wvel_gpt      = wvel;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        energy_gpt    = inv_gamma_m1*pressure_gpt</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                        + 0.5 * rho_gpt </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                        * (uvel_gpt*uvel_gpt + vvel_gpt*vvel_gpt + wvel_gpt*wvel_gpt);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        phi[nvars*p1+0] = rho_gpt;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        phi[nvars*p1+1] = rho_gpt * uvel_gpt;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        phi[nvars*p1+2] = rho_gpt * vvel_gpt;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        phi[nvars*p1+3] = rho_gpt * wvel_gpt;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        phi[nvars*p1+4] = energy_gpt;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,indexb,done);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    }</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  }</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
-<div class="ttc" id="a00131_html_a00523"><div class="ttname"><a href="a00131.html#a00523">NavierStokes3D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 3D Navier Stokes equations. This structure contains the physical parameters, variables, and function pointers specific to the 3D Navier-Stokes equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00470">navierstokes3d.h:470</a></div></div>
-<div class="ttc" id="a00131_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00131.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes3D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00471">navierstokes3d.h:471</a></div></div>
-<div class="ttc" id="a00195_html_a791e37fae3c9489d0fc039102c57409e"><div class="ttname"><a href="a00195.html#a791e37fae3c9489d0fc039102c57409e">BCSupersonicOutflowU</a></div><div class="ttdeci">int BCSupersonicOutflowU(void *b, void *m, int ndims, int nvars, int *size, int ghosts, double *phi, double waqt)</div><div class="ttdef"><b>Definition:</b> <a href="a00195_source.html#l00024">BCSupersonicOutflow.c:24</a></div></div>
-<div class="ttc" id="a00146_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00168">arrayfunctions.h:168</a></div></div>
-<div class="ttc" id="a00147_html"><div class="ttname"><a href="a00147.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00146_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00125">arrayfunctions.h:125</a></div></div>
-<div class="ttc" id="a00117_html_a481013ba007a99a4237cde5eeb3c9a29"><div class="ttname"><a href="a00117.html#a481013ba007a99a4237cde5eeb3c9a29">DomainBoundary::is</a></div><div class="ttdeci">int * is</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00082">boundaryconditions.h:82</a></div></div>
-<div class="ttc" id="a00120_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00120.html#a72f9e01745b3a8203067ab84aefc9aea">Euler2D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00120_source.html#l00245">euler2d.h:245</a></div></div>
-<div class="ttc" id="a00146_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00117_html_a7602de5ebb1b59ec35217e78a35a531e"><div class="ttname"><a href="a00117.html#a7602de5ebb1b59ec35217e78a35a531e">DomainBoundary::ie</a></div><div class="ttdeci">int * ie</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00082">boundaryconditions.h:82</a></div></div>
-<div class="ttc" id="a00120_html_a00509"><div class="ttname"><a href="a00120.html#a00509">Euler2D</a></div><div class="ttdef"><b>Definition:</b> <a href="a00120_source.html#l00244">euler2d.h:244</a></div></div>
-<div class="ttc" id="a00131_html_a47cfbfdecf13cd3336cc049cfe93ed45"><div class="ttname"><a href="a00131.html#a47cfbfdecf13cd3336cc049cfe93ed45">_NavierStokes3DGetFlowVar_</a></div><div class="ttdeci">#define _NavierStokes3DGetFlowVar_(u, rho, vx, vy, vz, e, P, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00131_source.html#l00084">navierstokes3d.h:84</a></div></div>
-<div class="ttc" id="a00146_html"><div class="ttname"><a href="a00146.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00117_html"><div class="ttname"><a href="a00117.html">DomainBoundary</a></div><div class="ttdoc">Structure containing the variables and function pointers defining a boundary. </div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00068">boundaryconditions.h:68</a></div></div>
-<div class="ttc" id="a00117_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00117.html#a72f9e01745b3a8203067ab84aefc9aea">DomainBoundary::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00096">boundaryconditions.h:96</a></div></div>
-<div class="ttc" id="a00120_html"><div class="ttname"><a href="a00120.html">euler2d.h</a></div></div>
-<div class="ttc" id="a00146_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00146.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00082">arrayfunctions.h:82</a></div></div>
-<div class="ttc" id="a00117_html_a70b5e28b5bc3d1b63a7435c5fe50b837"><div class="ttname"><a href="a00117.html#a70b5e28b5bc3d1b63a7435c5fe50b837">DomainBoundary::dim</a></div><div class="ttdeci">int dim</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00073">boundaryconditions.h:73</a></div></div>
-<div class="ttc" id="a00146_html_a98a3bb5fda2fcafb70a6288d100a0924"><div class="ttname"><a href="a00146.html#a98a3bb5fda2fcafb70a6288d100a0924">_ArrayAdd1D_</a></div><div class="ttdeci">#define _ArrayAdd1D_(x, a, b, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00211">arrayfunctions.h:211</a></div></div>
-<div class="ttc" id="a00146_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00131_html"><div class="ttname"><a href="a00131.html">navierstokes3d.h</a></div><div class="ttdoc">3D Navier Stokes equations (compressible flows) </div></div>
-<div class="ttc" id="a00120_html_afff338b9964cae67fd9b3f4dc224e77b"><div class="ttname"><a href="a00120.html#afff338b9964cae67fd9b3f4dc224e77b">_Euler2DGetFlowVar_</a></div><div class="ttdeci">#define _Euler2DGetFlowVar_(u, rho, vx, vy, e, P, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00120_source.html#l00044">euler2d.h:44</a></div></div>
-<div class="ttc" id="a00148_html"><div class="ttname"><a href="a00148.html">boundaryconditions.h</a></div><div class="ttdoc">Containts the structures and definitions for boundary condition implementation. </div></div>
-<div class="ttc" id="a00146_html_ab49d0f261ea751a17d6beca0504daf78"><div class="ttname"><a href="a00146.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a></div><div class="ttdeci">#define _ArraySubtract1D_(x, a, b, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00200">arrayfunctions.h:200</a></div></div>
-<div class="ttc" id="a00117_html_a2eec7e4ee612d5edc985ba81453346e1"><div class="ttname"><a href="a00117.html#a2eec7e4ee612d5edc985ba81453346e1">DomainBoundary::on_this_proc</a></div><div class="ttdeci">int on_this_proc</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00081">boundaryconditions.h:81</a></div></div>
-<div class="ttc" id="a00117_html_a9582c650f117a06449b5ee368b6762ef"><div class="ttname"><a href="a00117.html#a9582c650f117a06449b5ee368b6762ef">DomainBoundary::face</a></div><div class="ttdeci">int face</div><div class="ttdef"><b>Definition:</b> <a href="a00148_source.html#l00075">boundaryconditions.h:75</a></div></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00195.html#a2ca35809be0e351ff2ad94532c2c0d68">TimeInitialize</a>      (<span class="keywordtype">void</span>*,<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00195.html#a85984dec08cd43570151a625ab62f8d9">TimeCleanup</a>         (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00195.html#a2afba6dcdd13eb929ad4cb54a71eb470">TimePreStep</a>         (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00195.html#acb00956b2e195653e3f8107b1ab1dc4d">TimeStep</a>            (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00195.html#a25f8d76bc92804608cd299e63e23291c">TimePostStep</a>        (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00195.html#aa1ffb2050f4788b7c49b4576a9fe52ca">TimePrintStep</a>       (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00195.html#aacd05babc2fa0650f3047f955c38319c">TimeError</a>           (<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*,<span class="keywordtype">double</span>*);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00195.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a> (<span class="keywordtype">int</span>*,<span class="keywordtype">double</span>**,<span class="keywordtype">void</span>*,<span class="keywordtype">int</span>,<span class="keywordtype">int</span>);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00139_html"><div class="ttname"><a href="a00139.html">timeintegration_struct.h</a></div><div class="ttdoc">Contains structures for time integration. </div></div>
+<div class="ttc" id="a00195_html_a2ca35809be0e351ff2ad94532c2c0d68"><div class="ttname"><a href="a00195.html#a2ca35809be0e351ff2ad94532c2c0d68">TimeInitialize</a></div><div class="ttdeci">int TimeInitialize(void *, int, int, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00528_source.html#l00024">TimeInitialize.c:24</a></div></div>
+<div class="ttc" id="a00195_html_aa1ffb2050f4788b7c49b4576a9fe52ca"><div class="ttname"><a href="a00195.html#aa1ffb2050f4788b7c49b4576a9fe52ca">TimePrintStep</a></div><div class="ttdeci">int TimePrintStep(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00531_source.html#l00016">TimePrintStep.c:16</a></div></div>
+<div class="ttc" id="a00195_html_a25f8d76bc92804608cd299e63e23291c"><div class="ttname"><a href="a00195.html#a25f8d76bc92804608cd299e63e23291c">TimePostStep</a></div><div class="ttdeci">int TimePostStep(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00529_source.html#l00024">TimePostStep.c:24</a></div></div>
+<div class="ttc" id="a00195_html_a85984dec08cd43570151a625ab62f8d9"><div class="ttname"><a href="a00195.html#a85984dec08cd43570151a625ab62f8d9">TimeCleanup</a></div><div class="ttdeci">int TimeCleanup(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00519_source.html#l00015">TimeCleanup.c:15</a></div></div>
+<div class="ttc" id="a00195_html_a9bff7fe5ca4249dd82bfad78a1fa09dd"><div class="ttname"><a href="a00195.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a></div><div class="ttdeci">int TimeGetAuxSolutions(int *, double **, void *, int, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00524_source.html#l00029">TimeGetAuxSolutions.c:29</a></div></div>
+<div class="ttc" id="a00195_html_acb00956b2e195653e3f8107b1ab1dc4d"><div class="ttname"><a href="a00195.html#acb00956b2e195653e3f8107b1ab1dc4d">TimeStep</a></div><div class="ttdeci">int TimeStep(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00534_source.html#l00012">TimeStep.c:12</a></div></div>
+<div class="ttc" id="a00195_html_a2afba6dcdd13eb929ad4cb54a71eb470"><div class="ttname"><a href="a00195.html#a2afba6dcdd13eb929ad4cb54a71eb470">TimePreStep</a></div><div class="ttdeci">int TimePreStep(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00530_source.html#l00018">TimePreStep.c:18</a></div></div>
+<div class="ttc" id="a00195_html_aacd05babc2fa0650f3047f955c38319c"><div class="ttname"><a href="a00195.html#aacd05babc2fa0650f3047f955c38319c">TimeError</a></div><div class="ttdeci">int TimeError(void *, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00520_source.html#l00027">TimeError.c:27</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

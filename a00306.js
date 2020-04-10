@@ -1,6 +1,4 @@
 var a00306 =
 [
-    [ "__FUNCT__", "a00306.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "TransferVecToPETSc", "a00306.html#ade5f8f199ddce54db3bcd559252ac637", null ],
-    [ "TransferMatToPETSc", "a00306.html#abbb95954ce9349ea01f27f0c37af56ff", null ]
+    [ "MPILocalDomainLimits", "a00306.html#a293c6b27eae8dacc236402c1662e5d01", null ]
 ];

@@ -1,11 +1,10 @@
 var a00173 =
 [
-    [ "TimeInitialize", "a00173.html#a2ca35809be0e351ff2ad94532c2c0d68", null ],
-    [ "TimeCleanup", "a00173.html#a85984dec08cd43570151a625ab62f8d9", null ],
-    [ "TimePreStep", "a00173.html#a2afba6dcdd13eb929ad4cb54a71eb470", null ],
-    [ "TimeStep", "a00173.html#acb00956b2e195653e3f8107b1ab1dc4d", null ],
-    [ "TimePostStep", "a00173.html#a25f8d76bc92804608cd299e63e23291c", null ],
-    [ "TimePrintStep", "a00173.html#aa1ffb2050f4788b7c49b4576a9fe52ca", null ],
-    [ "TimeError", "a00173.html#aacd05babc2fa0650f3047f955c38319c", null ],
-    [ "TimeGetAuxSolutions", "a00173.html#a9bff7fe5ca4249dd82bfad78a1fa09dd", null ]
+    [ "ReadArray", "a00173.html#afaf5b0d6e79b1e8674b397aebcb219dc", null ],
+    [ "ReadArraywInterp", "a00173.html#ad0eb6700a70a6489148d41a48436da78", null ],
+    [ "WriteArray", "a00173.html#aaf888c739c5200d9c58a7154347069b0", null ],
+    [ "WriteBinary", "a00173.html#a067f454c26d85d6cfb4d7d878b3783c9", null ],
+    [ "WriteText", "a00173.html#a3355a71faf3d87f6715ad627db08ac9e", null ],
+    [ "WriteTecplot2D", "a00173.html#a265b0583afb79edd2f2f5d5087e5c3bf", null ],
+    [ "WriteTecplot3D", "a00173.html#a5bdb048ecc5ae7ab61622e4764f3133e", null ]
 ];

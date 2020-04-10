@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/FPDoubleWell/FPDoubleWellUpwind.c Source File</title>
+<title>HyPar: src/PhysicalModels/Euler1D/Euler1DCleanup.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,63 +114,29 @@ $(document).ready(function(){initNavTree('a00340_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">FPDoubleWellUpwind.c</div>  </div>
+<div class="title">Euler1DCleanup.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00340.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00147.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00146.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00122.html">physicalmodels/fpdoublewell.h</a>&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00153.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="a00340.html#a6c2964e5df00f839b0ebb11fd1d426ff">    7</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00340.html#a6c2964e5df00f839b0ebb11fd1d426ff">FPDoubleWellUpwind</a>(<span class="keywordtype">double</span> *fI,<span class="keywordtype">double</span> *fL,<span class="keywordtype">double</span> *fR,<span class="keywordtype">double</span> *uL,<span class="keywordtype">double</span> *uR,</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;                       <span class="keywordtype">double</span> *u,<span class="keywordtype">int</span> dir,<span class="keywordtype">void</span> *s,<span class="keywordtype">double</span> t)</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  <a class="code" href="a00126.html">HyPar</a>        *solver = (<a class="code" href="a00126.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  <span class="keywordtype">int</span>          done,v;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="keywordtype">int</span> ndims   = solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordtype">int</span> nvars   = solver-&gt;<a class="code" href="a00126.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keywordtype">int</span> ghosts  = solver-&gt;<a class="code" href="a00126.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordtype">int</span> *dim    = solver-&gt;<a class="code" href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordtype">int</span> index_outer[ndims], index_inter[ndims], bounds_outer[ndims], bounds_inter[ndims];</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_inter,ndims); bounds_inter[dir] += 1;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  done = 0; <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,index_inter,ndims);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordflow">for</span> (index_inter[dir] = 0; index_inter[dir] &lt; bounds_inter[dir]; index_inter[dir]++) {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;      <span class="keywordtype">int</span> p; <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds_inter,index_inter,0,p);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;      <span class="keywordtype">double</span> x1; <a class="code" href="a00147.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,index_inter[0]-1,dim,ghosts,solver-&gt;<a class="code" href="a00126.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,x1);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      <span class="keywordtype">double</span> x2; <a class="code" href="a00147.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,index_inter[0]  ,dim,ghosts,solver-&gt;<a class="code" href="a00126.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,x2);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;      <span class="keywordtype">double</span> x = 0.5 * ( x1 + x2 );</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;      <span class="keywordflow">for</span> (v = 0; v &lt; nvars; v++)  </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        fI[nvars*p+v] = (<a class="code" href="a00122.html#a45bcf0bb95407584d582c61664359c14">drift</a>(x) &gt; 0 ? fL[nvars*p+v] : fR[nvars*p+v] );</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="ttc" id="a00122_html"><div class="ttname"><a href="a00122.html">fpdoublewell.h</a></div></div>
-<div class="ttc" id="a00146_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00168">arrayfunctions.h:168</a></div></div>
-<div class="ttc" id="a00147_html"><div class="ttname"><a href="a00147.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00126_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00035">hypar.h:35</a></div></div>
-<div class="ttc" id="a00146_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00125">arrayfunctions.h:125</a></div></div>
-<div class="ttc" id="a00146_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00126_html_a711aad4cbe735871dd9e91ab575c878b"><div class="ttname"><a href="a00126.html#a711aad4cbe735871dd9e91ab575c878b">HyPar::x</a></div><div class="ttdeci">double * x</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00091">hypar.h:91</a></div></div>
-<div class="ttc" id="a00126_html"><div class="ttname"><a href="a00126.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00146_html"><div class="ttname"><a href="a00146.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00126_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00126.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00147_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00147.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00147_source.html#l00027">basic.h:27</a></div></div>
-<div class="ttc" id="a00122_html_a45bcf0bb95407584d582c61664359c14"><div class="ttname"><a href="a00122.html#a45bcf0bb95407584d582c61664359c14">drift</a></div><div class="ttdeci">#define drift(x)</div><div class="ttdef"><b>Definition:</b> <a href="a00122_source.html#l00031">fpdoublewell.h:31</a></div></div>
-<div class="ttc" id="a00126_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00126.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00044">hypar.h:44</a></div></div>
-<div class="ttc" id="a00146_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00340_html_a6c2964e5df00f839b0ebb11fd1d426ff"><div class="ttname"><a href="a00340.html#a6c2964e5df00f839b0ebb11fd1d426ff">FPDoubleWellUpwind</a></div><div class="ttdeci">int FPDoubleWellUpwind(double *fI, double *fL, double *fR, double *uL, double *uR, double *u, int dir, void *s, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00340_source.html#l00007">FPDoubleWellUpwind.c:7</a></div></div>
-<div class="ttc" id="a00153_html"><div class="ttname"><a href="a00153.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00126_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00126.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00026">hypar.h:26</a></div></div>
+<a href="a00340.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00183.html">physicalmodels/euler1d.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00340.html#aca2df106e7c331c81fc8aff929ec6e69">   10</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00340.html#aca2df106e7c331c81fc8aff929ec6e69">Euler1DCleanup</a>(</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                   <span class="keywordtype">void</span> *s </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                  )</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <a class="code" href="a00137.html">Euler1D</a> *param  = (<a class="code" href="a00137.html">Euler1D</a>*) s;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  free(param-&gt;<a class="code" href="a00137.html#afb1265dc9bb8f8c05bd22f88c23d879c">grav_field</a>);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  free(param-&gt;<a class="code" href="a00137.html#a14af7516371abe115b3a1aa9269aebb5">fast_jac</a>);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  free(param-&gt;<a class="code" href="a00137.html#a7568fac4d4e8488510e1d37f468967b1">solution</a>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+<div class="ttc" id="a00340_html_aca2df106e7c331c81fc8aff929ec6e69"><div class="ttname"><a href="a00340.html#aca2df106e7c331c81fc8aff929ec6e69">Euler1DCleanup</a></div><div class="ttdeci">int Euler1DCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00340_source.html#l00010">Euler1DCleanup.c:10</a></div></div>
+<div class="ttc" id="a00137_html_afb1265dc9bb8f8c05bd22f88c23d879c"><div class="ttname"><a href="a00137.html#afb1265dc9bb8f8c05bd22f88c23d879c">Euler1D::grav_field</a></div><div class="ttdeci">double * grav_field</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00288">euler1d.h:288</a></div></div>
+<div class="ttc" id="a00183_html"><div class="ttname"><a href="a00183.html">euler1d.h</a></div><div class="ttdoc">1D Euler Equations (inviscid, compressible flows) </div></div>
+<div class="ttc" id="a00137_html"><div class="ttname"><a href="a00137.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00273">euler1d.h:273</a></div></div>
+<div class="ttc" id="a00137_html_a14af7516371abe115b3a1aa9269aebb5"><div class="ttname"><a href="a00137.html#a14af7516371abe115b3a1aa9269aebb5">Euler1D::fast_jac</a></div><div class="ttdeci">double * fast_jac</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00289">euler1d.h:289</a></div></div>
+<div class="ttc" id="a00137_html_a7568fac4d4e8488510e1d37f468967b1"><div class="ttname"><a href="a00137.html#a7568fac4d4e8488510e1d37f468967b1">Euler1D::solution</a></div><div class="ttdeci">double * solution</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00290">euler1d.h:290</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

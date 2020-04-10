@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/Euler1D/Euler1DSourceUpwind.c File Reference</title>
+<title>HyPar: src/PETScFunctions/PetscIJacobian.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,82 +114,142 @@ $(document).ready(function(){initNavTree('a00323.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Euler1DSourceUpwind.c File Reference</div>  </div>
+<div class="title">PetscIJacobian.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Contains functions to compute the "upwind" source term at an interface (for a balanced finite-difference discretization of the 1D Euler equations with gravitational source terms).  
+<p>Contains the functions required for Jacobian computations for implicit time-integration.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;math.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00147_source.html">basic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00146_source.html">arrayfunctions.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00157_source.html">mathfunctions.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00161_source.html">physicalmodels/euler1d.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00153_source.html">hypar.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00166_source.html">basic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00165_source.html">arrayfunctions.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00181_source.html">mpivars.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00172_source.html">hypar.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00152_source.html">petscinterface.h</a>&gt;</code><br />
 </div>
 <p><a href="a00323_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ae60511a9aa5cbf216a00a1bb81006bc5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#ae60511a9aa5cbf216a00a1bb81006bc5">__FUNCT__</a>&#160;&#160;&#160;&quot;PetscIJacobian&quot;</td></tr>
+<tr class="separator:ae60511a9aa5cbf216a00a1bb81006bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae60511a9aa5cbf216a00a1bb81006bc5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#ae60511a9aa5cbf216a00a1bb81006bc5">__FUNCT__</a>&#160;&#160;&#160;&quot;PetscJacobianFunction_JFNK&quot;</td></tr>
+<tr class="separator:ae60511a9aa5cbf216a00a1bb81006bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae60511a9aa5cbf216a00a1bb81006bc5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#ae60511a9aa5cbf216a00a1bb81006bc5">__FUNCT__</a>&#160;&#160;&#160;&quot;PetscJacobianFunction_Linear&quot;</td></tr>
+<tr class="separator:ae60511a9aa5cbf216a00a1bb81006bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a229db12fad7bac6cf5f1223f204fe1f9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a229db12fad7bac6cf5f1223f204fe1f9">Euler1DSourceUpwindLLF</a> (double *fI, double *fL, double *fR, double *u, int dir, void *s, double t)</td></tr>
-<tr class="separator:a229db12fad7bac6cf5f1223f204fe1f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad94cc03bc96444b2f8ce0e701fe489f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#ad94cc03bc96444b2f8ce0e701fe489f3">Euler1DSourceUpwindRoe</a> (double *fI, double *fL, double *fR, double *u, int dir, void *s, double t)</td></tr>
-<tr class="separator:ad94cc03bc96444b2f8ce0e701fe489f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c61fe05d2aad7ec298f50e10aa910ee"><td class="memItemLeft" align="right" valign="top">PetscErrorCode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a8c61fe05d2aad7ec298f50e10aa910ee">PetscIJacobian</a> (TS ts, PetscReal t, Vec Y, Vec Ydot, PetscReal a, Mat A, Mat B, void *ctxt)</td></tr>
+<tr class="separator:a8c61fe05d2aad7ec298f50e10aa910ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ead7cf587262e15b8bfc343a092861"><td class="memItemLeft" align="right" valign="top">PetscErrorCode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a09ead7cf587262e15b8bfc343a092861">PetscJacobianFunction_JFNK</a> (Mat Jacobian, Vec Y, Vec F)</td></tr>
+<tr class="separator:a09ead7cf587262e15b8bfc343a092861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a626e9bf5daf2a3341b12c1b745519422"><td class="memItemLeft" align="right" valign="top">PetscErrorCode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a626e9bf5daf2a3341b12c1b745519422">PetscJacobianFunction_Linear</a> (Mat Jacobian, Vec Y, Vec F)</td></tr>
+<tr class="separator:a626e9bf5daf2a3341b12c1b745519422"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains functions to compute the "upwind" source term at an interface (for a balanced finite-difference discretization of the 1D Euler equations with gravitational source terms). </p>
+<div class="textblock"><p>Contains the functions required for Jacobian computations for implicit time-integration. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00323_source.html">Euler1DSourceUpwind.c</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a229db12fad7bac6cf5f1223f204fe1f9"></a>
+<p>Definition in file <a class="el" href="a00323_source.html">PetscIJacobian.c</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ae60511a9aa5cbf216a00a1bb81006bc5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Euler1DSourceUpwindLLF </td>
+          <td class="memname">#define __FUNCT__&#160;&#160;&#160;&quot;PetscIJacobian&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="a00323_source.html#l00183">183</a> of file <a class="el" href="a00323_source.html">PetscIJacobian.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae60511a9aa5cbf216a00a1bb81006bc5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __FUNCT__&#160;&#160;&#160;&quot;PetscJacobianFunction_JFNK&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="a00323_source.html#l00183">183</a> of file <a class="el" href="a00323_source.html">PetscIJacobian.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae60511a9aa5cbf216a00a1bb81006bc5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __FUNCT__&#160;&#160;&#160;&quot;PetscJacobianFunction_Linear&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="a00323_source.html#l00183">183</a> of file <a class="el" href="a00323_source.html">PetscIJacobian.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a8c61fe05d2aad7ec298f50e10aa910ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PetscErrorCode PetscIJacobian </td>
           <td>(</td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>fI</em>, </td>
+          <td class="paramtype">TS&#160;</td>
+          <td class="paramname"><em>ts</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>fL</em>, </td>
+          <td class="paramtype">PetscReal&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>fR</em>, </td>
+          <td class="paramtype">Vec&#160;</td>
+          <td class="paramname"><em>Y</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>u</em>, </td>
+          <td class="paramtype">Vec&#160;</td>
+          <td class="paramname"><em>Ydot</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
+          <td class="paramtype">PetscReal&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Mat&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Mat&#160;</td>
+          <td class="paramname"><em>B</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
+          <td class="paramname"><em>ctxt</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -198,107 +258,87 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute the "upwind" source term in the balanced formulation introduced in the reference below. The "upwind" state is just the arithmetic average of the left and right states.</p><ul>
-<li>Xing, Shu, "High Order Well-Balanced WENO Scheme for the Gas Dynamics Equations 
-              Under Gravitational Fields", J. Sci. Comput., 54, 2013, pp. 645&ndash;662, <a href="http://dx.doi.org/10.1007/s10915-012-9585-8">http://dx.doi.org/10.1007/s10915-012-9585-8</a>. </li>
+<p>Compute the Jacobian for implicit time integration of the governing equations: The ODE, obtained after discretizing the governing PDE in space, is expressed as follows: </p><p class="formulaDsp">
+\begin{equation} \frac {d{\bf U}}{dt} = {\bf F}\left({\bf U}\right) \Rightarrow \dot{\bf U} - {\bf F}\left({\bf U}\right) = 0, \end{equation}
+</p>
+<p> where \({\bf F}\) is the spatially discretized right-hand-side, and \({\bf U}\) represents the entire solution vector. The Jacobian is thus given by: </p><p class="formulaDsp">
+\begin{equation} {\bf J} = \left[\alpha{\bf I} - \frac {\partial {\bf F}} {\partial {\bf U}} \right] \end{equation}
+</p>
+<p> where \(\alpha\) is the shift coefficient (<a class="el" href="a00152.html#ab057d99becacf205132fd8c235a8488a">PETScContext::shift</a>) of the time integration method.</p>
+<p><b>Matrix-free</b> <b>representation:</b> The Jacobian is computed using a matrix-free approach, where the entire Jacobian is never assembled, computed, or stored. Instead, the action of the Jacobian on a vector is defined through functions (<a class="el" href="a00323.html#a09ead7cf587262e15b8bfc343a092861">PetscJacobianFunction_JFNK()</a> for nonlinear systems, and <a class="el" href="a00323.html#a626e9bf5daf2a3341b12c1b745519422">PetscJacobianFunction_Linear()</a> for linear systems). This approach works well with iterative solvers. Thus, this function just does the following:</p><ul>
+<li>Saves the <a class="el" href="a00152.html#ab057d99becacf205132fd8c235a8488a">PETScContext::shift</a> ( \(\alpha\)) and <a class="el" href="a00152.html#a28e4e78c0bf258662bef21d26c51fc0b">PETScContext::waqt</a> (current simulation time) to the application context (so that <a class="el" href="a00323.html#a09ead7cf587262e15b8bfc343a092861">PetscJacobianFunction_JFNK()</a> or <a class="el" href="a00323.html#a626e9bf5daf2a3341b12c1b745519422">PetscJacobianFunction_Linear()</a> can access these values).</li>
+<li>If a preconditioner is being used, calls the function to compute the preconditioning matrix.</li>
+</ul>
+<p><b>Notes:</b> </p><ul>
+<li>The Jacobian is defined as the PETSc type MatShell (<a href="http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/Mat/MATSHELL.html">http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/Mat/MATSHELL.html</a>)</li>
+<li><em>Y</em> and <em>Ydot</em> in the code are \({\bf U}\) and \(\dot{\bf U}\), respectively. PETsc denotes the state vector with \({\bf Y}\) in its time integrators.</li>
+<li>See <a href="http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/index.html">http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/index.html</a> for documentation on PETSc's time integrators.</li>
+<li>All functions and variables whose names start with Vec, Mat, PC, KSP, SNES, and TS are defined by PETSc. Refer to the PETSc documentation (<a href="http://www.mcs.anl.gov/petsc/petsc-current/docs/">http://www.mcs.anl.gov/petsc/petsc-current/docs/</a>). Usually, googling with the function or variable name yields the specific doc page dealing with that function/variable. </li>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fI</td><td>Computed interface source term ("upwinded") </td></tr>
-    <tr><td class="paramname">fL</td><td>Left-biased interface source term </td></tr>
-    <tr><td class="paramname">fR</td><td>Right-biased interface source term </td></tr>
-    <tr><td class="paramname">u</td><td>Solution (conserved variables) </td></tr>
-    <tr><td class="paramname">dir</td><td>Spatial dimension (unused since this is a 1D case) </td></tr>
-    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00126.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
-    <tr><td class="paramname">t</td><td>Current solution time </td></tr>
+    <tr><td class="paramname">ts</td><td>Time stepping object (see PETSc TS) </td></tr>
+    <tr><td class="paramname">t</td><td>Current time </td></tr>
+    <tr><td class="paramname">Y</td><td>Solution vector </td></tr>
+    <tr><td class="paramname">Ydot</td><td>Time-derivative of solution vector </td></tr>
+    <tr><td class="paramname">a</td><td>Shift </td></tr>
+    <tr><td class="paramname">A</td><td>Jacobian matrix </td></tr>
+    <tr><td class="paramname">B</td><td>Preconditioning matrix </td></tr>
+    <tr><td class="paramname">ctxt</td><td>Application context </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00323_source.html#l00021">21</a> of file <a class="el" href="a00323_source.html">Euler1DSourceUpwind.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <a class="code" href="a00126.html">HyPar</a>     *solver = (<a class="code" href="a00126.html">HyPar</a>*)    s;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span>       done,k;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="a00147.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordtype">int</span> ndims = solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">int</span> *dim  = solver-&gt;<a class="code" href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">int</span> index_outer[ndims], index_inter[ndims], bounds_outer[ndims], bounds_inter[ndims];</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_inter,ndims); bounds_inter[dir] += 1;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  done = 0; <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,index_inter,ndims);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">for</span> (index_inter[dir] = 0; index_inter[dir] &lt; bounds_inter[dir]; index_inter[dir]++) {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      <span class="keywordtype">int</span> p;  <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds_inter,index_inter,0,p);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      <span class="comment">/* Local Lax-Friedrich upwinding scheme */</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>; k++) </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        (fI+_MODEL_NVARS_*p)[k] = 0.5 * ((fL+_MODEL_NVARS_*p)[k] + (fR+_MODEL_NVARS_*p)[k]);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="ttc" id="a00161_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00058">euler1d.h:58</a></div></div>
-<div class="ttc" id="a00146_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00168">arrayfunctions.h:168</a></div></div>
-<div class="ttc" id="a00126_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00035">hypar.h:35</a></div></div>
-<div class="ttc" id="a00146_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00125">arrayfunctions.h:125</a></div></div>
-<div class="ttc" id="a00146_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00126_html"><div class="ttname"><a href="a00126.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00146_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00147_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00147.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00147_source.html#l00013">basic.h:13</a></div></div>
-<div class="ttc" id="a00126_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00126.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00026">hypar.h:26</a></div></div>
+<p>Definition at line <a class="el" href="a00323_source.html#l00052">52</a> of file <a class="el" href="a00323_source.html">PetscIJacobian.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <a class="code" href="a00152.html#a00562">PETScContext</a> *context = (<a class="code" href="a00152.html#a00562">PETScContext</a>*) ctxt;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <a class="code" href="a00144.html">HyPar</a>        *solver  = context-&gt;<a class="code" href="a00152.html#ade1bc5cad8c6735a891a28f637cbfb06">solver</a>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="a00166.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  PetscFunctionBegin;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  solver-&gt;<a class="code" href="a00144.html#a8086208a451520745e3fab0e3918db06">count_IJacobian</a>++;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  context-&gt;<a class="code" href="a00152.html#ab057d99becacf205132fd8c235a8488a">shift</a> = a;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  context-&gt;<a class="code" href="a00152.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a>  = t;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="comment">/* Construct preconditioning matrix */</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordflow">if</span> (context-&gt;<a class="code" href="a00152.html#a271fbbfea71118710d4a2fb13eb4c1cc">flag_use_precon</a>) { <a class="code" href="a00166.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00152.html#a4c77df03a775220fb7bcf6b137ca59b3">PetscComputePreconMatImpl</a>(B,Y,context); <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr); }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  PetscFunctionReturn(0);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="ttc" id="a00152_html_ab057d99becacf205132fd8c235a8488a"><div class="ttname"><a href="a00152.html#ab057d99becacf205132fd8c235a8488a">PETScContext::shift</a></div><div class="ttdeci">PetscReal shift</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00042">petscinterface.h:42</a></div></div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00144_html_a8086208a451520745e3fab0e3918db06"><div class="ttname"><a href="a00144.html#a8086208a451520745e3fab0e3918db06">HyPar::count_IJacobian</a></div><div class="ttdeci">int count_IJacobian</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00382">hypar.h:382</a></div></div>
+<div class="ttc" id="a00166_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00014">basic.h:14</a></div></div>
+<div class="ttc" id="a00152_html_a4c77df03a775220fb7bcf6b137ca59b3"><div class="ttname"><a href="a00152.html#a4c77df03a775220fb7bcf6b137ca59b3">PetscComputePreconMatImpl</a></div><div class="ttdeci">int PetscComputePreconMatImpl(Mat, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00317_source.html#l00064">PetscComputePreconMatImpl.c:64</a></div></div>
+<div class="ttc" id="a00152_html_a271fbbfea71118710d4a2fb13eb4c1cc"><div class="ttname"><a href="a00152.html#a271fbbfea71118710d4a2fb13eb4c1cc">PETScContext::flag_use_precon</a></div><div class="ttdeci">int flag_use_precon</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00071">petscinterface.h:71</a></div></div>
+<div class="ttc" id="a00152_html_a28e4e78c0bf258662bef21d26c51fc0b"><div class="ttname"><a href="a00152.html#a28e4e78c0bf258662bef21d26c51fc0b">PETScContext::waqt</a></div><div class="ttdeci">double waqt</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00044">petscinterface.h:44</a></div></div>
+<div class="ttc" id="a00166_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00166.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00013">basic.h:13</a></div></div>
+<div class="ttc" id="a00166_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00166.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00012">basic.h:12</a></div></div>
+<div class="ttc" id="a00152_html_a00562"><div class="ttname"><a href="a00152.html#a00562">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00035">petscinterface.h:35</a></div></div>
+<div class="ttc" id="a00152_html_ade1bc5cad8c6735a891a28f637cbfb06"><div class="ttname"><a href="a00152.html#ade1bc5cad8c6735a891a28f637cbfb06">PETScContext::solver</a></div><div class="ttdeci">void * solver</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00037">petscinterface.h:37</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="ad94cc03bc96444b2f8ce0e701fe489f3"></a>
+<a class="anchor" id="a09ead7cf587262e15b8bfc343a092861"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Euler1DSourceUpwindRoe </td>
+          <td class="memname">PetscErrorCode PetscJacobianFunction_JFNK </td>
           <td>(</td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>fI</em>, </td>
+          <td class="paramtype">Mat&#160;</td>
+          <td class="paramname"><em>Jacobian</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>fL</em>, </td>
+          <td class="paramtype">Vec&#160;</td>
+          <td class="paramname"><em>Y</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>fR</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>u</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
+          <td class="paramtype">Vec&#160;</td>
+          <td class="paramname"><em>F</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -307,59 +347,288 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute the "upwind" source term in the balanced formulation introduced in the reference below. The "upwind" state is just the arithmetic average of the left and right states.</p><ul>
-<li>Xing, Shu, "High Order Well-Balanced WENO Scheme for the Gas Dynamics Equations 
-              Under Gravitational Fields", J. Sci. Comput., 54, 2013, pp. 645&ndash;662, <a href="http://dx.doi.org/10.1007/s10915-012-9585-8">http://dx.doi.org/10.1007/s10915-012-9585-8</a>. </li>
+<p>Computes the action of the Jacobian on a vector: See documentation for <a class="el" href="a00323.html#a8c61fe05d2aad7ec298f50e10aa910ee">PetscIJacobian()</a> for the definition of the Jacobian. This function computes its action on a vector for a nonlinear system by taking the directional derivative, as follows: </p><p class="formulaDsp">
+\begin{equation} {\bf f} = {\bf J}\left({\bf U}_0\right){\bf y} = \frac {\partial \mathcal{F}\left({\bf U}\right)} {\partial {\bf U}}\left({\bf U}_0\right) {\bf y} \approx \frac{1}{\epsilon} \left[ \mathcal{F}\left({\bf U}_0+\epsilon{\bf y}\right)-\mathcal{F}\left({\bf U}_0\right) \right] \end{equation}
+</p>
+<p> In the context of the implicit time integration of the ODE given by </p><p class="formulaDsp">
+\begin{equation} \frac {d {\bf U}} {dt} = {\bf F}\left({\bf U}\right) \Rightarrow \frac {d {\bf U}} {dt} - {\bf F}\left({\bf U}\right) = 0, \end{equation}
+</p>
+<p> we have that </p><p class="formulaDsp">
+\begin{equation} \mathcal{F}\left({\bf U}\right) \equiv \dot{\bf U} - {\bf F}\left({\bf U}\right) \Rightarrow {\bf J}\left({\bf U}\right) = \left[\alpha{\bf I} - \frac {\partial {\bf F}\left({\bf U}\right)} {\partial {\bf U}} \right]. \end{equation}
+</p>
+<p> where \(\alpha\) (<a class="el" href="a00152.html#ab057d99becacf205132fd8c235a8488a">PETScContext::shift</a>) is the shift variable specific to the time integration method. So this function computes </p><p class="formulaDsp">
+\begin{equation} {\bf f} = \alpha {\bf y} - \frac{1}{\epsilon} \left[ {\bf F}\left({\bf U}_0+\epsilon{\bf y}\right)-{\bf F}\left({\bf U}_0\right) \right] \end{equation}
+</p>
+<p> In the code, \({\bf y}\) is <em>Y</em>, \(\bf f\) is <em>F</em>, and \({\bf U}_0\) is <em><a class="el" href="a00144.html#a3ccc9ddb96600c40dcc41bb1ded11160">HyPar::uref</a></em> (the reference solution at which the nonlinear Jacobian is computed). See papers on Jacobian-free Newton-Krylov (JFNK) methods to understand how \(\epsilon\) is computed.</p>
+<p><b>Notes:</b> </p><ul>
+<li>For a nonlinear spatial discretization, the right-hand-side <b>must</b> be computed without the nonlinearity (i.e. with a previously computed or "frozen" discretization operator). This ensures that the Jacobian being computed is consistent.</li>
+<li>See <a href="http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/index.html">http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/index.html</a> for documentation on PETSc's time integrators.</li>
+<li>All functions and variables whose names start with Vec, Mat, PC, KSP, SNES, and TS are defined by PETSc. Refer to the PETSc documentation (<a href="http://www.mcs.anl.gov/petsc/petsc-current/docs/">http://www.mcs.anl.gov/petsc/petsc-current/docs/</a>). Usually, googling with the function or variable name yields the specific doc page dealing with that function/variable. </li>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fI</td><td>Computed interface source term ("upwinded") </td></tr>
-    <tr><td class="paramname">fL</td><td>Left-biased interface source term </td></tr>
-    <tr><td class="paramname">fR</td><td>Right-biased interface source term </td></tr>
-    <tr><td class="paramname">u</td><td>Solution (conserved variables) </td></tr>
-    <tr><td class="paramname">dir</td><td>Spatial dimension (unused since this is a 1D case) </td></tr>
-    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00126.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
-    <tr><td class="paramname">t</td><td>Current solution time </td></tr>
+    <tr><td class="paramname">Jacobian</td><td>Jacobian matrix </td></tr>
+    <tr><td class="paramname">Y</td><td>Input vector </td></tr>
+    <tr><td class="paramname">F</td><td>Output vector (Jacobian times input vector) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00323_source.html#l00064">64</a> of file <a class="el" href="a00323_source.html">Euler1DSourceUpwind.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="a00126.html">HyPar</a>     *solver = (<a class="code" href="a00126.html">HyPar</a>*)    s;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordtype">int</span>       done,k;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="a00147.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">int</span> ndims = solver-&gt;<a class="code" href="a00126.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">int</span> *dim  = solver-&gt;<a class="code" href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordtype">int</span> index_outer[ndims], index_inter[ndims], bounds_outer[ndims], bounds_inter[ndims];</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_inter,ndims); bounds_inter[dir] += 1;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  done = 0; <a class="code" href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,index_inter,ndims);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">for</span> (index_inter[dir] = 0; index_inter[dir] &lt; bounds_inter[dir]; index_inter[dir]++) {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      <span class="keywordtype">int</span> p;  <a class="code" href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds_inter,index_inter,0,p);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      <span class="comment">/* Local Lax-Friedrich upwinding scheme */</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>; k++) </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        (fI+_MODEL_NVARS_*p)[k] = 0.5 * ((fL+_MODEL_NVARS_*p)[k] + (fR+_MODEL_NVARS_*p)[k]);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="ttc" id="a00161_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00058">euler1d.h:58</a></div></div>
-<div class="ttc" id="a00146_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00146.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00168">arrayfunctions.h:168</a></div></div>
-<div class="ttc" id="a00126_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00126.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00035">hypar.h:35</a></div></div>
-<div class="ttc" id="a00146_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00146.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00125">arrayfunctions.h:125</a></div></div>
-<div class="ttc" id="a00146_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00146.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00126_html"><div class="ttname"><a href="a00126.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00146_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00146.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00147_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00147.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00147_source.html#l00013">basic.h:13</a></div></div>
-<div class="ttc" id="a00126_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00126.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00153_source.html#l00026">hypar.h:26</a></div></div>
+<p>Definition at line <a class="el" href="a00323_source.html#l00113">113</a> of file <a class="el" href="a00323_source.html">PetscIJacobian.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;{</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <a class="code" href="a00152.html#a00562">PETScContext</a>    *context = NULL;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <a class="code" href="a00144.html">HyPar</a>           *solver  = NULL;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <a class="code" href="a00146.html#a00559">MPIVariables</a>    *mpi     = NULL;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordtype">int</span>             ierr     = 0, d;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  PetscFunctionBegin;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  ierr   = MatShellGetContext(Jacobian,&amp;context); CHKERRQ(ierr);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  solver = context-&gt;<a class="code" href="a00152.html#ade1bc5cad8c6735a891a28f637cbfb06">solver</a>;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  mpi    = context-&gt;<a class="code" href="a00152.html#abaa15763a88d05dc68ff230ce570eee9">mpi</a>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  solver-&gt;<a class="code" href="a00144.html#afc11cc081aa04d7b35ebcbcb735f7e22">count_IJacFunction</a>++;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keywordtype">int</span> size = 1;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keywordflow">for</span> (d=0; d&lt;solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) size *= (solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d]+2*solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordtype">double</span> *u       = solver-&gt;<a class="code" href="a00144.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keywordtype">double</span> *uref    = solver-&gt;<a class="code" href="a00144.html#a3ccc9ddb96600c40dcc41bb1ded11160">uref</a>;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordtype">double</span> *rhsref  = solver-&gt;<a class="code" href="a00144.html#ad587a58397d439c443ae325450a01a13">rhsref</a>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <span class="keywordtype">double</span> *rhs     = solver-&gt;<a class="code" href="a00144.html#ade4650485fe35fd3e12fea272fc80209">rhs</a>;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordtype">double</span> t = context-&gt;<a class="code" href="a00152.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a>; <span class="comment">/* current stage/step time */</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="keywordtype">double</span> normY;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  ierr = VecNorm(Y,NORM_2,&amp;normY);                                        CHKERRQ(ierr);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="keywordflow">if</span> (normY &lt; 1e-16) {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="comment">/* F = 0 */</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    ierr = VecZeroEntries(F);                                             CHKERRQ(ierr);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="comment">/* [J]Y = aY - F(Y) */</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    ierr = VecAXPBY(F,context-&gt;<a class="code" href="a00152.html#ab057d99becacf205132fd8c235a8488a">shift</a>,0,Y);                                CHKERRQ(ierr);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordtype">double</span> epsilon =  context-&gt;<a class="code" href="a00152.html#ad62e14c19e38497048380c4a7fe10e12">jfnk_eps</a> / normY;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="comment">/* copy solution from PETSc vector */</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    ierr = <a class="code" href="a00152.html#aba47a541676718cced51875b1c3a4ba6">TransferVecFromPETSc</a>(u,Y,context);                             <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <a class="code" href="a00165.html#ab8e3b679b04116dd6be664e727f0d951">_ArrayAYPX_</a>(uref,epsilon,u,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="comment">/* apply boundary conditions and exchange data over MPI interfaces */</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    ierr = solver-&gt;<a class="code" href="a00144.html#ae8ea0215931c7fc3feb33aa0fbdc24e5">ApplyBoundaryConditions</a>(solver,mpi,u,NULL,t);          <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    ierr = <a class="code" href="a00181.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                                   solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,mpi,u);                 <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="comment">/* Evaluate hyperbolic, parabolic and source terms  and the RHS for U+dU */</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <a class="code" href="a00165.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,0.0);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    ierr = solver-&gt;<a class="code" href="a00144.html#ac6e21700e87392a666ef9425981388a2">HyperbolicFunction</a>(solver-&gt;<a class="code" href="a00144.html#aeadfdde0fbc3058bace813055212dcc3">hyp</a>,u,solver,mpi,t,0,</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                                      solver-&gt;<a class="code" href="a00144.html#abd6886cf9b7ead81e0aaa9ead9aced81">FFunction</a>,solver-&gt;<a class="code" href="a00144.html#a3687b87fa31b07580aa2ef43089fb010">Upwind</a>);  <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00144.html#aeadfdde0fbc3058bace813055212dcc3">hyp</a>,-1.0,rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    ierr = solver-&gt;<a class="code" href="a00144.html#ad607a144bb3dbf119fd52c47757212dd">ParabolicFunction</a> (solver-&gt;<a class="code" href="a00144.html#ae53517ad7a202762d7b79eaf681701f3">par</a>,u,solver,mpi,t);        <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00144.html#ae53517ad7a202762d7b79eaf681701f3">par</a>, 1.0,rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    ierr = solver-&gt;<a class="code" href="a00144.html#ad8a664f0fe5ef5f928bb259fa5e3657e">SourceFunction</a>    (solver-&gt;<a class="code" href="a00144.html#a6b4951ffdbd82f3a3848b82352d389d6">source</a>,u,solver,mpi,t);     <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00144.html#a6b4951ffdbd82f3a3848b82352d389d6">source</a>, 1.0,rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(rhsref,-1.0,rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="comment">/* Transfer RHS to PETSc vector */</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    ierr = <a class="code" href="a00152.html#a94499efe0f52b5174ce7105de5ab1a37">TransferVecToPETSc</a>(rhs,F,context);               <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="comment">/* [J]Y = aY - F(Y) */</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    ierr = VecAXPBY(F,context-&gt;<a class="code" href="a00152.html#ab057d99becacf205132fd8c235a8488a">shift</a>,(-1.0/epsilon),Y);     CHKERRQ(ierr);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  PetscFunctionReturn(0);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}</div>
+<div class="ttc" id="a00152_html_ab057d99becacf205132fd8c235a8488a"><div class="ttname"><a href="a00152.html#ab057d99becacf205132fd8c235a8488a">PETScContext::shift</a></div><div class="ttdeci">PetscReal shift</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00042">petscinterface.h:42</a></div></div>
+<div class="ttc" id="a00144_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00035">hypar.h:35</a></div></div>
+<div class="ttc" id="a00144_html_a3ccc9ddb96600c40dcc41bb1ded11160"><div class="ttname"><a href="a00144.html#a3ccc9ddb96600c40dcc41bb1ded11160">HyPar::uref</a></div><div class="ttdeci">double * uref</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00365">hypar.h:365</a></div></div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00144_html_ac6e21700e87392a666ef9425981388a2"><div class="ttname"><a href="a00144.html#ac6e21700e87392a666ef9425981388a2">HyPar::HyperbolicFunction</a></div><div class="ttdeci">int(* HyperbolicFunction)(double *, double *, void *, void *, double, int, int(*)(double *, double *, int, void *, double), int(*)(double *, double *, double *, double *, double *, double *, int, void *, double))</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00229">hypar.h:229</a></div></div>
+<div class="ttc" id="a00144_html_abd6886cf9b7ead81e0aaa9ead9aced81"><div class="ttname"><a href="a00144.html#abd6886cf9b7ead81e0aaa9ead9aced81">HyPar::FFunction</a></div><div class="ttdeci">int(* FFunction)(double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00254">hypar.h:254</a></div></div>
+<div class="ttc" id="a00144_html_ad587a58397d439c443ae325450a01a13"><div class="ttname"><a href="a00144.html#ad587a58397d439c443ae325450a01a13">HyPar::rhsref</a></div><div class="ttdeci">double * rhsref</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00366">hypar.h:366</a></div></div>
+<div class="ttc" id="a00165_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00165.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00168">arrayfunctions.h:168</a></div></div>
+<div class="ttc" id="a00166_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00014">basic.h:14</a></div></div>
+<div class="ttc" id="a00152_html_aba47a541676718cced51875b1c3a4ba6"><div class="ttname"><a href="a00152.html#aba47a541676718cced51875b1c3a4ba6">TransferVecFromPETSc</a></div><div class="ttdeci">int TransferVecFromPETSc(double *, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00333_source.html#l00022">TransferFromPETSc.c:22</a></div></div>
+<div class="ttc" id="a00144_html_ade4650485fe35fd3e12fea272fc80209"><div class="ttname"><a href="a00144.html#ade4650485fe35fd3e12fea272fc80209">HyPar::rhs</a></div><div class="ttdeci">double * rhs</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00367">hypar.h:367</a></div></div>
+<div class="ttc" id="a00144_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00144_html_aeadfdde0fbc3058bace813055212dcc3"><div class="ttname"><a href="a00144.html#aeadfdde0fbc3058bace813055212dcc3">HyPar::hyp</a></div><div class="ttdeci">double * hyp</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00103">hypar.h:103</a></div></div>
+<div class="ttc" id="a00144_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00144.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00144_html_ad607a144bb3dbf119fd52c47757212dd"><div class="ttname"><a href="a00144.html#ad607a144bb3dbf119fd52c47757212dd">HyPar::ParabolicFunction</a></div><div class="ttdeci">int(* ParabolicFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00235">hypar.h:235</a></div></div>
+<div class="ttc" id="a00144_html_ae8ea0215931c7fc3feb33aa0fbdc24e5"><div class="ttname"><a href="a00144.html#ae8ea0215931c7fc3feb33aa0fbdc24e5">HyPar::ApplyBoundaryConditions</a></div><div class="ttdeci">int(* ApplyBoundaryConditions)(void *, void *, double *, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00193">hypar.h:193</a></div></div>
+<div class="ttc" id="a00152_html_a28e4e78c0bf258662bef21d26c51fc0b"><div class="ttname"><a href="a00152.html#a28e4e78c0bf258662bef21d26c51fc0b">PETScContext::waqt</a></div><div class="ttdeci">double waqt</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00044">petscinterface.h:44</a></div></div>
+<div class="ttc" id="a00144_html_a6b4951ffdbd82f3a3848b82352d389d6"><div class="ttname"><a href="a00144.html#a6b4951ffdbd82f3a3848b82352d389d6">HyPar::source</a></div><div class="ttdeci">double * source</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00109">hypar.h:109</a></div></div>
+<div class="ttc" id="a00165_html_ab8e3b679b04116dd6be664e727f0d951"><div class="ttname"><a href="a00165.html#ab8e3b679b04116dd6be664e727f0d951">_ArrayAYPX_</a></div><div class="ttdeci">#define _ArrayAYPX_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00257">arrayfunctions.h:257</a></div></div>
+<div class="ttc" id="a00144_html_a3687b87fa31b07580aa2ef43089fb010"><div class="ttname"><a href="a00144.html#a3687b87fa31b07580aa2ef43089fb010">HyPar::Upwind</a></div><div class="ttdeci">int(* Upwind)(double *, double *, double *, double *, double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00271">hypar.h:271</a></div></div>
+<div class="ttc" id="a00152_html_a00562"><div class="ttname"><a href="a00152.html#a00562">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00035">petscinterface.h:35</a></div></div>
+<div class="ttc" id="a00144_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00144.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00100">hypar.h:100</a></div></div>
+<div class="ttc" id="a00152_html_a94499efe0f52b5174ce7105de5ab1a37"><div class="ttname"><a href="a00152.html#a94499efe0f52b5174ce7105de5ab1a37">TransferVecToPETSc</a></div><div class="ttdeci">int TransferVecToPETSc(double *, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00334_source.html#l00023">TransferToPETSc.c:23</a></div></div>
+<div class="ttc" id="a00152_html_ade1bc5cad8c6735a891a28f637cbfb06"><div class="ttname"><a href="a00152.html#ade1bc5cad8c6735a891a28f637cbfb06">PETScContext::solver</a></div><div class="ttdeci">void * solver</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00037">petscinterface.h:37</a></div></div>
+<div class="ttc" id="a00144_html_afc11cc081aa04d7b35ebcbcb735f7e22"><div class="ttname"><a href="a00144.html#afc11cc081aa04d7b35ebcbcb735f7e22">HyPar::count_IJacFunction</a></div><div class="ttdeci">int count_IJacFunction</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00382">hypar.h:382</a></div></div>
+<div class="ttc" id="a00152_html_abaa15763a88d05dc68ff230ce570eee9"><div class="ttname"><a href="a00152.html#abaa15763a88d05dc68ff230ce570eee9">PETScContext::mpi</a></div><div class="ttdeci">void * mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00039">petscinterface.h:39</a></div></div>
+<div class="ttc" id="a00144_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00044">hypar.h:44</a></div></div>
+<div class="ttc" id="a00181_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00181.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00300_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
+<div class="ttc" id="a00165_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00270">arrayfunctions.h:270</a></div></div>
+<div class="ttc" id="a00144_html_ae53517ad7a202762d7b79eaf681701f3"><div class="ttname"><a href="a00144.html#ae53517ad7a202762d7b79eaf681701f3">HyPar::par</a></div><div class="ttdeci">double * par</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00106">hypar.h:106</a></div></div>
+<div class="ttc" id="a00146_html_a00559"><div class="ttname"><a href="a00146.html#a00559">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00144_html_ad8a664f0fe5ef5f928bb259fa5e3657e"><div class="ttname"><a href="a00144.html#ad8a664f0fe5ef5f928bb259fa5e3657e">HyPar::SourceFunction</a></div><div class="ttdeci">int(* SourceFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00238">hypar.h:238</a></div></div>
+<div class="ttc" id="a00152_html_ad62e14c19e38497048380c4a7fe10e12"><div class="ttname"><a href="a00152.html#ad62e14c19e38497048380c4a7fe10e12">PETScContext::jfnk_eps</a></div><div class="ttdeci">double jfnk_eps</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00077">petscinterface.h:77</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a626e9bf5daf2a3341b12c1b745519422"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PetscErrorCode PetscJacobianFunction_Linear </td>
+          <td>(</td>
+          <td class="paramtype">Mat&#160;</td>
+          <td class="paramname"><em>Jacobian</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Vec&#160;</td>
+          <td class="paramname"><em>Y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Vec&#160;</td>
+          <td class="paramname"><em>F</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Computes the action of the Jacobian on a vector: See documentation for <a class="el" href="a00323.html#a8c61fe05d2aad7ec298f50e10aa910ee">PetscIJacobian()</a> for the definition of the Jacobian. This function computes its action on a vector for a linear system by taking the directional derivative, as follows: </p><p class="formulaDsp">
+\begin{equation} {\bf f} = {\bf J}{\bf y} = \frac {\partial \mathcal{F}\left({\bf U}\right)} {\partial {\bf U}} {\bf y} = \left[ \mathcal{F}\left({\bf U}_0+{\bf y}\right)-\mathcal{F}\left({\bf U}_0\right) \right], \end{equation}
+</p>
+<p> where \(\mathcal{F}\) is linear, and thus \({\bf J}\) is a constant ( \(\mathcal{F}\left({\bf y}\right) = {\bf J}{\bf y}\)). In the context of the implicit time integration of a linear ODE given by </p><p class="formulaDsp">
+\begin{equation} \frac {d {\bf U}} {dt} = {\bf F}\left({\bf U}\right) \Rightarrow \frac {d {\bf U}} {dt} - {\bf F}\left({\bf U}\right) = 0, \end{equation}
+</p>
+<p> we have that </p><p class="formulaDsp">
+\begin{equation} \mathcal{F}\left({\bf U}\right) \equiv \dot{\bf U} - {\bf F}\left({\bf U}\right) \Rightarrow {\bf J}\left({\bf U}\right) = \left[\alpha{\bf I} - \frac {\partial {\bf F}\left({\bf U}\right)} {\partial {\bf U}} \right]. \end{equation}
+</p>
+<p> where \(\alpha\) (<a class="el" href="a00152.html#ab057d99becacf205132fd8c235a8488a">PETScContext::shift</a>) is the shift variable specific to the time integration method. So this function computes </p><p class="formulaDsp">
+\begin{equation} {\bf f} = \alpha {\bf y} - \left[ {\bf F}\left({\bf U}_0+{\bf y}\right)-{\bf F}\left({\bf U}_0\right) \right] \end{equation}
+</p>
+<p> In the code, \({\bf y}\) is <em>Y</em>, \(\bf f\) is <em>F</em>, and \({\bf U}_0\) is <em><a class="el" href="a00144.html#a3ccc9ddb96600c40dcc41bb1ded11160">HyPar::uref</a></em> (the reference solution at which the nonlinear Jacobian is computed).</p>
+<p>Since \(\mathcal{F}\) is linear, </p><p class="formulaDsp">
+\begin{equation} {\bf J}{\bf y} = \left[ \mathcal{F}\left({\bf U}_0+{\bf y}\right)-\mathcal{F}\left({\bf U}_0\right) \right] = \mathcal{F}\left({\bf y}\right). \end{equation}
+</p>
+<p> However, the Jacobian is not computed as \(\mathcal{F}\left({\bf y}\right)\) because of the following reason: this function is used by the equation solver within the implicit time integrator in PETSc, and \({\bf y}\) represents the change in the solution, i.e. \(\Delta {\bf U}\), and not the solution \(\bf U\). Thus, evaluating \(\mathcal{F}\left({\bf y}\right)\) using <a class="el" href="a00144.html#ac6e21700e87392a666ef9425981388a2">HyPar::HyperbolicFunction</a>, <a class="el" href="a00144.html#ad607a144bb3dbf119fd52c47757212dd">HyPar::ParabolicFunction</a>, and <a class="el" href="a00144.html#ad8a664f0fe5ef5f928bb259fa5e3657e">HyPar::SourceFunction</a> is incorrect since these functions expect \(\bf U\) as the input.</p>
+<p><b>Notes:</b> </p><ul>
+<li>For a nonlinear spatial discretization, the right-hand-side <b>must</b> be computed without the nonlinearity (i.e. with a previously computed or "frozen" discretization operator). This ensures that the Jacobian being computed is consistent, and is truly linear.</li>
+<li>See <a href="http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/index.html">http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/TS/index.html</a> for documentation on PETSc's time integrators.</li>
+<li>All functions and variables whose names start with Vec, Mat, PC, KSP, SNES, and TS are defined by PETSc. Refer to the PETSc documentation (<a href="http://www.mcs.anl.gov/petsc/petsc-current/docs/">http://www.mcs.anl.gov/petsc/petsc-current/docs/</a>). Usually, googling with the function or variable name yields the specific doc page dealing with that function/variable. </li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Jacobian</td><td>Jacobian matrix </td></tr>
+    <tr><td class="paramname">Y</td><td>Input vector </td></tr>
+    <tr><td class="paramname">F</td><td>Output vector (Jacobian times input vector </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="a00323_source.html#l00231">231</a> of file <a class="el" href="a00323_source.html">PetscIJacobian.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;{</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  <a class="code" href="a00152.html#a00562">PETScContext</a>    *context = NULL;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  <a class="code" href="a00144.html">HyPar</a>           *solver  = NULL;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  <a class="code" href="a00146.html#a00559">MPIVariables</a>    *mpi     = NULL;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  <span class="keywordtype">int</span>             ierr     = 0, d;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  PetscFunctionBegin;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  ierr   = MatShellGetContext(Jacobian,&amp;context); CHKERRQ(ierr);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  solver = context-&gt;<a class="code" href="a00152.html#ade1bc5cad8c6735a891a28f637cbfb06">solver</a>;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  mpi    = context-&gt;<a class="code" href="a00152.html#abaa15763a88d05dc68ff230ce570eee9">mpi</a>;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  solver-&gt;<a class="code" href="a00144.html#afc11cc081aa04d7b35ebcbcb735f7e22">count_IJacFunction</a>++;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <span class="keywordtype">int</span> size = 1;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordflow">for</span> (d=0; d&lt;solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) size *= (solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d]+2*solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordtype">double</span> *u       = solver-&gt;<a class="code" href="a00144.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordtype">double</span> *uref    = solver-&gt;<a class="code" href="a00144.html#a3ccc9ddb96600c40dcc41bb1ded11160">uref</a>;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  <span class="keywordtype">double</span> *rhsref  = solver-&gt;<a class="code" href="a00144.html#ad587a58397d439c443ae325450a01a13">rhsref</a>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  <span class="keywordtype">double</span> *rhs     = solver-&gt;<a class="code" href="a00144.html#ade4650485fe35fd3e12fea272fc80209">rhs</a>;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="keywordtype">double</span> t = context-&gt;<a class="code" href="a00152.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a>; <span class="comment">/* current stage/step time */</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  <span class="keywordtype">double</span> normY;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  ierr = VecNorm(Y,NORM_2,&amp;normY);                                        CHKERRQ(ierr);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  <span class="keywordflow">if</span> (normY &lt; 1e-16) {</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="comment">/* F = 0 */</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    ierr = VecZeroEntries(F);                                             CHKERRQ(ierr);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <span class="comment">/* [J]Y = aY - F(Y) */</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    ierr = VecAXPBY(F,context-&gt;<a class="code" href="a00152.html#ab057d99becacf205132fd8c235a8488a">shift</a>,0,Y);                                CHKERRQ(ierr);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="comment">/* copy solution from PETSc vector */</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    ierr = <a class="code" href="a00152.html#aba47a541676718cced51875b1c3a4ba6">TransferVecFromPETSc</a>(u,Y,context);                             <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <a class="code" href="a00165.html#ab8e3b679b04116dd6be664e727f0d951">_ArrayAYPX_</a>(uref,1.0,u,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="comment">/* apply boundary conditions and exchange data over MPI interfaces */</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    ierr = solver-&gt;<a class="code" href="a00144.html#ae8ea0215931c7fc3feb33aa0fbdc24e5">ApplyBoundaryConditions</a>(solver,mpi,u,NULL,t);          <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    ierr = <a class="code" href="a00181.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(solver-&gt;<a class="code" href="a00144.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;                                   solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,mpi,u);                 <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="comment">/* Evaluate hyperbolic, parabolic and source terms  and the RHS for U+dU */</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <a class="code" href="a00165.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,0.0);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    ierr = solver-&gt;<a class="code" href="a00144.html#ac6e21700e87392a666ef9425981388a2">HyperbolicFunction</a>(solver-&gt;<a class="code" href="a00144.html#aeadfdde0fbc3058bace813055212dcc3">hyp</a>,u,solver,mpi,t,0,</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                                      solver-&gt;<a class="code" href="a00144.html#abd6886cf9b7ead81e0aaa9ead9aced81">FFunction</a>,solver-&gt;<a class="code" href="a00144.html#a3687b87fa31b07580aa2ef43089fb010">Upwind</a>);  <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00144.html#aeadfdde0fbc3058bace813055212dcc3">hyp</a>,-1.0,rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    ierr = solver-&gt;<a class="code" href="a00144.html#ad607a144bb3dbf119fd52c47757212dd">ParabolicFunction</a> (solver-&gt;<a class="code" href="a00144.html#ae53517ad7a202762d7b79eaf681701f3">par</a>,u,solver,mpi,t);        <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00144.html#ae53517ad7a202762d7b79eaf681701f3">par</a>, 1.0,rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    ierr = solver-&gt;<a class="code" href="a00144.html#ad8a664f0fe5ef5f928bb259fa5e3657e">SourceFunction</a>    (solver-&gt;<a class="code" href="a00144.html#a6b4951ffdbd82f3a3848b82352d389d6">source</a>,u,solver,mpi,t);     <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(solver-&gt;<a class="code" href="a00144.html#a6b4951ffdbd82f3a3848b82352d389d6">source</a>, 1.0,rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <a class="code" href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(rhsref,-1.0,rhs,size*solver-&gt;<a class="code" href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="comment">/* Transfer RHS to PETSc vector */</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    ierr = <a class="code" href="a00152.html#a94499efe0f52b5174ce7105de5ab1a37">TransferVecToPETSc</a>(rhs,F,context);     <a class="code" href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="comment">/* [J]Y = aY - F(Y) */</span></div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    ierr = VecAXPBY(F,context-&gt;<a class="code" href="a00152.html#ab057d99becacf205132fd8c235a8488a">shift</a>,-1.0,Y);     CHKERRQ(ierr);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  }</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  PetscFunctionReturn(0);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;}</div>
+<div class="ttc" id="a00152_html_ab057d99becacf205132fd8c235a8488a"><div class="ttname"><a href="a00152.html#ab057d99becacf205132fd8c235a8488a">PETScContext::shift</a></div><div class="ttdeci">PetscReal shift</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00042">petscinterface.h:42</a></div></div>
+<div class="ttc" id="a00144_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00035">hypar.h:35</a></div></div>
+<div class="ttc" id="a00144_html_a3ccc9ddb96600c40dcc41bb1ded11160"><div class="ttname"><a href="a00144.html#a3ccc9ddb96600c40dcc41bb1ded11160">HyPar::uref</a></div><div class="ttdeci">double * uref</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00365">hypar.h:365</a></div></div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00144_html_ac6e21700e87392a666ef9425981388a2"><div class="ttname"><a href="a00144.html#ac6e21700e87392a666ef9425981388a2">HyPar::HyperbolicFunction</a></div><div class="ttdeci">int(* HyperbolicFunction)(double *, double *, void *, void *, double, int, int(*)(double *, double *, int, void *, double), int(*)(double *, double *, double *, double *, double *, double *, int, void *, double))</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00229">hypar.h:229</a></div></div>
+<div class="ttc" id="a00144_html_abd6886cf9b7ead81e0aaa9ead9aced81"><div class="ttname"><a href="a00144.html#abd6886cf9b7ead81e0aaa9ead9aced81">HyPar::FFunction</a></div><div class="ttdeci">int(* FFunction)(double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00254">hypar.h:254</a></div></div>
+<div class="ttc" id="a00144_html_ad587a58397d439c443ae325450a01a13"><div class="ttname"><a href="a00144.html#ad587a58397d439c443ae325450a01a13">HyPar::rhsref</a></div><div class="ttdeci">double * rhsref</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00366">hypar.h:366</a></div></div>
+<div class="ttc" id="a00165_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00165.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00168">arrayfunctions.h:168</a></div></div>
+<div class="ttc" id="a00166_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00166.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00014">basic.h:14</a></div></div>
+<div class="ttc" id="a00152_html_aba47a541676718cced51875b1c3a4ba6"><div class="ttname"><a href="a00152.html#aba47a541676718cced51875b1c3a4ba6">TransferVecFromPETSc</a></div><div class="ttdeci">int TransferVecFromPETSc(double *, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00333_source.html#l00022">TransferFromPETSc.c:22</a></div></div>
+<div class="ttc" id="a00144_html_ade4650485fe35fd3e12fea272fc80209"><div class="ttname"><a href="a00144.html#ade4650485fe35fd3e12fea272fc80209">HyPar::rhs</a></div><div class="ttdeci">double * rhs</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00367">hypar.h:367</a></div></div>
+<div class="ttc" id="a00144_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00144.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00144_html_aeadfdde0fbc3058bace813055212dcc3"><div class="ttname"><a href="a00144.html#aeadfdde0fbc3058bace813055212dcc3">HyPar::hyp</a></div><div class="ttdeci">double * hyp</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00103">hypar.h:103</a></div></div>
+<div class="ttc" id="a00144_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00144.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00144_html_ad607a144bb3dbf119fd52c47757212dd"><div class="ttname"><a href="a00144.html#ad607a144bb3dbf119fd52c47757212dd">HyPar::ParabolicFunction</a></div><div class="ttdeci">int(* ParabolicFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00235">hypar.h:235</a></div></div>
+<div class="ttc" id="a00144_html_ae8ea0215931c7fc3feb33aa0fbdc24e5"><div class="ttname"><a href="a00144.html#ae8ea0215931c7fc3feb33aa0fbdc24e5">HyPar::ApplyBoundaryConditions</a></div><div class="ttdeci">int(* ApplyBoundaryConditions)(void *, void *, double *, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00193">hypar.h:193</a></div></div>
+<div class="ttc" id="a00152_html_a28e4e78c0bf258662bef21d26c51fc0b"><div class="ttname"><a href="a00152.html#a28e4e78c0bf258662bef21d26c51fc0b">PETScContext::waqt</a></div><div class="ttdeci">double waqt</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00044">petscinterface.h:44</a></div></div>
+<div class="ttc" id="a00144_html_a6b4951ffdbd82f3a3848b82352d389d6"><div class="ttname"><a href="a00144.html#a6b4951ffdbd82f3a3848b82352d389d6">HyPar::source</a></div><div class="ttdeci">double * source</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00109">hypar.h:109</a></div></div>
+<div class="ttc" id="a00165_html_ab8e3b679b04116dd6be664e727f0d951"><div class="ttname"><a href="a00165.html#ab8e3b679b04116dd6be664e727f0d951">_ArrayAYPX_</a></div><div class="ttdeci">#define _ArrayAYPX_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00257">arrayfunctions.h:257</a></div></div>
+<div class="ttc" id="a00144_html_a3687b87fa31b07580aa2ef43089fb010"><div class="ttname"><a href="a00144.html#a3687b87fa31b07580aa2ef43089fb010">HyPar::Upwind</a></div><div class="ttdeci">int(* Upwind)(double *, double *, double *, double *, double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00271">hypar.h:271</a></div></div>
+<div class="ttc" id="a00152_html_a00562"><div class="ttname"><a href="a00152.html#a00562">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00035">petscinterface.h:35</a></div></div>
+<div class="ttc" id="a00144_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00144.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00100">hypar.h:100</a></div></div>
+<div class="ttc" id="a00152_html_a94499efe0f52b5174ce7105de5ab1a37"><div class="ttname"><a href="a00152.html#a94499efe0f52b5174ce7105de5ab1a37">TransferVecToPETSc</a></div><div class="ttdeci">int TransferVecToPETSc(double *, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00334_source.html#l00023">TransferToPETSc.c:23</a></div></div>
+<div class="ttc" id="a00152_html_ade1bc5cad8c6735a891a28f637cbfb06"><div class="ttname"><a href="a00152.html#ade1bc5cad8c6735a891a28f637cbfb06">PETScContext::solver</a></div><div class="ttdeci">void * solver</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00037">petscinterface.h:37</a></div></div>
+<div class="ttc" id="a00144_html_afc11cc081aa04d7b35ebcbcb735f7e22"><div class="ttname"><a href="a00144.html#afc11cc081aa04d7b35ebcbcb735f7e22">HyPar::count_IJacFunction</a></div><div class="ttdeci">int count_IJacFunction</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00382">hypar.h:382</a></div></div>
+<div class="ttc" id="a00152_html_abaa15763a88d05dc68ff230ce570eee9"><div class="ttname"><a href="a00152.html#abaa15763a88d05dc68ff230ce570eee9">PETScContext::mpi</a></div><div class="ttdeci">void * mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00152_source.html#l00039">petscinterface.h:39</a></div></div>
+<div class="ttc" id="a00144_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00044">hypar.h:44</a></div></div>
+<div class="ttc" id="a00181_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00181.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00300_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
+<div class="ttc" id="a00165_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00165.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00270">arrayfunctions.h:270</a></div></div>
+<div class="ttc" id="a00144_html_ae53517ad7a202762d7b79eaf681701f3"><div class="ttname"><a href="a00144.html#ae53517ad7a202762d7b79eaf681701f3">HyPar::par</a></div><div class="ttdeci">double * par</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00106">hypar.h:106</a></div></div>
+<div class="ttc" id="a00146_html_a00559"><div class="ttname"><a href="a00146.html#a00559">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00144_html_ad8a664f0fe5ef5f928bb259fa5e3657e"><div class="ttname"><a href="a00144.html#ad8a664f0fe5ef5f928bb259fa5e3657e">HyPar::SourceFunction</a></div><div class="ttdeci">int(* SourceFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00238">hypar.h:238</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

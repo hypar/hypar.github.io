@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/ImmersedBoundaries/IBNearestFacetNormal.c Source File</title>
+<title>HyPar: src/HyParFunctions/ApplyIBConditions.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,159 +114,35 @@ $(document).ready(function(){initNavTree('a00227_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">IBNearestFacetNormal.c</div>  </div>
+<div class="title">ApplyIBConditions.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00227.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00147.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00157.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00159.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00114.html">immersedboundaries.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="a00227.html#a6910727d86fc73085545f208fecdece7">   25</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00227.html#a6910727d86fc73085545f208fecdece7">IBNearestFacetNormal</a>(</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                          <span class="keywordtype">void</span>    *ib, </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                          <span class="keywordtype">void</span>    *m,  </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                          <span class="keywordtype">double</span>  *X,  </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                          <span class="keywordtype">double</span>  large_distance, </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                          <span class="keywordtype">int</span>     *dim_l, </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                          <span class="keywordtype">int</span>     ghosts </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                        )</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="a00114.html#a00519">ImmersedBoundary</a>  *IB       = (<a class="code" href="a00114.html#a00519">ImmersedBoundary</a>*) ib;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00128.html#a00521">MPIVariables</a>      *mpi      = (<a class="code" href="a00128.html#a00521">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="a00114.html#a00506">Body3D</a>            *body     = IB-&gt;<a class="code" href="a00114.html#af858f0e9bc4a6cb1c16ad2931cf4b43d">body</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00114.html#a00511">Facet3D</a>           *surface  = body-&gt;<a class="code" href="a00114.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00114.html#a00518">IBNode</a>            *boundary = IB-&gt;<a class="code" href="a00114.html#aeab4c13a1e3fce2920ce0ff616d0fac5">boundary</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">double</span>  eps = IB-&gt;<a class="code" href="a00114.html#a97eab6d709b80585fe9e8a54b1e3da27">tolerance</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordtype">int</span>     nb  = IB-&gt;<a class="code" href="a00114.html#a7f578e3fbaeeea97b65e3ade80f60a78">n_boundary_nodes</a>,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;          nf  = body-&gt;<a class="code" href="a00114.html#afd755b081f4d9ca3558ef9ca9f3c35d0">nfacets</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">int</span> i, j, k, dg, n;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">for</span> (dg = 0; dg &lt; nb; dg++) {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        i = boundary[dg].<a class="code" href="a00114.html#acb559820d9ca11295b4500f179ef6392">i</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        j = boundary[dg].<a class="code" href="a00114.html#a37d972ae0b47b9099e30983131d31916">j</a>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        k = boundary[dg].<a class="code" href="a00114.html#ab66ed8e0098c0a86b458672a55a9cca9">k</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">double</span> xp, yp, zp;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="a00147.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,i,dim_l,ghosts,X,xp);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="a00147.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,j,dim_l,ghosts,X,yp);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="a00147.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,k,dim_l,ghosts,X,zp);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    boundary[dg].<a class="code" href="a00114.html#af88b946fb90d5f08b5fb740c70e98c10">x</a> = xp;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    boundary[dg].<a class="code" href="a00114.html#ab927965981178aa1fba979a37168db2a">y</a> = yp;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    boundary[dg].<a class="code" href="a00114.html#ab3e6ed577a7c669c19de1f9c1b46c872">z</a> = zp;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordtype">double</span>  dist_min = large_distance;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">int</span>     n_min    = -1;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">for</span> (n = 0; n &lt; nf; n++) {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">double</span> x1, x2, x3;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">double</span> y1, y2, y3;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">double</span> z1, z2, z3;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            x1 = surface[n].<a class="code" href="a00114.html#ac75b803b570527306e1e744bfb7a604f">x1</a>; x2 = surface[n].<a class="code" href="a00114.html#adcf04f5f1964d18b332643939561da0d">x2</a>; x3 = surface[n].<a class="code" href="a00114.html#a98e99f64ddf7321e4eae52beca4b580f">x3</a>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            y1 = surface[n].<a class="code" href="a00114.html#ac3b72e5b77595ca2340ecf8ccfe5fd99">y1</a>; y2 = surface[n].<a class="code" href="a00114.html#a5347e514ebe985fb371754ffd2b5ff83">y2</a>; y3 = surface[n].<a class="code" href="a00114.html#a786634d3d364cf94d8eb600ce7136355">y3</a>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            z1 = surface[n].<a class="code" href="a00114.html#a0e1fe82df628138c8f3907ecddb514ae">z1</a>; z2 = surface[n].<a class="code" href="a00114.html#a822ab991099a420eb62b3f0e2b0021a2">z2</a>; z3 = surface[n].<a class="code" href="a00114.html#a270503fb34041aa050ec80858f7820a7">z3</a>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordtype">double</span> dist =   surface[n].<a class="code" href="a00114.html#a74d07ed95c86939416c6a88f1daf8e1a">nx</a>*(xp-surface[n].<a class="code" href="a00114.html#ac75b803b570527306e1e744bfb7a604f">x1</a>) </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                    + surface[n].ny*(yp-surface[n].y1) </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    + surface[n].<a class="code" href="a00114.html#a463bf8b21578003b62221acf2e522134">nz</a>*(zp-surface[n].<a class="code" href="a00114.html#a0e1fe82df628138c8f3907ecddb514ae">z1</a>);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">if</span> (dist &gt; 0)   <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(dist) &lt; dist_min) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                <span class="keywordtype">short</span>   is_it_in = 0;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                <span class="keywordtype">double</span>  x_int, y_int, z_int;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                x_int = xp - dist * surface[n].<a class="code" href="a00114.html#a74d07ed95c86939416c6a88f1daf8e1a">nx</a>;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                y_int = yp - dist * surface[n].<a class="code" href="a00114.html#a147a8b14bbd79c0f1a3457805e2065ba">ny</a>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                z_int = zp - dist * surface[n].<a class="code" href="a00114.html#a463bf8b21578003b62221acf2e522134">nz</a>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="keywordflow">if</span> (<a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(surface[n].nx) &gt; eps) {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                    <span class="keywordtype">double</span> den = (z2-z3)*(y1-y3)-(y2-y3)*(z1-z3);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                    <span class="keywordtype">double</span> l1, l2, l3;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    l1 = ((y2-y3)*(z3-z_int)-(z2-z3)*(y3-y_int)) / den;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                    l2 = ((z1-z3)*(y3-y_int)-(y1-y3)*(z3-z_int)) / den;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                    l3 = 1 - l1 - l2;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                    <span class="keywordflow">if</span> ((l1 &gt; -eps) &amp;&amp; (l2 &gt; -eps) &amp;&amp; (l3 &gt; -eps))  is_it_in = 1;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(surface[n].ny) &gt; eps) {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                    <span class="keywordtype">double</span> den = (x2-x3)*(z1-z3)-(z2-z3)*(x1-x3);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                    <span class="keywordtype">double</span> l1, l2, l3;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                    l1 = ((z2-z3)*(x3-x_int)-(x2-x3)*(z3-z_int)) / den;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                    l2 = ((x1-x3)*(z3-z_int)-(z1-z3)*(x3-x_int)) / den;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                    l3 = 1 - l1 - l2;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                    <span class="keywordflow">if</span> ((l1 &gt; -eps) &amp;&amp; (l2 &gt; -eps) &amp;&amp; (l3 &gt; -eps))  is_it_in = 1;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                    <span class="keywordtype">double</span> den = (y2-y3)*(x1-x3)-(x2-x3)*(y1-y3);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                    <span class="keywordtype">double</span> l1, l2, l3;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                    l1 = ((x2-x3)*(y3-y_int)-(y2-y3)*(x3-x_int)) / den;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                    l2 = ((y1-y3)*(x3-x_int)-(x1-x3)*(y3-y_int)) / den;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                    l3 = 1 - l1 - l2;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                    <span class="keywordflow">if</span> ((l1 &gt; -eps) &amp;&amp; (l2 &gt; -eps) &amp;&amp; (l3 &gt; -eps))  is_it_in = 1;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                <span class="keywordflow">if</span> (is_it_in) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                    dist_min = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(dist);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                    n_min = n; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">if</span> (n_min == -1) {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="keywordflow">for</span> (n = 0; n &lt; nf; n++) {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                <span class="keywordtype">double</span> dist =   surface[n].<a class="code" href="a00114.html#a74d07ed95c86939416c6a88f1daf8e1a">nx</a>*(xp-surface[n].<a class="code" href="a00114.html#ac75b803b570527306e1e744bfb7a604f">x1</a>) </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                      + surface[n].ny*(yp-surface[n].y1) </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                      + surface[n].<a class="code" href="a00114.html#a463bf8b21578003b62221acf2e522134">nz</a>*(zp-surface[n].<a class="code" href="a00114.html#a0e1fe82df628138c8f3907ecddb514ae">z1</a>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                <span class="keywordflow">if</span> (dist &gt; eps) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                    <span class="keywordflow">if</span> (<a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(dist) &lt; dist_min) {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                        dist_min = <a class="code" href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(dist);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                        n_min = n;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                    }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                }</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            }</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        }</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">if</span> (n_min == -1)    {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      fprintf(stderr,<span class="stringliteral">&quot;Error in IBNearestFacetNormal(): no nearest normal found for boundary node (%d,%d,%d) &quot;</span>,i,j,k);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      fprintf(stderr,<span class="stringliteral">&quot;on rank %d.\n&quot;</span>,mpi-&gt;<a class="code" href="a00128.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    } <span class="keywordflow">else</span> boundary[dg].<a class="code" href="a00114.html#a84f780956fce41006ca0d5bd16478490">face</a> = &amp;surface[n_min];</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
-<div class="ttc" id="a00114_html_a74d07ed95c86939416c6a88f1daf8e1a"><div class="ttname"><a href="a00114.html#a74d07ed95c86939416c6a88f1daf8e1a">Facet3D::nx</a></div><div class="ttdeci">double nx</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00114_html_aa7bdafcc50881d7f0f4db707755698ce"><div class="ttname"><a href="a00114.html#aa7bdafcc50881d7f0f4db707755698ce">Body3D::surface</a></div><div class="ttdeci">Facet3D * surface</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00102">immersedboundaries.h:102</a></div></div>
-<div class="ttc" id="a00114_html_a0e1fe82df628138c8f3907ecddb514ae"><div class="ttname"><a href="a00114.html#a0e1fe82df628138c8f3907ecddb514ae">Facet3D::z1</a></div><div class="ttdeci">double z1</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00128_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00128.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00025">mpivars_struct.h:25</a></div></div>
-<div class="ttc" id="a00114_html_a147a8b14bbd79c0f1a3457805e2065ba"><div class="ttname"><a href="a00114.html#a147a8b14bbd79c0f1a3457805e2065ba">Facet3D::ny</a></div><div class="ttdeci">double ny</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00159_html"><div class="ttname"><a href="a00159.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
-<div class="ttc" id="a00114_html_ab927965981178aa1fba979a37168db2a"><div class="ttname"><a href="a00114.html#ab927965981178aa1fba979a37168db2a">IBNode::y</a></div><div class="ttdeci">double y</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00130">immersedboundaries.h:130</a></div></div>
-<div class="ttc" id="a00147_html"><div class="ttname"><a href="a00147.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00114_html_a270503fb34041aa050ec80858f7820a7"><div class="ttname"><a href="a00114.html#a270503fb34041aa050ec80858f7820a7">Facet3D::z3</a></div><div class="ttdeci">double z3</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00114_html_ab3e6ed577a7c669c19de1f9c1b46c872"><div class="ttname"><a href="a00114.html#ab3e6ed577a7c669c19de1f9c1b46c872">IBNode::z</a></div><div class="ttdeci">double z</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00130">immersedboundaries.h:130</a></div></div>
-<div class="ttc" id="a00114_html_afd755b081f4d9ca3558ef9ca9f3c35d0"><div class="ttname"><a href="a00114.html#afd755b081f4d9ca3558ef9ca9f3c35d0">Body3D::nfacets</a></div><div class="ttdeci">int nfacets</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00101">immersedboundaries.h:101</a></div></div>
-<div class="ttc" id="a00114_html_a463bf8b21578003b62221acf2e522134"><div class="ttname"><a href="a00114.html#a463bf8b21578003b62221acf2e522134">Facet3D::nz</a></div><div class="ttdeci">double nz</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00114_html_adcf04f5f1964d18b332643939561da0d"><div class="ttname"><a href="a00114.html#adcf04f5f1964d18b332643939561da0d">Facet3D::x2</a></div><div class="ttdeci">double x2</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00114_html_a97eab6d709b80585fe9e8a54b1e3da27"><div class="ttname"><a href="a00114.html#a97eab6d709b80585fe9e8a54b1e3da27">ImmersedBoundary::tolerance</a></div><div class="ttdeci">double tolerance</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00158">immersedboundaries.h:158</a></div></div>
-<div class="ttc" id="a00114_html_ab66ed8e0098c0a86b458672a55a9cca9"><div class="ttname"><a href="a00114.html#ab66ed8e0098c0a86b458672a55a9cca9">IBNode::k</a></div><div class="ttdeci">int k</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00126">immersedboundaries.h:126</a></div></div>
-<div class="ttc" id="a00114_html"><div class="ttname"><a href="a00114.html">immersedboundaries.h</a></div><div class="ttdoc">Structures and function definitions for immersed boundaries. </div></div>
-<div class="ttc" id="a00114_html_af88b946fb90d5f08b5fb740c70e98c10"><div class="ttname"><a href="a00114.html#af88b946fb90d5f08b5fb740c70e98c10">IBNode::x</a></div><div class="ttdeci">double x</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00130">immersedboundaries.h:130</a></div></div>
-<div class="ttc" id="a00114_html_aeab4c13a1e3fce2920ce0ff616d0fac5"><div class="ttname"><a href="a00114.html#aeab4c13a1e3fce2920ce0ff616d0fac5">ImmersedBoundary::boundary</a></div><div class="ttdeci">IBNode * boundary</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00155">immersedboundaries.h:155</a></div></div>
-<div class="ttc" id="a00114_html_a00511"><div class="ttname"><a href="a00114.html#a00511">Facet3D</a></div><div class="ttdoc">Structure defining a facet. </div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00039">immersedboundaries.h:39</a></div></div>
-<div class="ttc" id="a00114_html_a00518"><div class="ttname"><a href="a00114.html#a00518">IBNode</a></div><div class="ttdoc">Structure defining an immersed boundary node. </div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00125">immersedboundaries.h:125</a></div></div>
-<div class="ttc" id="a00114_html_a00519"><div class="ttname"><a href="a00114.html#a00519">ImmersedBoundary</a></div><div class="ttdoc">Structure containing variables for immersed boundary implementation. </div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00153">immersedboundaries.h:153</a></div></div>
-<div class="ttc" id="a00114_html_a00506"><div class="ttname"><a href="a00114.html#a00506">Body3D</a></div><div class="ttdoc">Structure defining a body. </div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00100">immersedboundaries.h:100</a></div></div>
-<div class="ttc" id="a00147_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00147.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00147_source.html#l00027">basic.h:27</a></div></div>
-<div class="ttc" id="a00114_html_ac75b803b570527306e1e744bfb7a604f"><div class="ttname"><a href="a00114.html#ac75b803b570527306e1e744bfb7a604f">Facet3D::x1</a></div><div class="ttdeci">double x1</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00114_html_a84f780956fce41006ca0d5bd16478490"><div class="ttname"><a href="a00114.html#a84f780956fce41006ca0d5bd16478490">IBNode::face</a></div><div class="ttdeci">Facet3D * face</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00133">immersedboundaries.h:133</a></div></div>
-<div class="ttc" id="a00114_html_a822ab991099a420eb62b3f0e2b0021a2"><div class="ttname"><a href="a00114.html#a822ab991099a420eb62b3f0e2b0021a2">Facet3D::z2</a></div><div class="ttdeci">double z2</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00227_html_a6910727d86fc73085545f208fecdece7"><div class="ttname"><a href="a00227.html#a6910727d86fc73085545f208fecdece7">IBNearestFacetNormal</a></div><div class="ttdeci">int IBNearestFacetNormal(void *ib, void *m, double *X, double large_distance, int *dim_l, int ghosts)</div><div class="ttdef"><b>Definition:</b> <a href="a00227_source.html#l00025">IBNearestFacetNormal.c:25</a></div></div>
-<div class="ttc" id="a00114_html_a7f578e3fbaeeea97b65e3ade80f60a78"><div class="ttname"><a href="a00114.html#a7f578e3fbaeeea97b65e3ade80f60a78">ImmersedBoundary::n_boundary_nodes</a></div><div class="ttdeci">int n_boundary_nodes</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00161">immersedboundaries.h:161</a></div></div>
-<div class="ttc" id="a00157_html"><div class="ttname"><a href="a00157.html">mathfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00114_html_acb559820d9ca11295b4500f179ef6392"><div class="ttname"><a href="a00114.html#acb559820d9ca11295b4500f179ef6392">IBNode::i</a></div><div class="ttdeci">int i</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00126">immersedboundaries.h:126</a></div></div>
-<div class="ttc" id="a00114_html_af858f0e9bc4a6cb1c16ad2931cf4b43d"><div class="ttname"><a href="a00114.html#af858f0e9bc4a6cb1c16ad2931cf4b43d">ImmersedBoundary::body</a></div><div class="ttdeci">Body3D * body</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00154">immersedboundaries.h:154</a></div></div>
-<div class="ttc" id="a00114_html_ac3b72e5b77595ca2340ecf8ccfe5fd99"><div class="ttname"><a href="a00114.html#ac3b72e5b77595ca2340ecf8ccfe5fd99">Facet3D::y1</a></div><div class="ttdeci">double y1</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00128_html_a00521"><div class="ttname"><a href="a00128.html#a00521">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00128_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00114_html_a37d972ae0b47b9099e30983131d31916"><div class="ttname"><a href="a00114.html#a37d972ae0b47b9099e30983131d31916">IBNode::j</a></div><div class="ttdeci">int j</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00126">immersedboundaries.h:126</a></div></div>
-<div class="ttc" id="a00114_html_a786634d3d364cf94d8eb600ce7136355"><div class="ttname"><a href="a00114.html#a786634d3d364cf94d8eb600ce7136355">Facet3D::y3</a></div><div class="ttdeci">double y3</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00157_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00157.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00157_source.html#l00033">mathfunctions.h:33</a></div></div>
-<div class="ttc" id="a00114_html_a98e99f64ddf7321e4eae52beca4b580f"><div class="ttname"><a href="a00114.html#a98e99f64ddf7321e4eae52beca4b580f">Facet3D::x3</a></div><div class="ttdeci">double x3</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00114_html_a5347e514ebe985fb371754ffd2b5ff83"><div class="ttname"><a href="a00114.html#a5347e514ebe985fb371754ffd2b5ff83">Facet3D::y2</a></div><div class="ttdeci">double y2</div><div class="ttdef"><b>Definition:</b> <a href="a00114_source.html#l00040">immersedboundaries.h:40</a></div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00181.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00172.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00495.html#a4cf60474c83d29277a8c9060143113ff">   13</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00227.html#a63bad563b5163bdada0672cec6d535c0">ApplyIBConditions</a>(<span class="keywordtype">void</span>    *s, </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                      <span class="keywordtype">void</span>    *m, </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                      <span class="keywordtype">double</span>  *x, </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                      <span class="keywordtype">double</span>  waqt </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                     ) </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <a class="code" href="a00144.html">HyPar</a>           *solver   = (<a class="code" href="a00144.html">HyPar</a>*)          s;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <a class="code" href="a00146.html#a00559">MPIVariables</a>    *mpi      = (<a class="code" href="a00146.html#a00559">MPIVariables</a>*)   m;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="comment">/* Apply immersed boundary conditions, if applicable */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00144.html#ae83b1b0117b6a805ead2e4728945814c">flag_ib</a>) <a class="code" href="a00166.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00144.html#ab6b4ddc83903e8ec06aeb9a87dd60c9b">IBFunction</a>(solver,mpi,x,waqt);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00144_html_ae83b1b0117b6a805ead2e4728945814c"><div class="ttname"><a href="a00144.html#ae83b1b0117b6a805ead2e4728945814c">HyPar::flag_ib</a></div><div class="ttdeci">int flag_ib</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00401">hypar.h:401</a></div></div>
+<div class="ttc" id="a00227_html_a63bad563b5163bdada0672cec6d535c0"><div class="ttname"><a href="a00227.html#a63bad563b5163bdada0672cec6d535c0">ApplyIBConditions</a></div><div class="ttdeci">int ApplyIBConditions(void *s, void *m, double *x, double waqt)</div><div class="ttdef"><b>Definition:</b> <a href="a00227_source.html#l00013">ApplyIBConditions.c:13</a></div></div>
+<div class="ttc" id="a00181_html"><div class="ttname"><a href="a00181.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="ttc" id="a00166_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00166.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00012">basic.h:12</a></div></div>
+<div class="ttc" id="a00144_html_ab6b4ddc83903e8ec06aeb9a87dd60c9b"><div class="ttname"><a href="a00144.html#ab6b4ddc83903e8ec06aeb9a87dd60c9b">HyPar::IBFunction</a></div><div class="ttdeci">int(* IBFunction)(void *, void *, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00406">hypar.h:406</a></div></div>
+<div class="ttc" id="a00172_html"><div class="ttname"><a href="a00172.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00146_html_a00559"><div class="ttname"><a href="a00146.html#a00559">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00024">mpivars_struct.h:24</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

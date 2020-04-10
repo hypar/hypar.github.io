@@ -1,5 +1,6 @@
 var a00283 =
 [
-    [ "MPIPartitionArraynD", "a00283.html#a01e91e5f4675fae1698339a4028c09c1", null ],
-    [ "MPIPartitionArraynDwGhosts", "a00283.html#a43dfd14478735bbae12fbaa10f0403b5", null ]
+    [ "WriteArraySerial", "a00283.html#a62e3430c806c874df7b65e9ba3da95c7", null ],
+    [ "WriteArrayParallel", "a00283.html#a1548f4cea5254257d93790952941c351", null ],
+    [ "WriteArray", "a00283.html#a39266090467a28f626638e7bfc9957e2", null ]
 ];

@@ -1,5 +1,5 @@
 var a00402 =
 [
-    [ "NavierStokes3DJacobian", "a00402.html#a6c45dc91596bd65c52421d51d32aa77e", null ],
-    [ "NavierStokes3DStiffJacobian", "a00402.html#a4e52fd52b4a07d5a31ceda8e28fab91a", null ]
+    [ "LinearADRDiffusionG", "a00402.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
+    [ "LinearADRDiffusionH", "a00402.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
 ];

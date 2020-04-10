@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/PhysicalModels/FPPowerSystem/FPPowerSystemCleanup.c Source File</title>
+<title>HyPar: src/PhysicalModels/Euler1D/Euler1DEigen.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,18 +114,51 @@ $(document).ready(function(){initNavTree('a00342_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">FPPowerSystemCleanup.c</div>  </div>
+<div class="title">Euler1DEigen.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00342.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00123.html">physicalmodels/fppowersystem.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="a00342.html#ac5558f0ce41893640fb0d0d9c30c9dfb">    4</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00342.html#ac5558f0ce41893640fb0d0d9c30c9dfb">FPPowerSystemCleanup</a>(<span class="keywordtype">void</span> *s)</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;}</div>
-<div class="ttc" id="a00123_html"><div class="ttname"><a href="a00123.html">fppowersystem.h</a></div></div>
-<div class="ttc" id="a00342_html_ac5558f0ce41893640fb0d0d9c30c9dfb"><div class="ttname"><a href="a00342.html#ac5558f0ce41893640fb0d0d9c30c9dfb">FPPowerSystemCleanup</a></div><div class="ttdeci">int FPPowerSystemCleanup(void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00342_source.html#l00004">FPPowerSystemCleanup.c:4</a></div></div>
+<a href="a00342.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00166.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00165.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00177.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00183.html">physicalmodels/euler1d.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00172.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="a00346.html#a979f0aa5a88e8c1d32794ccba50bc806">   19</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00342.html#a1815fa0e825f5544526165566c75a619">Euler1DLeftEigenvectors</a>(</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                            <span class="keywordtype">double</span> *u, </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                            <span class="keywordtype">double</span> *L, </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                            <span class="keywordtype">void</span>   *p, </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                            <span class="keywordtype">int</span>    dir </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                           )</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="a00137.html">Euler1D</a> *param  = (<a class="code" href="a00137.html">Euler1D</a>*)  p;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00183.html#a413fd3cab5a06c9d7a38334768d81b0f">_Euler1DLeftEigenvectors_</a>(u,L,param,dir);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a00346.html#a6139f9478a0791ac0a0c0d43faffb378">   38</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00342.html#af93bb74bc4643347f59e3bdb722e864b">Euler1DRightEigenvectors</a>(</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                              <span class="keywordtype">double</span>  *u, </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                              <span class="keywordtype">double</span>  *R, </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                              <span class="keywordtype">void</span>    *p, </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                              <span class="keywordtype">int</span>     dir </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                            )</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00137.html">Euler1D</a> *param  = (<a class="code" href="a00137.html">Euler1D</a>*)  p;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="a00183.html#a4449638968eca76bb5631bc75b7dced7">_Euler1DRightEigenvectors_</a>(u,R,param,dir);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="ttc" id="a00183_html_a413fd3cab5a06c9d7a38334768d81b0f"><div class="ttname"><a href="a00183.html#a413fd3cab5a06c9d7a38334768d81b0f">_Euler1DLeftEigenvectors_</a></div><div class="ttdeci">#define _Euler1DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00225">euler1d.h:225</a></div></div>
+<div class="ttc" id="a00183_html"><div class="ttname"><a href="a00183.html">euler1d.h</a></div><div class="ttdoc">1D Euler Equations (inviscid, compressible flows) </div></div>
+<div class="ttc" id="a00166_html"><div class="ttname"><a href="a00166.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00137_html"><div class="ttname"><a href="a00137.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00273">euler1d.h:273</a></div></div>
+<div class="ttc" id="a00172_html"><div class="ttname"><a href="a00172.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00177_html"><div class="ttname"><a href="a00177.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00165_html"><div class="ttname"><a href="a00165.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00342_html_af93bb74bc4643347f59e3bdb722e864b"><div class="ttname"><a href="a00342.html#af93bb74bc4643347f59e3bdb722e864b">Euler1DRightEigenvectors</a></div><div class="ttdeci">int Euler1DRightEigenvectors(double *u, double *R, void *p, int dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00342_source.html#l00038">Euler1DEigen.c:38</a></div></div>
+<div class="ttc" id="a00183_html_a4449638968eca76bb5631bc75b7dced7"><div class="ttname"><a href="a00183.html#a4449638968eca76bb5631bc75b7dced7">_Euler1DRightEigenvectors_</a></div><div class="ttdeci">#define _Euler1DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00249">euler1d.h:249</a></div></div>
+<div class="ttc" id="a00342_html_a1815fa0e825f5544526165566c75a619"><div class="ttname"><a href="a00342.html#a1815fa0e825f5544526165566c75a619">Euler1DLeftEigenvectors</a></div><div class="ttdeci">int Euler1DLeftEigenvectors(double *u, double *L, void *p, int dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00342_source.html#l00019">Euler1DEigen.c:19</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

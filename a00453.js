@@ -1,4 +1,5 @@
 var a00453 =
 [
-    [ "Initialize", "a00453.html#aa7965eaf393e9ce6a059ff85a9055fb5", null ]
+    [ "ShallowWater1DLeftEigenvectors", "a00453.html#aa9519badea39145bc113cba2422016b3", null ],
+    [ "ShallowWater1DRightEigenvectors", "a00453.html#af4a44ab4a02a19c10ad8f4d75f88f8d7", null ]
 ];

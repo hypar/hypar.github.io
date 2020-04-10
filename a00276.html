@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/MPIFunctions/MPIGetFilename.c File Reference</title>
+<title>HyPar: src/InterpolationFunctions/MUSCLInitialize.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -116,52 +116,48 @@ $(document).ready(function(){initNavTree('a00276.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">MPIGetFilename.c File Reference</div>  </div>
+<div class="title">MUSCLInitialize.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Get filename indexed by MPI rank.  
+<p>Initialize the 2nd or 3rd order MUSCL scheme.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;mpi.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00147_source.html">basic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00159_source.html">mpivars.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00149_source.html">common.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00175_source.html">limiters.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00134_source.html">interpolation.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00181_source.html">mpivars.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00172_source.html">hypar.h</a>&gt;</code><br />
 </div>
 <p><a href="a00276_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3bea94d51bdf0cd76ac4a0b0d52a5baa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#a3bea94d51bdf0cd76ac4a0b0d52a5baa">MPIGetFilename</a> (char *root, void *c, char *filename)</td></tr>
-<tr class="separator:a3bea94d51bdf0cd76ac4a0b0d52a5baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9c0c7ce0e00510c982d1408fc3f8ee7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ab9c0c7ce0e00510c982d1408fc3f8ee7">MUSCLInitialize</a> (void *s, void *m)</td></tr>
+<tr class="separator:ab9c0c7ce0e00510c982d1408fc3f8ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Get filename indexed by MPI rank. </p>
+<div class="textblock"><p>Initialize the 2nd or 3rd order MUSCL scheme. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00276_source.html">MPIGetFilename.c</a>.</p>
+<p>Definition in file <a class="el" href="a00276_source.html">MUSCLInitialize.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a3bea94d51bdf0cd76ac4a0b0d52a5baa"></a>
+<a class="anchor" id="ab9c0c7ce0e00510c982d1408fc3f8ee7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void MPIGetFilename </td>
+          <td class="memname">int MUSCLInitialize </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>root</em>, </td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>filename</em>&#160;</td>
+          <td class="paramname"><em>m</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -170,38 +166,95 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get a string representing a filename indexed by the MPI rank: <em>filename</em> = <em>root.index</em>, where <em>index</em> is the string corresponding to the MPI rank. </p>
+<p>Initialize the 2nd or 3rd order MUSCL scheme. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">root</td><td>filename root </td></tr>
-    <tr><td class="paramname">c</td><td>MPI communicator </td></tr>
-    <tr><td class="paramname">filename</td><td>filename </td></tr>
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00144.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00146.html#a00559" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00276_source.html#l00019">19</a> of file <a class="el" href="a00276_source.html">MPIGetFilename.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">char</span>  tail[<a class="code" href="a00147.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>]=<span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">int</span>   rank;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  MPI_Comm  comm = *((MPI_Comm*)c);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  MPI_Comm_rank(comm,&amp;rank);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  rank = 0;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00149.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a>(rank,tail,4);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  strcpy(filename,<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  strcat(filename,root);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  strcat(filename,<span class="stringliteral">&quot;.&quot;</span> );</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  strcat(filename,tail);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
-<div class="ttc" id="a00147_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00147.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00147_source.html#l00010">basic.h:10</a></div></div>
-<div class="ttc" id="a00149_html_a3e3ad5aed581d9ae563190c365dadc41"><div class="ttname"><a href="a00149.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a></div><div class="ttdeci">void GetStringFromInteger(int, char *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00200_source.html#l00015">CommonFunctions.c:15</a></div></div>
+<p>Definition at line <a class="el" href="a00276_source.html#l00017">17</a> of file <a class="el" href="a00276_source.html">MUSCLInitialize.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <a class="code" href="a00144.html">HyPar</a>           *solver = (<a class="code" href="a00144.html">HyPar</a>*) s;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00146.html#a00559">MPIVariables</a>    *mpi    = (<a class="code" href="a00146.html#a00559">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00147.html">MUSCLParameters</a> *muscl  = (<a class="code" href="a00147.html">MUSCLParameters</a>*) solver-&gt;<a class="code" href="a00144.html#a29c46b81ad574e4dfbad5a7211487dcb">interp</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="comment">/* default values */</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  muscl-&gt;<a class="code" href="a00147.html#a974b448c3d0a13d483d36ef15de369b5">eps</a> = 1e-3;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  strcpy(muscl-&gt;<a class="code" href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">limiter_type</a>, <a class="code" href="a00175.html#a709c944f0d1acdf4471cebadad905603">_LIM_GM_</a>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00146.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    FILE *in;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">int</span> ferr;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    in = fopen(<span class="stringliteral">&quot;muscl.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">if</span> (!in) printf(<span class="stringliteral">&quot;Warning: File muscl.inp not found. Using default parameters for muscl2/muscl3 scheme.\n&quot;</span>);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      printf(<span class="stringliteral">&quot;Reading MUSCL parameters from muscl.inp.\n&quot;</span>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      <span class="keywordtype">char</span> word[<a class="code" href="a00166.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;          <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;              ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;          <span class="keywordflow">if</span>      (!strcmp(word,<span class="stringliteral">&quot;epsilon&quot;</span>)) { ferr = fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;muscl-&gt;<a class="code" href="a00147.html#a974b448c3d0a13d483d36ef15de369b5">eps</a>);          <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>(1); }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;          <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word,<span class="stringliteral">&quot;limiter&quot;</span>)) { ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span> ,&amp;muscl-&gt;<a class="code" href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">limiter_type</a>); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>(1); }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;          <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(word,<span class="stringliteral">&quot;end&quot;</span>)) {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordtype">char</span> useless[<a class="code" href="a00166.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,useless); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>(ferr);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            printf(<span class="stringliteral">&quot;Warning: keyword %s in file \&quot;muscl.inp\&quot; with value %s not &quot;</span>,word,useless);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            printf(<span class="stringliteral">&quot;recognized or extraneous. Ignoring.\n&quot;</span>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;          }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;          fprintf(stderr,<span class="stringliteral">&quot;Error: Illegal format in file \&quot;muscl.inp\&quot;.\n&quot;</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      fclose(in);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="a00181.html#a45dcb265863a65d862bb16222e7e623c">MPIBroadcast_double</a>(&amp;muscl-&gt;<a class="code" href="a00147.html#a974b448c3d0a13d483d36ef15de369b5">eps</a>, 1, 0, &amp;mpi-&gt;<a class="code" href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="a00181.html#ad408e5a44e863cca50112d1e2f728597">MPIBroadcast_character</a>(muscl-&gt;<a class="code" href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">limiter_type</a>, <a class="code" href="a00166.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>, 0, &amp;mpi-&gt;<a class="code" href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">if</span> (!strcmp(muscl-&gt;<a class="code" href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">limiter_type</a>, <a class="code" href="a00175.html#a709c944f0d1acdf4471cebadad905603">_LIM_GM_</a>)) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    muscl-&gt;<a class="code" href="a00147.html#a218d51519e9b2913e48c68911a42d563">LimiterFunction</a> = <a class="code" href="a00175.html#aa3a1bfccb1c53cfcdb4ce40e8dcdf754">LimiterGeneralizedMinMod</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(muscl-&gt;<a class="code" href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">limiter_type</a>, <a class="code" href="a00175.html#ab5921c3e03f8c8afdcdc402008f70119">_LIM_MM_</a>)) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    muscl-&gt;<a class="code" href="a00147.html#a218d51519e9b2913e48c68911a42d563">LimiterFunction</a> = <a class="code" href="a00175.html#a5a7e3e6ec209bbe35f9278625ccae845">LimiterMinMod</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(muscl-&gt;<a class="code" href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">limiter_type</a>, <a class="code" href="a00175.html#a367f4f3889293e279da34b5325e45c0b">_LIM_VANLEER_</a>)) {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    muscl-&gt;<a class="code" href="a00147.html#a218d51519e9b2913e48c68911a42d563">LimiterFunction</a> = <a class="code" href="a00175.html#a65cac92ad79132ce522202535b165dbf">LimiterVanLeer</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(muscl-&gt;<a class="code" href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">limiter_type</a>, <a class="code" href="a00175.html#a1eb2f1d88c4ccd13f08d495a7740ba19">_LIM_SUPERBEE_</a>)) {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    muscl-&gt;<a class="code" href="a00147.html#a218d51519e9b2913e48c68911a42d563">LimiterFunction</a> = <a class="code" href="a00175.html#af8c1bbcc710852804d9be359bb88c770">LimiterSuperBee</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00146.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      fprintf(stderr, <span class="stringliteral">&quot;Warning: %s is an invalid limiter type. Using default (Generalized MinMod).\n&quot;</span>, </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;              muscl-&gt;<a class="code" href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">limiter_type</a>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    muscl-&gt;<a class="code" href="a00147.html#a218d51519e9b2913e48c68911a42d563">LimiterFunction</a> = <a class="code" href="a00175.html#aa3a1bfccb1c53cfcdb4ce40e8dcdf754">LimiterGeneralizedMinMod</a>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="ttc" id="a00146_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00146.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00025">mpivars_struct.h:25</a></div></div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00147_html_a218d51519e9b2913e48c68911a42d563"><div class="ttname"><a href="a00147.html#a218d51519e9b2913e48c68911a42d563">MUSCLParameters::LimiterFunction</a></div><div class="ttdeci">double(* LimiterFunction)(double)</div><div class="ttdef"><b>Definition:</b> <a href="a00134_source.html#l00162">interpolation.h:162</a></div></div>
+<div class="ttc" id="a00175_html_af8c1bbcc710852804d9be359bb88c770"><div class="ttname"><a href="a00175.html#af8c1bbcc710852804d9be359bb88c770">LimiterSuperBee</a></div><div class="ttdeci">double LimiterSuperBee(double)</div><div class="ttdef"><b>Definition:</b> <a href="a00290_source.html#l00016">LimiterSuperBee.c:16</a></div></div>
+<div class="ttc" id="a00147_html"><div class="ttname"><a href="a00147.html">MUSCLParameters</a></div><div class="ttdoc">Structure of variables/parameters needed by the MUSCL scheme. </div><div class="ttdef"><b>Definition:</b> <a href="a00134_source.html#l00156">interpolation.h:156</a></div></div>
+<div class="ttc" id="a00175_html_a5a7e3e6ec209bbe35f9278625ccae845"><div class="ttname"><a href="a00175.html#a5a7e3e6ec209bbe35f9278625ccae845">LimiterMinMod</a></div><div class="ttdeci">double LimiterMinMod(double)</div><div class="ttdef"><b>Definition:</b> <a href="a00289_source.html#l00016">LimiterMinMod.c:16</a></div></div>
+<div class="ttc" id="a00175_html_a709c944f0d1acdf4471cebadad905603"><div class="ttname"><a href="a00175.html#a709c944f0d1acdf4471cebadad905603">_LIM_GM_</a></div><div class="ttdeci">#define _LIM_GM_</div><div class="ttdef"><b>Definition:</b> <a href="a00175_source.html#l00010">limiters.h:10</a></div></div>
+<div class="ttc" id="a00144_html_a29c46b81ad574e4dfbad5a7211487dcb"><div class="ttname"><a href="a00144.html#a29c46b81ad574e4dfbad5a7211487dcb">HyPar::interp</a></div><div class="ttdeci">void * interp</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00330">hypar.h:330</a></div></div>
+<div class="ttc" id="a00175_html_ab5921c3e03f8c8afdcdc402008f70119"><div class="ttname"><a href="a00175.html#ab5921c3e03f8c8afdcdc402008f70119">_LIM_MM_</a></div><div class="ttdeci">#define _LIM_MM_</div><div class="ttdef"><b>Definition:</b> <a href="a00175_source.html#l00012">limiters.h:12</a></div></div>
+<div class="ttc" id="a00175_html_a367f4f3889293e279da34b5325e45c0b"><div class="ttname"><a href="a00175.html#a367f4f3889293e279da34b5325e45c0b">_LIM_VANLEER_</a></div><div class="ttdeci">#define _LIM_VANLEER_</div><div class="ttdef"><b>Definition:</b> <a href="a00175_source.html#l00014">limiters.h:14</a></div></div>
+<div class="ttc" id="a00175_html_a65cac92ad79132ce522202535b165dbf"><div class="ttname"><a href="a00175.html#a65cac92ad79132ce522202535b165dbf">LimiterVanLeer</a></div><div class="ttdeci">double LimiterVanLeer(double)</div><div class="ttdef"><b>Definition:</b> <a href="a00291_source.html#l00017">LimiterVanLeer.c:17</a></div></div>
+<div class="ttc" id="a00166_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00166.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00010">basic.h:10</a></div></div>
+<div class="ttc" id="a00147_html_a719bcd37c38ee89560c4e08566d0ce05"><div class="ttname"><a href="a00147.html#a719bcd37c38ee89560c4e08566d0ce05">MUSCLParameters::limiter_type</a></div><div class="ttdeci">char limiter_type[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00134_source.html#l00158">interpolation.h:158</a></div></div>
+<div class="ttc" id="a00146_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00146.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00037">mpivars_struct.h:37</a></div></div>
+<div class="ttc" id="a00175_html_a1eb2f1d88c4ccd13f08d495a7740ba19"><div class="ttname"><a href="a00175.html#a1eb2f1d88c4ccd13f08d495a7740ba19">_LIM_SUPERBEE_</a></div><div class="ttdeci">#define _LIM_SUPERBEE_</div><div class="ttdef"><b>Definition:</b> <a href="a00175_source.html#l00016">limiters.h:16</a></div></div>
+<div class="ttc" id="a00181_html_a45dcb265863a65d862bb16222e7e623c"><div class="ttname"><a href="a00181.html#a45dcb265863a65d862bb16222e7e623c">MPIBroadcast_double</a></div><div class="ttdeci">int MPIBroadcast_double(double *, int, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00297_source.html#l00009">MPIBroadcast.c:9</a></div></div>
+<div class="ttc" id="a00175_html_aa3a1bfccb1c53cfcdb4ce40e8dcdf754"><div class="ttname"><a href="a00175.html#aa3a1bfccb1c53cfcdb4ce40e8dcdf754">LimiterGeneralizedMinMod</a></div><div class="ttdeci">double LimiterGeneralizedMinMod(double)</div><div class="ttdef"><b>Definition:</b> <a href="a00288_source.html#l00016">LimiterGeneralizedMinMod.c:16</a></div></div>
+<div class="ttc" id="a00146_html_a00559"><div class="ttname"><a href="a00146.html#a00559">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00146_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00147_html_a974b448c3d0a13d483d36ef15de369b5"><div class="ttname"><a href="a00147.html#a974b448c3d0a13d483d36ef15de369b5">MUSCLParameters::eps</a></div><div class="ttdeci">double eps</div><div class="ttdef"><b>Definition:</b> <a href="a00134_source.html#l00159">interpolation.h:159</a></div></div>
+<div class="ttc" id="a00181_html_ad408e5a44e863cca50112d1e2f728597"><div class="ttname"><a href="a00181.html#ad408e5a44e863cca50112d1e2f728597">MPIBroadcast_character</a></div><div class="ttdeci">int MPIBroadcast_character(char *, int, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00297_source.html#l00037">MPIBroadcast.c:37</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -1,5 +1,4 @@
 var a00286 =
 [
-    [ "MPISum_integer", "a00286.html#a3fdbda19a80373d03b0034694d7309b7", null ],
-    [ "MPISum_double", "a00286.html#ab72730180adfeeb505a716952545d591", null ]
+    [ "WriteTecplot3D", "a00286.html#a3534f57522eaabee8fe3689476abf23c", null ]
 ];

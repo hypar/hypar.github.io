@@ -1,4 +1,4 @@
 var a00339 =
 [
-    [ "FPDoubleWellPrintStep", "a00339.html#a5b51bfceb9555102ac21245741159a0f", null ]
+    [ "BurgersUpwind", "a00339.html#acdb7cb154ca3e4d6c7f9b948df0ea7ef", null ]
 ];

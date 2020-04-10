@@ -1,4 +1,4 @@
 var a00437 =
 [
-    [ "ShallowWater2DComputeCFL", "a00437.html#a57adc8f213aa86d2da2330454a311025", null ]
+    [ "Numa2DComputeCFL", "a00437.html#a0b0fab13b3677c4d7bbf7a940ce65875", null ]
 ];

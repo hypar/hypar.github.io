@@ -1,6 +1,4 @@
 var a00444 =
 [
-    [ "ShallowWater2DSourceFunction1", "a00444.html#a4d5b3f3e933170ce53af12d19ba4ef01", null ],
-    [ "ShallowWater2DSourceFunction2", "a00444.html#a5ed617f0405e97ed489c4843d482e692", null ],
-    [ "ShallowWater2DSource", "a00444.html#a40d3a942960d07b188d08a46bec76768", null ]
+    [ "Numa3DCleanup", "a00444.html#af62517a2d64232969b52ddcb4e01c150", null ]
 ];

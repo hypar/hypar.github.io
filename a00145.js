@@ -1,15 +1,13 @@
 var a00145 =
 [
-    [ "Simulation", "a00119.html", "a00119" ],
-    [ "ReadInputs", "a00145.html#a31fac45bcc0a8e9dd578cc1d8515d173", null ],
-    [ "Initialize", "a00145.html#a74087f11196b3689b296e53eb14b69f3", null ],
-    [ "InitialSolution", "a00145.html#a23523232e5e6dd7cdec11754be4c21aa", null ],
-    [ "InitializeBoundaries", "a00145.html#a3a27bf10eed2122900356dd89b66731b", null ],
-    [ "InitializeImmersedBoundaries", "a00145.html#a6ac8578eb0216a84307bfb3b2fba816f", null ],
-    [ "InitializePhysics", "a00145.html#a5dc056a75d14ab6ba9292bcad6928a72", null ],
-    [ "InitializeSolvers", "a00145.html#ad3f393b89ecd5a544c52e1099722337a", null ],
-    [ "Solve", "a00145.html#a7347183ec04d39b43cf35d1fe68ace4d", null ],
-    [ "SolvePETSc", "a00145.html#a1a054e1b92ee41a9e38926d18c6628bf", null ],
-    [ "Cleanup", "a00145.html#a315baa877650032461e4cc97eef45b6f", null ],
-    [ "SimWriteErrors", "a00145.html#ad7007f198eeb61eb9f73f7ab0df71900", null ]
+    [ "LinearADR", "a00145.html#a00558", [
+      [ "constant_advection", "a00145.html#a857e5fcb8a5cb035175f21e4dc3de26f", null ],
+      [ "adv_filename", "a00145.html#a143c0b09170c16ca8af49f337e5f672d", null ],
+      [ "adv_arr_size", "a00145.html#a6faf530242605d8f7a3dd4b2bf46693d", null ],
+      [ "a", "a00145.html#a1c93565457c6d07aa9691346f0086e14", null ],
+      [ "d", "a00145.html#ae6261d15419eb591b3f65c5f8cd7b8cb", null ]
+    ] ],
+    [ "_LINEAR_ADVECTION_DIFFUSION_REACTION_", "a00145.html#a44c745170d88218420752d150856b01c", null ],
+    [ "LinearADRInitialize", "a00145.html#a78c1fbb2ddae048ddb9d2863ad4f65b3", null ],
+    [ "LinearADRCleanup", "a00145.html#a114e6f1e977ae4220d29e8097e017f19", null ]
 ];

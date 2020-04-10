@@ -1,4 +1,4 @@
 var a00340 =
 [
-    [ "FPDoubleWellUpwind", "a00340.html#a6c2964e5df00f839b0ebb11fd1d426ff", null ]
+    [ "Euler1DCleanup", "a00340.html#aca2df106e7c331c81fc8aff929ec6e69", null ]
 ];

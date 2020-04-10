@@ -1,12 +1,17 @@
 var a00420 =
 [
-    [ "Numa3DComputeCFL", "a00420.html#af87b3684a5e37d011b7af3e18eaeedf5", null ],
-    [ "Numa3DFlux", "a00420.html#af65b0aa648b23422047d1d9197212ad5", null ],
-    [ "Numa3DStiffFlux", "a00420.html#a2cbd383fbe6bdc2d785e3b6e3ced2d52", null ],
-    [ "Numa3DSource", "a00420.html#a5dea7df5896808d22303783e333a577c", null ],
-    [ "Numa3DRusanovFlux", "a00420.html#a9358277e880397dd427213488fe25007", null ],
-    [ "Numa3DRusanovLinearFlux", "a00420.html#a74a91140e4e2c6328878fcf5767e02d5", null ],
-    [ "Numa3DCalculateStandardAtmosphere_1", "a00420.html#ac5608220335dd25647841014e67ba10f", null ],
-    [ "Numa3DCalculateStandardAtmosphere_2", "a00420.html#ac16db84618d93d2d70fa177b41daeb45", null ],
-    [ "Numa3DInitialize", "a00420.html#a61a9f390ea68741dff3588fc2c16c9eb", null ]
+    [ "NavierStokes2DUpwindRoe", "a00420.html#a94a2da28368372eb7470d64daba64701", null ],
+    [ "NavierStokes2DUpwindRF", "a00420.html#a26fb9aaa395af22869ea3403c75b9fc6", null ],
+    [ "NavierStokes2DUpwindLLF", "a00420.html#ae42134097d9d8ba1206ee44ef3cef46a", null ],
+    [ "NavierStokes2DUpwindSWFS", "a00420.html#aea31369800b304c021cbeae1c820d4fe", null ],
+    [ "NavierStokes2DUpwindRusanov", "a00420.html#a35b1a9ef3ac86193f26cea7b61d5dda3", null ],
+    [ "NavierStokes2DUpwindRusanovModified", "a00420.html#a065d64b9ace6d9299bcbeb6a3df38610", null ],
+    [ "NavierStokes2DUpwinddFRoe", "a00420.html#ac8e82aba4c8a677c0e70810446bd8ba2", null ],
+    [ "NavierStokes2DUpwinddFRF", "a00420.html#abb82d24b6ea31a22e93ddce27e9d8854", null ],
+    [ "NavierStokes2DUpwinddFLLF", "a00420.html#a37db09007b30f4f092bd231092af7c91", null ],
+    [ "NavierStokes2DUpwinddFRusanovModified", "a00420.html#a9d050883877d0c2e6982b5523ed8ae98", null ],
+    [ "NavierStokes2DUpwindFdFRoe", "a00420.html#af3c0b6185039a068a0f863c1f7d79b3d", null ],
+    [ "NavierStokes2DUpwindFdFRF", "a00420.html#ad22479fc0a6d11d6e97ae03636e3ded5", null ],
+    [ "NavierStokes2DUpwindFdFLLF", "a00420.html#a9866ef9e01e5e1e34fa699455673959e", null ],
+    [ "NavierStokes2DUpwindFdFRusanovModified", "a00420.html#acd787e13badb965cf382e44b86d2504d", null ]
 ];

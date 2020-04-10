@@ -1,4 +1,5 @@
 var a00372 =
 [
-    [ "LinearADRComputeCFL", "a00372.html#a483cca53816c96d4d08c12241688f75d", null ]
+    [ "FPPowerSystemDissipationFunction", "a00372.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
+    [ "FPPowerSystemComputeDiffNumber", "a00372.html#a0baeed235f71eba334249f178f632ac0", null ]
 ];

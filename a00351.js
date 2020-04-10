@@ -1,4 +1,5 @@
 var a00351 =
 [
-    [ "FPPowerSystem1BusAdvection", "a00351.html#ad7e78d17ce9013c5e3929a7c13847d83", null ]
+    [ "Euler1DSourceUpwindLLF", "a00351.html#a229db12fad7bac6cf5f1223f204fe1f9", null ],
+    [ "Euler1DSourceUpwindRoe", "a00351.html#ad94cc03bc96444b2f8ce0e701fe489f3", null ]
 ];

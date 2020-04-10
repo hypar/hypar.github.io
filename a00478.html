@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>HyPar: src/SparseGrids/SparseGridsSetSolverParameters.cpp File Reference</title>
+<title>HyPar: src/PhysicalModels/Vlasov/VlasovAdvectionCoeff.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -113,22 +113,128 @@ $(document).ready(function(){initNavTree('a00478.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SparseGridsSetSolverParameters.cpp File Reference</div>  </div>
+<div class="title">VlasovAdvectionCoeff.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Set the solver parameters of a simulation object.  
+<p>Returns the advection coefficient at a given grid index.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00170_source.html">sparse_grids_simulation.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;float.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00166_source.html">basic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00165_source.html">arrayfunctions.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00161_source.html">physicalmodels/vlasov.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00181_source.html">mpivars.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00172_source.html">hypar.h</a>&gt;</code><br />
 </div>
 <p><a href="a00478_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:afc18d2e95d8606bf4a79b661f88f1b98"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00478.html#afc18d2e95d8606bf4a79b661f88f1b98">VlasovAdvectionCoeff</a> (int *idx, int dir, void *s)</td></tr>
+<tr class="separator:afc18d2e95d8606bf4a79b661f88f1b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Set the solver parameters of a simulation object. </p>
-<dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh, John Loffeld, Lee Ricketson </dd></dl>
+<div class="textblock"><p>Returns the advection coefficient at a given grid index. </p>
+<dl class="section author"><dt>Author</dt><dd>John Loffeld </dd></dl>
 
-<p>Definition in file <a class="el" href="a00478_source.html">SparseGridsSetSolverParameters.cpp</a>.</p>
-</div></div><!-- contents -->
+<p>Definition in file <a class="el" href="a00478_source.html">VlasovAdvectionCoeff.c</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="afc18d2e95d8606bf4a79b661f88f1b98"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double VlasovAdvectionCoeff </td>
+          <td>(</td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>idx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the advection coefficient at a given grid index \(c\), where </p><p class="formulaDsp">
+\begin{equation} c = v_i, \end{equation}
+</p>
+<p> if dir &lt; <a class="el" href="a00161.html#ae527165d3d2d27bcedc2179a1fb0cb63">Vlasov::ndims_x</a> ( \(i = {\rm dir}\)), and </p><p class="formulaDsp">
+\begin{equation} c = E_i, \end{equation}
+</p>
+<p> the electric field if dir &gt;= <a class="el" href="a00161.html#ae527165d3d2d27bcedc2179a1fb0cb63">Vlasov::ndims_x</a> ( \(i = \) dir-<a class="el" href="a00161.html#ae527165d3d2d27bcedc2179a1fb0cb63">Vlasov::ndims_x</a>).</p>
+<p><b>Note:</b> this function assumes that the electric field has already been set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>grid index </td></tr>
+    <tr><td class="paramname">dir</td><td>Spatial dimension </td></tr>
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00144.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="a00478_source.html#l00028">28</a> of file <a class="el" href="a00478_source.html">VlasovAdvectionCoeff.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="a00144.html">HyPar</a>  *solver = (<a class="code" href="a00144.html">HyPar</a>*)  s;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00161.html#a00565">Vlasov</a> *param  = (<a class="code" href="a00161.html#a00565">Vlasov</a>*) solver-&gt;<a class="code" href="a00144.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">int</span>* dim    = solver-&gt;<a class="code" href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">int</span>  ghosts = solver-&gt;<a class="code" href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">double</span> retval = DBL_MAX;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  if (dir &lt; param-&gt;ndims_x) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">int</span> veldim = dir + param-&gt;<a class="code" href="a00161.html#ae527165d3d2d27bcedc2179a1fb0cb63">ndims_x</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="a00166.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(veldim,idx[veldim],dim,ghosts,solver-&gt;<a class="code" href="a00144.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,retval);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }  <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">int</span> ndims_x = param-&gt;<a class="code" href="a00161.html#ae527165d3d2d27bcedc2179a1fb0cb63">ndims_x</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">int</span> dim_x[ndims_x]; <a class="code" href="a00165.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim, dim_x, ndims_x);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">int</span> idx_x[ndims_x];</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="a00165.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(idx, idx_x, ndims_x);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00165.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims_x, dim_x, idx_x, ghosts, p);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    retval = param-&gt;<a class="code" href="a00161.html#aedea9c3dc1e5f991dc50e82b0d51d04c">e_field</a>[ndims_x*p+(dir-ndims_x)];</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordflow">return</span> retval;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="ttc" id="a00161_html_a00565"><div class="ttname"><a href="a00161.html#a00565">Vlasov</a></div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00053">vlasov.h:53</a></div></div>
+<div class="ttc" id="a00144_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00144.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00035">hypar.h:35</a></div></div>
+<div class="ttc" id="a00144_html"><div class="ttname"><a href="a00144.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00161_html_aedea9c3dc1e5f991dc50e82b0d51d04c"><div class="ttname"><a href="a00161.html#aedea9c3dc1e5f991dc50e82b0d51d04c">Vlasov::e_field</a></div><div class="ttdeci">double * e_field</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00077">vlasov.h:77</a></div></div>
+<div class="ttc" id="a00144_html_a711aad4cbe735871dd9e91ab575c878b"><div class="ttname"><a href="a00144.html#a711aad4cbe735871dd9e91ab575c878b">HyPar::x</a></div><div class="ttdeci">double * x</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00091">hypar.h:91</a></div></div>
+<div class="ttc" id="a00165_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00165.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00318">arrayfunctions.h:318</a></div></div>
+<div class="ttc" id="a00166_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00166.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00166_source.html#l00027">basic.h:27</a></div></div>
+<div class="ttc" id="a00144_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00144.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00245">hypar.h:245</a></div></div>
+<div class="ttc" id="a00161_html_ae527165d3d2d27bcedc2179a1fb0cb63"><div class="ttname"><a href="a00161.html#ae527165d3d2d27bcedc2179a1fb0cb63">Vlasov::ndims_x</a></div><div class="ttdeci">int ndims_x</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00059">vlasov.h:59</a></div></div>
+<div class="ttc" id="a00144_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00144.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00172_source.html#l00044">hypar.h:44</a></div></div>
+<div class="ttc" id="a00165_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00165.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00165_source.html#l00039">arrayfunctions.h:39</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->
 <script type="text/javascript">

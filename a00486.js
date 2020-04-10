@@ -1,4 +1,5 @@
 var a00486 =
 [
-    [ "TimeGetAuxSolutions", "a00486.html#afb7c0aaa510e236f880899a068bbecca", null ]
+    [ "_MINIMUM_GHOSTS_", "a00486.html#ab2278b4768059f198821dbf4d1a80389", null ],
+    [ "SecondDerivativeFourthOrderCentral", "a00486.html#a41e040c0062127ce7e0edc64569c845e", null ]
 ];

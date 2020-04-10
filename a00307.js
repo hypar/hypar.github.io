@@ -1,4 +1,5 @@
 var a00307 =
 [
-    [ "BurgersAdvection", "a00307.html#af8efd7171101567d22ced87ae3d72097", null ]
+    [ "MPIMax_integer", "a00307.html#a6d51d72d0316346543fbda2aa97a790a", null ],
+    [ "MPIMax_double", "a00307.html#aa8bb15ed31fcdd02194de4d639d67988", null ]
 ];

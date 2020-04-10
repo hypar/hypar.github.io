@@ -1,9 +1,12 @@
 var a00154 =
 [
-    [ "ReadArray", "a00154.html#afaf5b0d6e79b1e8674b397aebcb219dc", null ],
-    [ "WriteArray", "a00154.html#aaf888c739c5200d9c58a7154347069b0", null ],
-    [ "WriteBinary", "a00154.html#a067f454c26d85d6cfb4d7d878b3783c9", null ],
-    [ "WriteText", "a00154.html#a3355a71faf3d87f6715ad627db08ac9e", null ],
-    [ "WriteTecplot2D", "a00154.html#a265b0583afb79edd2f2f5d5087e5c3bf", null ],
-    [ "WriteTecplot3D", "a00154.html#a5bdb048ecc5ae7ab61622e4764f3133e", null ]
+    [ "bt_type", "a00154.html#a6f84a1093abf57dcbf0406b33f40f766", null ],
+    [ "topo_flag", "a00154.html#a71b5cdadb8aec7421fa05a93ec51c102", null ],
+    [ "g", "a00154.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
+    [ "b", "a00154.html#a9f92e5582bf339a3c95df78b9c684fe0", null ],
+    [ "fhat", "a00154.html#acc808f03e31ad5612b724fe23dea05ab", null ],
+    [ "beta", "a00154.html#a9424343761f8c4f4c1afe8f5b6bf471b", null ],
+    [ "D", "a00154.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
+    [ "upw_choice", "a00154.html#a57894a0f53d5b228bf64053367736bf9", null ],
+    [ "SourceUpwind", "a00154.html#acf2a05e3d7005c865c3e4f609cf728f8", null ]
 ];
