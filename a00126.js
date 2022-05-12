@@ -6,5 +6,5 @@ var a00126 =
     [ "2D Euler Equations - Isentropic Vortex Convection (Training a DMD)", "a00134.html", null ],
     [ "2D Euler Equations - Riemann Problem Case 4 (Training a Time Windowed DMD)", "a00136.html", null ],
     [ "2D Navier-Stokes Equations -  Lid-Driven Square Cavity (Training a Time-Windowed DMD)", "a00140.html", null ],
-    [ "2D (1D-1V) Vlasov Equation - Self-Consistent E-Field", "a00138.html", null ]
+    [ "2D (1D-1V) Vlasov Equation - Self-Consistent E-Field (Training a Time-Windowed DMD)", "a00138.html", null ]
 ];

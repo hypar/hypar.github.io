@@ -32,5 +32,5 @@ var searchData=
   ['2d_20shallow_20water_20equations_20_2d_20latitude_20belt_20flow',['2D Shallow Water Equations - Latitude Belt Flow',['../a00056.html',1,'basic_examples']]],
   ['2d_20_281d_2d1v_29_20vlasov_20equation_20_2d_20prescribed_20e_2dfield',['2D (1D-1V) Vlasov Equation - Prescribed E-Field',['../a00034.html',1,'basic_examples']]],
   ['2d_20_281d_2d1v_29_20vlasov_20equation_20_2d_20self_2dconsistent_20e_2dfield',['2D (1D-1V) Vlasov Equation - Self-Consistent E-Field',['../a00036.html',1,'basic_examples']]],
-  ['2d_20_281d_2d1v_29_20vlasov_20equation_20_2d_20self_2dconsistent_20e_2dfield',['2D (1D-1V) Vlasov Equation - Self-Consistent E-Field',['../a00138.html',1,'librom_examples']]]
+  ['2d_20_281d_2d1v_29_20vlasov_20equation_20_2d_20self_2dconsistent_20e_2dfield_20_28training_20a_20time_2dwindowed_20dmd_29',['2D (1D-1V) Vlasov Equation - Self-Consistent E-Field (Training a Time-Windowed DMD)',['../a00138.html',1,'librom_examples']]]
 ];
