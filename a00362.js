@@ -1,4 +1,4 @@
 var a00362 =
 [
-    [ "FPDoubleWellComputeCFL", "a00362.html#abbcaa9ed9a58d1b0048832bf4b3ae246", null ]
+    [ "BurgersCleanup", "a00362.html#aa1c99cef648d3cdcf4d6c6f86e60c513", null ]
 ];

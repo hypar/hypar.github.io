@@ -1,4 +1,4 @@
 var a00335 =
 [
-    [ "BurgersAdvection", "a00335.html#af8efd7171101567d22ced87ae3d72097", null ]
+    [ "MPIPartition1D", "a00335.html#a87127187b566bfa02b692247f9e3c798", null ]
 ];

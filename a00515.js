@@ -1,4 +1,4 @@
 var a00515 =
 [
-    [ "TimeError", "a00515.html#a0e482caa3b262c93af18f0e96f16ff59", null ]
+    [ "CombineSolutions", "a00515.html#aef15dae96a913afc5b2f5912bb130daf", null ]
 ];

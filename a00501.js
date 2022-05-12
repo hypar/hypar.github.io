@@ -1,7 +1,5 @@
 var a00501 =
 [
-    [ "ComputeRHSOperators", "a00501.html#ac36e92835a7778335d6855faae25a575", null ],
-    [ "CalculateError", "a00501.html#a116876aaf447559b6cc9fff36a501843", null ],
-    [ "OutputSolution", "a00501.html#a5981de613724cb667e98aa872157534e", null ],
-    [ "Solve", "a00501.html#a7252344719299385bb387a001b2a3a38", null ]
+    [ "ShallowWater2DUpwindRoe", "a00501.html#a0e7ae51d13b353863d26192dc37573f7", null ],
+    [ "ShallowWater2DUpwindLLF", "a00501.html#a82a4bea512a2584e39a96945d1855225", null ]
 ];

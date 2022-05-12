@@ -1,6 +1,5 @@
 var a00472 =
 [
-    [ "ShallowWater2DSourceFunction1", "a00472.html#a4d5b3f3e933170ce53af12d19ba4ef01", null ],
-    [ "ShallowWater2DSourceFunction2", "a00472.html#a5ed617f0405e97ed489c4843d482e692", null ],
-    [ "ShallowWater2DSource", "a00472.html#a40d3a942960d07b188d08a46bec76768", null ]
+    [ "Numa3DFlux", "a00472.html#a173a0e31d874adff608b905549a58a11", null ],
+    [ "Numa3DStiffFlux", "a00472.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
 ];

@@ -1,4 +1,5 @@
 var a00523 =
 [
-    [ "TimeForwardEuler", "a00523.html#aa9ef7eaebda92d180aea9b0ef8186935", null ]
+    [ "VolumeIntegral", "a00523.html#a1f30168f72fce94d12bd0cc8d9322494", null ],
+    [ "InitialSolution", "a00523.html#a21908a4de7bd316f468c85e6d7074760", null ]
 ];

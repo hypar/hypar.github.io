@@ -1,43 +1,14 @@
 var a00146 =
 [
-    [ "NavierStokes2D", "a00146.html#a00555", [
-      [ "gamma", "a00146.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
-      [ "upw_choice", "a00146.html#a57894a0f53d5b228bf64053367736bf9", null ],
-      [ "grav_x", "a00146.html#aaccb5cbe710523019e8615b49383fea1", null ],
-      [ "grav_y", "a00146.html#adf08e308b453bd2d4e117576e493ed03", null ],
-      [ "rho0", "a00146.html#a1e6f66261d19a1c1c272e8808bd2657b", null ],
-      [ "p0", "a00146.html#a8be9de5ac626cddcd15c5ec181619694", null ],
-      [ "Re", "a00146.html#a3b92a4b98cedf64473b3c13dfa7674b4", null ],
-      [ "Pr", "a00146.html#af0f6e03342b9eb912e25f94ce0249a2c", null ],
-      [ "Minf", "a00146.html#aa5f774fe7b4f69be5e085f1988ef2a6d", null ],
-      [ "C1", "a00146.html#ad69d2b382d336189251f264999f56bfa", null ],
-      [ "C2", "a00146.html#a666af5280f39c3ddcafb7c01e55192a2", null ],
-      [ "R", "a00146.html#a228eb5e837a644887ac6e7bab3f42485", null ],
-      [ "grav_field_f", "a00146.html#aed6abeb9de440ef71c2709218395317d", null ],
-      [ "grav_field_g", "a00146.html#ad2261e3953cff99f1593f3b326312f28", null ],
-      [ "fast_jac", "a00146.html#a14af7516371abe115b3a1aa9269aebb5", null ],
-      [ "solution", "a00146.html#a5e98bc441f5d361be0dd5f13bce1257e", null ],
-      [ "HB", "a00146.html#a2e01ef077b0fedaea9e286ccdf2fe259", null ],
-      [ "N_bv", "a00146.html#aa79c64518f6e9127d9b201bacd398174", null ]
+    [ "BandedMatrix", "a00146.html#a00568", [
+      [ "nbands", "a00146.html#a30165df2b4e7a3d2b24bfd0963c16172", null ],
+      [ "nrows_local", "a00146.html#ac2b596b16037450673a77da1080b8707", null ],
+      [ "BlockSize", "a00146.html#aeae4e1754c511c08564892d93c83ada1", null ],
+      [ "ncol", "a00146.html#a6db648ed09c7736e77e2c79f2a4514fd", null ],
+      [ "nrow", "a00146.html#a0a58ae803aa8c0ef7cf86577919f205e", null ],
+      [ "data", "a00146.html#a23436a7a2b44939627b59df11be7ad75", null ]
     ] ],
-    [ "_NAVIER_STOKES_2D_", "a00146.html#a04e16b3f2a882826e604b6353d9e5bcb", null ],
-    [ "_MODEL_NDIMS_", "a00146.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00146.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "_ROE_", "a00146.html#abffeadaaee7a3a2baeeb28e395411d73", null ],
-    [ "_RF_", "a00146.html#a51e0f9431973e4cf55e6aeee7dab6d83", null ],
-    [ "_LLF_", "a00146.html#a98a6bcc1b69abface4bef84cf0d51955", null ],
-    [ "_SWFS_", "a00146.html#a930e301363fd9f0a570d97c8c3dd3ea3", null ],
-    [ "_RUSANOV_", "a00146.html#a68e6f3e8f20e4c3a5874221661141935", null ],
-    [ "_XDIR_", "a00146.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
-    [ "_YDIR_", "a00146.html#a7fd32e06617f4489079bc50ce9bfc00c", null ],
-    [ "_NavierStokes2DGetFlowVar_", "a00146.html#a90ce369a1f9d490ab6d392a996e5be4c", null ],
-    [ "_NavierStokes2DSetFlux_", "a00146.html#a6776a75a155577566eeba193db3cf60d", null ],
-    [ "_NavierStokes2DSetStiffFlux_", "a00146.html#a4e4769b03de5dc0f470a0d380ac40835", null ],
-    [ "_NavierStokes2DSetNonStiffFlux_", "a00146.html#aa9e016a6b0e311b3cb1dac3f91392105", null ],
-    [ "_NavierStokes2DRoeAverage_", "a00146.html#af2953d3fa344703519e094d0e23ca2e2", null ],
-    [ "_NavierStokes2DEigenvalues_", "a00146.html#a5eee028addf376867bf61f188291d9ed", null ],
-    [ "_NavierStokes2DLeftEigenvectors_", "a00146.html#a1c2ecd3e4013b7e37e0f141a3cb16094", null ],
-    [ "_NavierStokes2DRightEigenvectors_", "a00146.html#ac319c173962f94706d7c78184a9da4f4", null ],
-    [ "NavierStokes2DInitialize", "a00146.html#abdd7dcd1ec7c37af027441f521dbe844", null ],
-    [ "NavierStokes2DCleanup", "a00146.html#a6906f847d1d73981dfcfcebdb6cb70d4", null ]
+    [ "BandedMatrixDestroy", "a00146.html#a7481e8970799d48bf61489d2c8664291", null ],
+    [ "BandedMatrixInitialize", "a00146.html#a2e2999e64538fc1278db51e3a4544c0a", null ],
+    [ "BandedMatrixPreallocate", "a00146.html#a6f340cd6da5050e863142a9a5d3b4276", null ]
 ];

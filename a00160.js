@@ -1,26 +1,13 @@
 var a00160 =
 [
-    [ "TridiagLU", "a00160.html#a00564", [
-      [ "reducedsolvetype", "a00160.html#ae50ec60868beaab2cb84897adefda09f", null ],
-      [ "evaluate_norm", "a00160.html#a584c0fc0b1e845800ad511dffc60e032", null ],
-      [ "maxiter", "a00160.html#a274519264a28477940f161ddb4b61feb", null ],
-      [ "atol", "a00160.html#a60c6dfc476dd9596072f61c2ec8d58ed", null ],
-      [ "rtol", "a00160.html#a4587afeee8941ba7c208b3690a3eeaa7", null ],
-      [ "exititer", "a00160.html#a846172807b19cf19a2587ede74b06828", null ],
-      [ "exitnorm", "a00160.html#a0a20107c06f29ce4d4ac23a4e7cfb17a", null ],
-      [ "verbose", "a00160.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ],
-      [ "total_time", "a00160.html#abc276e47b85df9dd59f248e663b3b971", null ],
-      [ "stage1_time", "a00160.html#a8cd56611f6cd8c71a991c9ed2b97ca29", null ],
-      [ "stage2_time", "a00160.html#ab956b3ef566ffdd35d9ddc39c2662875", null ],
-      [ "stage3_time", "a00160.html#a45e5bf315927ed87c57bcf220ec49861", null ],
-      [ "stage4_time", "a00160.html#ac7df4fddfc5aa2827b346dcfd80346fb", null ]
+    [ "FPDoubleWell", "a00160.html#a00580", [
+      [ "q", "a00160.html#a5b5e3f03e443adea974601f295136638", null ],
+      [ "pdf_integral", "a00160.html#adca2e435527ef52d18b3626b0e2ca852", null ]
     ] ],
-    [ "_TRIDIAG_JACOBI_", "a00160.html#a79ddfe354b89d113b72db4b5ae6c6e3d", null ],
-    [ "_TRIDIAG_GS_", "a00160.html#adf756eb923ab79f911e38a82da7a6cab", null ],
-    [ "tridiagLU", "a00160.html#a83b53dedf034d67bf2dde46eebf492ee", null ],
-    [ "tridiagLUGS", "a00160.html#a3d43d79472727ef201c8a48f3073decd", null ],
-    [ "tridiagIterJacobi", "a00160.html#a1b0ccd6fb49ee8efe7c87a78e1bbe0ec", null ],
-    [ "tridiagLUInit", "a00160.html#a52d21dfe1d76916811879bf0d7a29d72", null ],
-    [ "blocktridiagLU", "a00160.html#ad2c404dd44e760ee729740176b186bd0", null ],
-    [ "blocktridiagIterJacobi", "a00160.html#a8c48f135943fe35da85072714d4b1b23", null ]
+    [ "_FP_DOUBLE_WELL_", "a00160.html#a801cd9499779d35febbce73603aa70a6", null ],
+    [ "_MODEL_NDIMS_", "a00160.html#a57771c952ec174601addf43e1c0202b2", null ],
+    [ "_MODEL_NVARS_", "a00160.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
+    [ "drift", "a00160.html#a45bcf0bb95407584d582c61664359c14", null ],
+    [ "FPDoubleWellInitialize", "a00160.html#af48e8eb8a81020a97b3b7b039bb94626", null ],
+    [ "FPDoubleWellCleanup", "a00160.html#ad512be0d21fc4b769fcc735ec3482203", null ]
 ];

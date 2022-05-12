@@ -1,4 +1,5 @@
 var a00368 =
 [
-    [ "FPDoubleWellUpwind", "a00368.html#a6c2964e5df00f839b0ebb11fd1d426ff", null ]
+    [ "Euler1DLeftEigenvectors", "a00368.html#a1815fa0e825f5544526165566c75a619", null ],
+    [ "Euler1DRightEigenvectors", "a00368.html#af93bb74bc4643347f59e3bdb722e864b", null ]
 ];

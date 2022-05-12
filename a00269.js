@@ -1,5 +1,4 @@
 var a00269 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00269.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimSecondOrderCentral", "a00269.html#afc9d5bb359f07e2a0af25ba03cb478df", null ]
+    [ "IBComputeFacetVar", "a00269.html#a9c3f95ff860bcc0a29e7cdf3af41ba18", null ]
 ];

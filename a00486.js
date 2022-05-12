@@ -1,5 +1,5 @@
 var a00486 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00486.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "SecondDerivativeFourthOrderCentral", "a00486.html#a41e040c0062127ce7e0edc64569c845e", null ]
+    [ "ShallowWater1DSourceUpwindLLF", "a00486.html#a7ff86870738e940b355fc34e9989b4cf", null ],
+    [ "ShallowWater1DSourceUpwindRoe", "a00486.html#a120e0e4b2185cdef19b4f78efd1dfe1b", null ]
 ];

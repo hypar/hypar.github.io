@@ -1,5 +1,5 @@
 var a00308 =
 [
-    [ "MPIMin_integer", "a00308.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
-    [ "MPIMin_double", "a00308.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
+    [ "ReadArraywInterpSerial", "a00308.html#ac1fd9c1e0d7b79e7047db352b8aeb0b8", null ],
+    [ "ReadArraywInterp", "a00308.html#a84eb363896d58f78282bd0426638c13d", null ]
 ];

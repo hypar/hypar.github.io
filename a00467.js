@@ -1,4 +1,4 @@
 var a00467 =
 [
-    [ "ShallowWater2DFlux", "a00467.html#a402c3b0d9e533619a23dc5a06a0c0bd3", null ]
+    [ "Numa2DParabolicFunction", "a00467.html#a572c3429da236f2aeb16775269f0d26b", null ]
 ];

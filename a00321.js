@@ -1,5 +1,7 @@
 var a00321 =
 [
-    [ "ApplyPeriodicity", "a00321.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e", null ],
-    [ "PetscGlobalDOF", "a00321.html#a15c41ba7e2d10e4803226f42708a6ef8", null ]
+    [ "isPowerOfTwo", "a00321.html#aafd7ccd78e660e79257b36fc5a9453f2", null ],
+    [ "coarsen1D", "a00321.html#a9d680d590ea7b1a942b880564d70dfd1", null ],
+    [ "refine1D", "a00321.html#a8fbe3466587deeb3032a24ccfcc3956a", null ],
+    [ "InterpolateGlobalnDVar", "a00321.html#a12f68d1438531171b4cc818ac9c53008", null ]
 ];

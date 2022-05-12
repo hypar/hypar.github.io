@@ -1,11 +1,12 @@
 var a00176 =
 [
-    [ "min", "a00176.html#ac6afabdc09a49a433ee19d8a9486056d", null ],
-    [ "max", "a00176.html#affe776513b24d84b39af8ab0930fef7f", null ],
-    [ "min3", "a00176.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a", null ],
-    [ "max3", "a00176.html#aa0d45e1e67c5cacf5c9251fcd90a971b", null ],
-    [ "absolute", "a00176.html#adf1be5ccbb7a2522b4f3a64043c72880", null ],
-    [ "raiseto", "a00176.html#a840eef18a5986381093ff8c176a2153c", null ],
-    [ "raiseto_int", "a00176.html#a74ca90b3ea1d23b2f0ab160523e2f477", null ],
-    [ "sign", "a00176.html#a1e471b644e7fd684cd5dbb144e00ee81", null ]
+    [ "bt_type", "a00176.html#a6f84a1093abf57dcbf0406b33f40f766", null ],
+    [ "topo_flag", "a00176.html#a71b5cdadb8aec7421fa05a93ec51c102", null ],
+    [ "g", "a00176.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
+    [ "b", "a00176.html#a9f92e5582bf339a3c95df78b9c684fe0", null ],
+    [ "fhat", "a00176.html#acc808f03e31ad5612b724fe23dea05ab", null ],
+    [ "beta", "a00176.html#a9424343761f8c4f4c1afe8f5b6bf471b", null ],
+    [ "D", "a00176.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
+    [ "upw_choice", "a00176.html#a57894a0f53d5b228bf64053367736bf9", null ],
+    [ "SourceUpwind", "a00176.html#a3cb843ad67e4b14387b7fa21f6d4090b", null ]
 ];

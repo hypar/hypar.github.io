@@ -1,5 +1,4 @@
 var a00480 =
 [
-    [ "VlasovAdvectionCoeff", "a00480.html#a58d4d7eb9e93f0e81dd01ce4895d6b3a", null ],
-    [ "VlasovComputeCFL", "a00480.html#ad219e6304b21fa714b226db36facc85a", null ]
+    [ "ShallowWater1DFlux", "a00480.html#ab8ef6342f2e68ddffa5fe5d5f50cc4ce", null ]
 ];

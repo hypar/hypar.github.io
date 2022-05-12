@@ -1,6 +1,6 @@
 var a00247 =
 [
-    [ "isInside", "a00247.html#ae5fc4cce9be29ebb8c3d80c534e55720", null ],
-    [ "interpNodesCoeffs", "a00247.html#ac8dd87df944e8659dedfa3171e832f44", null ],
-    [ "IBCreateFacetMapping", "a00247.html#a1eaa51b960b4fae56b2283983c7d9cf9", null ]
+    [ "MPIContext", "a00247.html#aef8e1d87c719a4a2a2342213c1721789", null ],
+    [ "SolverContext", "a00247.html#a588e1e74fdbac3dcc2b1258aa0c155c0", null ],
+    [ "FirstDerivativeFourthOrderCentral", "a00247.html#a51fbc513e5461e38c98eeb5a1c03817c", null ]
 ];

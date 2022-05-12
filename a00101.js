@@ -7,5 +7,5 @@ var a00101 =
     [ "fast_jac", "a00101.html#a14af7516371abe115b3a1aa9269aebb5", null ],
     [ "solution", "a00101.html#a7568fac4d4e8488510e1d37f468967b1", null ],
     [ "upw_choice", "a00101.html#a57894a0f53d5b228bf64053367736bf9", null ],
-    [ "SourceUpwind", "a00101.html#acf2a05e3d7005c865c3e4f609cf728f8", null ]
+    [ "SourceUpwind", "a00101.html#a3cb843ad67e4b14387b7fa21f6d4090b", null ]
 ];

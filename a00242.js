@@ -1,4 +1,4 @@
 var a00242 =
 [
-    [ "IBAssembleGlobalFacetData", "a00242.html#a7383f93f03644bda100a1f27742232a3", null ]
+    [ "BCThermalNoslipWallU", "a00242.html#ab17f965ac7dd617a92c7191ff65ee82b", null ]
 ];

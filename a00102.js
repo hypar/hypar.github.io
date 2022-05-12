@@ -1,4 +1,5 @@
 var a00102 =
 [
-    [ "2D Linear Advection - Sine Wave", "a00104.html", null ]
+    [ "1D Linear Advection - Sine Wave - Ensemble Simulation", "a00104.html", null ],
+    [ "2D Euler Equations - Isentropic Vortex Convection - Ensemble Simulation", "a00106.html", null ]
 ];

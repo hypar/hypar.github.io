@@ -1,5 +1,4 @@
 var a00314 =
 [
-    [ "MPISum_integer", "a00314.html#a3fdbda19a80373d03b0034694d7309b7", null ],
-    [ "MPISum_double", "a00314.html#ab72730180adfeeb505a716952545d591", null ]
+    [ "LimiterGeneralizedMinMod", "a00314.html#acff4747eace2d9f9b3bc66aaa99cb384", null ]
 ];

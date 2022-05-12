@@ -1,5 +1,5 @@
 var a00333 =
 [
-    [ "__FUNCT__", "a00333.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "TransferVecFromPETSc", "a00333.html#abb476449ff310bdfdd082faeb31e36d1", null ]
+    [ "MPIMax_integer", "a00333.html#a6d51d72d0316346543fbda2aa97a790a", null ],
+    [ "MPIMax_double", "a00333.html#aa8bb15ed31fcdd02194de4d639d67988", null ]
 ];

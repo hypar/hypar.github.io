@@ -1,5 +1,5 @@
 var a00355 =
 [
-    [ "Euler2DLeftEigenvectors", "a00355.html#a965cafbf06fa0cfd5c0664dc94fcfd3f", null ],
-    [ "Euler2DRightEigenvectors", "a00355.html#a2e9802c52e7497ece4e65e55c77c7b22", null ]
+    [ "__FUNCT__", "a00355.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "PetscRegisterTIMethods", "a00355.html#a2cb233a09955ca5a8fcd889e7daa70ca", null ]
 ];

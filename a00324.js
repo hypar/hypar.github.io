@@ -1,9 +1,5 @@
 var a00324 =
 [
-    [ "__FUNCT__", "a00324.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "__FUNCT__", "a00324.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "__FUNCT__", "a00324.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscIJacobianIMEX", "a00324.html#ad9e3c8425520ee3f70963fe7f7e1a287", null ],
-    [ "PetscJacobianFunctionIMEX_JFNK", "a00324.html#a4db7efdfc3f8849daab0a2acf695a650", null ],
-    [ "PetscJacobianFunctionIMEX_Linear", "a00324.html#a57fed24902996c38e9d020af0144ba4c", null ]
+    [ "MPICreateCommunicators", "a00324.html#a8f52d58fa2c0c94914befd51b6d413a1", null ],
+    [ "MPIFreeCommunicators", "a00324.html#a56b1ce0eb3d932698ac49d3c3183d39a", null ]
 ];

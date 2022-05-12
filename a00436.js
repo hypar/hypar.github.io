@@ -1,4 +1,5 @@
 var a00436 =
 [
-    [ "Numa2DCleanup", "a00436.html#ae3d31a81226a3c8da15d033c06945532", null ]
+    [ "NavierStokes2DLeftEigenvectors", "a00436.html#a497cabf9429ce30c3107d526bc18a798", null ],
+    [ "NavierStokes2DRightEigenvectors", "a00436.html#a2267c0825e485249fdee53ee44981636", null ]
 ];

@@ -1,19 +1,24 @@
 var a00161 =
 [
-    [ "Vlasov", "a00161.html#a00565", [
-      [ "self_consistent_electric_field", "a00161.html#ab43844127348f370633153239fa916c1", null ],
-      [ "ndims_x", "a00161.html#ae527165d3d2d27bcedc2179a1fb0cb63", null ],
-      [ "ndims_v", "a00161.html#a489f8895b9b198463a3b72b8809d46d8", null ],
-      [ "npts_local_x", "a00161.html#a2a5cede87e8687192c8bec19ec1535f3", null ],
-      [ "npts_global_x", "a00161.html#aab5bd39936c1e76e9d6193abe3030036", null ],
-      [ "npts_local_x_wghosts", "a00161.html#a4094920098b4d5295d51c180da96f699", null ],
-      [ "npts_global_x_wghosts", "a00161.html#aba8999e006d046630748521bcadf52b8", null ],
-      [ "e_field", "a00161.html#aedea9c3dc1e5f991dc50e82b0d51d04c", null ],
-      [ "m", "a00161.html#a46c1826d30af1a1778b65915c5cb1124", null ]
+    [ "FPPowerSystem", "a00161.html#a00581", [
+      [ "O_s", "a00161.html#aad25901418696dab0fb4016bd2eb87f9", null ],
+      [ "H", "a00161.html#a982cf43f120ff8978010e078bd49d9a3", null ],
+      [ "E", "a00161.html#a1eb62b8cb1f5e5f571d51179718e7d4c", null ],
+      [ "V", "a00161.html#a1e6fac1696a7d8fcf13ce87a658cfe12", null ],
+      [ "g1", "a00161.html#adf05fcfd83be702fb6d79e601cd7df76", null ],
+      [ "g2", "a00161.html#af6cb842b18f412478038edddd8ee6009", null ],
+      [ "D", "a00161.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
+      [ "Pm", "a00161.html#a447021464d5a14391f18d08fc463a7d5", null ],
+      [ "l", "a00161.html#a59e80b8ba32c12c6d0a868f17a19ae48", null ],
+      [ "q", "a00161.html#a5b5e3f03e443adea974601f295136638", null ],
+      [ "tf", "a00161.html#ac0c72a715f4cb2cce75ad7711fa246c4", null ],
+      [ "tcl", "a00161.html#a8159bd898bf5186e56bde271c4e4350d", null ],
+      [ "Pmax", "a00161.html#ab070db6beb517f3c727e4f259f3c43de", null ],
+      [ "pdf_integral", "a00161.html#adca2e435527ef52d18b3626b0e2ca852", null ]
     ] ],
-    [ "_VLASOV_", "a00161.html#a83dc099011b8d965235f462a935f4830", null ],
+    [ "_FP_POWER_SYSTEM_", "a00161.html#aaeb0de68ad20c63864e1a6cdf819e836", null ],
     [ "_MODEL_NDIMS_", "a00161.html#a57771c952ec174601addf43e1c0202b2", null ],
     [ "_MODEL_NVARS_", "a00161.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "VlasovInitialize", "a00161.html#a527a443cc8715a3e4dfc554046d0bb3d", null ],
-    [ "VlasovCleanup", "a00161.html#a86cecceaf67a26041189c560ea5a176c", null ]
+    [ "FPPowerSystemInitialize", "a00161.html#abe8191ce0b15220b854bbcda4446b170", null ],
+    [ "FPPowerSystemCleanup", "a00161.html#ac613cf54a15aaed79e93bd3b12d81f44", null ]
 ];

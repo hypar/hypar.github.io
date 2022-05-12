@@ -1,4 +1,4 @@
 var a00237 =
 [
-    [ "ParabolicFunctionNC1_5Stage", "a00237.html#af9331a439bf243524c027eba50fdbbfd", null ]
+    [ "BCSubsonicInflowU", "a00237.html#a9c5eb47fb65476896445cc90ec945312", null ]
 ];

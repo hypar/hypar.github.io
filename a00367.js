@@ -1,4 +1,4 @@
 var a00367 =
 [
-    [ "FPDoubleWellPrintStep", "a00367.html#a5b51bfceb9555102ac21245741159a0f", null ]
+    [ "Euler1DComputeCFL", "a00367.html#a820145e91372888fca738bcf320495d9", null ]
 ];

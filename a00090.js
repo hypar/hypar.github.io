@@ -5,6 +5,7 @@ var a00090 =
     [ "Inviscid Shock-Cylinder Interaction", "a00096.html", null ],
     [ "Steady, incompressible, viscous flow around an adiabatic sphere", "a00098.html", null ],
     [ "Steady, incompressible, viscous flow around an isothermal sphere", "a00100.html", null ],
-    [ "Unsteady, compressible, viscous flow around an adiabatic sphere", "a00102.html", null ],
-    [ "Unsteady, compressible, viscous flow around an isothermal sphere", "a00104.html", null ]
+    [ "Steady, incompressible, viscous flow around an isothermal warm sphere", "a00102.html", null ],
+    [ "Unsteady, compressible, viscous flow around an adiabatic sphere", "a00104.html", null ],
+    [ "Unsteady, compressible, viscous flow around an isothermal sphere", "a00106.html", null ]
 ];

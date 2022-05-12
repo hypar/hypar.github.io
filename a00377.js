@@ -1,4 +1,5 @@
 var a00377 =
 [
-    [ "FPPowerSystemPrintStep", "a00377.html#ac42ab0c1eb174dc03417e1863c86afe5", null ]
+    [ "Euler1DSourceUpwindLLF", "a00377.html#a229db12fad7bac6cf5f1223f204fe1f9", null ],
+    [ "Euler1DSourceUpwindRoe", "a00377.html#ad94cc03bc96444b2f8ce0e701fe489f3", null ]
 ];

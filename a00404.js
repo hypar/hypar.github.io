@@ -1,4 +1,5 @@
 var a00404 =
 [
-    [ "LinearADRJacobian", "a00404.html#a3a2e89cbd3bcd1bb20f92ba9337e3faf", null ]
+    [ "FPPowerSystemDriftFunction", "a00404.html#aad5370d85f97a4a03459e9b9a185cfa1", null ],
+    [ "FPPowerSystemUpwind", "a00404.html#a3ff2c216124138f65c2ff0d44c185085", null ]
 ];

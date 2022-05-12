@@ -1,4 +1,5 @@
 var a00229 =
 [
-    [ "CalculateConservationError", "a00229.html#aef9a903e2e2870dbadbae56ab1b62eb7", null ]
+    [ "BCReadTurbulentInflowData", "a00229.html#ae90485b7beacc863180d194634c9e6d5", null ],
+    [ "BCReadTemperatureData", "a00229.html#a482110904d4b11dd863786c9d425bc7e", null ]
 ];

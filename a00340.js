@@ -1,4 +1,5 @@
 var a00340 =
 [
-    [ "Euler1DCleanup", "a00340.html#aca2df106e7c331c81fc8aff929ec6e69", null ]
+    [ "MPISum_integer", "a00340.html#a3fdbda19a80373d03b0034694d7309b7", null ],
+    [ "MPISum_double", "a00340.html#ab72730180adfeeb505a716952545d591", null ]
 ];

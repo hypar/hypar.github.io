@@ -1,4 +1,5 @@
 var a00449 =
 [
-    [ "Numa3DSource", "a00449.html#ac1ef542f82c25ef1fb460454f75b4694", null ]
+    [ "NavierStokes3DLeftEigenvectors", "a00449.html#ab376732168de139806c9f77828caa063", null ],
+    [ "NavierStokes3DRightEigenvectors", "a00449.html#a62b44025b86e4d73a34142b32301ee7c", null ]
 ];

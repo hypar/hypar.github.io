@@ -1,4 +1,5 @@
 var a00253 =
 [
-    [ "IBReadBodySTL", "a00253.html#ab11c40c53b44e72e03b788ab2fa769c2", null ]
+    [ "ExactSolution", "a00253.html#aef6e3464d167cab9e23a9eacb8f62882", null ],
+    [ "CalculateError", "a00253.html#a52e8c83d9dad55f9a6b967e63dc5f4bc", null ]
 ];

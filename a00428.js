@@ -1,5 +1,5 @@
 var a00428 =
 [
-    [ "NavierStokes3DIBAdiabatic", "a00428.html#a0f7ac290f54e925b5e5554a69bba5c16", null ],
-    [ "NavierStokes3DIBIsothermal", "a00428.html#a8988fb5737b2ad7f660c21326f2e1049", null ]
+    [ "LinearADRDiffusionG", "a00428.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
+    [ "LinearADRDiffusionH", "a00428.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
 ];

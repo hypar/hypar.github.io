@@ -1,4 +1,4 @@
 var a00363 =
 [
-    [ "FPDoubleWellComputeDiffNumber", "a00363.html#a54014d08719e5db4fdfc34b558d9fd60", null ]
+    [ "BurgersComputeCFL", "a00363.html#a99db371c78dc383aca3e51b342adb724", null ]
 ];

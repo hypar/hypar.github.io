@@ -1,4 +1,5 @@
 var a00441 =
 [
-    [ "Numa2DParabolicFunction", "a00441.html#a572c3429da236f2aeb16775269f0d26b", null ]
+    [ "NavierStokes2DJacobian", "a00441.html#a343a73d6dce8347a2e56d7302392737a", null ],
+    [ "NavierStokes2DStiffJacobian", "a00441.html#aa3baa96900b3d921ae62b3005c16635c", null ]
 ];

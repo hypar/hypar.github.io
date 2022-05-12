@@ -1,5 +1,5 @@
 var a00381 =
 [
-    [ "FPPowerSystem1BusDriftFunction", "a00381.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
-    [ "FPPowerSystem1BusComputeCFL", "a00381.html#a55b31508f49708c46c4bb3e44939f982", null ]
+    [ "Euler2DLeftEigenvectors", "a00381.html#a965cafbf06fa0cfd5c0664dc94fcfd3f", null ],
+    [ "Euler2DRightEigenvectors", "a00381.html#a2e9802c52e7497ece4e65e55c77c7b22", null ]
 ];

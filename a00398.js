@@ -1,4 +1,5 @@
 var a00398 =
 [
-    [ "LinearADRAdvectionField", "a00398.html#aedbb5cafa8b52dbc80b1ed3082bf8670", null ]
+    [ "FPPowerSystemDissipationFunction", "a00398.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
+    [ "FPPowerSystemComputeDiffNumber", "a00398.html#a0baeed235f71eba334249f178f632ac0", null ]
 ];

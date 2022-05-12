@@ -1,6 +1,5 @@
 var a00334 =
 [
-    [ "__FUNCT__", "a00334.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "TransferVecToPETSc", "a00334.html#ade5f8f199ddce54db3bcd559252ac637", null ],
-    [ "TransferMatToPETSc", "a00334.html#abbb95954ce9349ea01f27f0c37af56ff", null ]
+    [ "MPIMin_integer", "a00334.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
+    [ "MPIMin_double", "a00334.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
 ];

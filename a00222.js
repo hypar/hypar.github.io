@@ -1,4 +1,4 @@
 var a00222 =
 [
-    [ "GetStringFromInteger", "a00222.html#ad1b8919f10d5b92bac1e31e065a9439d", null ]
+    [ "BandedMatrixDestroy", "a00222.html#a75f8c3de645719ac147311358c3bff73", null ]
 ];

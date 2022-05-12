@@ -1,5 +1,5 @@
 var a00373 =
 [
-    [ "FPPowerSystemDissipationFunction", "a00373.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
-    [ "FPPowerSystemDiffusion", "a00373.html#a0210181023c485ae65c8d7983f23303a", null ]
+    [ "Euler1DJacobian", "a00373.html#ab37022ee06f6873c94049e55a0890fe1", null ],
+    [ "Euler1DStiffJacobian", "a00373.html#a635a7e46a7898c4de6b7a47b1d68c969", null ]
 ];

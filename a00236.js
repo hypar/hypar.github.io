@@ -1,4 +1,4 @@
 var a00236 =
 [
-    [ "ParabolicFunctionCons1Stage", "a00236.html#a5e79cc5efd6d3e4c93717a67e0fbf918", null ]
+    [ "BCSubsonicAmbivalentU", "a00236.html#aa06b35b07659fa413f72a90372e325d0", null ]
 ];

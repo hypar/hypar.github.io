@@ -1,4 +1,4 @@
 var a00504 =
 [
-    [ "ExactSolution", "a00504.html#aef6e3464d167cab9e23a9eacb8f62882", null ]
+    [ "VlasovAdvectionCoeff", "a00504.html#afc18d2e95d8606bf4a79b661f88f1b98", null ]
 ];
