@@ -1,5 +1,4 @@
 var a00369 =
 [
-    [ "Euler1DFlux", "a00369.html#a17a485e5749c6ff502d89a28a43c87ca", null ],
-    [ "Euler1DStiffFlux", "a00369.html#a3017a4ade688681fa865c1556fb73f97", null ]
+    [ "MPIPartitionArray1D", "a00369.html#ac43b2dabcbf9ac251928a7394dc3775a", null ]
 ];

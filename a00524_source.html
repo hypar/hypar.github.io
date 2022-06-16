@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/Simulation/libROMInterface.cpp Source File</title>
+<title>HyPar: src/PhysicalModels/ShallowWater2D/ShallowWater2DComputeCFL.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,341 +112,79 @@ $(document).ready(function(){initNavTree('a00524_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">libROMInterface.cpp</div>  </div>
+<div class="title">ShallowWater2DComputeCFL.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00524.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifdef with_librom</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00187.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00178.html">simulation_object.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00197.html">librom_interface.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="a00154.html#a7d815cb2b7fcc5474613e2fa7c54f6fc">   36</a></span>&#160;<a class="code" href="a00154.html#a7d815cb2b7fcc5474613e2fa7c54f6fc">DMDROMObject::DMDROMObject</a>( <span class="keyword">const</span> <span class="keywordtype">int</span>     a_vec_size, </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">double</span>  a_dt,       </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">int</span>     a_rdim,     </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">int</span>     a_rank,     </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">int</span>     a_nproc      )</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <a class="code" href="a00154.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a> = a_rank;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="a00154.html#ae5bbe5daa629a4f92b569cb632256780">m_nproc</a> = a_nproc;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>.clear();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00154.html#a26d4cd0268558d4ab253c07e79655d48">m_intervals</a>.clear();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="a00154.html#aedba203e35d89d380d8ec4c61ee84947">m_vec_size</a> = a_vec_size;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <a class="code" href="a00154.html#a67f6cc7fa80c9e446737863bd4fdc2d5">m_dt</a> = a_dt;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="a00154.html#a46716d3f1d496cde83a07bd6706d4da0">m_rdim</a> = a_rdim;</div>
+<a href="a00524.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00218.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00217.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00230.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00241.html">physicalmodels/shallowwater2d.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00224.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="a00528.html#aaa16c0e74fd5459b14b367fc3cf14311">   17</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="a00524.html#a57adc8f213aa86d2da2330454a311025">ShallowWater2DComputeCFL</a>(</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                                  <span class="keywordtype">void</span>    *s, </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                                  <span class="keywordtype">void</span>    *m, </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                                  <span class="keywordtype">double</span>  dt, </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                  <span class="keywordtype">double</span>  t   </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                               )</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00194.html">HyPar</a>           *solver = (<a class="code" href="a00194.html">HyPar</a>*)   s;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00206.html">ShallowWater2D</a>  *param  = (<a class="code" href="a00206.html">ShallowWater2D</a>*) solver-&gt;<a class="code" href="a00194.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span> *dim    = solver-&gt;<a class="code" href="a00194.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">int</span> ghosts  = solver-&gt;<a class="code" href="a00194.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordtype">int</span> ndims   = solver-&gt;<a class="code" href="a00194.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">int</span> index[ndims];</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">double</span> *u   = solver-&gt;<a class="code" href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">double</span> max_cfl = 0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00217.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00217.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">double</span> h, uvel, vvel, c, dxinv, dyinv, local_cfl[<a class="code" href="a00237.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a>];</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="a00241.html#a66b88d6a05555a192a0e455ed99341a4">_ShallowWater2DGetFlowVar_</a>((u+<a class="code" href="a00237.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),h,uvel,vvel);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="a00218.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00237.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>,index[<a class="code" href="a00237.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>],dim,ghosts,solver-&gt;<a class="code" href="a00194.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dxinv); <span class="comment">/* 1/dx */</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="a00218.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(<a class="code" href="a00188.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>,index[<a class="code" href="a00188.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>],dim,ghosts,solver-&gt;<a class="code" href="a00194.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dyinv); <span class="comment">/* 1/dy */</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    c = sqrt(param-&gt;<a class="code" href="a00206.html#ab30c765b9be1b7776c97c899a12a66bb">g</a>*h); <span class="comment">/* speed of gravity waves */</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    local_cfl[<a class="code" href="a00237.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>]=(<a class="code" href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(uvel)+c)*dt*dxinv;<span class="comment">/* local cfl for this grid point (x) */</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    local_cfl[<a class="code" href="a00188.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>]=(<a class="code" href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(vvel)+c)*dt*dyinv;<span class="comment">/* local cfl for this grid point (y) */</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span> (local_cfl[_XDIR_] &gt; max_cfl) max_cfl = local_cfl[<a class="code" href="a00237.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>];</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">if</span> (local_cfl[_YDIR_] &gt; max_cfl) max_cfl = local_cfl[<a class="code" href="a00188.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>];</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="a00217.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  }</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <a class="code" href="a00154.html#aa98d3c307daac6fc078ab36af24b6020">m_num_window_samples</a> = INT_MAX;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordtype">char</span> dirname_c_str[<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>] = <span class="stringliteral">&quot;DMD&quot;</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordflow">if</span> (!<a class="code" href="a00154.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a>) {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    FILE *in;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    in = fopen(<a class="code" href="a00197.html#ac28504348ecbd5b80765d9b8fa0b4ba4">_LIBROM_INP_FNAME_</a>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span> (in) {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      <span class="keywordtype">int</span> ferr;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      <span class="keywordtype">char</span> word[<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>, word); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;begin&quot;</span>) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">while</span> (std::string(word) != <span class="stringliteral">&quot;end&quot;</span>) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;          ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;          <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;dmd_num_win_samples&quot;</span>) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            ferr = fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>, &amp;<a class="code" href="a00154.html#aa98d3c307daac6fc078ab36af24b6020">m_num_window_samples</a>); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;          } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;dmd_dirname&quot;</span>) {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>, dirname_c_str); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;          }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;          <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        fprintf( stderr, <span class="stringliteral">&quot;Error: Illegal format in file \&quot;%s\&quot;. Word read is: %s\n&quot;</span>,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                 <a class="code" href="a00197.html#ac28504348ecbd5b80765d9b8fa0b4ba4">_LIBROM_INP_FNAME_</a>, word);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      fclose(in);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">/* print useful stuff to screen */</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    printf(<span class="stringliteral">&quot;libROM DMD inputs:\n&quot;</span>);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    printf(<span class="stringliteral">&quot;  number of samples per window:   %d\n&quot;</span>, <a class="code" href="a00154.html#aa98d3c307daac6fc078ab36af24b6020">m_num_window_samples</a>);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    printf(<span class="stringliteral">&quot;  directory name for DMD onjects: %s\n&quot;</span>, dirname_c_str);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor"></span>  MPI_Bcast(&amp;<a class="code" href="a00154.html#aa98d3c307daac6fc078ab36af24b6020">m_num_window_samples</a>,1,MPI_INT,0,MPI_COMM_WORLD);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  MPI_Bcast(dirname_c_str,<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>,MPI_CHAR,0,MPI_COMM_WORLD);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <a class="code" href="a00154.html#a4a2342bcda8d44940111704f8423f38f">m_dirname</a> = std::string( dirname_c_str );</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="a00154.html#aa98d3c307daac6fc078ab36af24b6020">m_num_window_samples</a> &lt;= <a class="code" href="a00154.html#a46716d3f1d496cde83a07bd6706d4da0">m_rdim</a>) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    printf(<span class="stringliteral">&quot;ERROR:DMDROMObject::DMDROMObject() - m_num_window_samples &lt;= m_rdim!!&quot;</span>);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <a class="code" href="a00154.html#ab6222c830345da039482ce97a00ce4d0">m_tic</a> = 0;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <a class="code" href="a00154.html#a2f0d0636a7c94864ae9d11b69f331a24">m_curr_win</a> = 0;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="a00154.html#a58a9e39b3626c1bb7e4e959b36bf43d7">  108</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00154.html#a58a9e39b3626c1bb7e4e959b36bf43d7">DMDROMObject::train</a>()</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;{</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="comment">/* make sure the number of columns for the last DMD isn&#39;t less than m_rdim */</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  {</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">int</span> last_win = <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>.size() - 1;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">int</span> num_columns( <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>[last_win]-&gt;getSnapshotMatrix()-&gt;numColumns() );</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordflow">if</span> (num_columns &lt;= <a class="code" href="a00154.html#a46716d3f1d496cde83a07bd6706d4da0">m_rdim</a>) {</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>.pop_back();</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <a class="code" href="a00154.html#a26d4cd0268558d4ab253c07e79655d48">m_intervals</a>.pop_back();</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <a class="code" href="a00154.html#a26d4cd0268558d4ab253c07e79655d48">m_intervals</a>[<a class="code" href="a00154.html#a26d4cd0268558d4ab253c07e79655d48">m_intervals</a>.size()-1].second = DBL_MAX;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="a00154.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a>) {</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        printf(<span class="stringliteral">&quot;DMDROMObject::train() - last window DMD has %d sample(s) only; deleted it &quot;</span>,</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;               num_columns );</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        printf(<span class="stringliteral">&quot;(total: %d).\n&quot;</span>, <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>.size());</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    }</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>.size() &gt; 0) {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>.size(); i++) {</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      <span class="keywordtype">int</span> ncol = <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>[i]-&gt;getSnapshotMatrix()-&gt;numColumns();</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="a00154.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a>) {</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        printf(<span class="stringliteral">&quot;DMDROMObject::train() - training DMD object %d with %d samples.\n&quot;</span>, i, ncol );</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      }</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>[i]-&gt;train(<a class="code" href="a00154.html#a46716d3f1d496cde83a07bd6706d4da0">m_rdim</a>);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    }</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    printf(<span class="stringliteral">&quot;ERROR in DMDROMObject::train(): m_dmd is of size zero!&quot;</span>);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00150"></a><span class="lineno"><a class="line" href="a00154.html#a1d0fa61fd47daf92f859e11662989cac">  150</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00154.html#a1d0fa61fd47daf92f859e11662989cac">DMDROMObject::save</a>(<span class="keyword">const</span> std::string&amp; a_fname_root )</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;{</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  std::string fname_root = <a class="code" href="a00154.html#a4a2342bcda8d44940111704f8423f38f">m_dirname</a> + <span class="stringliteral">&quot;/&quot;</span>;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <span class="keywordflow">if</span> (a_fname_root == <span class="stringliteral">&quot;&quot;</span>) {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    fname_root += <span class="stringliteral">&quot;dmdobj_&quot;</span>;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    fname_root += a_fname_root;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  }</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>.size(); i++) {</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordtype">char</span> idx_string[<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    sprintf(idx_string, <span class="stringliteral">&quot;%04d&quot;</span>, i);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    std::string fname = fname_root + std::string(idx_string);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="a00154.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a>) {</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      printf(<span class="stringliteral">&quot;  Saving DMD object with filename root %s.\n&quot;</span>, fname.c_str());</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <a class="code" href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">m_dmd</a>[i]-&gt;save(fname);</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  }</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;}</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="a00165.html#a2bd63e26cbd3bd0d0c8f33914056e9ec">  197</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00165.html#a2bd63e26cbd3bd0d0c8f33914056e9ec">libROMInterface::define</a>( <span class="keywordtype">void</span>*   a_s, </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                              <span class="keywordtype">int</span>     a_nsims, </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                              <span class="keywordtype">int</span>     a_rank,  </div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                              <span class="keywordtype">int</span>     a_nproc, </div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                              <span class="keywordtype">double</span>  a_dt      )</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;{</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <a class="code" href="a00178.html#a00592">SimulationObject</a>* sim = (<a class="code" href="a00178.html#a00592">SimulationObject</a>*) a_s;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <a class="code" href="a00165.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a> = a_rank;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <a class="code" href="a00165.html#ae5bbe5daa629a4f92b569cb632256780">m_nproc</a> = a_nproc;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <a class="code" href="a00165.html#a83fea48aac89fe345a02e50af79531ae">m_nsims</a> = a_nsims;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <a class="code" href="a00165.html#aedba203e35d89d380d8ec4c61ee84947">m_vec_size</a> = 0;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <a class="code" href="a00165.html#a6a71edb74cc8a3e56c30ba34ded9fc10">m_vec_offsets</a>.resize(<a class="code" href="a00165.html#a83fea48aac89fe345a02e50af79531ae">m_nsims</a>);</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; <a class="code" href="a00165.html#a83fea48aac89fe345a02e50af79531ae">m_nsims</a>; ns++) {</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <a class="code" href="a00165.html#a6a71edb74cc8a3e56c30ba34ded9fc10">m_vec_offsets</a>[ns] = <a class="code" href="a00165.html#aedba203e35d89d380d8ec4c61ee84947">m_vec_size</a>;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <a class="code" href="a00165.html#aedba203e35d89d380d8ec4c61ee84947">m_vec_size</a> += (sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#afae6319baba315ac1f0c56505610ed85">npoints_local</a> * sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  }</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <span class="keywordtype">char</span> mode_c_str[<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="keywordtype">char</span> type_c_str[<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordtype">char</span> save_c_str[<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordflow">if</span> (!<a class="code" href="a00165.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a>) {</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    FILE *in;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    in = fopen(<a class="code" href="a00197.html#ac28504348ecbd5b80765d9b8fa0b4ba4">_LIBROM_INP_FNAME_</a>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordflow">if</span> (!in) {</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      strcpy( mode_c_str, <span class="stringliteral">&quot;none&quot;</span> );</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      strcpy( type_c_str, <span class="stringliteral">&quot;none&quot;</span> );</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      strcpy( save_c_str, <span class="stringliteral">&quot;false&quot;</span> );</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      strcpy( mode_c_str, <span class="stringliteral">&quot;train&quot;</span> );</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      strcpy( type_c_str, <span class="stringliteral">&quot;DMD&quot;</span> );</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      strcpy( save_c_str, <span class="stringliteral">&quot;true&quot;</span> );</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;      <span class="keywordtype">int</span> ferr;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;      <span class="keywordtype">char</span> word[<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>, word); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;begin&quot;</span>) {</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <span class="keywordflow">while</span> (std::string(word) != <span class="stringliteral">&quot;end&quot;</span>) {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;          ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;          <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;rdim&quot;</span>) {</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            ferr = fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>, &amp;<a class="code" href="a00165.html#a46716d3f1d496cde83a07bd6706d4da0">m_rdim</a>); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;          } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;sampling_frequency&quot;</span>) {</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            ferr = fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>, &amp;<a class="code" href="a00165.html#a963701fd6a399d7175c478e9c2e74cfb">m_sampling_freq</a>); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;          } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;mode&quot;</span>) {</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>, mode_c_str); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;          } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;type&quot;</span>) {</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;            ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>, type_c_str); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;          } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::string(word) == <span class="stringliteral">&quot;save_to_file&quot;</span>) {</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            ferr = fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>, save_c_str); <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;          }</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;          <span class="keywordflow">if</span> (ferr != 1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        }</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        fprintf( stderr, <span class="stringliteral">&quot;Error: Illegal format in file \&quot;%s\&quot;. Word read is: %s\n&quot;</span>,</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;                 <a class="code" href="a00197.html#ac28504348ecbd5b80765d9b8fa0b4ba4">_LIBROM_INP_FNAME_</a>, word);</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      }</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      fclose(in);</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    }</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="comment">/* print useful stuff to screen */</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    printf(<span class="stringliteral">&quot;libROM inputs and parameters:\n&quot;</span>);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    printf(<span class="stringliteral">&quot;  reduced model dimensionality:  %d\n&quot;</span>, <a class="code" href="a00165.html#a46716d3f1d496cde83a07bd6706d4da0">m_rdim</a>);</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    printf(<span class="stringliteral">&quot;  sampling frequency:  %d\n&quot;</span>, <a class="code" href="a00165.html#a963701fd6a399d7175c478e9c2e74cfb">m_sampling_freq</a>);</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    printf(<span class="stringliteral">&quot;  mode: %s\n&quot;</span>, mode_c_str);</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    printf(<span class="stringliteral">&quot;  type: %s\n&quot;</span>, type_c_str);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    printf(<span class="stringliteral">&quot;  save to file: %s\n&quot;</span>, save_c_str);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    printf(<span class="stringliteral">&quot;  local vector size: %d\n&quot;</span>, <a class="code" href="a00165.html#aedba203e35d89d380d8ec4c61ee84947">m_vec_size</a>);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  }</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="preprocessor"></span>  MPI_Bcast(&amp;<a class="code" href="a00165.html#a46716d3f1d496cde83a07bd6706d4da0">m_rdim</a>,1,MPI_INT,0,MPI_COMM_WORLD);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  MPI_Bcast(&amp;<a class="code" href="a00165.html#a963701fd6a399d7175c478e9c2e74cfb">m_sampling_freq</a>,1,MPI_INT,0,MPI_COMM_WORLD);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  MPI_Bcast(mode_c_str,<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>,MPI_CHAR,0,MPI_COMM_WORLD);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  MPI_Bcast(type_c_str,<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>,MPI_CHAR,0,MPI_COMM_WORLD);</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  MPI_Bcast(save_c_str,<a class="code" href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>,MPI_CHAR,0,MPI_COMM_WORLD);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <a class="code" href="a00165.html#af323868d7651bdfd2c34ea076cfaceb7">m_mode</a> = std::string( mode_c_str );</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  <a class="code" href="a00165.html#ac18cb5a4597cfb6fb48127fc2156a48d">m_rom_type</a> = std::string( type_c_str );</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  <a class="code" href="a00165.html#abf14ca819153d3cb507370be90b32dc6">m_save_ROM</a> = (((std::string(save_c_str) == <span class="stringliteral">&quot;true&quot;</span>)) &amp;&amp; (<a class="code" href="a00165.html#af323868d7651bdfd2c34ea076cfaceb7">m_mode</a> == <span class="stringliteral">&quot;train&quot;</span>));</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="a00165.html#af323868d7651bdfd2c34ea076cfaceb7">m_mode</a> == <span class="stringliteral">&quot;train&quot;</span>) {</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="a00165.html#ac18cb5a4597cfb6fb48127fc2156a48d">m_rom_type</a> == <a class="code" href="a00197.html#a1184f097c38d922473154d681715e472">_ROM_TYPE_DMD_</a>) {</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      <a class="code" href="a00165.html#a1d016205a16f6b6a491e26012afcc15d">m_rom</a> = <span class="keyword">new</span> <a class="code" href="a00154.html">DMDROMObject</a>( <a class="code" href="a00165.html#aedba203e35d89d380d8ec4c61ee84947">m_vec_size</a>, a_dt, <a class="code" href="a00165.html#a46716d3f1d496cde83a07bd6706d4da0">m_rdim</a>, <a class="code" href="a00165.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a>, <a class="code" href="a00165.html#ae5bbe5daa629a4f92b569cb632256780">m_nproc</a> );</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    }</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <a class="code" href="a00165.html#a5af5f27772e404322cb1a56503690b68">m_U</a> = <span class="keyword">new</span> <span class="keywordtype">double</span>[<a class="code" href="a00165.html#aedba203e35d89d380d8ec4c61ee84947">m_vec_size</a>];</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  }</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  <a class="code" href="a00165.html#a4c049947a4c07f2d2df7d1374a4babae">m_is_defined</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;}</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;</div>
-<div class="line"><a name="l00304"></a><span class="lineno"><a class="line" href="a00165.html#a0414d15157fde19912b34c9603c44023">  304</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00165.html#a0414d15157fde19912b34c9603c44023">libROMInterface::copyFromHyPar</a>(  <span class="keywordtype">double</span>* a_U,  </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                                      <span class="keywordtype">void</span>* a_s      )</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;{</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <a class="code" href="a00178.html#a00592">SimulationObject</a>* sim = (<a class="code" href="a00178.html#a00592">SimulationObject</a>*) a_s;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; <a class="code" href="a00165.html#a83fea48aac89fe345a02e50af79531ae">m_nsims</a>; ns++) {</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordtype">double</span>* vec = a_U + <a class="code" href="a00165.html#a6a71edb74cc8a3e56c30ba34ded9fc10">m_vec_offsets</a>[ns];</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keywordtype">double</span>* u = sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    std::vector&lt;int&gt; index(sim[ns].solver.ndims);</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <a class="code" href="a00187.html#ac4ae1109cf287763cef63cc38d52589f">ArrayCopynD</a>(  sim[ns].solver.ndims,</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                  u,</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                  vec,</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                  sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                  sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                  0,</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                  index.data(),</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                  sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a> );</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  }</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;}</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
-<div class="line"><a name="l00332"></a><span class="lineno"><a class="line" href="a00165.html#abff9c8d863f3a564be72d53e6d4ae0d6">  332</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00165.html#abff9c8d863f3a564be72d53e6d4ae0d6">libROMInterface::copyToHyPar</a>(  <span class="keywordtype">double</span>* a_U,  </div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                                    <span class="keywordtype">void</span>* a_s      )</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;{</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  <a class="code" href="a00178.html#a00592">SimulationObject</a>* sim = (<a class="code" href="a00178.html#a00592">SimulationObject</a>*) a_s;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; <a class="code" href="a00165.html#a83fea48aac89fe345a02e50af79531ae">m_nsims</a>; ns++) {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keywordtype">double</span>* vec = a_U + <a class="code" href="a00165.html#a6a71edb74cc8a3e56c30ba34ded9fc10">m_vec_offsets</a>[ns];</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keywordtype">double</span>* u = sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#aac11b2a653ffaeac4b35057431f1b981">u_rom_predicted</a>;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    std::vector&lt;int&gt; index(sim[ns].solver.ndims);</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <a class="code" href="a00187.html#ac4ae1109cf287763cef63cc38d52589f">ArrayCopynD</a>(  sim[ns].solver.ndims,</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;                  vec,</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;                  u,</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                  sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;                  0,</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;                  sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;                  index.data(),</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;                  sim[ns].<a class="code" href="a00178.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00164.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a> );</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  }</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00154_html_a4a2342bcda8d44940111704f8423f38f"><div class="ttname"><a href="a00154.html#a4a2342bcda8d44940111704f8423f38f">DMDROMObject::m_dirname</a></div><div class="ttdeci">std::string m_dirname</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00154">librom_interface.h:154</a></div></div>
-<div class="ttc" id="a00165_html_a0414d15157fde19912b34c9603c44023"><div class="ttname"><a href="a00165.html#a0414d15157fde19912b34c9603c44023">libROMInterface::copyFromHyPar</a></div><div class="ttdeci">void copyFromHyPar(double *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00524_source.html#l00304">libROMInterface.cpp:304</a></div></div>
-<div class="ttc" id="a00164_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00164.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00194_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00178_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00178.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00178_source.html#l00026">simulation_object.h:26</a></div></div>
-<div class="ttc" id="a00154_html_aedba203e35d89d380d8ec4c61ee84947"><div class="ttname"><a href="a00154.html#aedba203e35d89d380d8ec4c61ee84947">DMDROMObject::m_vec_size</a></div><div class="ttdeci">int m_vec_size</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00145">librom_interface.h:145</a></div></div>
-<div class="ttc" id="a00154_html_a46716d3f1d496cde83a07bd6706d4da0"><div class="ttname"><a href="a00154.html#a46716d3f1d496cde83a07bd6706d4da0">DMDROMObject::m_rdim</a></div><div class="ttdeci">int m_rdim</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00147">librom_interface.h:147</a></div></div>
-<div class="ttc" id="a00165_html_abf14ca819153d3cb507370be90b32dc6"><div class="ttname"><a href="a00165.html#abf14ca819153d3cb507370be90b32dc6">libROMInterface::m_save_ROM</a></div><div class="ttdeci">bool m_save_ROM</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00323">librom_interface.h:323</a></div></div>
-<div class="ttc" id="a00165_html_a4c049947a4c07f2d2df7d1374a4babae"><div class="ttname"><a href="a00165.html#a4c049947a4c07f2d2df7d1374a4babae">libROMInterface::m_is_defined</a></div><div class="ttdeci">bool m_is_defined</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00298">librom_interface.h:298</a></div></div>
-<div class="ttc" id="a00197_html_a1184f097c38d922473154d681715e472"><div class="ttname"><a href="a00197.html#a1184f097c38d922473154d681715e472">_ROM_TYPE_DMD_</a></div><div class="ttdeci">#define _ROM_TYPE_DMD_</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00026">librom_interface.h:26</a></div></div>
-<div class="ttc" id="a00165_html_a2bd63e26cbd3bd0d0c8f33914056e9ec"><div class="ttname"><a href="a00165.html#a2bd63e26cbd3bd0d0c8f33914056e9ec">libROMInterface::define</a></div><div class="ttdeci">void define(void *, int, int, int, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00524_source.html#l00197">libROMInterface.cpp:197</a></div></div>
-<div class="ttc" id="a00165_html_a83fea48aac89fe345a02e50af79531ae"><div class="ttname"><a href="a00165.html#a83fea48aac89fe345a02e50af79531ae">libROMInterface::m_nsims</a></div><div class="ttdeci">int m_nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00302">librom_interface.h:302</a></div></div>
-<div class="ttc" id="a00165_html_ac18cb5a4597cfb6fb48127fc2156a48d"><div class="ttname"><a href="a00165.html#ac18cb5a4597cfb6fb48127fc2156a48d">libROMInterface::m_rom_type</a></div><div class="ttdeci">std::string m_rom_type</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00311">librom_interface.h:311</a></div></div>
-<div class="ttc" id="a00154_html_ae5bbe5daa629a4f92b569cb632256780"><div class="ttname"><a href="a00154.html#ae5bbe5daa629a4f92b569cb632256780">DMDROMObject::m_nproc</a></div><div class="ttdeci">int m_nproc</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00143">librom_interface.h:143</a></div></div>
-<div class="ttc" id="a00154_html_ab6222c830345da039482ce97a00ce4d0"><div class="ttname"><a href="a00154.html#ab6222c830345da039482ce97a00ce4d0">DMDROMObject::m_tic</a></div><div class="ttdeci">int m_tic</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00151">librom_interface.h:151</a></div></div>
-<div class="ttc" id="a00165_html_abff9c8d863f3a564be72d53e6d4ae0d6"><div class="ttname"><a href="a00165.html#abff9c8d863f3a564be72d53e6d4ae0d6">libROMInterface::copyToHyPar</a></div><div class="ttdeci">void copyToHyPar(double *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00524_source.html#l00332">libROMInterface.cpp:332</a></div></div>
-<div class="ttc" id="a00154_html_ac6a822dc76382e4027cf94ac3e510056"><div class="ttname"><a href="a00154.html#ac6a822dc76382e4027cf94ac3e510056">DMDROMObject::m_rank</a></div><div class="ttdeci">int m_rank</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00142">librom_interface.h:142</a></div></div>
-<div class="ttc" id="a00154_html_a67f6cc7fa80c9e446737863bd4fdc2d5"><div class="ttname"><a href="a00154.html#a67f6cc7fa80c9e446737863bd4fdc2d5">DMDROMObject::m_dt</a></div><div class="ttdeci">double m_dt</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00146">librom_interface.h:146</a></div></div>
-<div class="ttc" id="a00164_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00164.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00194_source.html#l00035">hypar.h:35</a></div></div>
-<div class="ttc" id="a00187_html"><div class="ttname"><a href="a00187.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00154_html_a7d815cb2b7fcc5474613e2fa7c54f6fc"><div class="ttname"><a href="a00154.html#a7d815cb2b7fcc5474613e2fa7c54f6fc">DMDROMObject::DMDROMObject</a></div><div class="ttdeci">DMDROMObject(const int, const double, const int, const int, const int)</div><div class="ttdef"><b>Definition:</b> <a href="a00524_source.html#l00036">libROMInterface.cpp:36</a></div></div>
-<div class="ttc" id="a00165_html_a5af5f27772e404322cb1a56503690b68"><div class="ttname"><a href="a00165.html#a5af5f27772e404322cb1a56503690b68">libROMInterface::m_U</a></div><div class="ttdeci">double * m_U</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00314">librom_interface.h:314</a></div></div>
-<div class="ttc" id="a00165_html_a963701fd6a399d7175c478e9c2e74cfb"><div class="ttname"><a href="a00165.html#a963701fd6a399d7175c478e9c2e74cfb">libROMInterface::m_sampling_freq</a></div><div class="ttdeci">int m_sampling_freq</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00308">librom_interface.h:308</a></div></div>
-<div class="ttc" id="a00154_html_aa98d3c307daac6fc078ab36af24b6020"><div class="ttname"><a href="a00154.html#aa98d3c307daac6fc078ab36af24b6020">DMDROMObject::m_num_window_samples</a></div><div class="ttdeci">int m_num_window_samples</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00149">librom_interface.h:149</a></div></div>
-<div class="ttc" id="a00165_html_aedba203e35d89d380d8ec4c61ee84947"><div class="ttname"><a href="a00165.html#aedba203e35d89d380d8ec4c61ee84947">libROMInterface::m_vec_size</a></div><div class="ttdeci">int m_vec_size</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00304">librom_interface.h:304</a></div></div>
-<div class="ttc" id="a00154_html_a58a9e39b3626c1bb7e4e959b36bf43d7"><div class="ttname"><a href="a00154.html#a58a9e39b3626c1bb7e4e959b36bf43d7">DMDROMObject::train</a></div><div class="ttdeci">virtual void train()</div><div class="ttdef"><b>Definition:</b> <a href="a00524_source.html#l00108">libROMInterface.cpp:108</a></div></div>
-<div class="ttc" id="a00165_html_a6a71edb74cc8a3e56c30ba34ded9fc10"><div class="ttname"><a href="a00165.html#a6a71edb74cc8a3e56c30ba34ded9fc10">libROMInterface::m_vec_offsets</a></div><div class="ttdeci">std::vector&lt; int &gt; m_vec_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00305">librom_interface.h:305</a></div></div>
-<div class="ttc" id="a00165_html_ac6a822dc76382e4027cf94ac3e510056"><div class="ttname"><a href="a00165.html#ac6a822dc76382e4027cf94ac3e510056">libROMInterface::m_rank</a></div><div class="ttdeci">int m_rank</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00300">librom_interface.h:300</a></div></div>
-<div class="ttc" id="a00178_html"><div class="ttname"><a href="a00178.html">simulation_object.h</a></div><div class="ttdoc">Simulation object. </div></div>
-<div class="ttc" id="a00164_html_afae6319baba315ac1f0c56505610ed85"><div class="ttname"><a href="a00164.html#afae6319baba315ac1f0c56505610ed85">HyPar::npoints_local</a></div><div class="ttdeci">int npoints_local</div><div class="ttdef"><b>Definition:</b> <a href="a00194_source.html#l00040">hypar.h:40</a></div></div>
-<div class="ttc" id="a00164_html_aac11b2a653ffaeac4b35057431f1b981"><div class="ttname"><a href="a00164.html#aac11b2a653ffaeac4b35057431f1b981">HyPar::u_rom_predicted</a></div><div class="ttdeci">double * u_rom_predicted</div><div class="ttdef"><b>Definition:</b> <a href="a00194_source.html#l00379">hypar.h:379</a></div></div>
-<div class="ttc" id="a00197_html_ac28504348ecbd5b80765d9b8fa0b4ba4"><div class="ttname"><a href="a00197.html#ac28504348ecbd5b80765d9b8fa0b4ba4">_LIBROM_INP_FNAME_</a></div><div class="ttdeci">#define _LIBROM_INP_FNAME_</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00023">librom_interface.h:23</a></div></div>
-<div class="ttc" id="a00154_html"><div class="ttname"><a href="a00154.html">DMDROMObject</a></div><div class="ttdoc">ROM object of type DMD (see libROM) </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00069">librom_interface.h:69</a></div></div>
-<div class="ttc" id="a00165_html_af323868d7651bdfd2c34ea076cfaceb7"><div class="ttname"><a href="a00165.html#af323868d7651bdfd2c34ea076cfaceb7">libROMInterface::m_mode</a></div><div class="ttdeci">std::string m_mode</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00310">librom_interface.h:310</a></div></div>
-<div class="ttc" id="a00154_html_a1d0fa61fd47daf92f859e11662989cac"><div class="ttname"><a href="a00154.html#a1d0fa61fd47daf92f859e11662989cac">DMDROMObject::save</a></div><div class="ttdeci">virtual void save(const std::string &amp;a_fname_root)</div><div class="ttdef"><b>Definition:</b> <a href="a00524_source.html#l00150">libROMInterface.cpp:150</a></div></div>
-<div class="ttc" id="a00154_html_a9b7230a0701effa4e73d3957eb6887de"><div class="ttname"><a href="a00154.html#a9b7230a0701effa4e73d3957eb6887de">DMDROMObject::m_dmd</a></div><div class="ttdeci">std::vector&lt; CAROM::DMD * &gt; m_dmd</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00139">librom_interface.h:139</a></div></div>
-<div class="ttc" id="a00165_html_ae5bbe5daa629a4f92b569cb632256780"><div class="ttname"><a href="a00165.html#ae5bbe5daa629a4f92b569cb632256780">libROMInterface::m_nproc</a></div><div class="ttdeci">int m_nproc</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00301">librom_interface.h:301</a></div></div>
-<div class="ttc" id="a00178_html_a00592"><div class="ttname"><a href="a00178.html#a00592">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00178_source.html#l00023">simulation_object.h:23</a></div></div>
-<div class="ttc" id="a00164_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00164.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00194_source.html#l00108">hypar.h:108</a></div></div>
-<div class="ttc" id="a00165_html_a1d016205a16f6b6a491e26012afcc15d"><div class="ttname"><a href="a00165.html#a1d016205a16f6b6a491e26012afcc15d">libROMInterface::m_rom</a></div><div class="ttdeci">ROMObject * m_rom</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00313">librom_interface.h:313</a></div></div>
-<div class="ttc" id="a00154_html_a2f0d0636a7c94864ae9d11b69f331a24"><div class="ttname"><a href="a00154.html#a2f0d0636a7c94864ae9d11b69f331a24">DMDROMObject::m_curr_win</a></div><div class="ttdeci">int m_curr_win</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00152">librom_interface.h:152</a></div></div>
-<div class="ttc" id="a00164_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00164.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00194_source.html#l00044">hypar.h:44</a></div></div>
-<div class="ttc" id="a00188_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00188.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00188_source.html#l00010">basic.h:10</a></div></div>
-<div class="ttc" id="a00165_html_a46716d3f1d496cde83a07bd6706d4da0"><div class="ttname"><a href="a00165.html#a46716d3f1d496cde83a07bd6706d4da0">libROMInterface::m_rdim</a></div><div class="ttdeci">int m_rdim</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00307">librom_interface.h:307</a></div></div>
-<div class="ttc" id="a00187_html_ac4ae1109cf287763cef63cc38d52589f"><div class="ttname"><a href="a00187.html#ac4ae1109cf287763cef63cc38d52589f">ArrayCopynD</a></div><div class="ttdeci">INLINE int ArrayCopynD(int, double *, double *, int *, int, int, int *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00407">arrayfunctions.h:407</a></div></div>
-<div class="ttc" id="a00197_html"><div class="ttname"><a href="a00197.html">librom_interface.h</a></div><div class="ttdoc">libROM interface class </div></div>
-<div class="ttc" id="a00154_html_a26d4cd0268558d4ab253c07e79655d48"><div class="ttname"><a href="a00154.html#a26d4cd0268558d4ab253c07e79655d48">DMDROMObject::m_intervals</a></div><div class="ttdeci">std::vector&lt; Interval &gt; m_intervals</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00140">librom_interface.h:140</a></div></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">return</span>(max_cfl);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="ttc" id="a00224_html"><div class="ttname"><a href="a00224.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00206_html_ab30c765b9be1b7776c97c899a12a66bb"><div class="ttname"><a href="a00206.html#ab30c765b9be1b7776c97c899a12a66bb">ShallowWater2D::g</a></div><div class="ttdeci">double g</div><div class="ttdef"><b>Definition:</b> <a href="a00241_source.html#l00243">shallowwater2d.h:243</a></div></div>
+<div class="ttc" id="a00194_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00194.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00102">hypar.h:102</a></div></div>
+<div class="ttc" id="a00194_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00194.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00253">hypar.h:253</a></div></div>
+<div class="ttc" id="a00230_html"><div class="ttname"><a href="a00230.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00218_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00218.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00027">basic.h:27</a></div></div>
+<div class="ttc" id="a00237_html_a6a44057228e5f4b86e1c4d04b2a28977"><div class="ttname"><a href="a00237.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a></div><div class="ttdeci">#define _XDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00237_source.html#l00075">euler1d.h:75</a></div></div>
+<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00194_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00108">hypar.h:108</a></div></div>
+<div class="ttc" id="a00241_html"><div class="ttname"><a href="a00241.html">shallowwater2d.h</a></div><div class="ttdoc">2D Shallow Water Equations </div></div>
+<div class="ttc" id="a00206_html"><div class="ttname"><a href="a00206.html">ShallowWater2D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 2D Shallow Water equations. This structure contains the physical parameters, variables, and function pointers specific to the 2D ShallowWater equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00241_source.html#l00240">shallowwater2d.h:240</a></div></div>
+<div class="ttc" id="a00194_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00194.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00044">hypar.h:44</a></div></div>
+<div class="ttc" id="a00188_html_a7fd32e06617f4489079bc50ce9bfc00c"><div class="ttname"><a href="a00188.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a></div><div class="ttdeci">#define _YDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00188_source.html#l00041">euler2d.h:41</a></div></div>
+<div class="ttc" id="a00524_html_a57adc8f213aa86d2da2330454a311025"><div class="ttname"><a href="a00524.html#a57adc8f213aa86d2da2330454a311025">ShallowWater2DComputeCFL</a></div><div class="ttdeci">double ShallowWater2DComputeCFL(void *s, void *m, double dt, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00524_source.html#l00017">ShallowWater2DComputeCFL.c:17</a></div></div>
+<div class="ttc" id="a00229_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00032">math_ops.h:32</a></div></div>
+<div class="ttc" id="a00217_html"><div class="ttname"><a href="a00217.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00237_html_a57771c952ec174601addf43e1c0202b2"><div class="ttname"><a href="a00237.html#a57771c952ec174601addf43e1c0202b2">_MODEL_NDIMS_</a></div><div class="ttdeci">#define _MODEL_NDIMS_</div><div class="ttdef"><b>Definition:</b> <a href="a00237_source.html#l00056">euler1d.h:56</a></div></div>
+<div class="ttc" id="a00217_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00217.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00168">arrayfunctions.h:168</a></div></div>
+<div class="ttc" id="a00217_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00217.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00039">arrayfunctions.h:39</a></div></div>
+<div class="ttc" id="a00237_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00237.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00237_source.html#l00058">euler1d.h:58</a></div></div>
+<div class="ttc" id="a00194_html"><div class="ttname"><a href="a00194.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00241_html_a66b88d6a05555a192a0e455ed99341a4"><div class="ttname"><a href="a00241.html#a66b88d6a05555a192a0e455ed99341a4">_ShallowWater2DGetFlowVar_</a></div><div class="ttdeci">#define _ShallowWater2DGetFlowVar_(u, h, uvel, vvel)</div><div class="ttdef"><b>Definition:</b> <a href="a00241_source.html#l00073">shallowwater2d.h:73</a></div></div>
+<div class="ttc" id="a00194_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00194.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00217_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00217.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00125">arrayfunctions.h:125</a></div></div>
+<div class="ttc" id="a00194_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00194.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00035">hypar.h:35</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

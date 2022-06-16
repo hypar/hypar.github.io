@@ -1,5 +1,6 @@
 var a00518 =
 [
-    [ "CalculateLocalExtent", "a00518.html#a33293e35159e6411e3574409bf7d90db", null ],
-    [ "InitializeBoundaries", "a00518.html#a915577ea88d59ab33c6c1e53cfc67737", null ]
+    [ "ShallowWater1DSourceFunction1", "a00518.html#a784d099e1efac1033289d50478b47ccd", null ],
+    [ "ShallowWater1DSourceFunction2", "a00518.html#a6734df3ba5f1473c2bbaf2b9fb4df174", null ],
+    [ "ShallowWater1DSource", "a00518.html#ac11e8a3b0844ffe0a62597cf3d929021", null ]
 ];

@@ -1,7 +1,6 @@
 var a00306 =
 [
-    [ "WENOFifthOrderCalculateWeights", "a00306.html#a3107c4ab0a55a53d58b3b7c1c456be75", null ],
-    [ "WENOFifthOrderCalculateWeightsChar", "a00306.html#a44d32cb52b0ef592fbf15b18edade695", null ],
-    [ "WENOFifthOrderInitializeWeights", "a00306.html#a522dbf81bca4ddfffd0a49b88f6bc6bc", null ],
-    [ "WENOInitialize", "a00306.html#ab998cb7839e6b350b0450adabcfeafc7", null ]
+    [ "CountBoundaryPoints", "a00306.html#ac20a15dad8cdc1021b559f08cd60bdf4", null ],
+    [ "SetBoundaryPoints", "a00306.html#a684729950453b8313d61c1731acf5e5c", null ],
+    [ "IBIdentifyBoundary", "a00306.html#a65f57f0636944e8a45906b00c8882a8a", null ]
 ];

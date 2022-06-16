@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/PhysicalModels/Euler2D/Euler2DFunctions.c Source File</title>
+<title>HyPar: src/PETScFunctions/PetscPostStage.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,24 +112,103 @@ $(document).ready(function(){initNavTree('a00383_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Euler2DFunctions.c</div>  </div>
+<div class="title">PetscPostStage.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00383.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00188.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00158.html">physicalmodels/euler2d.h</a>&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="a00384.html#ab0bae2e6f4ac6dadf947d2ad766a3d27">    5</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00383.html#a6f483370683d7a07b8bbe2ae075fa72f">Euler2DRoeAverage</a>(<span class="keywordtype">double</span> *uavg,<span class="keywordtype">double</span> *uL,<span class="keywordtype">double</span> *uR,<span class="keywordtype">void</span> *p)</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <a class="code" href="a00158.html#a00576">Euler2D</a> *param  = (<a class="code" href="a00158.html#a00576">Euler2D</a>*) p;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <a class="code" href="a00158.html#ad01b2e4da71d287e9f5574ccecc9997f">_Euler2DRoeAverage_</a>(uavg,uL,uR,param);</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;}</div>
-<div class="ttc" id="a00383_html_a6f483370683d7a07b8bbe2ae075fa72f"><div class="ttname"><a href="a00383.html#a6f483370683d7a07b8bbe2ae075fa72f">Euler2DRoeAverage</a></div><div class="ttdeci">int Euler2DRoeAverage(double *uavg, double *uL, double *uR, void *p)</div><div class="ttdef"><b>Definition:</b> <a href="a00383_source.html#l00005">Euler2DFunctions.c:5</a></div></div>
-<div class="ttc" id="a00188_html"><div class="ttname"><a href="a00188.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00158_html"><div class="ttname"><a href="a00158.html">euler2d.h</a></div></div>
-<div class="ttc" id="a00158_html_a00576"><div class="ttname"><a href="a00158.html#a00576">Euler2D</a></div><div class="ttdef"><b>Definition:</b> <a href="a00158_source.html#l00244">euler2d.h:244</a></div></div>
-<div class="ttc" id="a00158_html_ad01b2e4da71d287e9f5574ccecc9997f"><div class="ttname"><a href="a00158.html#ad01b2e4da71d287e9f5574ccecc9997f">_Euler2DRoeAverage_</a></div><div class="ttdeci">#define _Euler2DRoeAverage_(uavg, uL, uR, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00158_source.html#l00070">euler2d.h:70</a></div></div>
+<a href="a00383.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifdef with_petsc</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00218.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00208.html">simulation_object.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00236.html">petscinterface.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#undef __FUNCT__</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00383.html#ae60511a9aa5cbf216a00a1bb81006bc5">   13</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __FUNCT__ &quot;PetscPostStage&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00383.html#a90fab129617aa29eb543206785eb38e5">   16</a></span>&#160;PetscErrorCode <a class="code" href="a00236.html#ad1f357f94c228ba9ff45275064ca162b">PetscPostStage</a>(  TS        ts,         </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                                PetscReal stagetime,  </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                                PetscInt  stageindex, </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                                Vec       *Y           )</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <a class="code" href="a00203.html#a00625">PETScContext</a>* context(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  PetscFunctionBegin;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  TSGetApplicationContext(ts,&amp;context);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">if</span> (!context) {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in PetscPreTimeStep: Null context!\n&quot;</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <a class="code" href="a00208.html#a00626">SimulationObject</a>* sim = (<a class="code" href="a00208.html#a00626">SimulationObject</a>*) context-&gt;<a class="code" href="a00203.html#a4e2f35037563217c8dc84c095af9e35f">simobj</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> nsims = context-&gt;<a class="code" href="a00203.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  TSType time_scheme;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  TSGetType(ts,&amp;time_scheme);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  TSGetTimeStep(ts,&amp;(context-&gt;<a class="code" href="a00203.html#a03e28be41881b703c836edbfe9b51b17">dt</a>));</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  context-&gt;<a class="code" href="a00203.html#ad55778d618804ddb359e18c9312c1454">stage_index</a> = stageindex;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">if</span> (context-&gt;<a class="code" href="a00203.html#a22ceb3bed48bc42e41131982f61a839f">stage_times</a>.size() == stageindex) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    context-&gt;<a class="code" href="a00203.html#a22ceb3bed48bc42e41131982f61a839f">stage_times</a>.push_back(stagetime/context-&gt;<a class="code" href="a00203.html#a03e28be41881b703c836edbfe9b51b17">dt</a>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; nsims; ns++) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="a00194.html">HyPar</a>* solver = &amp;(sim[ns].<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="a00197.html#a00622">MPIVariables</a>* mpi = &amp;(sim[ns].<a class="code" href="a00208.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">/* get solution */</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="a00236.html#a9f443ff08a9a8852ab1e9cabb793ddaa">TransferVecFromPETSc</a>(solver-&gt;<a class="code" href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,Y[stageindex],context,ns,context-&gt;<a class="code" href="a00203.html#ad2182a08b22eed3bb3b0728725841875">offsets</a>[ns]);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="comment">/* apply immersed boundaries */</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    solver-&gt;<a class="code" href="a00194.html#a83d97dfc50e6bfefd0db6503d365d5bd">ApplyIBConditions</a>(solver,mpi,solver-&gt;<a class="code" href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,stagetime);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">/* If using a non-linear scheme with ARKIMEX methods, </span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">       compute the non-linear finite-difference operator */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span> (!strcmp(time_scheme,TSARKIMEX)) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      solver-&gt;<a class="code" href="a00194.html#a228697ae6a0f0fe7a928a9ddad45da54">NonlinearInterp</a>(  solver-&gt;<a class="code" href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                                solver,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                                mpi,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                                (<span class="keywordtype">double</span>)stagetime,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                                solver-&gt;<a class="code" href="a00194.html#a0d895f9bb0c8a3e79a64dd2379e1f2dd">FFunction</a> );</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">/* Call any physics-specific post-stage function, if available */</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00194.html#a356e3534ee0048e05c5ea3ca091c33d8">PostStage</a>) {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      solver-&gt;<a class="code" href="a00194.html#a356e3534ee0048e05c5ea3ca091c33d8">PostStage</a>(solver-&gt;<a class="code" href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,solver,mpi,stagetime);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="a00236.html#a6c64bea980c3a8b0a752113bbeb40cf3">TransferVecToPETSc</a>(solver-&gt;<a class="code" href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,Y[stageindex],context,ns,context-&gt;<a class="code" href="a00203.html#ad2182a08b22eed3bb3b0728725841875">offsets</a>[ns]);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  PetscFunctionReturn(0);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00194_html_a356e3534ee0048e05c5ea3ca091c33d8"><div class="ttname"><a href="a00194.html#a356e3534ee0048e05c5ea3ca091c33d8">HyPar::PostStage</a></div><div class="ttdeci">int(* PostStage)(double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00313">hypar.h:313</a></div></div>
+<div class="ttc" id="a00208_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00208.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00025">simulation_object.h:25</a></div></div>
+<div class="ttc" id="a00203_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00203.html#a9a0e87291e0e8b9c1445e5482e814c92">PETScContext::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00203_source.html#l00053">petscinterface_struct.h:53</a></div></div>
+<div class="ttc" id="a00208_html_a00626"><div class="ttname"><a href="a00208.html#a00626">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00023">simulation_object.h:23</a></div></div>
+<div class="ttc" id="a00203_html_a22ceb3bed48bc42e41131982f61a839f"><div class="ttname"><a href="a00203.html#a22ceb3bed48bc42e41131982f61a839f">PETScContext::stage_times</a></div><div class="ttdeci">std::vector&lt; double &gt; stage_times</div><div class="ttdef"><b>Definition:</b> <a href="a00203_source.html#l00068">petscinterface_struct.h:68</a></div></div>
+<div class="ttc" id="a00236_html_ad1f357f94c228ba9ff45275064ca162b"><div class="ttname"><a href="a00236.html#ad1f357f94c228ba9ff45275064ca162b">PetscPostStage</a></div><div class="ttdeci">PetscErrorCode PetscPostStage(TS, PetscReal, PetscInt, Vec *)</div><div class="ttdef"><b>Definition:</b> <a href="a00383_source.html#l00016">PetscPostStage.cpp:16</a></div></div>
+<div class="ttc" id="a00194_html_a0d895f9bb0c8a3e79a64dd2379e1f2dd"><div class="ttname"><a href="a00194.html#a0d895f9bb0c8a3e79a64dd2379e1f2dd">HyPar::FFunction</a></div><div class="ttdeci">int(* FFunction)(double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00262">hypar.h:262</a></div></div>
+<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00194_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00108">hypar.h:108</a></div></div>
+<div class="ttc" id="a00236_html_a6c64bea980c3a8b0a752113bbeb40cf3"><div class="ttname"><a href="a00236.html#a6c64bea980c3a8b0a752113bbeb40cf3">TransferVecToPETSc</a></div><div class="ttdeci">int TransferVecToPETSc(const double *const, Vec, void *, const int, const int)</div><div class="ttdef"><b>Definition:</b> <a href="a00393_source.html#l00024">TransferToPETSc.cpp:24</a></div></div>
+<div class="ttc" id="a00197_html_a00622"><div class="ttname"><a href="a00197.html#a00622">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00208_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00208.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00026">simulation_object.h:26</a></div></div>
+<div class="ttc" id="a00236_html_a9f443ff08a9a8852ab1e9cabb793ddaa"><div class="ttname"><a href="a00236.html#a9f443ff08a9a8852ab1e9cabb793ddaa">TransferVecFromPETSc</a></div><div class="ttdeci">int TransferVecFromPETSc(double *const, const Vec, void *, const int, const int)</div><div class="ttdef"><b>Definition:</b> <a href="a00392_source.html#l00023">TransferFromPETSc.cpp:23</a></div></div>
+<div class="ttc" id="a00203_html_a4e2f35037563217c8dc84c095af9e35f"><div class="ttname"><a href="a00203.html#a4e2f35037563217c8dc84c095af9e35f">PETScContext::simobj</a></div><div class="ttdeci">void * simobj</div><div class="ttdef"><b>Definition:</b> <a href="a00203_source.html#l00050">petscinterface_struct.h:50</a></div></div>
+<div class="ttc" id="a00203_html_a00625"><div class="ttname"><a href="a00203.html#a00625">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00203_source.html#l00041">petscinterface_struct.h:41</a></div></div>
+<div class="ttc" id="a00194_html_a83d97dfc50e6bfefd0db6503d365d5bd"><div class="ttname"><a href="a00194.html#a83d97dfc50e6bfefd0db6503d365d5bd">HyPar::ApplyIBConditions</a></div><div class="ttdeci">int(* ApplyIBConditions)(void *, void *, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00204">hypar.h:204</a></div></div>
+<div class="ttc" id="a00194_html_a228697ae6a0f0fe7a928a9ddad45da54"><div class="ttname"><a href="a00194.html#a228697ae6a0f0fe7a928a9ddad45da54">HyPar::NonlinearInterp</a></div><div class="ttdeci">int(* NonlinearInterp)(double *, void *, void *, double, int(*)(double *, double *, int, void *, double))</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00215">hypar.h:215</a></div></div>
+<div class="ttc" id="a00208_html"><div class="ttname"><a href="a00208.html">simulation_object.h</a></div><div class="ttdoc">Simulation object. </div></div>
+<div class="ttc" id="a00203_html_a03e28be41881b703c836edbfe9b51b17"><div class="ttname"><a href="a00203.html#a03e28be41881b703c836edbfe9b51b17">PETScContext::dt</a></div><div class="ttdeci">double dt</div><div class="ttdef"><b>Definition:</b> <a href="a00203_source.html#l00065">petscinterface_struct.h:65</a></div></div>
+<div class="ttc" id="a00194_html"><div class="ttname"><a href="a00194.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00203_html_ad55778d618804ddb359e18c9312c1454"><div class="ttname"><a href="a00203.html#ad55778d618804ddb359e18c9312c1454">PETScContext::stage_index</a></div><div class="ttdeci">int stage_index</div><div class="ttdef"><b>Definition:</b> <a href="a00203_source.html#l00071">petscinterface_struct.h:71</a></div></div>
+<div class="ttc" id="a00203_html_ad2182a08b22eed3bb3b0728725841875"><div class="ttname"><a href="a00203.html#ad2182a08b22eed3bb3b0728725841875">PETScContext::offsets</a></div><div class="ttdeci">int * offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00203_source.html#l00091">petscinterface_struct.h:91</a></div></div>
+<div class="ttc" id="a00236_html"><div class="ttname"><a href="a00236.html">petscinterface.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/IOFunctions/WriteText.c Source File</title>
+<title>HyPar: src/InterpolationFunctions/CompactSchemeInitialize.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,55 +112,64 @@ $(document).ready(function(){initNavTree('a00313_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">WriteText.c</div>  </div>
+<div class="title">CompactSchemeInitialize.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00313.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00188.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00187.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="a00313.html#afc6009d99921e629e20244374914a806">   27</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00195.html#a3355a71faf3d87f6715ad627db08ac9e">WriteText</a>(</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                <span class="keywordtype">int</span> ndims,  </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                <span class="keywordtype">int</span> nvars,  </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                <span class="keywordtype">int</span> *dim,   </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                <span class="keywordtype">double</span> *x,  </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                <span class="keywordtype">double</span> *u,  </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                <span class="keywordtype">char</span> *f,    </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                <span class="keywordtype">int</span> *index  </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;             )</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  FILE *out;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  out = fopen(f,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordflow">if</span> (!out) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error: could not open %s for writing.\n&quot;</span>,f);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00187.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">int</span> i, p;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="a00187.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,0,p);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">for</span> (i=0; i&lt;ndims; i++) fprintf(out,<span class="stringliteral">&quot;%4d &quot;</span>,index[i]);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">for</span> (i=0; i&lt;ndims; i++) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      <span class="keywordtype">int</span> j,offset = 0; <span class="keywordflow">for</span> (j=0; j&lt;i; j++) offset += dim[j];</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      fprintf(out,<span class="stringliteral">&quot;%+1.16E &quot;</span>,x[offset+index[i]]);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">for</span> (i=0; i&lt;nvars; i++) fprintf(out,<span class="stringliteral">&quot;%+1.16E &quot;</span>,u[nvars*p+i]);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="a00187.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  fclose(out);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
-<div class="ttc" id="a00188_html"><div class="ttname"><a href="a00188.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00187_html"><div class="ttname"><a href="a00187.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00187_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00187.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00187_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00187.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00125">arrayfunctions.h:125</a></div></div>
-<div class="ttc" id="a00195_html_a3355a71faf3d87f6715ad627db08ac9e"><div class="ttname"><a href="a00195.html#a3355a71faf3d87f6715ad627db08ac9e">WriteText</a></div><div class="ttdeci">int WriteText(int, int, int *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00313_source.html#l00027">WriteText.c:27</a></div></div>
-<div class="ttc" id="a00187_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00187.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00168">arrayfunctions.h:168</a></div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00183.html">interpolation.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00234.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00224.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="a00313.html#a666601a9c9c7e3084adef44396a87827">   17</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00183.html#af255a582e14c5820cf12f9f95b4e28fd">CompactSchemeInitialize</a>(</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                              <span class="keywordtype">void</span> *s,      </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                              <span class="keywordtype">void</span> *m,      </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                              <span class="keywordtype">char</span> *type    </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                           )</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00194.html">HyPar</a>         *solver = (<a class="code" href="a00194.html">HyPar</a>*) s;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00197.html#a00622">MPIVariables</a>  *mpi    = (<a class="code" href="a00197.html#a00622">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00183.html#a00609">CompactScheme</a> *compact   = (<a class="code" href="a00183.html#a00609">CompactScheme</a>*) solver-&gt;<a class="code" href="a00194.html#a56318721d534e74a96b440f8542a0232">compact</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span> nvars = solver-&gt;<a class="code" href="a00194.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">int</span> ndims = solver-&gt;<a class="code" href="a00194.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">int</span> size = 1, d;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  for (d=0; d&lt;solver-&gt;<a class="code" href="a00194.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) size *= (solver-&gt;<a class="code" href="a00194.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d]+1);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  size *= solver-&gt;<a class="code" href="a00194.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00194.html#a9591ba0fadb863561474e2ba251d2594">interp_type</a>,<a class="code" href="a00183.html#aa7752b40155314f9f2c063d4d9d8339d">_CHARACTERISTIC_</a>)) size *= solver-&gt;<a class="code" href="a00194.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  compact-&gt;<a class="code" href="a00183.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  compact-&gt;<a class="code" href="a00183.html#ad36954709307649365515214a02ab06d">B</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  compact-&gt;<a class="code" href="a00183.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  compact-&gt;<a class="code" href="a00183.html#ac06de847603f5cfaec085f6fe500f3c8">R</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  compact-&gt;<a class="code" href="a00183.html#aba3b15034da676474db917f9f5533085">sendbuf</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  compact-&gt;<a class="code" href="a00183.html#afc23e46e08649e112e8d64d780cea5cb">recvbuf</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="ttc" id="a00224_html"><div class="ttname"><a href="a00224.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00183_html_a00609"><div class="ttname"><a href="a00183.html#a00609">CompactScheme</a></div><div class="ttdoc">Structure of variables/parameters needed by the compact schemes. </div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00443">interpolation.h:443</a></div></div>
+<div class="ttc" id="a00194_html_a9591ba0fadb863561474e2ba251d2594"><div class="ttname"><a href="a00194.html#a9591ba0fadb863561474e2ba251d2594">HyPar::interp_type</a></div><div class="ttdeci">char interp_type[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00080">hypar.h:80</a></div></div>
+<div class="ttc" id="a00183_html"><div class="ttname"><a href="a00183.html">interpolation.h</a></div><div class="ttdoc">Definitions for the functions computing the interpolated value of the primitive at the cell interface...</div></div>
+<div class="ttc" id="a00197_html_a00622"><div class="ttname"><a href="a00197.html#a00622">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00234_html"><div class="ttname"><a href="a00234.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="ttc" id="a00183_html_a0a26ce8d1878aac6ddc87e3f6290e039"><div class="ttname"><a href="a00183.html#a0a26ce8d1878aac6ddc87e3f6290e039">CompactScheme::C</a></div><div class="ttdeci">double * C</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00445">interpolation.h:445</a></div></div>
+<div class="ttc" id="a00194_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00194.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00183_html_aba3b15034da676474db917f9f5533085"><div class="ttname"><a href="a00183.html#aba3b15034da676474db917f9f5533085">CompactScheme::sendbuf</a></div><div class="ttdeci">double * sendbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00450">interpolation.h:450</a></div></div>
+<div class="ttc" id="a00183_html_aa7752b40155314f9f2c063d4d9d8339d"><div class="ttname"><a href="a00183.html#aa7752b40155314f9f2c063d4d9d8339d">_CHARACTERISTIC_</a></div><div class="ttdeci">#define _CHARACTERISTIC_</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00033">interpolation.h:33</a></div></div>
+<div class="ttc" id="a00183_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00183.html#ad36954709307649365515214a02ab06d">CompactScheme::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00445">interpolation.h:445</a></div></div>
+<div class="ttc" id="a00183_html_ac06de847603f5cfaec085f6fe500f3c8"><div class="ttname"><a href="a00183.html#ac06de847603f5cfaec085f6fe500f3c8">CompactScheme::R</a></div><div class="ttdeci">double * R</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00445">interpolation.h:445</a></div></div>
+<div class="ttc" id="a00183_html_af255a582e14c5820cf12f9f95b4e28fd"><div class="ttname"><a href="a00183.html#af255a582e14c5820cf12f9f95b4e28fd">CompactSchemeInitialize</a></div><div class="ttdeci">int CompactSchemeInitialize(void *, void *, char *)</div><div class="ttdef"><b>Definition:</b> <a href="a00313_source.html#l00017">CompactSchemeInitialize.c:17</a></div></div>
+<div class="ttc" id="a00183_html_ac900805a486cbb8489e3c176ed6e0d8e"><div class="ttname"><a href="a00183.html#ac900805a486cbb8489e3c176ed6e0d8e">CompactScheme::A</a></div><div class="ttdeci">double * A</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00445">interpolation.h:445</a></div></div>
+<div class="ttc" id="a00194_html_a56318721d534e74a96b440f8542a0232"><div class="ttname"><a href="a00194.html#a56318721d534e74a96b440f8542a0232">HyPar::compact</a></div><div class="ttdeci">void * compact</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00340">hypar.h:340</a></div></div>
+<div class="ttc" id="a00194_html"><div class="ttname"><a href="a00194.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00194_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00194.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00194_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00194.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00035">hypar.h:35</a></div></div>
+<div class="ttc" id="a00183_html_afc23e46e08649e112e8d64d780cea5cb"><div class="ttname"><a href="a00183.html#afc23e46e08649e112e8d64d780cea5cb">CompactScheme::recvbuf</a></div><div class="ttdeci">double * recvbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00183_source.html#l00450">interpolation.h:450</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

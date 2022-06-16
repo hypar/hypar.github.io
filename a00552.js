@@ -1,4 +1,4 @@
 var a00552 =
 [
-    [ "TimeForwardEuler", "a00552.html#aa9ef7eaebda92d180aea9b0ef8186935", null ]
+    [ "Initialize", "a00552.html#aa7965eaf393e9ce6a059ff85a9055fb5", null ]
 ];

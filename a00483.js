@@ -1,4 +1,6 @@
 var a00483 =
 [
-    [ "ShallowWater1DJacobian", "a00483.html#a0afc6ad3b8af530bd24834cf3c4e374d", null ]
+    [ "NavierStokes3DFlux", "a00483.html#ac0c3d11fce67eca952fcb594ff3930cb", null ],
+    [ "NavierStokes3DStiffFlux", "a00483.html#a028bf569168b6ac14cc51c485fd891ce", null ],
+    [ "NavierStokes3DNonStiffFlux", "a00483.html#ae304378ba0faf692ac352fef0deeb961", null ]
 ];

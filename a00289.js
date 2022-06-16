@@ -1,5 +1,4 @@
 var a00289 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00289.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderWENO", "a00289.html#a28f7e6d7ba7ae5d593c29c36de5fdde9", null ]
+    [ "ExactSolution", "a00289.html#a4e85e6c06e8140c5eb2e6efe6ff33f53", null ]
 ];

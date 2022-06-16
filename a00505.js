@@ -1,4 +1,5 @@
 var a00505 =
 [
-    [ "VlasovCleanup", "a00505.html#ab87d6ece7ff494cc44a06438a0943ec6", null ]
+    [ "Numa3DFlux", "a00505.html#a173a0e31d874adff608b905549a58a11", null ],
+    [ "Numa3DStiffFlux", "a00505.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
 ];

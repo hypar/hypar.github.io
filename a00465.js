@@ -1,5 +1,5 @@
 var a00465 =
 [
-    [ "Numa2DCalculateStandardAtmosphere_1", "a00465.html#a63e7a4dc0f7cb9263a16c05431e03dc8", null ],
-    [ "Numa2DCalculateStandardAtmosphere_2", "a00465.html#a5b324327c40edaecca557cfa76c9cd2b", null ]
+    [ "LinearADRUpwind", "a00465.html#a2bc2527c84fa0ebf5ef27cf7c4e52bbc", null ],
+    [ "LinearADRCenteredFlux", "a00465.html#abb39556f9cdec82d2cfd95d1681c87c2", null ]
 ];

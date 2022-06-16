@@ -1,5 +1,4 @@
 var a00516 =
 [
-    [ "CalculateLocalExtent", "a00516.html#a33293e35159e6411e3574409bf7d90db", null ],
-    [ "InitializeBoundaries", "a00516.html#a915577ea88d59ab33c6c1e53cfc67737", null ]
+    [ "ShallowWater1DJacobian", "a00516.html#a0afc6ad3b8af530bd24834cf3c4e374d", null ]
 ];

@@ -1,5 +1,5 @@
 var a00506 =
 [
-    [ "VlasovAdvectionCoeff", "a00506.html#a58d4d7eb9e93f0e81dd01ce4895d6b3a", null ],
-    [ "VlasovComputeCFL", "a00506.html#ad219e6304b21fa714b226db36facc85a", null ]
+    [ "Numa3DCalculateStandardAtmosphere_1", "a00506.html#ac2be313ce1c2510c61ea35f6fd56f254", null ],
+    [ "Numa3DCalculateStandardAtmosphere_2", "a00506.html#a276b2e95fcf1c00b0e9d8bd641c9deed", null ]
 ];

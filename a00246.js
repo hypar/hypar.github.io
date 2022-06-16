@@ -1,6 +1,6 @@
 var a00246 =
 [
-    [ "MPIContext", "a00246.html#aef8e1d87c719a4a2a2342213c1721789", null ],
-    [ "SolverContext", "a00246.html#a588e1e74fdbac3dcc2b1258aa0c155c0", null ],
-    [ "FirstDerivativeFirstOrder", "a00246.html#a6e0e65f5323bf9a56988f609a52e6a9c", null ]
+    [ "_SIM_TYPE_SINGLE_", "a00246.html#a967190fff16695d2eb4fc74a18ec254c", null ],
+    [ "_SIM_TYPE_ENSEMBLE_", "a00246.html#ac3a9d282b78039033a7a2752a62b294e", null ],
+    [ "_SIM_TYPE_SPARSE_GRIDS_", "a00246.html#a293bed21430798d6b5db1b9ca6f2f675", null ]
 ];

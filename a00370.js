@@ -1,4 +1,5 @@
 var a00370 =
 [
-    [ "Euler1DRoeAverage", "a00370.html#a25f26ae1ec34783770e761553ae617ae", null ]
+    [ "MPIPartitionArraynD", "a00370.html#a01e91e5f4675fae1698339a4028c09c1", null ],
+    [ "MPIPartitionArraynDwGhosts", "a00370.html#a43dfd14478735bbae12fbaa10f0403b5", null ]
 ];

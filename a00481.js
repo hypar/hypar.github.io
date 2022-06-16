@@ -1,4 +1,4 @@
 var a00481 =
 [
-    [ "ShallowWater1DRoeAverage", "a00481.html#a58a7f69435429c6235c30655236fefd9", null ]
+    [ "NavierStokes3DComputeCFL", "a00481.html#ae98f605de061bde1006de5e37e7745bb", null ]
 ];

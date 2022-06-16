@@ -1,5 +1,7 @@
 var a00418 =
 [
-    [ "FPPowerSystem3BusDissipationFunction", "a00418.html#a9fc174afd12172d7017edb0b05012438", null ],
-    [ "FPPowerSystem3BusComputeDiffNumber", "a00418.html#a2516d85ae9b31b8ca6a13b3542c2a752", null ]
+    [ "Euler2DUpwindRoe", "a00418.html#ab331cdd5f4f0c4de721fbc19d6a51eea", null ],
+    [ "Euler2DUpwindRF", "a00418.html#a32d6cc9b43c6b67e528af0e266b49180", null ],
+    [ "Euler2DUpwindLLF", "a00418.html#aadd6257a6586e80c38398c46d3088b16", null ],
+    [ "Euler2DUpwindSWFS", "a00418.html#a8ac4a3f41819711e1dcd10437f9619de", null ]
 ];

@@ -5,6 +5,7 @@ var a00066 =
     [ "1D Linear Diffusion - Sine Wave", "a00072.html", null ],
     [ "2D Linear Diffusion - Sine Wave", "a00074.html", null ],
     [ "2D Euler Equations - Isentropic Vortex Convection", "a00084.html", null ],
+    [ "2D Navier-Stokes Equations -  Lid-Driven Square Cavity", "a00168.html", null ],
     [ "2D Navier-Stokes Equations -  Laminar Flow over Flat Plate", "a00078.html", null ],
     [ "2D Euler Equations - Low-Mach Isentropic Vortex Convection", "a00086.html", null ],
     [ "2D Euler Equations (with gravitational force) - Inertia-Gravity Waves", "a00088.html", null ],

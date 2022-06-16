@@ -1,6 +1,4 @@
 var a00257 =
 [
-    [ "ReconstructHyperbolic", "a00257.html#ae6e53860597b32435f6ad086401e11a1", null ],
-    [ "DefaultUpwinding", "a00257.html#ab0afa96eb227a6b066ba4844b4dc11a7", null ],
-    [ "HyperbolicFunction", "a00257.html#a0096c47175c007dbe805b34129835b84", null ]
+    [ "BandedMatrixPreallocate", "a00257.html#ac62d1bac79d03bd2136c4fb87e9045d4", null ]
 ];

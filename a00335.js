@@ -1,4 +1,4 @@
 var a00335 =
 [
-    [ "MPIPartition1D", "a00335.html#a87127187b566bfa02b692247f9e3c798", null ]
+    [ "MUSCLInitialize", "a00335.html#ab9c0c7ce0e00510c982d1408fc3f8ee7", null ]
 ];

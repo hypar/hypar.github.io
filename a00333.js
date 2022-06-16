@@ -1,5 +1,5 @@
 var a00333 =
 [
-    [ "MPIMax_integer", "a00333.html#a6d51d72d0316346543fbda2aa97a790a", null ],
-    [ "MPIMax_double", "a00333.html#aa8bb15ed31fcdd02194de4d639d67988", null ]
+    [ "_MINIMUM_GHOSTS_", "a00333.html#ab2278b4768059f198821dbf4d1a80389", null ],
+    [ "Interp1PrimThirdOrderMUSCLChar", "a00333.html#aef318a3caa68e37228d169fde39cae91", null ]
 ];

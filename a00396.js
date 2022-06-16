@@ -1,4 +1,4 @@
 var a00396 =
 [
-    [ "FPPowerSystemCleanup", "a00396.html#ac5558f0ce41893640fb0d0d9c30c9dfb", null ]
+    [ "BurgersComputeCFL", "a00396.html#a99db371c78dc383aca3e51b342adb724", null ]
 ];

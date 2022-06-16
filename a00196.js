@@ -1,8 +1,14 @@
 var a00196 =
 [
-    [ "WriteArray", "a00196.html#aaf888c739c5200d9c58a7154347069b0", null ],
-    [ "WriteBinary", "a00196.html#a067f454c26d85d6cfb4d7d878b3783c9", null ],
-    [ "WriteText", "a00196.html#a3355a71faf3d87f6715ad627db08ac9e", null ],
-    [ "WriteTecplot2D", "a00196.html#a265b0583afb79edd2f2f5d5087e5c3bf", null ],
-    [ "WriteTecplot3D", "a00196.html#a5bdb048ecc5ae7ab61622e4764f3133e", null ]
+    [ "LinearADR", "a00196.html#a00621", [
+      [ "constant_advection", "a00196.html#a857e5fcb8a5cb035175f21e4dc3de26f", null ],
+      [ "adv_filename", "a00196.html#a143c0b09170c16ca8af49f337e5f672d", null ],
+      [ "adv_arr_size", "a00196.html#a6faf530242605d8f7a3dd4b2bf46693d", null ],
+      [ "a", "a00196.html#a1c93565457c6d07aa9691346f0086e14", null ],
+      [ "d", "a00196.html#ae6261d15419eb591b3f65c5f8cd7b8cb", null ],
+      [ "centered_flux", "a00196.html#a478f311f31e56d8a950586cd25867daa", null ]
+    ] ],
+    [ "_LINEAR_ADVECTION_DIFFUSION_REACTION_", "a00196.html#a44c745170d88218420752d150856b01c", null ],
+    [ "LinearADRInitialize", "a00196.html#a78c1fbb2ddae048ddb9d2863ad4f65b3", null ],
+    [ "LinearADRCleanup", "a00196.html#a114e6f1e977ae4220d29e8097e017f19", null ]
 ];

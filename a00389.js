@@ -1,4 +1,5 @@
 var a00389 =
 [
-    [ "FPDoubleWellComputeDiffNumber", "a00389.html#a54014d08719e5db4fdfc34b558d9fd60", null ]
+    [ "__FUNCT__", "a00389.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "PetscRHSFunctionIMEX", "a00389.html#a3d7e8fc58596e02b5488a600bc87cdb7", null ]
 ];

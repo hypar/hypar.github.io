@@ -1,4 +1,5 @@
 var a00447 =
 [
-    [ "NavierStokes3DCleanup", "a00447.html#a57ed248d95cef9ec72880105eae499ca", null ]
+    [ "FPPowerSystem1BusDriftFunction", "a00447.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
+    [ "FPPowerSystem1BusUpwind", "a00447.html#aba11a90b1aa788700496713f3aa355b5", null ]
 ];

@@ -1,4 +1,5 @@
 var a00366 =
 [
-    [ "Euler1DCleanup", "a00366.html#aca2df106e7c331c81fc8aff929ec6e69", null ]
+    [ "MPIMax_integer", "a00366.html#a6d51d72d0316346543fbda2aa97a790a", null ],
+    [ "MPIMax_double", "a00366.html#aa8bb15ed31fcdd02194de4d639d67988", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/ImmersedBoundaries/IBAssembleGlobalFacetData.c Source File</title>
+<title>HyPar: src/BoundaryConditions/BCReflect.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,144 +112,69 @@ $(document).ready(function(){initNavTree('a00266_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">IBAssembleGlobalFacetData.c</div>  </div>
+<div class="title">BCReflect.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00266.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00187.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00151.html">immersedboundaries.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00204.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="a00266.html#a7383f93f03644bda100a1f27742232a3">   22</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00151.html#a1b5b1eb59ced4b1ece449774787b83b4">IBAssembleGlobalFacetData</a>(<span class="keywordtype">void</span>*               m,          </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                              <span class="keywordtype">void</span>*               ib,         </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                              <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span> local_var,  </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                              <span class="keywordtype">double</span>** <span class="keyword">const</span>      global_var, </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                              <span class="keywordtype">int</span>                 nvars       </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                             )</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00167.html#a00588">MPIVariables</a>     *mpi = (<a class="code" href="a00167.html#a00588">MPIVariables</a>*) m; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00151.html#a00586">ImmersedBoundary</a> *IB  = (<a class="code" href="a00151.html#a00586">ImmersedBoundary</a>*) ib;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">if</span> ((*global_var) != NULL) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in IBAssembleGlobalFacetData()\n&quot;</span>);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot; global_var is not NULL on rank %d\n&quot;</span>,</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            mpi-&gt;<a class="code" href="a00167.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a> );</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordtype">int</span> nfacets_local = IB-&gt;<a class="code" href="a00151.html#ab3583871695c8f2fc06011d14e092d09">nfacets_local</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="a00151.html#a00579">FacetMap</a> *fmap = IB-&gt;<a class="code" href="a00151.html#a83fe29d69e04c222af5c68e38142336c">fmap</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordflow">if</span> ((nfacets_local == 0) &amp;&amp; (local_var != NULL)) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot;Error in IBAssembleGlobalFacetData()\n&quot;</span>);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot; nfacets_local is 0 but local_var is not NULL!\n&quot;</span>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">if</span> ((nfacets_local &gt; 0) &amp;&amp; (local_var == NULL)) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot;Error in IBAssembleGlobalFacetData()\n&quot;</span>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot; nfacets_local &gt; 0 but local_var is NULL!\n&quot;</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor"></span>  MPI_Status status;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00167.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">int</span> nfacets_global = IB-&gt;<a class="code" href="a00151.html#af858f0e9bc4a6cb1c16ad2931cf4b43d">body</a>-&gt;<a class="code" href="a00151.html#afd755b081f4d9ca3558ef9ca9f3c35d0">nfacets</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="comment">/* allocate arrays for whole domain */</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        *global_var = (<span class="keywordtype">double</span>*) calloc (nfacets_global*nvars, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="a00187.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>((*global_var), (nfacets_global*nvars), 0.0);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">/* check array - to avoid double counting of facets */</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">int</span> *check = (<span class="keywordtype">int</span>*) calloc (nfacets_global, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="a00187.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(check, nfacets_global, 0);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">/* local data */</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nfacets_local; n++) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      <a class="code" href="a00187.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>((local_var+n), 1.0, ((*global_var)+fmap[n].index), nvars);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;          check[fmap[n].<a class="code" href="a00151.html#a750b5d744c39a06bfb13e6eb010e35d0">index</a>]++;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> proc = 1; proc &lt; mpi-&gt;<a class="code" href="a00167.html#ae68326adc3b3862f1162832f70727b06">nproc</a>; proc++) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordtype">int</span> nf_incoming;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            MPI_Recv(&amp;nf_incoming, 1, MPI_INT, proc, 98927, MPI_COMM_WORLD, &amp;status);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <span class="keywordflow">if</span> (nf_incoming &gt; 0) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;              <span class="keywordtype">int</span>    *indices_incoming = (<span class="keywordtype">int</span>*)    calloc(nf_incoming, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;              <span class="keywordtype">double</span> *var_incoming     = (<span class="keywordtype">double</span>*) calloc(nf_incoming*nvars, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;              MPI_Recv(indices_incoming, nf_incoming, MPI_INT, proc, 98928, mpi-&gt;<a class="code" href="a00167.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>, &amp;status);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;              MPI_Recv(var_incoming, nf_incoming*nvars, MPI_DOUBLE, proc, 98929, mpi-&gt;<a class="code" href="a00167.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>, &amp;status);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;              <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nf_incoming; n++) {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;          <a class="code" href="a00187.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>((var_incoming+n), 1.0, ((*global_var)+indices_incoming[n]), nvars);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                  check[indices_incoming[n]]++;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;              }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        free(indices_incoming);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        free(var_incoming);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nfacets_global; n++) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">if</span> (check[n] == 0) {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        fprintf(stderr, <span class="stringliteral">&quot;Error in IBAssembleGlobalFacetData()\n&quot;</span>);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        fprintf(stderr, <span class="stringliteral">&quot;  No data received for facet %d\n&quot;</span>, n);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="a00187.html#a1dab5f429ccd03c4a7fbb605d8ef75b6">_ArrayScale1D_</a>(((*global_var)+n), (1.0/(<span class="keywordtype">double</span>)check[n]), nvars);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        MPI_Send(&amp;nfacets_local, 1, MPI_INT, 0, 98927, MPI_COMM_WORLD);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">if</span> (nfacets_local &gt; 0) {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <span class="keywordtype">int</span> i, *indices = (<span class="keywordtype">int</span>*) calloc (nfacets_local, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <span class="keywordflow">for</span> (i = 0; i &lt; nfacets_local; i++) indices[i] = fmap[i].index;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;          MPI_Send(indices, nfacets_local, MPI_INT, 0, 98928, mpi-&gt;<a class="code" href="a00167.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;          MPI_Send(local_var, nfacets_local*nvars, MPI_DOUBLE, 0, 98929, mpi-&gt;<a class="code" href="a00167.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      free(indices);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
-<div class="ttc" id="a00151_html_afd755b081f4d9ca3558ef9ca9f3c35d0"><div class="ttname"><a href="a00151.html#afd755b081f4d9ca3558ef9ca9f3c35d0">Body3D::nfacets</a></div><div class="ttdeci">int nfacets</div><div class="ttdef"><b>Definition:</b> <a href="a00151_source.html#l00101">immersedboundaries.h:101</a></div></div>
-<div class="ttc" id="a00151_html_a1b5b1eb59ced4b1ece449774787b83b4"><div class="ttname"><a href="a00151.html#a1b5b1eb59ced4b1ece449774787b83b4">IBAssembleGlobalFacetData</a></div><div class="ttdeci">int IBAssembleGlobalFacetData(void *, void *, const double *const, double **const, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00266_source.html#l00022">IBAssembleGlobalFacetData.c:22</a></div></div>
-<div class="ttc" id="a00151_html_a00579"><div class="ttname"><a href="a00151.html#a00579">FacetMap</a></div><div class="ttdoc">Structure defining a facet map. </div><div class="ttdef"><b>Definition:</b> <a href="a00151_source.html#l00067">immersedboundaries.h:67</a></div></div>
-<div class="ttc" id="a00151_html_a00586"><div class="ttname"><a href="a00151.html#a00586">ImmersedBoundary</a></div><div class="ttdoc">Structure containing variables for immersed boundary implementation. </div><div class="ttdef"><b>Definition:</b> <a href="a00151_source.html#l00153">immersedboundaries.h:153</a></div></div>
-<div class="ttc" id="a00151_html_af858f0e9bc4a6cb1c16ad2931cf4b43d"><div class="ttname"><a href="a00151.html#af858f0e9bc4a6cb1c16ad2931cf4b43d">ImmersedBoundary::body</a></div><div class="ttdeci">Body3D * body</div><div class="ttdef"><b>Definition:</b> <a href="a00151_source.html#l00154">immersedboundaries.h:154</a></div></div>
-<div class="ttc" id="a00187_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00187.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00270">arrayfunctions.h:270</a></div></div>
-<div class="ttc" id="a00167_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00167.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00167_source.html#l00037">mpivars_struct.h:37</a></div></div>
-<div class="ttc" id="a00187_html"><div class="ttname"><a href="a00187.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00187_html_a1dab5f429ccd03c4a7fbb605d8ef75b6"><div class="ttname"><a href="a00187.html#a1dab5f429ccd03c4a7fbb605d8ef75b6">_ArrayScale1D_</a></div><div class="ttdeci">#define _ArrayScale1D_(x, a, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00189">arrayfunctions.h:189</a></div></div>
-<div class="ttc" id="a00167_html_a00588"><div class="ttname"><a href="a00167.html#a00588">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00167_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00167_html_ae68326adc3b3862f1162832f70727b06"><div class="ttname"><a href="a00167.html#ae68326adc3b3862f1162832f70727b06">MPIVariables::nproc</a></div><div class="ttdeci">int nproc</div><div class="ttdef"><b>Definition:</b> <a href="a00167_source.html#l00026">mpivars_struct.h:26</a></div></div>
-<div class="ttc" id="a00167_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00167.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00167_source.html#l00025">mpivars_struct.h:25</a></div></div>
-<div class="ttc" id="a00187_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00187.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00187_source.html#l00168">arrayfunctions.h:168</a></div></div>
-<div class="ttc" id="a00151_html_a83fe29d69e04c222af5c68e38142336c"><div class="ttname"><a href="a00151.html#a83fe29d69e04c222af5c68e38142336c">ImmersedBoundary::fmap</a></div><div class="ttdeci">FacetMap * fmap</div><div class="ttdef"><b>Definition:</b> <a href="a00151_source.html#l00156">immersedboundaries.h:156</a></div></div>
-<div class="ttc" id="a00151_html"><div class="ttname"><a href="a00151.html">immersedboundaries.h</a></div><div class="ttdoc">Structures and function definitions for immersed boundaries. </div></div>
-<div class="ttc" id="a00204_html"><div class="ttname"><a href="a00204.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
-<div class="ttc" id="a00151_html_a750b5d744c39a06bfb13e6eb010e35d0"><div class="ttname"><a href="a00151.html#a750b5d744c39a06bfb13e6eb010e35d0">FacetMap::index</a></div><div class="ttdeci">int index</div><div class="ttdef"><b>Definition:</b> <a href="a00151_source.html#l00069">immersedboundaries.h:69</a></div></div>
-<div class="ttc" id="a00151_html_ab3583871695c8f2fc06011d14e092d09"><div class="ttname"><a href="a00151.html#ab3583871695c8f2fc06011d14e092d09">ImmersedBoundary::nfacets_local</a></div><div class="ttdeci">int nfacets_local</div><div class="ttdef"><b>Definition:</b> <a href="a00151_source.html#l00162">immersedboundaries.h:162</a></div></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00218.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00217.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00219.html">boundaryconditions.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00266.html#a262943d07ca8e576f79b36846a43e103">   14</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00219.html#a9a0a6df7b555f4eea004e79de223abf8">BCReflectU</a>(</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                <span class="keywordtype">void</span>    *b,     </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                <span class="keywordtype">void</span>    *m,     </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                <span class="keywordtype">int</span>     ndims,  </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                <span class="keywordtype">int</span>     nvars,  </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                <span class="keywordtype">int</span>     *size,  </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                <span class="keywordtype">int</span>     ghosts, </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                <span class="keywordtype">double</span>  *phi,   </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                <span class="keywordtype">double</span>  waqt    </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;              )</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00185.html">DomainBoundary</a> *boundary = (<a class="code" href="a00185.html">DomainBoundary</a>*) b;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span> dim   = boundary-&gt;<a class="code" href="a00185.html#a70b5e28b5bc3d1b63a7435c5fe50b837">dim</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">int</span> face  = boundary-&gt;<a class="code" href="a00185.html#a9582c650f117a06449b5ee368b6762ef">face</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00185.html#a2eec7e4ee612d5edc985ba81453346e1">on_this_proc</a>) {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">int</span> bounds[ndims], indexb[ndims], indexi[ndims];</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="a00217.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a>(bounds,boundary-&gt;<a class="code" href="a00185.html#a7602de5ebb1b59ec35217e78a35a531e">ie</a>,boundary-&gt;<a class="code" href="a00185.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="a00217.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,ndims,0);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">int</span> done = 0;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      <span class="keywordtype">int</span> p1, p2;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      <a class="code" href="a00217.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(indexb,indexi,ndims);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      <a class="code" href="a00217.html#a98a3bb5fda2fcafb70a6288d100a0924">_ArrayAdd1D_</a>(indexi,indexi,boundary-&gt;<a class="code" href="a00185.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      <span class="keywordflow">if</span>      (face ==  1) indexi[dim] = ghosts-1-indexb[dim];</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (face == -1) indexi[dim] = size[dim]-indexb[dim]-1;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      <a class="code" href="a00217.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,size,indexb,boundary-&gt;<a class="code" href="a00185.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ghosts,p1);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      <a class="code" href="a00217.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,size,indexi,ghosts,p2);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      <a class="code" href="a00217.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a>((phi+nvars*p2),(-1.0),(phi+nvars*p1),nvars);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      <a class="code" href="a00217.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,indexb,done);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="ttc" id="a00217_html_a7d97d4914726fa7cca339356dae28473"><div class="ttname"><a href="a00217.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a></div><div class="ttdeci">#define _ArrayScaleCopy1D_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00355">arrayfunctions.h:355</a></div></div>
+<div class="ttc" id="a00217_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00217.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00318">arrayfunctions.h:318</a></div></div>
+<div class="ttc" id="a00185_html_a9582c650f117a06449b5ee368b6762ef"><div class="ttname"><a href="a00185.html#a9582c650f117a06449b5ee368b6762ef">DomainBoundary::face</a></div><div class="ttdeci">int face</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00075">boundaryconditions.h:75</a></div></div>
+<div class="ttc" id="a00217_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00217.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00082">arrayfunctions.h:82</a></div></div>
+<div class="ttc" id="a00185_html_a2eec7e4ee612d5edc985ba81453346e1"><div class="ttname"><a href="a00185.html#a2eec7e4ee612d5edc985ba81453346e1">DomainBoundary::on_this_proc</a></div><div class="ttdeci">int on_this_proc</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00081">boundaryconditions.h:81</a></div></div>
+<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00217_html_ab49d0f261ea751a17d6beca0504daf78"><div class="ttname"><a href="a00217.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a></div><div class="ttdeci">#define _ArraySubtract1D_(x, a, b, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00200">arrayfunctions.h:200</a></div></div>
+<div class="ttc" id="a00217_html"><div class="ttname"><a href="a00217.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00217_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00217.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00168">arrayfunctions.h:168</a></div></div>
+<div class="ttc" id="a00185_html_a70b5e28b5bc3d1b63a7435c5fe50b837"><div class="ttname"><a href="a00185.html#a70b5e28b5bc3d1b63a7435c5fe50b837">DomainBoundary::dim</a></div><div class="ttdeci">int dim</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00073">boundaryconditions.h:73</a></div></div>
+<div class="ttc" id="a00217_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00217.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00039">arrayfunctions.h:39</a></div></div>
+<div class="ttc" id="a00185_html_a481013ba007a99a4237cde5eeb3c9a29"><div class="ttname"><a href="a00185.html#a481013ba007a99a4237cde5eeb3c9a29">DomainBoundary::is</a></div><div class="ttdeci">int * is</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00082">boundaryconditions.h:82</a></div></div>
+<div class="ttc" id="a00217_html_a98a3bb5fda2fcafb70a6288d100a0924"><div class="ttname"><a href="a00217.html#a98a3bb5fda2fcafb70a6288d100a0924">_ArrayAdd1D_</a></div><div class="ttdeci">#define _ArrayAdd1D_(x, a, b, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00211">arrayfunctions.h:211</a></div></div>
+<div class="ttc" id="a00219_html_a9a0a6df7b555f4eea004e79de223abf8"><div class="ttname"><a href="a00219.html#a9a0a6df7b555f4eea004e79de223abf8">BCReflectU</a></div><div class="ttdeci">int BCReflectU(void *, void *, int, int, int *, int, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00266_source.html#l00014">BCReflect.c:14</a></div></div>
+<div class="ttc" id="a00217_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00217.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00125">arrayfunctions.h:125</a></div></div>
+<div class="ttc" id="a00185_html_a7602de5ebb1b59ec35217e78a35a531e"><div class="ttname"><a href="a00185.html#a7602de5ebb1b59ec35217e78a35a531e">DomainBoundary::ie</a></div><div class="ttdeci">int * ie</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00082">boundaryconditions.h:82</a></div></div>
+<div class="ttc" id="a00185_html"><div class="ttname"><a href="a00185.html">DomainBoundary</a></div><div class="ttdoc">Structure containing the variables and function pointers defining a boundary. </div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00068">boundaryconditions.h:68</a></div></div>
+<div class="ttc" id="a00219_html"><div class="ttname"><a href="a00219.html">boundaryconditions.h</a></div><div class="ttdoc">Containts the structures and definitions for boundary condition implementation. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

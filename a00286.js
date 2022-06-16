@@ -1,5 +1,5 @@
 var a00286 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00286.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderHCWENOChar", "a00286.html#a2e43ae211de60776d2cf914a389d54af", null ]
+    [ "ExactSolution", "a00286.html#aef6e3464d167cab9e23a9eacb8f62882", null ],
+    [ "CalculateError", "a00286.html#a52e8c83d9dad55f9a6b967e63dc5f4bc", null ]
 ];

@@ -1,5 +1,5 @@
 var a00441 =
 [
-    [ "NavierStokes2DJacobian", "a00441.html#a343a73d6dce8347a2e56d7302392737a", null ],
-    [ "NavierStokes2DStiffJacobian", "a00441.html#aa3baa96900b3d921ae62b3005c16635c", null ]
+    [ "FPPowerSystem1BusDissipationFunction", "a00441.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
+    [ "FPPowerSystem1BusComputeDiffNumber", "a00441.html#a443e2757428e35f3818ba01dec4c20cd", null ]
 ];

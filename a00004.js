@@ -15,7 +15,7 @@ var a00004 =
     [ "2D Linear Diffusion - Sine Wave", "a00030.html", null ],
     [ "2D Inviscid Burgers Equation - Sine Wave", "a00032.html", null ],
     [ "2D (1D-1V) Vlasov Equation - Prescribed E-Field", "a00034.html", null ],
-    [ "2D (1D-1V) Vlasov Equation - Self-Consistent E-Field", "a00036.html", null ],
+    [ "2D (1D-1V) Vlasov Equation - Two-Stream Instability", "a00036.html", null ],
     [ "2D Euler Equations - Riemann Problem Case 4", "a00038.html", null ],
     [ "2D Euler Equations - Riemann Problem Case 6", "a00040.html", null ],
     [ "2D Euler Equations - Radial Expansion Wave", "a00042.html", null ],

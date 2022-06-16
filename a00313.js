@@ -1,4 +1,4 @@
 var a00313 =
 [
-    [ "WriteText", "a00313.html#afc6009d99921e629e20244374914a806", null ]
+    [ "CompactSchemeInitialize", "a00313.html#a666601a9c9c7e3084adef44396a87827", null ]
 ];

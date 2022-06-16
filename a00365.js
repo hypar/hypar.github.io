@@ -1,4 +1,4 @@
 var a00365 =
 [
-    [ "BurgersUpwind", "a00365.html#acdb7cb154ca3e4d6c7f9b948df0ea7ef", null ]
+    [ "MPILocalDomainLimits", "a00365.html#a293c6b27eae8dacc236402c1662e5d01", null ]
 ];

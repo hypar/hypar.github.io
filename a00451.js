@@ -1,6 +1,5 @@
 var a00451 =
 [
-    [ "NavierStokes3DRoeAverage", "a00451.html#a8910dbe2aaf01714c0136e887ab88a89", null ],
-    [ "NavierStokes3DComputePressure", "a00451.html#aad0938e55e9fc3c10fe5451ff8f2ee1c", null ],
-    [ "NavierStokes3DComputeTemperature", "a00451.html#a6d78f90f0c4b9a283c603518407a5336", null ]
+    [ "FPPowerSystem3BusDissipationFunction", "a00451.html#a9fc174afd12172d7017edb0b05012438", null ],
+    [ "FPPowerSystem3BusComputeDiffNumber", "a00451.html#a2516d85ae9b31b8ca6a13b3542c2a752", null ]
 ];

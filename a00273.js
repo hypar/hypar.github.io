@@ -1,6 +1,4 @@
 var a00273 =
 [
-    [ "CountBoundaryPoints", "a00273.html#ac20a15dad8cdc1021b559f08cd60bdf4", null ],
-    [ "SetBoundaryPoints", "a00273.html#a684729950453b8313d61c1731acf5e5c", null ],
-    [ "IBIdentifyBoundary", "a00273.html#a65f57f0636944e8a45906b00c8882a8a", null ]
+    [ "BCSupersonicOutflowU", "a00273.html#a791e37fae3c9489d0fc039102c57409e", null ]
 ];

@@ -1,5 +1,9 @@
 var a00454 =
 [
-    [ "NavierStokes3DIBAdiabatic", "a00454.html#a0f7ac290f54e925b5e5554a69bba5c16", null ],
-    [ "NavierStokes3DIBIsothermal", "a00454.html#a8988fb5737b2ad7f660c21326f2e1049", null ]
+    [ "FPPowerSystem3BusComputeCFL", "a00454.html#a93e681bfb4d19ad0c51f5b2db367b388", null ],
+    [ "FPPowerSystem3BusComputeDiffNumber", "a00454.html#aa5319f84e8ec0a98ac035366c2c6842f", null ],
+    [ "FPPowerSystem3BusAdvection", "a00454.html#a68bbc9ffcd74c439612e232e16b4678b", null ],
+    [ "FPPowerSystem3BusDiffusion", "a00454.html#a04fa6cefc6cb8b84f711ff398495817a", null ],
+    [ "FPPowerSystem3BusUpwind", "a00454.html#ac206039f8e685047c95de9f773e5c716", null ],
+    [ "FPPowerSystem3BusInitialize", "a00454.html#a981d9849c01ea6d681bf1d2255d64c79", null ]
 ];

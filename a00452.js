@@ -1,4 +1,5 @@
 var a00452 =
 [
-    [ "NavierStokes3DGravityField", "a00452.html#ab5d4daeb6c2e758d8159c5b059cf9145", null ]
+    [ "FPPowerSystem3BusDissipationFunction", "a00452.html#a9fc174afd12172d7017edb0b05012438", null ],
+    [ "FPPowerSystem3BusDiffusion", "a00452.html#a4be65319ce7917a7221851a22d120efd", null ]
 ];

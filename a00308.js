@@ -1,5 +1,4 @@
 var a00308 =
 [
-    [ "ReadArraywInterpSerial", "a00308.html#ac1fd9c1e0d7b79e7047db352b8aeb0b8", null ],
-    [ "ReadArraywInterp", "a00308.html#a84eb363896d58f78282bd0426638c13d", null ]
+    [ "IBInterpCoeffs", "a00308.html#a55a017ffd535afc3cb077a4ecc568402", null ]
 ];

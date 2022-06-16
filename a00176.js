@@ -1,12 +1,14 @@
 var a00176 =
 [
-    [ "bt_type", "a00176.html#a6f84a1093abf57dcbf0406b33f40f766", null ],
-    [ "topo_flag", "a00176.html#a71b5cdadb8aec7421fa05a93ec51c102", null ],
-    [ "g", "a00176.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
-    [ "b", "a00176.html#a9f92e5582bf339a3c95df78b9c684fe0", null ],
-    [ "fhat", "a00176.html#acc808f03e31ad5612b724fe23dea05ab", null ],
-    [ "beta", "a00176.html#a9424343761f8c4f4c1afe8f5b6bf471b", null ],
-    [ "D", "a00176.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
-    [ "upw_choice", "a00176.html#a57894a0f53d5b228bf64053367736bf9", null ],
-    [ "SourceUpwind", "a00176.html#a3cb843ad67e4b14387b7fa21f6d4090b", null ]
+    [ "BandedMatrix", "a00176.html#a00601", [
+      [ "nbands", "a00176.html#a30165df2b4e7a3d2b24bfd0963c16172", null ],
+      [ "nrows_local", "a00176.html#ac2b596b16037450673a77da1080b8707", null ],
+      [ "BlockSize", "a00176.html#aeae4e1754c511c08564892d93c83ada1", null ],
+      [ "ncol", "a00176.html#a6db648ed09c7736e77e2c79f2a4514fd", null ],
+      [ "nrow", "a00176.html#a0a58ae803aa8c0ef7cf86577919f205e", null ],
+      [ "data", "a00176.html#a23436a7a2b44939627b59df11be7ad75", null ]
+    ] ],
+    [ "BandedMatrixDestroy", "a00176.html#a7481e8970799d48bf61489d2c8664291", null ],
+    [ "BandedMatrixInitialize", "a00176.html#a2e2999e64538fc1278db51e3a4544c0a", null ],
+    [ "BandedMatrixPreallocate", "a00176.html#a6f340cd6da5050e863142a9a5d3b4276", null ]
 ];

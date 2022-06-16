@@ -1,4 +1,4 @@
 var a00270 =
 [
-    [ "IBComputeNormalGradient", "a00270.html#af2395d184c7e2d65736714d8aaeebcfe", null ]
+    [ "BCSubsonicInflowU", "a00270.html#a9c5eb47fb65476896445cc90ec945312", null ]
 ];

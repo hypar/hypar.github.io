@@ -1,5 +1,4 @@
 var a00293 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00293.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFourthOrderCentral", "a00293.html#af45fe547593d21575ad86b4d542422d2", null ]
+    [ "ParabolicFunctionCons1Stage", "a00293.html#a5e79cc5efd6d3e4c93717a67e0fbf918", null ]
 ];

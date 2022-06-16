@@ -1,5 +1,5 @@
 var a00469 =
 [
-    [ "Numa2DRusanovFlux", "a00469.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
-    [ "Numa2DRusanovLinearFlux", "a00469.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
+    [ "NavierStokes2DLeftEigenvectors", "a00469.html#a497cabf9429ce30c3107d526bc18a798", null ],
+    [ "NavierStokes2DRightEigenvectors", "a00469.html#a2267c0825e485249fdee53ee44981636", null ]
 ];

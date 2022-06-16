@@ -1,4 +1,4 @@
 var a00504 =
 [
-    [ "VlasovAdvectionCoeff", "a00504.html#afc18d2e95d8606bf4a79b661f88f1b98", null ]
+    [ "Numa3DComputeCFL", "a00504.html#acb12fd525157444151deaf74dfab8411", null ]
 ];

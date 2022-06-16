@@ -1,7 +1,6 @@
 var a00531 =
 [
-    [ "__FUNCT__", "a00531.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "CalculateError", "a00531.html#a116876aaf447559b6cc9fff36a501843", null ],
-    [ "OutputSolution", "a00531.html#a5981de613724cb667e98aa872157534e", null ],
-    [ "SolvePETSc", "a00531.html#a63727f86c19e70bc897c86edd5015b75", null ]
+    [ "ShallowWater2DSourceFunction1", "a00531.html#a4d5b3f3e933170ce53af12d19ba4ef01", null ],
+    [ "ShallowWater2DSourceFunction2", "a00531.html#a5ed617f0405e97ed489c4843d482e692", null ],
+    [ "ShallowWater2DSource", "a00531.html#a40d3a942960d07b188d08a46bec76768", null ]
 ];

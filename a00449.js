@@ -1,5 +1,4 @@
 var a00449 =
 [
-    [ "NavierStokes3DLeftEigenvectors", "a00449.html#ab376732168de139806c9f77828caa063", null ],
-    [ "NavierStokes3DRightEigenvectors", "a00449.html#a62b44025b86e4d73a34142b32301ee7c", null ]
+    [ "FPPowerSystem3BusCleanup", "a00449.html#ae3739edb84bb838b7917c2b19ee8350c", null ]
 ];

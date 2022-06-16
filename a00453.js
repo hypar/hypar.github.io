@@ -1,8 +1,6 @@
 var a00453 =
 [
-    [ "NavierStokes3DComputePressure", "a00453.html#a9d676025e80592838ea77fee6c337205", null ],
-    [ "NavierStokes3DComputeTemperature", "a00453.html#a3504476955bd4a5dd49600eed715e209", null ],
-    [ "ComputeShear", "a00453.html#a3e14cd172223ee5c22e1cd7a425266cc", null ],
-    [ "WriteSurfaceData", "a00453.html#aba43a5d5f52f4c98f85a87e0ccc88b63", null ],
-    [ "NavierStokes3DIBForces", "a00453.html#ac66d24485c83422b6ec21fdf9e1363e5", null ]
+    [ "ComputeElectricalPower", "a00453.html#a454d95ed74eac931fbd3e02f9ac8ca63", null ],
+    [ "FPPowerSystem3BusDriftFunction", "a00453.html#a5b602ee3f15087c8ab5542c83596f6c0", null ],
+    [ "FPPowerSystem3BusDissipationFunction", "a00453.html#a9dd5286fde835efd7885cad200f01007", null ]
 ];

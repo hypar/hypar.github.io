@@ -1,5 +1,5 @@
 var a00512 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00512.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "SecondDerivativeFourthOrderCentral", "a00512.html#a41e040c0062127ce7e0edc64569c845e", null ]
+    [ "ShallowWater1DLeftEigenvectors", "a00512.html#aa9519badea39145bc113cba2422016b3", null ],
+    [ "ShallowWater1DRightEigenvectors", "a00512.html#af4a44ab4a02a19c10ad8f4d75f88f8d7", null ]
 ];

@@ -1,5 +1,5 @@
 var a00373 =
 [
-    [ "Euler1DJacobian", "a00373.html#ab37022ee06f6873c94049e55a0890fe1", null ],
-    [ "Euler1DStiffJacobian", "a00373.html#a635a7e46a7898c4de6b7a47b1d68c969", null ]
+    [ "MPISum_integer", "a00373.html#a3fdbda19a80373d03b0034694d7309b7", null ],
+    [ "MPISum_double", "a00373.html#ab72730180adfeeb505a716952545d591", null ]
 ];

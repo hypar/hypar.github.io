@@ -1,5 +1,5 @@
 var a00525 =
 [
-    [ "IncrementFilenameIndex", "a00525.html#a55a796b622e90a00d1cb9164ab40c1c3", null ],
-    [ "OutputROMSolution", "a00525.html#a11343894048fd842093253bbbb407700", null ]
+    [ "ShallowWater2DLeftEigenvectors", "a00525.html#aedb92b59af4004f2a2905d741bffd00a", null ],
+    [ "ShallowWater2DRightEigenvectors", "a00525.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
 ];

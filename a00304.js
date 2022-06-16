@@ -1,14 +1,6 @@
 var a00304 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00304.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "WENOFifthOrderCalculateWeightsJS", "a00304.html#a13030ec8d94fc0a47a3d6d155585aad6", null ],
-    [ "WENOFifthOrderCalculateWeightsM", "a00304.html#ab78f887edaa9c2e7322cbf58a31ac9b1", null ],
-    [ "WENOFifthOrderCalculateWeightsZ", "a00304.html#aa2933f837dfed0122c805579794c36d7", null ],
-    [ "WENOFifthOrderCalculateWeightsYC", "a00304.html#a5d7a9c8558b7a8ebf244c5002d0eb180", null ],
-    [ "WENOFifthOrderCalculateWeightsCharJS", "a00304.html#a5293f1fb48f44abae10ca519f80ec548", null ],
-    [ "WENOFifthOrderCalculateWeightsCharM", "a00304.html#a5b2d199dff41614827184b85aad179aa", null ],
-    [ "WENOFifthOrderCalculateWeightsCharZ", "a00304.html#ac291c1bcf8db16c168d56fd9d8ac4e67", null ],
-    [ "WENOFifthOrderCalculateWeightsCharYC", "a00304.html#a0b298b64f0681c2ceaff06d97de804ad", null ],
-    [ "WENOFifthOrderCalculateWeights", "a00304.html#a91383df8b8b5f32861e2ecb18dab8ab7", null ],
-    [ "WENOFifthOrderCalculateWeightsChar", "a00304.html#a6f1f5da1b6e5134bb1deccfad05a506d", null ]
+    [ "isInside", "a00304.html#ae5fc4cce9be29ebb8c3d80c534e55720", null ],
+    [ "interpNodesCoeffs", "a00304.html#ac8dd87df944e8659dedfa3171e832f44", null ],
+    [ "IBCreateFacetMapping", "a00304.html#a1eaa51b960b4fae56b2283983c7d9cf9", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/SparseGrids/SparseGridsInitialize.cpp File Reference</title>
+<title>HyPar: src/PhysicalModels/Vlasov/VlasovCleanup.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -111,24 +111,79 @@ $(document).ready(function(){initNavTree('a00538.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SparseGridsInitialize.cpp File Reference</div>  </div>
+<div class="title">VlasovCleanup.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Initialize all the stuff needed for a sparse grids simulation.  
+<p>Contains the function to clean up the <a class="el" href="a00213.html#a00628">Vlasov</a> physics module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00188_source.html">basic.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00187_source.html">arrayfunctions.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00215_source.html">sparse_grids_simulation.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00213_source.html">physicalmodels/vlasov.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00538_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab87d6ece7ff494cc44a06438a0943ec6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00538.html#ab87d6ece7ff494cc44a06438a0943ec6">VlasovCleanup</a> (void *s)</td></tr>
+<tr class="separator:ab87d6ece7ff494cc44a06438a0943ec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Initialize all the stuff needed for a sparse grids simulation. </p>
-<dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh, John Loffeld, Lee Ricketson </dd></dl>
+<div class="textblock"><p>Contains the function to clean up the <a class="el" href="a00213.html#a00628">Vlasov</a> physics module. </p>
+<dl class="section author"><dt>Author</dt><dd>John Loffeld </dd></dl>
 
-<p>Definition in file <a class="el" href="a00538_source.html">SparseGridsInitialize.cpp</a>.</p>
-</div></div><!-- contents -->
+<p>Definition in file <a class="el" href="a00538_source.html">VlasovCleanup.c</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ab87d6ece7ff494cc44a06438a0943ec6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int VlasovCleanup </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Function to clean up all physics-related allocations for the <a class="el" href="a00213.html#a00628">Vlasov</a> equations </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00194.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="a00538_source.html#l00010">10</a> of file <a class="el" href="a00538_source.html">VlasovCleanup.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <a class="code" href="a00213.html#a00628">Vlasov</a> *physics = (<a class="code" href="a00213.html#a00628">Vlasov</a>*) s;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  free(physics-&gt;<a class="code" href="a00213.html#aedea9c3dc1e5f991dc50e82b0d51d04c">e_field</a>);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#ifdef fftw</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span>(physics-&gt;<a class="code" href="a00213.html#acc5a122c52054223754455bbd5d0cacf">self_consistent_electric_field</a>) {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    free(physics-&gt;sum_buffer);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    fftw_destroy_plan(physics-&gt;plan_forward);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    fftw_destroy_plan(physics-&gt;plan_backward);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    fftw_free(physics-&gt;phys_buffer);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    fftw_free(physics-&gt;fourier_buffer);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
+<div class="ttc" id="a00213_html_a00628"><div class="ttname"><a href="a00213.html#a00628">Vlasov</a></div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00053">vlasov.h:53</a></div></div>
+<div class="ttc" id="a00213_html_aedea9c3dc1e5f991dc50e82b0d51d04c"><div class="ttname"><a href="a00213.html#aedea9c3dc1e5f991dc50e82b0d51d04c">Vlasov::e_field</a></div><div class="ttdeci">double * e_field</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00077">vlasov.h:77</a></div></div>
+<div class="ttc" id="a00213_html_acc5a122c52054223754455bbd5d0cacf"><div class="ttname"><a href="a00213.html#acc5a122c52054223754455bbd5d0cacf">Vlasov::self_consistent_electric_field</a></div><div class="ttdeci">int self_consistent_electric_field</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00056">vlasov.h:56</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->
 <script type="text/javascript">

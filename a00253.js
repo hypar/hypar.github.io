@@ -1,5 +1,4 @@
 var a00253 =
 [
-    [ "ExactSolution", "a00253.html#aef6e3464d167cab9e23a9eacb8f62882", null ],
-    [ "CalculateError", "a00253.html#a52e8c83d9dad55f9a6b967e63dc5f4bc", null ]
+    [ "BandedMatrixDestroy", "a00253.html#a75f8c3de645719ac147311358c3bff73", null ]
 ];

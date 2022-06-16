@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: include/simulation_library.h Source File</title>
+<title>HyPar: include/physicalmodels/vlasov.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,24 +112,79 @@ $(document).ready(function(){initNavTree('a00213_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">simulation_library.h</div>  </div>
+<div class="title">vlasov.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00213.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _SIMULATION_LIB_H_</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _SIMULATION_LIB_H_</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="a00213.html#a967190fff16695d2eb4fc74a18ec254c">    4</a></span>&#160;<span class="preprocessor">#define _SIM_TYPE_SINGLE_       0</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="a00213.html#ac3a9d282b78039033a7a2752a62b294e">    5</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _SIM_TYPE_ENSEMBLE_     1</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="a00213.html#a293bed21430798d6b5db1b9ca6f2f675">    6</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _SIM_TYPE_SPARSE_GRIDS_ 2</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00214.html">single_simulation.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00192.html">ensemble_simulations.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00215.html">sparse_grids_simulation.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00215_html"><div class="ttname"><a href="a00215.html">sparse_grids_simulation.h</a></div></div>
-<div class="ttc" id="a00214_html"><div class="ttname"><a href="a00214.html">single_simulation.h</a></div><div class="ttdoc">Single simulation class. </div></div>
-<div class="ttc" id="a00192_html"><div class="ttname"><a href="a00192.html">ensemble_simulations.h</a></div><div class="ttdoc">Ensemble simulation class. </div></div>
+<a href="a00213.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#ifdef fftw</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;fftw3-mpi.h&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="a00213.html#a83dc099011b8d965235f462a935f4830">   33</a></span>&#160;<span class="preprocessor">#define _VLASOV_  &quot;vlasov&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">/* define ndims and nvars for this model */</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#undef _MODEL_NDIMS_</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#undef _MODEL_NVARS_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a00213.html#a57771c952ec174601addf43e1c0202b2">   39</a></span>&#160;<span class="preprocessor">#define _MODEL_NDIMS_ 2</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a00213.html#ad3395a55a5fde64d6603c7a82d7bf2c7">   41</a></span>&#160;<span class="preprocessor">#define _MODEL_NVARS_ 1</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">/* \brief Structure containing variables and parameters for the Vlasov equation</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"> * This structure contains the physical parameters, variables, and function pointers </span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment"> * specific to the Vlasov equation.</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="a00213.html">   53</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>vlasov_parameters {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00213.html#acc5a122c52054223754455bbd5d0cacf">   56</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="a00213.html#acc5a122c52054223754455bbd5d0cacf">self_consistent_electric_field</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="a00213.html#ae527165d3d2d27bcedc2179a1fb0cb63">   59</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="a00213.html#ae527165d3d2d27bcedc2179a1fb0cb63">ndims_x</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="a00213.html#a489f8895b9b198463a3b72b8809d46d8">   62</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="a00213.html#a489f8895b9b198463a3b72b8809d46d8">ndims_v</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="a00213.html#a2a5cede87e8687192c8bec19ec1535f3">   65</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="a00213.html#a2a5cede87e8687192c8bec19ec1535f3">npts_local_x</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="a00213.html#aab5bd39936c1e76e9d6193abe3030036">   68</a></span>&#160;  <span class="keywordtype">long</span> <a class="code" href="a00213.html#aab5bd39936c1e76e9d6193abe3030036">npts_global_x</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="a00213.html#a4094920098b4d5295d51c180da96f699">   71</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="a00213.html#a4094920098b4d5295d51c180da96f699">npts_local_x_wghosts</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="a00213.html#aba8999e006d046630748521bcadf52b8">   74</a></span>&#160;  <span class="keywordtype">long</span> <a class="code" href="a00213.html#aba8999e006d046630748521bcadf52b8">npts_global_x_wghosts</a>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="a00213.html#aedea9c3dc1e5f991dc50e82b0d51d04c">   77</a></span>&#160;  <span class="keywordtype">double</span> *<a class="code" href="a00213.html#aedea9c3dc1e5f991dc50e82b0d51d04c">e_field</a>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="a00213.html#a46c1826d30af1a1778b65915c5cb1124">   80</a></span>&#160;  <span class="keywordtype">void</span>  *<a class="code" href="a00213.html#a46c1826d30af1a1778b65915c5cb1124">m</a>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#ifdef fftw</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordtype">double</span> *sum_buffer;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  fftw_plan plan_forward;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  fftw_plan plan_backward;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  fftw_complex *phys_buffer;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  fftw_complex *fourier_buffer;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  ptrdiff_t alloc_local;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  ptrdiff_t local_ni, local_i_start;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  ptrdiff_t local_no, local_o_start;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;} <a class="code" href="a00213.html#a00628">Vlasov</a>;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00213.html#a527a443cc8715a3e4dfc554046d0bb3d">VlasovInitialize</a> (<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00213.html#a86cecceaf67a26041189c560ea5a176c">VlasovCleanup</a>    (<span class="keywordtype">void</span>*);</div>
+<div class="ttc" id="a00213_html_a4094920098b4d5295d51c180da96f699"><div class="ttname"><a href="a00213.html#a4094920098b4d5295d51c180da96f699">Vlasov::npts_local_x_wghosts</a></div><div class="ttdeci">int npts_local_x_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00071">vlasov.h:71</a></div></div>
+<div class="ttc" id="a00213_html_aab5bd39936c1e76e9d6193abe3030036"><div class="ttname"><a href="a00213.html#aab5bd39936c1e76e9d6193abe3030036">Vlasov::npts_global_x</a></div><div class="ttdeci">long npts_global_x</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00068">vlasov.h:68</a></div></div>
+<div class="ttc" id="a00213_html_a2a5cede87e8687192c8bec19ec1535f3"><div class="ttname"><a href="a00213.html#a2a5cede87e8687192c8bec19ec1535f3">Vlasov::npts_local_x</a></div><div class="ttdeci">int npts_local_x</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00065">vlasov.h:65</a></div></div>
+<div class="ttc" id="a00213_html_a489f8895b9b198463a3b72b8809d46d8"><div class="ttname"><a href="a00213.html#a489f8895b9b198463a3b72b8809d46d8">Vlasov::ndims_v</a></div><div class="ttdeci">int ndims_v</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00062">vlasov.h:62</a></div></div>
+<div class="ttc" id="a00213_html_a46c1826d30af1a1778b65915c5cb1124"><div class="ttname"><a href="a00213.html#a46c1826d30af1a1778b65915c5cb1124">Vlasov::m</a></div><div class="ttdeci">void * m</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00080">vlasov.h:80</a></div></div>
+<div class="ttc" id="a00213_html_ae527165d3d2d27bcedc2179a1fb0cb63"><div class="ttname"><a href="a00213.html#ae527165d3d2d27bcedc2179a1fb0cb63">Vlasov::ndims_x</a></div><div class="ttdeci">int ndims_x</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00059">vlasov.h:59</a></div></div>
+<div class="ttc" id="a00213_html_aba8999e006d046630748521bcadf52b8"><div class="ttname"><a href="a00213.html#aba8999e006d046630748521bcadf52b8">Vlasov::npts_global_x_wghosts</a></div><div class="ttdeci">long npts_global_x_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00074">vlasov.h:74</a></div></div>
+<div class="ttc" id="a00213_html_a527a443cc8715a3e4dfc554046d0bb3d"><div class="ttname"><a href="a00213.html#a527a443cc8715a3e4dfc554046d0bb3d">VlasovInitialize</a></div><div class="ttdeci">int VlasovInitialize(void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00542_source.html#l00039">VlasovInitialize.c:39</a></div></div>
+<div class="ttc" id="a00213_html_a00628"><div class="ttname"><a href="a00213.html#a00628">Vlasov</a></div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00053">vlasov.h:53</a></div></div>
+<div class="ttc" id="a00213_html_aedea9c3dc1e5f991dc50e82b0d51d04c"><div class="ttname"><a href="a00213.html#aedea9c3dc1e5f991dc50e82b0d51d04c">Vlasov::e_field</a></div><div class="ttdeci">double * e_field</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00077">vlasov.h:77</a></div></div>
+<div class="ttc" id="a00213_html_a86cecceaf67a26041189c560ea5a176c"><div class="ttname"><a href="a00213.html#a86cecceaf67a26041189c560ea5a176c">VlasovCleanup</a></div><div class="ttdeci">int VlasovCleanup(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00538_source.html#l00010">VlasovCleanup.c:10</a></div></div>
+<div class="ttc" id="a00213_html_acc5a122c52054223754455bbd5d0cacf"><div class="ttname"><a href="a00213.html#acc5a122c52054223754455bbd5d0cacf">Vlasov::self_consistent_electric_field</a></div><div class="ttdeci">int self_consistent_electric_field</div><div class="ttdef"><b>Definition:</b> <a href="a00213_source.html#l00056">vlasov.h:56</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

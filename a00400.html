@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/PhysicalModels/FPPowerSystem/FPPowerSystemFunctions.c File Reference</title>
+<title>HyPar: src/PhysicalModels/Euler1D/Euler1DComputeCFL.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,49 +114,54 @@ $(document).ready(function(){initNavTree('a00400.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FPPowerSystemFunctions.c File Reference</div>  </div>
+<div class="title">Euler1DComputeCFL.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;math.h&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00161_source.html">physicalmodels/fppowersystem.h</a>&gt;</code><br/>
+
+<p>Contains the function to compute maximum CFL over the domain for the 1D Euler equations physical model.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00218_source.html">basic.h</a>&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00217_source.html">arrayfunctions.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00230_source.html">mathfunctions.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00237_source.html">physicalmodels/euler1d.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00224_source.html">hypar.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00400_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aac482e6c6196f67a7a2645247b28ac86"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#aac482e6c6196f67a7a2645247b28ac86">FPPowerSystemDriftFunction</a> (int dir, void *p, double x, double y, double t)</td></tr>
-<tr class="separator:aac482e6c6196f67a7a2645247b28ac86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1f47845af7ce8dfcf12624868cb7ca5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#ab1f47845af7ce8dfcf12624868cb7ca5">FPPowerSystemDissipationFunction</a> (int dir, void *p, double t)</td></tr>
-<tr class="separator:ab1f47845af7ce8dfcf12624868cb7ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a820145e91372888fca738bcf320495d9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#a820145e91372888fca738bcf320495d9">Euler1DComputeCFL</a> (void *s, void *m, double dt, double t)</td></tr>
+<tr class="separator:a820145e91372888fca738bcf320495d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aac482e6c6196f67a7a2645247b28ac86"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Contains the function to compute maximum CFL over the domain for the 1D Euler equations physical model. </p>
+<dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
+
+<p>Definition in file <a class="el" href="a00400_source.html">Euler1DComputeCFL.c</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a820145e91372888fca738bcf320495d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double FPPowerSystemDriftFunction </td>
+          <td class="memname">double Euler1DComputeCFL </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
+          <td class="paramname"><em>m</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
+          <td class="paramname"><em>dt</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -171,85 +176,59 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Computes the maximum CFL number over the domain. Note that the CFL is computed over the local domain on this processor only. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00194.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00197.html#a00622" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
+    <tr><td class="paramname">dt</td><td>Time step size for which to compute the CFL </td></tr>
+    <tr><td class="paramname">t</td><td>Time </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="a00400_source.html#l00004">4</a> of file <a class="el" href="a00400_source.html">FPPowerSystemFunctions.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;  <a class="code" href="a00161.html#a00581">FPPowerSystem</a> *params = (<a class="code" href="a00161.html#a00581">FPPowerSystem</a>*) p;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keywordtype">double</span> <a class="code" href="a00160.html#a45bcf0bb95407584d582c61664359c14">drift</a> = 0;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <span class="keywordflow">if</span> (dir == 0)   drift = params-&gt;<a class="code" href="a00161.html#aad25901418696dab0fb4016bd2eb87f9">O_s</a> * (y - 1.0);</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (dir == 1) {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keywordflow">if</span>      (t &lt; params-&gt;tf)    params-&gt;<a class="code" href="a00161.html#ab070db6beb517f3c727e4f259f3c43de">Pmax</a> = params-&gt;<a class="code" href="a00161.html#a1eb62b8cb1f5e5f571d51179718e7d4c">E</a>*params-&gt;<a class="code" href="a00161.html#a1e6fac1696a7d8fcf13ce87a658cfe12">V</a>/params-&gt;<a class="code" href="a00161.html#adf05fcfd83be702fb6d79e601cd7df76">g1</a>;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (t &lt; params-&gt;tcl)   params-&gt;<a class="code" href="a00161.html#ab070db6beb517f3c727e4f259f3c43de">Pmax</a> = 0.0;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keywordflow">else</span>                        params-&gt;<a class="code" href="a00161.html#ab070db6beb517f3c727e4f259f3c43de">Pmax</a> = params-&gt;<a class="code" href="a00161.html#a1eb62b8cb1f5e5f571d51179718e7d4c">E</a>*params-&gt;<a class="code" href="a00161.html#a1e6fac1696a7d8fcf13ce87a658cfe12">V</a>/params-&gt;<a class="code" href="a00161.html#af6cb842b18f412478038edddd8ee6009">g2</a>;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    drift = (1.0/(2.0*params-&gt;<a class="code" href="a00161.html#a982cf43f120ff8978010e078bd49d9a3">H</a>)) * (params-&gt;<a class="code" href="a00161.html#a447021464d5a14391f18d08fc463a7d5">Pm</a> - params-&gt;<a class="code" href="a00161.html#ab070db6beb517f3c727e4f259f3c43de">Pmax</a>*sin(x) - params-&gt;<a class="code" href="a00161.html#ad8657a5ec76e12f3066fb4b4eb75ace9">D</a>*(y-1.0));</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  }</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="a00160.html#a45bcf0bb95407584d582c61664359c14">drift</a>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
-<div class="ttc" id="a00161_html_a00581"><div class="ttname"><a href="a00161.html#a00581">FPPowerSystem</a></div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00052">fppowersystem.h:52</a></div></div>
-<div class="ttc" id="a00161_html_ad8657a5ec76e12f3066fb4b4eb75ace9"><div class="ttname"><a href="a00161.html#ad8657a5ec76e12f3066fb4b4eb75ace9">FPPowerSystem::D</a></div><div class="ttdeci">double D</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00060">fppowersystem.h:60</a></div></div>
-<div class="ttc" id="a00161_html_a1e6fac1696a7d8fcf13ce87a658cfe12"><div class="ttname"><a href="a00161.html#a1e6fac1696a7d8fcf13ce87a658cfe12">FPPowerSystem::V</a></div><div class="ttdeci">double V</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00058">fppowersystem.h:58</a></div></div>
-<div class="ttc" id="a00160_html_a45bcf0bb95407584d582c61664359c14"><div class="ttname"><a href="a00160.html#a45bcf0bb95407584d582c61664359c14">drift</a></div><div class="ttdeci">#define drift(x)</div><div class="ttdef"><b>Definition:</b> <a href="a00160_source.html#l00031">fpdoublewell.h:31</a></div></div>
-<div class="ttc" id="a00161_html_af6cb842b18f412478038edddd8ee6009"><div class="ttname"><a href="a00161.html#af6cb842b18f412478038edddd8ee6009">FPPowerSystem::g2</a></div><div class="ttdeci">double g2</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00059">fppowersystem.h:59</a></div></div>
-<div class="ttc" id="a00161_html_aad25901418696dab0fb4016bd2eb87f9"><div class="ttname"><a href="a00161.html#aad25901418696dab0fb4016bd2eb87f9">FPPowerSystem::O_s</a></div><div class="ttdeci">double O_s</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00055">fppowersystem.h:55</a></div></div>
-<div class="ttc" id="a00161_html_a447021464d5a14391f18d08fc463a7d5"><div class="ttname"><a href="a00161.html#a447021464d5a14391f18d08fc463a7d5">FPPowerSystem::Pm</a></div><div class="ttdeci">double Pm</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00061">fppowersystem.h:61</a></div></div>
-<div class="ttc" id="a00161_html_ab070db6beb517f3c727e4f259f3c43de"><div class="ttname"><a href="a00161.html#ab070db6beb517f3c727e4f259f3c43de">FPPowerSystem::Pmax</a></div><div class="ttdeci">double Pmax</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00067">fppowersystem.h:67</a></div></div>
-<div class="ttc" id="a00161_html_adf05fcfd83be702fb6d79e601cd7df76"><div class="ttname"><a href="a00161.html#adf05fcfd83be702fb6d79e601cd7df76">FPPowerSystem::g1</a></div><div class="ttdeci">double g1</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00059">fppowersystem.h:59</a></div></div>
-<div class="ttc" id="a00161_html_a982cf43f120ff8978010e078bd49d9a3"><div class="ttname"><a href="a00161.html#a982cf43f120ff8978010e078bd49d9a3">FPPowerSystem::H</a></div><div class="ttdeci">double H</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00056">fppowersystem.h:56</a></div></div>
-<div class="ttc" id="a00161_html_a1eb62b8cb1f5e5f571d51179718e7d4c"><div class="ttname"><a href="a00161.html#a1eb62b8cb1f5e5f571d51179718e7d4c">FPPowerSystem::E</a></div><div class="ttdeci">double E</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00057">fppowersystem.h:57</a></div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="ab1f47845af7ce8dfcf12624868cb7ca5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double FPPowerSystemDissipationFunction </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>dir</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="a00400_source.html#l00020">20</a> of file <a class="el" href="a00400_source.html">FPPowerSystemFunctions.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <a class="code" href="a00161.html#a00581">FPPowerSystem</a> *params = (<a class="code" href="a00161.html#a00581">FPPowerSystem</a>*) p;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordtype">double</span> dissp = 0;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">if</span> (dir == 1) {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">double</span> gamma = params-&gt;<a class="code" href="a00161.html#ad8657a5ec76e12f3066fb4b4eb75ace9">D</a> / (2.0*params-&gt;<a class="code" href="a00161.html#a982cf43f120ff8978010e078bd49d9a3">H</a>);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    dissp =   (1.0/(2.0*params-&gt;<a class="code" href="a00161.html#a982cf43f120ff8978010e078bd49d9a3">H</a>)) * (1.0/(2.0*params-&gt;<a class="code" href="a00161.html#a982cf43f120ff8978010e078bd49d9a3">H</a>)) </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            * ((params-&gt;<a class="code" href="a00161.html#a59e80b8ba32c12c6d0a868f17a19ae48">l</a>*params-&gt;<a class="code" href="a00161.html#a5b5e3f03e443adea974601f295136638">q</a>*params-&gt;<a class="code" href="a00161.html#a5b5e3f03e443adea974601f295136638">q</a>)/(params-&gt;<a class="code" href="a00161.html#a59e80b8ba32c12c6d0a868f17a19ae48">l</a>*gamma+1.0))</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            * (1.0 - exp(-(gamma+1.0/params-&gt;<a class="code" href="a00161.html#a59e80b8ba32c12c6d0a868f17a19ae48">l</a>)*t));</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">return</span>(dissp);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
-<div class="ttc" id="a00161_html_a00581"><div class="ttname"><a href="a00161.html#a00581">FPPowerSystem</a></div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00052">fppowersystem.h:52</a></div></div>
-<div class="ttc" id="a00161_html_ad8657a5ec76e12f3066fb4b4eb75ace9"><div class="ttname"><a href="a00161.html#ad8657a5ec76e12f3066fb4b4eb75ace9">FPPowerSystem::D</a></div><div class="ttdeci">double D</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00060">fppowersystem.h:60</a></div></div>
-<div class="ttc" id="a00161_html_a59e80b8ba32c12c6d0a868f17a19ae48"><div class="ttname"><a href="a00161.html#a59e80b8ba32c12c6d0a868f17a19ae48">FPPowerSystem::l</a></div><div class="ttdeci">double l</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00062">fppowersystem.h:62</a></div></div>
-<div class="ttc" id="a00161_html_a5b5e3f03e443adea974601f295136638"><div class="ttname"><a href="a00161.html#a5b5e3f03e443adea974601f295136638">FPPowerSystem::q</a></div><div class="ttdeci">double q</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00063">fppowersystem.h:63</a></div></div>
-<div class="ttc" id="a00161_html_a982cf43f120ff8978010e078bd49d9a3"><div class="ttname"><a href="a00161.html#a982cf43f120ff8978010e078bd49d9a3">FPPowerSystem::H</a></div><div class="ttdeci">double H</div><div class="ttdef"><b>Definition:</b> <a href="a00161_source.html#l00056">fppowersystem.h:56</a></div></div>
+<p>Definition at line <a class="el" href="a00400_source.html#l00017">17</a> of file <a class="el" href="a00400_source.html">Euler1DComputeCFL.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00194.html">HyPar</a>     *solver = (<a class="code" href="a00194.html">HyPar</a>*)   s;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00187.html">Euler1D</a>   *param  = (<a class="code" href="a00187.html">Euler1D</a>*) solver-&gt;<a class="code" href="a00194.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span> *dim    = solver-&gt;<a class="code" href="a00194.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">int</span> ghosts  = solver-&gt;<a class="code" href="a00194.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordtype">int</span> ndims   = solver-&gt;<a class="code" href="a00194.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">int</span> index[ndims];</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">double</span> *u   = solver-&gt;<a class="code" href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">double</span> max_cfl = 0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00217.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">int</span> p; <a class="code" href="a00217.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">double</span> rho, v, e, P, c, dxinv, local_cfl;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="a00237.html#af35510fb1477577f57c57cc2a862b1e7">_Euler1DGetFlowVar_</a>((u+<a class="code" href="a00237.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),rho,v,e,P,param);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="a00218.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,index[0],dim,ghosts,solver-&gt;<a class="code" href="a00194.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,dxinv); <span class="comment">/* 1/dx */</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    c         = sqrt(param-&gt;<a class="code" href="a00187.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>*P/rho); <span class="comment">/* speed of sound */</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    local_cfl = (<a class="code" href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(v)+c)*dt*dxinv; <span class="comment">/* local cfl for this grid point */</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">if</span> (local_cfl &gt; max_cfl) max_cfl = local_cfl;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="a00217.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span>(max_cfl);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="ttc" id="a00194_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00194.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00102">hypar.h:102</a></div></div>
+<div class="ttc" id="a00194_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00194.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00253">hypar.h:253</a></div></div>
+<div class="ttc" id="a00218_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00218.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00027">basic.h:27</a></div></div>
+<div class="ttc" id="a00194_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00108">hypar.h:108</a></div></div>
+<div class="ttc" id="a00194_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00194.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00044">hypar.h:44</a></div></div>
+<div class="ttc" id="a00187_html"><div class="ttname"><a href="a00187.html">Euler1D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 1D Euler equations. This structure cont...</div><div class="ttdef"><b>Definition:</b> <a href="a00237_source.html#l00273">euler1d.h:273</a></div></div>
+<div class="ttc" id="a00237_html_af35510fb1477577f57c57cc2a862b1e7"><div class="ttname"><a href="a00237.html#af35510fb1477577f57c57cc2a862b1e7">_Euler1DGetFlowVar_</a></div><div class="ttdeci">#define _Euler1DGetFlowVar_(u, rho, v, e, P, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00237_source.html#l00081">euler1d.h:81</a></div></div>
+<div class="ttc" id="a00229_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00032">math_ops.h:32</a></div></div>
+<div class="ttc" id="a00217_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00217.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00168">arrayfunctions.h:168</a></div></div>
+<div class="ttc" id="a00217_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00217.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00039">arrayfunctions.h:39</a></div></div>
+<div class="ttc" id="a00237_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00237.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00237_source.html#l00058">euler1d.h:58</a></div></div>
+<div class="ttc" id="a00187_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00187.html#a72f9e01745b3a8203067ab84aefc9aea">Euler1D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00237_source.html#l00274">euler1d.h:274</a></div></div>
+<div class="ttc" id="a00194_html"><div class="ttname"><a href="a00194.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00194_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00194.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00217_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00217.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00125">arrayfunctions.h:125</a></div></div>
+<div class="ttc" id="a00194_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00194.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00035">hypar.h:35</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

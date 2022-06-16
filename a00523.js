@@ -1,5 +1,4 @@
 var a00523 =
 [
-    [ "VolumeIntegral", "a00523.html#a1f30168f72fce94d12bd0cc8d9322494", null ],
-    [ "InitialSolution", "a00523.html#a21908a4de7bd316f468c85e6d7074760", null ]
+    [ "ShallowWater2DCleanup", "a00523.html#a8ce86b097b5c5bf69087ba54e89e2acc", null ]
 ];

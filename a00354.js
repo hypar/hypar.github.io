@@ -1,6 +1,7 @@
 var a00354 =
 [
-    [ "__FUNCT__", "a00354.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscComputeRHSOperators", "a00354.html#adea77130b130e8c11d207417e818a642", null ],
-    [ "PetscPreTimeStep", "a00354.html#afd0d852423b377a3759c8bc0500903c7", null ]
+    [ "isPowerOfTwo", "a00354.html#aafd7ccd78e660e79257b36fc5a9453f2", null ],
+    [ "coarsen1D", "a00354.html#a9d680d590ea7b1a942b880564d70dfd1", null ],
+    [ "refine1D", "a00354.html#a8fbe3466587deeb3032a24ccfcc3956a", null ],
+    [ "InterpolateGlobalnDVar", "a00354.html#a12f68d1438531171b4cc818ac9c53008", null ]
 ];

@@ -1,4 +1,5 @@
 var a00536 =
 [
-    [ "IncrementFilenameIndex", "a00536.html#a55a796b622e90a00d1cb9164ab40c1c3", null ]
+    [ "VlasovAdvectionCoeff", "a00536.html#a58d4d7eb9e93f0e81dd01ce4895d6b3a", null ],
+    [ "VlasovAdvection", "a00536.html#a5abae931957e04e898c1d3873dddce45", null ]
 ];

@@ -1,4 +1,5 @@
 var a00443 =
 [
-    [ "NavierStokes2DParabolicFunction", "a00443.html#a3b7da8c25125ac4681035c3bcd35c449", null ]
+    [ "FPPowerSystem1BusDriftFunction", "a00443.html#ace8e98b299156d0b6dbac42538068a73", null ],
+    [ "FPPowerSystem1BusDissipationFunction", "a00443.html#a5f26bc15752e591bc4010dec7dc3c285", null ]
 ];

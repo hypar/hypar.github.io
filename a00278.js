@@ -1,4 +1,4 @@
 var a00278 =
 [
-    [ "IBWriteBodySTL", "a00278.html#a562d4a06560fee4b5d1df95736c47fd3", null ]
+    [ "GetStringFromInteger", "a00278.html#ad1b8919f10d5b92bac1e31e065a9439d", null ]
 ];
