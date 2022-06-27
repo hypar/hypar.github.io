@@ -1,4 +1,4 @@
 var a00578 =
 [
-    [ "TimeError", "a00578.html#a0e482caa3b262c93af18f0e96f16ff59", null ]
+    [ "OutputSolution", "a00578.html#a5981de613724cb667e98aa872157534e", null ]
 ];

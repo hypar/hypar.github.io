@@ -1,6 +1,12 @@
 var a00208 =
 [
-    [ "mpi", "a00208.html#a4afd2c7b3eb8fda452474ebdbe71c8c0", null ],
-    [ "solver", "a00208.html#a523947ce4fa7128c4c767163953253b9", null ],
-    [ "is_barebones", "a00208.html#a23988a34071e1a0f0de820a4043a1fc8", null ]
+    [ "bt_type", "a00208.html#a6f84a1093abf57dcbf0406b33f40f766", null ],
+    [ "topo_flag", "a00208.html#a71b5cdadb8aec7421fa05a93ec51c102", null ],
+    [ "g", "a00208.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
+    [ "b", "a00208.html#a9f92e5582bf339a3c95df78b9c684fe0", null ],
+    [ "fhat", "a00208.html#acc808f03e31ad5612b724fe23dea05ab", null ],
+    [ "beta", "a00208.html#a9424343761f8c4f4c1afe8f5b6bf471b", null ],
+    [ "D", "a00208.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
+    [ "upw_choice", "a00208.html#a57894a0f53d5b228bf64053367736bf9", null ],
+    [ "SourceUpwind", "a00208.html#a3cb843ad67e4b14387b7fa21f6d4090b", null ]
 ];

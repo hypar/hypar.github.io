@@ -1,5 +1,4 @@
 var a00376 =
 [
-    [ "__FUNCT__", "a00376.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscComputePreconMatImpl", "a00376.html#af9e1c250975faedc020e71b15b774ea0", null ]
+    [ "PetscCleanup", "a00376.html#a6135b9aff50e410b03934a0688d8a73b", null ]
 ];

@@ -1,4 +1,4 @@
 var a00350 =
 [
-    [ "LimiterVanLeer", "a00350.html#a722f80eaa30391d5f57600c51b68e1ab", null ]
+    [ "LimiterMinMod", "a00350.html#a26b80a8b0c4841aa43ee83081bfa2b7a", null ]
 ];

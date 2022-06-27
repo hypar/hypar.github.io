@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/TimeIntegration/TimeGetAuxSolutions.c File Reference</title>
+<title>HyPar: src/TimeIntegration/TimeExplicitRKCleanup.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,124 +114,62 @@ $(document).ready(function(){initNavTree('a00587.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">TimeGetAuxSolutions.c File Reference</div>  </div>
+<div class="title">TimeExplicitRKCleanup.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Returns any "auxiliary" solutions.  
+<p>Clean up explicit Runge-Kutta time integrator.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br/>
 <code>#include &lt;string.h&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00224_source.html">hypar.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00250_source.html">timeintegration.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00252_source.html">timeintegration.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00587_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afb7c0aaa510e236f880899a068bbecca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00587.html#afb7c0aaa510e236f880899a068bbecca">TimeGetAuxSolutions</a> (int *N, double **uaux, void *s, int nu, int ns)</td></tr>
-<tr class="separator:afb7c0aaa510e236f880899a068bbecca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c15ee3ba87216c336861346c3e577c3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00587.html#a6c15ee3ba87216c336861346c3e577c3">TimeExplicitRKCleanup</a> (void *s)</td></tr>
+<tr class="separator:a6c15ee3ba87216c336861346c3e577c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Returns any "auxiliary" solutions. </p>
+<div class="textblock"><p>Clean up explicit Runge-Kutta time integrator. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00587_source.html">TimeGetAuxSolutions.c</a>.</p>
+<p>Definition in file <a class="el" href="a00587_source.html">TimeExplicitRKCleanup.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="afb7c0aaa510e236f880899a068bbecca"></a>
+<a class="anchor" id="a6c15ee3ba87216c336861346c3e577c3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int TimeGetAuxSolutions </td>
+          <td class="memname">int TimeExplicitRKCleanup </td>
           <td>(</td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>N</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double **&#160;</td>
-          <td class="paramname"><em>uaux</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>s</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nu</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>ns</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return auxiliary solution: Some time integrators may have the concept of auxiliary solutions that they evolve along with the main solution <a class="el" href="a00194.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a> (these may be used for error estimation, for example). This function returns a pointer to such an auxiliary solution. Note that the auxiliary solution has the same dimensions and array layout as the main solution.</p>
-<ul>
-<li>Call with the final argument <em>n</em> less than 0 to get the total number of auxiliary solutions (this value will be stored in the argument <em>N</em> at exit).</li>
-<li>Call with the final argument <em>n</em> less than or equal to zero to get the <em>n-th</em> auxiliary solution (the argument <em>uaux</em> will point to this at exit).</li>
-</ul>
-<p>Note that auxiliary solutions are numbered in the C convention: 0,1,...,N-1.</p>
-<p>Time integration methods which use auxiliary solutions currently implemented:</p>
-<ul>
-<li>General Linear Methods with Global Error Estimators (GLM-GEE - <a class="el" href="a00189.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>) (see <a class="el" href="a00250.html#a7b76988ab950d39d505042dc1f09b875">TimeGLMGEE()</a>, <a class="el" href="a00250.html#ad7d778f0d388a120492e4901c3319d51">TimeGLMGEEInitialize()</a> ). </li>
-</ul>
+<p>Clean up allocations related to explicit Runge-Kutta time integration: This function frees up the arrays for the Butcher tableaux. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">N</td><td>Number of auxiliary solutions </td></tr>
-    <tr><td class="paramname">uaux</td><td>Pointer to the array holding the auxiliary solution </td></tr>
-    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00194.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
-    <tr><td class="paramname">nu</td><td>Index of the auxiliary solution to return </td></tr>
-    <tr><td class="paramname">ns</td><td>Index of the simulation domain of which the auxiliary solution to return </td></tr>
+    <tr><td class="paramname">s</td><td>Object of type <a class="el" href="a00191.html#a00614" title="Structure containing the parameters for an explicit Runge-Kutta method. ">ExplicitRKParameters</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00587_source.html#l00029">29</a> of file <a class="el" href="a00587_source.html">TimeGetAuxSolutions.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00194.html">HyPar</a>           *solver = (<a class="code" href="a00194.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00211.html">TimeIntegration</a> *TS     = (<a class="code" href="a00211.html">TimeIntegration</a>*) solver-&gt;<a class="code" href="a00194.html#a1d36fea92472416e32e039b86dea0b18">time_integrator</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  if (nu &gt;= 0) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00194.html#a138e751362d14724df8e6ab27c4a5e55">time_scheme</a>,<a class="code" href="a00189.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      <a class="code" href="a00189.html#a00618">GLMGEEParameters</a> *params = (<a class="code" href="a00189.html#a00618">GLMGEEParameters</a>*) solver-&gt;<a class="code" href="a00194.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      *uaux = (TS-&gt;<a class="code" href="a00211.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[params-&gt;<a class="code" href="a00189.html#acab531abaa74a7e664e3986f2522b33a">r</a>+nu] + TS-&gt;<a class="code" href="a00211.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">if</span> (!TS) *N = 0;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00194.html#a138e751362d14724df8e6ab27c4a5e55">time_scheme</a>,<a class="code" href="a00189.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="a00189.html#a00618">GLMGEEParameters</a> *params = (<a class="code" href="a00189.html#a00618">GLMGEEParameters</a>*) solver-&gt;<a class="code" href="a00194.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        *N = params-&gt;<a class="code" href="a00189.html#acab531abaa74a7e664e3986f2522b33a">r</a> - 1;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      } <span class="keywordflow">else</span> *N = 0;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
-<div class="ttc" id="a00189_html_aad9619c099daeb3e6b1b7ef9e03e38d8"><div class="ttname"><a href="a00189.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a></div><div class="ttdeci">#define _GLM_GEE_</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00018">timeintegration_struct.h:18</a></div></div>
-<div class="ttc" id="a00211_html_aed62497ac51211784e9bfa2608cc7413"><div class="ttname"><a href="a00211.html#aed62497ac51211784e9bfa2608cc7413">TimeIntegration::u_offsets</a></div><div class="ttdeci">long * u_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00054">timeintegration_struct.h:54</a></div></div>
-<div class="ttc" id="a00194_html_adec095311615891040de11341c01a77f"><div class="ttname"><a href="a00194.html#adec095311615891040de11341c01a77f">HyPar::msti</a></div><div class="ttdeci">void * msti</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00342">hypar.h:342</a></div></div>
-<div class="ttc" id="a00189_html_acab531abaa74a7e664e3986f2522b33a"><div class="ttname"><a href="a00189.html#acab531abaa74a7e664e3986f2522b33a">GLMGEEParameters::r</a></div><div class="ttdeci">int r</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00257">timeintegration_struct.h:257</a></div></div>
-<div class="ttc" id="a00189_html_a00618"><div class="ttname"><a href="a00189.html#a00618">GLMGEEParameters</a></div><div class="ttdoc">Structure containing the parameters for the General Linear Methods with Global Error Estimators (GLM-...</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00256">timeintegration_struct.h:256</a></div></div>
-<div class="ttc" id="a00194_html_a138e751362d14724df8e6ab27c4a5e55"><div class="ttname"><a href="a00194.html#a138e751362d14724df8e6ab27c4a5e55">HyPar::time_scheme</a></div><div class="ttdeci">char time_scheme[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00070">hypar.h:70</a></div></div>
-<div class="ttc" id="a00211_html"><div class="ttname"><a href="a00211.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00029">timeintegration_struct.h:29</a></div></div>
-<div class="ttc" id="a00194_html"><div class="ttname"><a href="a00194.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00211_html_ae21dee7e1deaf4ff3024c1476230d3b1"><div class="ttname"><a href="a00211.html#ae21dee7e1deaf4ff3024c1476230d3b1">TimeIntegration::U</a></div><div class="ttdeci">double ** U</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00079">timeintegration_struct.h:79</a></div></div>
-<div class="ttc" id="a00194_html_a1d36fea92472416e32e039b86dea0b18"><div class="ttname"><a href="a00194.html#a1d36fea92472416e32e039b86dea0b18">HyPar::time_integrator</a></div><div class="ttdeci">void * time_integrator</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00157">hypar.h:157</a></div></div>
+<p>Definition at line <a class="el" href="a00587_source.html#l00012">12</a> of file <a class="el" href="a00587_source.html">TimeExplicitRKCleanup.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <a class="code" href="a00191.html#a00614">ExplicitRKParameters</a> *params = (<a class="code" href="a00191.html#a00614">ExplicitRKParameters</a>*) s;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keywordflow">if</span> (params-&gt;<a class="code" href="a00191.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>) free(params-&gt;<a class="code" href="a00191.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a>);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordflow">if</span> (params-&gt;<a class="code" href="a00191.html#a9f92e5582bf339a3c95df78b9c684fe0">b</a>) free(params-&gt;<a class="code" href="a00191.html#a9f92e5582bf339a3c95df78b9c684fe0">b</a>);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keywordflow">if</span> (params-&gt;<a class="code" href="a00191.html#a9699d746362160261a64e9447767c8d0">c</a>) free(params-&gt;<a class="code" href="a00191.html#a9699d746362160261a64e9447767c8d0">c</a>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+<div class="ttc" id="a00191_html_a00614"><div class="ttname"><a href="a00191.html#a00614">ExplicitRKParameters</a></div><div class="ttdoc">Structure containing the parameters for an explicit Runge-Kutta method. </div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00166">timeintegration_struct.h:166</a></div></div>
+<div class="ttc" id="a00191_html_ac900805a486cbb8489e3c176ed6e0d8e"><div class="ttname"><a href="a00191.html#ac900805a486cbb8489e3c176ed6e0d8e">ExplicitRKParameters::A</a></div><div class="ttdeci">double * A</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00169">timeintegration_struct.h:169</a></div></div>
+<div class="ttc" id="a00191_html_a9699d746362160261a64e9447767c8d0"><div class="ttname"><a href="a00191.html#a9699d746362160261a64e9447767c8d0">ExplicitRKParameters::c</a></div><div class="ttdeci">double * c</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00169">timeintegration_struct.h:169</a></div></div>
+<div class="ttc" id="a00191_html_a9f92e5582bf339a3c95df78b9c684fe0"><div class="ttname"><a href="a00191.html#a9f92e5582bf339a3c95df78b9c684fe0">ExplicitRKParameters::b</a></div><div class="ttdeci">double * b</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00169">timeintegration_struct.h:169</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

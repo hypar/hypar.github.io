@@ -1,4 +1,4 @@
 var a00303 =
 [
-    [ "IBComputeNormalGradient", "a00303.html#af2395d184c7e2d65736714d8aaeebcfe", null ]
+    [ "IBComputeBoundingBox", "a00303.html#aa84e5f72825ab6682a3fd9daf2934bfe", null ]
 ];

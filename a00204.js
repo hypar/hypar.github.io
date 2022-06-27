@@ -1,10 +1,12 @@
 var a00204 =
 [
-    [ "~ROMObject", "a00204.html#a1ca5b352f7d65880379c7395ff2030f6", null ],
-    [ "projectInitialSolution", "a00204.html#a97ba4f15f37282435146c7ec50c16bc0", null ],
-    [ "takeSample", "a00204.html#ac66edb9999191b64b7d01b6dfc11307d", null ],
-    [ "train", "a00204.html#a5ac207430cbefd5e3dc2492c6cb05d8e", null ],
-    [ "predict", "a00204.html#a64c67d740dccea2f0d065f8a5e97acca", null ],
-    [ "save", "a00204.html#a01e1111152e9d98f152539cabdc9456d", null ],
-    [ "load", "a00204.html#ac392eccc3d2e6319528a151b4e24dafb", null ]
+    [ "gamma", "a00204.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "R", "a00204.html#a228eb5e837a644887ac6e7bab3f42485", null ],
+    [ "Omega", "a00204.html#a1b5bf6735b7465aec5c931281d240737", null ],
+    [ "g", "a00204.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
+    [ "init_atmos", "a00204.html#a8033c1255ef443c5e72e120e7519ff6a", null ],
+    [ "Pref", "a00204.html#ad2988f8045b70fe0950d361d8814faa6", null ],
+    [ "Tref", "a00204.html#abfc9a78d9685d39295be4f8cfefed2f2", null ],
+    [ "StandardAtmosphere", "a00204.html#a5025a527e19d84e42fead49061ed7fec", null ],
+    [ "upwind", "a00204.html#aea473d706c30accecfe35e5d76d4b50a", null ]
 ];

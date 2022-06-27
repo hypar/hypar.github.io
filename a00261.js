@@ -1,4 +1,4 @@
 var a00261 =
 [
-    [ "BCInitialize", "a00261.html#ae3e7ccd26cf3f58d1e1ae5b7faa684c1", null ]
+    [ "BCDirichletU", "a00261.html#aff556c3ed9f4a947436d47c58ea5983e", null ]
 ];

@@ -1,4 +1,4 @@
 var a00301 =
 [
-    [ "IBComputeBoundingBox", "a00301.html#aa84e5f72825ab6682a3fd9daf2934bfe", null ]
+    [ "IBAssembleGlobalFacetData", "a00301.html#a7383f93f03644bda100a1f27742232a3", null ]
 ];

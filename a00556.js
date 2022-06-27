@@ -1,4 +1,5 @@
 var a00556 =
 [
-    [ "InitializePhysicsData", "a00556.html#aca9b36e0c718e07e3806be4097cec0bd", null ]
+    [ "CalculateLocalExtent", "a00556.html#a33293e35159e6411e3574409bf7d90db", null ],
+    [ "InitializeBoundaries", "a00556.html#a915577ea88d59ab33c6c1e53cfc67737", null ]
 ];

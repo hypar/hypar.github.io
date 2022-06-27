@@ -1,5 +1,6 @@
 var a00487 =
 [
-    [ "NavierStokes3DIBAdiabatic", "a00487.html#a0f7ac290f54e925b5e5554a69bba5c16", null ],
-    [ "NavierStokes3DIBIsothermal", "a00487.html#a8988fb5737b2ad7f660c21326f2e1049", null ]
+    [ "NavierStokes3DRoeAverage", "a00487.html#a8910dbe2aaf01714c0136e887ab88a89", null ],
+    [ "NavierStokes3DComputePressure", "a00487.html#aad0938e55e9fc3c10fe5451ff8f2ee1c", null ],
+    [ "NavierStokes3DComputeTemperature", "a00487.html#a6d78f90f0c4b9a283c603518407a5336", null ]
 ];

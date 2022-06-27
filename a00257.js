@@ -1,4 +1,4 @@
 var a00257 =
 [
-    [ "BandedMatrixPreallocate", "a00257.html#ac62d1bac79d03bd2136c4fb87e9045d4", null ]
+    [ "BandedMatrixDestroy", "a00257.html#a75f8c3de645719ac147311358c3bff73", null ]
 ];

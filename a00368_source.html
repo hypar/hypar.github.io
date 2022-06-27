@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/MPIFunctions/MPIPartition1D.c Source File</title>
+<title>HyPar: src/MPIFunctions/MPIMax.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,29 +112,46 @@ $(document).ready(function(){initNavTree('a00368_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">MPIPartition1D.c</div>  </div>
+<div class="title">MPIMax.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00368.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00234.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00368.html#a87127187b566bfa02b692247f9e3c798">   14</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00234.html#af8194ca5a460534fdbe391035a95c69d">MPIPartition1D</a>(</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">int</span> nglobal,  </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">int</span> nproc,    </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span> rank      </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                  )</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">int</span> nlocal;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> (nglobal%nproc == 0) nlocal = nglobal/nproc;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">if</span> (rank == nproc-1)  nlocal = nglobal/nproc + nglobal%nproc;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">else</span>                  nlocal = nglobal/nproc;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span>(nlocal);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
-<div class="ttc" id="a00234_html_af8194ca5a460534fdbe391035a95c69d"><div class="ttname"><a href="a00234.html#af8194ca5a460534fdbe391035a95c69d">MPIPartition1D</a></div><div class="ttdeci">int MPIPartition1D(int, int, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00368_source.html#l00014">MPIPartition1D.c:14</a></div></div>
-<div class="ttc" id="a00234_html"><div class="ttname"><a href="a00234.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00236.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="a00368.html#a6d51d72d0316346543fbda2aa97a790a">   15</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00236.html#a184fc81a4d6618de22a60c9d8436fc83">MPIMax_integer</a>(</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">int</span>   *global, </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span>   *var,    </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    <span class="keywordtype">int</span>   size,    </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                    <span class="keywordtype">void</span>  *comm    </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                  )</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#ifdef serial</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span>  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">for</span> (i = 0; i &lt; size; i++)  global[i] = var[i];</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor"></span>  MPI_Allreduce((var==global?MPI_IN_PLACE:var),global,size,MPI_INT,MPI_MAX,*((MPI_Comm*)comm));</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a00368.html#aa8bb15ed31fcdd02194de4d639d67988">   38</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00236.html#a33aa37e0050ec72dadb8d63851df51ec">MPIMax_double</a>(</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                    <span class="keywordtype">double</span>  *global, </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                    <span class="keywordtype">double</span>  *var,    </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                    <span class="keywordtype">int</span>     size,    </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                    <span class="keywordtype">void</span>    *comm    </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                 )</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#ifdef serial</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor"></span>  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">for</span> (i = 0; i &lt; size; i++)  global[i] = var[i];</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor"></span>  MPI_Allreduce((var==global?MPI_IN_PLACE:var),global,size,MPI_DOUBLE,MPI_MAX,*((MPI_Comm*)comm));</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="ttc" id="a00236_html_a184fc81a4d6618de22a60c9d8436fc83"><div class="ttname"><a href="a00236.html#a184fc81a4d6618de22a60c9d8436fc83">MPIMax_integer</a></div><div class="ttdeci">int MPIMax_integer(int *, int *, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00368_source.html#l00015">MPIMax.c:15</a></div></div>
+<div class="ttc" id="a00236_html_a33aa37e0050ec72dadb8d63851df51ec"><div class="ttname"><a href="a00236.html#a33aa37e0050ec72dadb8d63851df51ec">MPIMax_double</a></div><div class="ttdeci">int MPIMax_double(double *, double *, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00368_source.html#l00038">MPIMax.c:38</a></div></div>
+<div class="ttc" id="a00236_html"><div class="ttname"><a href="a00236.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

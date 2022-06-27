@@ -1,11 +1,11 @@
 var a00251 =
 [
-    [ "TimeInitialize", "a00251.html#a2ca35809be0e351ff2ad94532c2c0d68", null ],
-    [ "TimeCleanup", "a00251.html#a85984dec08cd43570151a625ab62f8d9", null ],
-    [ "TimePreStep", "a00251.html#a2afba6dcdd13eb929ad4cb54a71eb470", null ],
-    [ "TimeStep", "a00251.html#acb00956b2e195653e3f8107b1ab1dc4d", null ],
-    [ "TimePostStep", "a00251.html#a25f8d76bc92804608cd299e63e23291c", null ],
-    [ "TimePrintStep", "a00251.html#aa1ffb2050f4788b7c49b4576a9fe52ca", null ],
-    [ "TimeError", "a00251.html#aacd05babc2fa0650f3047f955c38319c", null ],
-    [ "TimeGetAuxSolutions", "a00251.html#a9bff7fe5ca4249dd82bfad78a1fa09dd", null ]
+    [ "sum", "a00251.html#aca1295e3cf52d990f4cd1d5872f1385a", null ],
+    [ "product", "a00251.html#ad74c53c19ad5dfb91fadd66c774e33bc", null ],
+    [ "copyFrom", "a00251.html#a53cafdf187fdf401cda2700b0c2f223c", null ],
+    [ "add", "a00251.html#a8c082f789b0046528b9bb05845ee823a", null ],
+    [ "copyFrom", "a00251.html#ab5e9416ff4a842258df5132b4e548921", null ],
+    [ "createNormalVector", "a00251.html#a723506a5fd12767688e8642efc108cbc", null ],
+    [ "createNormalVector", "a00251.html#af8cb4af096b8c4ed60d0e9157aa9d049", null ],
+    [ "compute2Norm", "a00251.html#a7022a0455c73481fd8aa5b1c7b64bbee", null ]
 ];

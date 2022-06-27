@@ -1,4 +1,4 @@
 var a00602 =
 [
-    [ "tridiagLUGS", "a00602.html#ad485d12c99b8c48303b6bef2f86b135d", null ]
+    [ "blocktridiagLU", "a00602.html#a55888a62483c0754cf6e4e030ffe2023", null ]
 ];

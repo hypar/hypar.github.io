@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/SparseGrids/SparseGridsWriteErrors.cpp Source File</title>
+<title>HyPar: src/SparseGrids/SparseGridsSanityChecks.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,153 +112,51 @@ $(document).ready(function(){initNavTree('a00581_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SparseGridsWriteErrors.cpp</div>  </div>
+<div class="title">SparseGridsSanityChecks.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00581.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00218.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00221.html">common_cpp.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00248.html">sparse_grids_simulation.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00210.html#ad7d8bcadf64dc098044a1cbff213a92e">   14</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00210.html#ad7d8bcadf64dc098044a1cbff213a92e">SparseGridsSimulation::WriteErrors</a>(<span class="keywordtype">double</span> solver_runtime,  </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                                        <span class="keywordtype">double</span> main_runtime     </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                                       )</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordflow">if</span> (!<a class="code" href="a00210.html#ac6a822dc76382e4027cf94ac3e510056">m_rank</a>) {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="comment">/* Write sparse grids stuff, if asked for */</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="a00210.html#a8ccd402501119573dbadc7d6e96c59a2">m_print_sg_errors</a> == 1) {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; <a class="code" href="a00210.html#acd95922d6bb09419fb66435d114cdb5c">m_nsims_sg</a>; n++) {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">char</span>  err_fname[<a class="code" href="a00218.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>],</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;              cons_fname[<a class="code" href="a00218.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>],</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;              fc_fname[<a class="code" href="a00218.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        strcpy(err_fname, <span class="stringliteral">&quot;errors&quot;</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        strcpy(cons_fname,<span class="stringliteral">&quot;conservation&quot;</span>);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        strcpy(fc_fname,  <span class="stringliteral">&quot;function_counts&quot;</span>);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">if</span> (m_nsims_sg &gt; 1) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;          strcat(err_fname,<span class="stringliteral">&quot;_&quot;</span>);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;          strcat(cons_fname,<span class="stringliteral">&quot;_&quot;</span>);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;          strcat(fc_fname,<span class="stringliteral">&quot;_&quot;</span>);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;          <span class="keywordtype">char</span> index[<a class="code" href="a00218.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;          <a class="code" href="a00220.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a>(n, index, (<span class="keywordtype">int</span>)log10(m_nsims_sg)+1);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;          strcat(err_fname,index);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;          strcat(cons_fname,index);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;          strcat(fc_fname,index);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        }</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00250.html">sparse_grids_simulation.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="a00212.html#a19987c0f2b999b6e820231a32667ddf2">   18</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00212.html#a19987c0f2b999b6e820231a32667ddf2">SparseGridsSimulation::SanityChecks</a>()</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">int</span> *dim_global_fg = <a class="code" href="a00212.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00210.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00196.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordtype">int</span> *iproc_fg = <a class="code" href="a00212.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00210.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>.<a class="code" href="a00199.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="comment">/* check if grid sizes are same along all dimensions */</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">bool</span> flag = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> d=0; d&lt;<a class="code" href="a00212.html#af3c229deae2a8e788c823dcc6f020b65">m_ndims</a>; d++) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;      flag = flag &amp;&amp; (dim_global_fg[d] == dim_global_fg[0]);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    }</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">if</span> (!flag) {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;      fprintf(stderr, <span class="stringliteral">&quot;Error in SparseGridsSimulation::SanityChecks()\n&quot;</span>);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;      fprintf(stderr, <span class="stringliteral">&quot;  full grid dimensions are not equal in all dimensions.\n&quot;</span>);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="comment">/* check if grid size is a power of 2 */</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">bool</span> flag = <a class="code" href="a00212.html#ad209b51783ddb3be5497d6cbe6a3e8af">isPowerOfTwo</a>(dim_global_fg[0]);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">if</span> (!flag) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      fprintf(stderr, <span class="stringliteral">&quot;Error in SparseGridsSimulation::SanityChecks()\n&quot;</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      fprintf(stderr, <span class="stringliteral">&quot;  full grid dimensions are not a power of 2.\n&quot;</span>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        strcat(err_fname,<span class="stringliteral">&quot;.dat&quot;</span>);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        strcat(cons_fname,<span class="stringliteral">&quot;.dat&quot;</span>);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        strcat(fc_fname,<span class="stringliteral">&quot;.dat&quot;</span>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        FILE *out; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="comment">/* write out solution errors and wall times to file */</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">int</span> d;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        out = fopen(err_fname,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.ndims; d++) fprintf(out,<span class="stringliteral">&quot;%4d &quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.dim_global[d]);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.ndims; d++) fprintf(out,<span class="stringliteral">&quot;%4d &quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].mpi.iproc[d]);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%1.16E  &quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.dt);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%1.16E %1.16E %1.16E   &quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.error[0],<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.error[1],<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.error[2]);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%1.16E %1.16E\n&quot;</span>,solver_runtime,main_runtime);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        fclose(out);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">/* write out conservation errors to file */</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        out = fopen(cons_fname,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.ndims; d++) fprintf(out,<span class="stringliteral">&quot;%4d &quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.dim_global[d]);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.ndims; d++) fprintf(out,<span class="stringliteral">&quot;%4d &quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].mpi.iproc[d]);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%1.16E  &quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.dt);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.nvars; d++) fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.ConservationError[d]);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        fclose(out);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="comment">/* write out function call counts to file */</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        out = fopen(fc_fname,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%d\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.n_iter);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%d\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.count_hyp);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%d\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.count_par);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%d\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.count_sou);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">  #ifdef with_petsc</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span>        fprintf(out,<span class="stringliteral">&quot;%d\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.count_RHSFunction);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%d\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.count_IFunction);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%d\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.count_IJacobian);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        fprintf(out,<span class="stringliteral">&quot;%d\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.count_IJacFunction);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">  #endif</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor"></span>        fclose(out);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="comment">/* print solution errors, conservation errors, and wall times to screen */</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.error[0] &gt;= 0) {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;          printf(<span class="stringliteral">&quot;Computed errors for sparse grids domain %d:\n&quot;</span>, n);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;          printf(<span class="stringliteral">&quot;  L1   Error: %1.16E\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.error[0]);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;          printf(<span class="stringliteral">&quot;  L2   Error: %1.16E\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.error[1]);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;          printf(<span class="stringliteral">&quot;  Linf Error: %1.16E\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.error[2]);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">if</span> (!strcmp(<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.ConservationCheck,<span class="stringliteral">&quot;yes&quot;</span>)) {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;          printf(<span class="stringliteral">&quot;Conservation Errors:\n&quot;</span>);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;          <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.nvars; d++) printf(<span class="stringliteral">&quot;\t%1.16E\n&quot;</span>,<a class="code" href="a00210.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[n].solver.ConservationError[d]);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;          printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="comment">/* First write stuff for the full grid solution */</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <span class="keywordtype">char</span>  err_fname[<a class="code" href="a00218.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      strcpy(err_fname,<span class="stringliteral">&quot;errors_fg&quot;</span>);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      strcat(err_fname,<span class="stringliteral">&quot;.dat&quot;</span>);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      FILE *out; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <span class="comment">/* write out solution errors and wall times to file */</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      <span class="keywordtype">int</span> d;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      out = fopen(err_fname,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) fprintf(out,<span class="stringliteral">&quot;%4d &quot;</span>,<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>[d]);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordflow">for</span> (d=0; d&lt;<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) fprintf(out,<span class="stringliteral">&quot;%4d &quot;</span>,<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>.<a class="code" href="a00197.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[d]);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      fprintf(out,<span class="stringliteral">&quot;%1.16E  &quot;</span>,<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#a03e28be41881b703c836edbfe9b51b17">dt</a>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      fprintf(out,<span class="stringliteral">&quot;%1.16E %1.16E %1.16E   &quot;</span>,<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[0],<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[1],<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[2]);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      fprintf(out,<span class="stringliteral">&quot;%1.16E %1.16E\n&quot;</span>,solver_runtime,main_runtime);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      fclose(out);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <span class="comment">/* print solution errors, conservation errors, and wall times to screen */</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[0] &gt;= 0) {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        printf(<span class="stringliteral">&quot;Computed errors for full grid solution:\n&quot;</span>);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        printf(<span class="stringliteral">&quot;  L1   Error: %1.16E\n&quot;</span>,<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[0]);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        printf(<span class="stringliteral">&quot;  L2   Error: %1.16E\n&quot;</span>,<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[1]);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        printf(<span class="stringliteral">&quot;  Linf Error: %1.16E\n&quot;</span>,<a class="code" href="a00210.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>-&gt;<a class="code" href="a00208.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00194.html#aa40f27cb2afa2db0f0468962be8b3679">error</a>[2]);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="comment">/* report wall times */</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    printf(<span class="stringliteral">&quot;Solver runtime (in seconds): %1.16E\n&quot;</span>,solver_runtime);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    printf(<span class="stringliteral">&quot;Total  runtime (in seconds): %1.16E\n&quot;</span>,main_runtime);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
-<div class="ttc" id="a00208_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00208.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00025">simulation_object.h:25</a></div></div>
-<div class="ttc" id="a00194_html_aa989ebb755986852177779cdf7bd8c85"><div class="ttname"><a href="a00194.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a></div><div class="ttdeci">int * dim_global</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00032">hypar.h:32</a></div></div>
-<div class="ttc" id="a00221_html"><div class="ttname"><a href="a00221.html">common_cpp.h</a></div><div class="ttdoc">Some common functions used here and there (C++ declarations) </div></div>
-<div class="ttc" id="a00210_html_ac6a822dc76382e4027cf94ac3e510056"><div class="ttname"><a href="a00210.html#ac6a822dc76382e4027cf94ac3e510056">SparseGridsSimulation::m_rank</a></div><div class="ttdeci">int m_rank</div><div class="ttdef"><b>Definition:</b> <a href="a00248_source.html#l00215">sparse_grids_simulation.h:215</a></div></div>
-<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00210_html_ad7d8bcadf64dc098044a1cbff213a92e"><div class="ttname"><a href="a00210.html#ad7d8bcadf64dc098044a1cbff213a92e">SparseGridsSimulation::WriteErrors</a></div><div class="ttdeci">void WriteErrors(double, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00581_source.html#l00014">SparseGridsWriteErrors.cpp:14</a></div></div>
-<div class="ttc" id="a00194_html_aa40f27cb2afa2db0f0468962be8b3679"><div class="ttname"><a href="a00194.html#aa40f27cb2afa2db0f0468962be8b3679">HyPar::error</a></div><div class="ttdeci">double error[3]</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00347">hypar.h:347</a></div></div>
-<div class="ttc" id="a00194_html_a03e28be41881b703c836edbfe9b51b17"><div class="ttname"><a href="a00194.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a></div><div class="ttdeci">double dt</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00059">hypar.h:59</a></div></div>
-<div class="ttc" id="a00210_html_acd95922d6bb09419fb66435d114cdb5c"><div class="ttname"><a href="a00210.html#acd95922d6bb09419fb66435d114cdb5c">SparseGridsSimulation::m_nsims_sg</a></div><div class="ttdeci">int m_nsims_sg</div><div class="ttdef"><b>Definition:</b> <a href="a00248_source.html#l00213">sparse_grids_simulation.h:213</a></div></div>
-<div class="ttc" id="a00220_html_a3e3ad5aed581d9ae563190c365dadc41"><div class="ttname"><a href="a00220.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a></div><div class="ttdeci">void GetStringFromInteger(int, char *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00278_source.html#l00015">CommonFunctions.c:15</a></div></div>
-<div class="ttc" id="a00208_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00208.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00026">simulation_object.h:26</a></div></div>
-<div class="ttc" id="a00210_html_afd006361179964b4e2c2cc65526247bd"><div class="ttname"><a href="a00210.html#afd006361179964b4e2c2cc65526247bd">SparseGridsSimulation::m_sims_sg</a></div><div class="ttdeci">std::vector&lt; SimulationObject &gt; m_sims_sg</div><div class="ttdef"><b>Definition:</b> <a href="a00248_source.html#l00230">sparse_grids_simulation.h:230</a></div></div>
-<div class="ttc" id="a00197_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00197.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00027">mpivars_struct.h:27</a></div></div>
-<div class="ttc" id="a00210_html_a8ccd402501119573dbadc7d6e96c59a2"><div class="ttname"><a href="a00210.html#a8ccd402501119573dbadc7d6e96c59a2">SparseGridsSimulation::m_print_sg_errors</a></div><div class="ttdeci">int m_print_sg_errors</div><div class="ttdef"><b>Definition:</b> <a href="a00248_source.html#l00227">sparse_grids_simulation.h:227</a></div></div>
-<div class="ttc" id="a00194_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00194.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00218_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00218.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00010">basic.h:10</a></div></div>
-<div class="ttc" id="a00210_html_a41a86f682aa37c28c671759a11a494a8"><div class="ttname"><a href="a00210.html#a41a86f682aa37c28c671759a11a494a8">SparseGridsSimulation::m_sim_fg</a></div><div class="ttdeci">SimulationObject * m_sim_fg</div><div class="ttdef"><b>Definition:</b> <a href="a00248_source.html#l00229">sparse_grids_simulation.h:229</a></div></div>
-<div class="ttc" id="a00248_html"><div class="ttname"><a href="a00248.html">sparse_grids_simulation.h</a></div></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="ttc" id="a00212_html_a41a86f682aa37c28c671759a11a494a8"><div class="ttname"><a href="a00212.html#a41a86f682aa37c28c671759a11a494a8">SparseGridsSimulation::m_sim_fg</a></div><div class="ttdeci">SimulationObject * m_sim_fg</div><div class="ttdef"><b>Definition:</b> <a href="a00250_source.html#l00229">sparse_grids_simulation.h:229</a></div></div>
+<div class="ttc" id="a00212_html_a19987c0f2b999b6e820231a32667ddf2"><div class="ttname"><a href="a00212.html#a19987c0f2b999b6e820231a32667ddf2">SparseGridsSimulation::SanityChecks</a></div><div class="ttdeci">int SanityChecks()</div><div class="ttdef"><b>Definition:</b> <a href="a00581_source.html#l00018">SparseGridsSanityChecks.cpp:18</a></div></div>
+<div class="ttc" id="a00196_html_aa989ebb755986852177779cdf7bd8c85"><div class="ttname"><a href="a00196.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a></div><div class="ttdeci">int * dim_global</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00032">hypar.h:32</a></div></div>
+<div class="ttc" id="a00210_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00210.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00026">simulation_object.h:26</a></div></div>
+<div class="ttc" id="a00212_html_af3c229deae2a8e788c823dcc6f020b65"><div class="ttname"><a href="a00212.html#af3c229deae2a8e788c823dcc6f020b65">SparseGridsSimulation::m_ndims</a></div><div class="ttdeci">int m_ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00250_source.html#l00214">sparse_grids_simulation.h:214</a></div></div>
+<div class="ttc" id="a00250_html"><div class="ttname"><a href="a00250.html">sparse_grids_simulation.h</a></div></div>
+<div class="ttc" id="a00199_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00199.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00027">mpivars_struct.h:27</a></div></div>
+<div class="ttc" id="a00210_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00210.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00025">simulation_object.h:25</a></div></div>
+<div class="ttc" id="a00212_html_ad209b51783ddb3be5497d6cbe6a3e8af"><div class="ttname"><a href="a00212.html#ad209b51783ddb3be5497d6cbe6a3e8af">SparseGridsSimulation::isPowerOfTwo</a></div><div class="ttdeci">bool isPowerOfTwo(int x)</div><div class="ttdef"><b>Definition:</b> <a href="a00250_source.html#l00316">sparse_grids_simulation.h:316</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

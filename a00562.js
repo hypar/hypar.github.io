@@ -1,4 +1,5 @@
 var a00562 =
 [
-    [ "SimWriteErrors", "a00562.html#a6a7251e630f93024df55cda6a8f2d942", null ]
+    [ "IncrementFilenameIndex", "a00562.html#a55a796b622e90a00d1cb9164ab40c1c3", null ],
+    [ "OutputROMSolution", "a00562.html#a11343894048fd842093253bbbb407700", null ]
 ];

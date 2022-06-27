@@ -1,5 +1,4 @@
 var a00370 =
 [
-    [ "MPIPartitionArraynD", "a00370.html#a01e91e5f4675fae1698339a4028c09c1", null ],
-    [ "MPIPartitionArraynDwGhosts", "a00370.html#a43dfd14478735bbae12fbaa10f0403b5", null ]
+    [ "MPIPartition1D", "a00370.html#a87127187b566bfa02b692247f9e3c798", null ]
 ];

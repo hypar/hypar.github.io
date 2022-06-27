@@ -1,11 +1,10 @@
 var a00229 =
 [
-    [ "min", "a00229.html#ac6afabdc09a49a433ee19d8a9486056d", null ],
-    [ "max", "a00229.html#affe776513b24d84b39af8ab0930fef7f", null ],
-    [ "min3", "a00229.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a", null ],
-    [ "max3", "a00229.html#aa0d45e1e67c5cacf5c9251fcd90a971b", null ],
-    [ "absolute", "a00229.html#adf1be5ccbb7a2522b4f3a64043c72880", null ],
-    [ "raiseto", "a00229.html#a840eef18a5986381093ff8c176a2153c", null ],
-    [ "raiseto_int", "a00229.html#a74ca90b3ea1d23b2f0ab160523e2f477", null ],
-    [ "sign", "a00229.html#a1e471b644e7fd684cd5dbb144e00ee81", null ]
+    [ "libROMInterface", "a00197.html", "a00197" ],
+    [ "_ROM_MODE_NONE_", "a00229.html#a28e9ddc4d69c4a09fda0f0f39726ba16", null ],
+    [ "_ROM_MODE_TRAIN_", "a00229.html#a8d7f058ce028038a98a49ad28176390e", null ],
+    [ "_ROM_MODE_PREDICT_", "a00229.html#a3035c57e07a432c8274e63259a0d506d", null ],
+    [ "_ROM_MODE_INITIAL_GUESS_", "a00229.html#acc2b61eb7c1bad16328d8f4be63b70f3", null ],
+    [ "_ROM_COMP_MODE_MONOLITHIC_", "a00229.html#acdb79f8c89bd3e1e867e510b5546fad1", null ],
+    [ "_ROM_COMP_MODE_COMPONENTWISE_", "a00229.html#a1923410d66bb4949e32712e539efd296", null ]
 ];

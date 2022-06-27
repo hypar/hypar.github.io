@@ -1,4 +1,4 @@
 var a00298 =
 [
-    [ "VolumeIntegral", "a00298.html#a74a4527b7a6060acc1808d9c945b117f", null ]
+    [ "ParabolicFunctionNC2Stage", "a00298.html#a153eb91ec9b118a7b8c971facbc8d920", null ]
 ];

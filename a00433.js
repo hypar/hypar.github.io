@@ -1,5 +1,5 @@
 var a00433 =
 [
-    [ "FPPowerSystemDriftFunction", "a00433.html#aac482e6c6196f67a7a2645247b28ac86", null ],
-    [ "FPPowerSystemDissipationFunction", "a00433.html#ab1f47845af7ce8dfcf12624868cb7ca5", null ]
+    [ "FPPowerSystemDriftFunction", "a00433.html#aad5370d85f97a4a03459e9b9a185cfa1", null ],
+    [ "FPPowerSystemComputeCFL", "a00433.html#aaecb1f794e2a9ffb670810d20f275339", null ]
 ];

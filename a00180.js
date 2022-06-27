@@ -1,6 +1,6 @@
 var a00180 =
 [
-    [ "BandedMatrix", "a00180.html#a00606", [
+    [ "BandedMatrix", "a00180.html#a00607", [
       [ "nbands", "a00180.html#a30165df2b4e7a3d2b24bfd0963c16172", null ],
       [ "nrows_local", "a00180.html#ac2b596b16037450673a77da1080b8707", null ],
       [ "BlockSize", "a00180.html#aeae4e1754c511c08564892d93c83ada1", null ],

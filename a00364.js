@@ -1,4 +1,4 @@
 var a00364 =
 [
-    [ "MPICreateIOGroups", "a00364.html#a32033a931111b364a144da26e6a53335", null ]
+    [ "MPIGetArrayDatanD", "a00364.html#a85bac139e1cfe7ce1f6d83f8212f5d99", null ]
 ];

@@ -1,5 +1,4 @@
 var a00553 =
 [
-    [ "CalculateLocalExtent", "a00553.html#a33293e35159e6411e3574409bf7d90db", null ],
-    [ "InitializeBoundaries", "a00553.html#a915577ea88d59ab33c6c1e53cfc67737", null ]
+    [ "CombineSolutions", "a00553.html#aef15dae96a913afc5b2f5912bb130daf", null ]
 ];

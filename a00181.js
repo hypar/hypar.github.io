@@ -1,6 +1,6 @@
 var a00181 =
 [
-    [ "Facet3D", "a00181.html#a00612", [
+    [ "Facet3D", "a00181.html#a00613", [
       [ "x1", "a00181.html#ac75b803b570527306e1e744bfb7a604f", null ],
       [ "x2", "a00181.html#adcf04f5f1964d18b332643939561da0d", null ],
       [ "x3", "a00181.html#a98e99f64ddf7321e4eae52beca4b580f", null ],
@@ -14,7 +14,7 @@ var a00181 =
       [ "ny", "a00181.html#a147a8b14bbd79c0f1a3457805e2065ba", null ],
       [ "nz", "a00181.html#a463bf8b21578003b62221acf2e522134", null ]
     ] ],
-    [ "FacetMap", "a00181.html#a00613", [
+    [ "FacetMap", "a00181.html#a00614", [
       [ "facet", "a00181.html#adc15fcdbb3aaff6ced4ab10162781055", null ],
       [ "index", "a00181.html#a750b5d744c39a06bfb13e6eb010e35d0", null ],
       [ "interp_nodes", "a00181.html#a849cc8a5a571348a4d50a0332d9816f8", null ],
@@ -31,7 +31,7 @@ var a00181 =
       [ "dy", "a00181.html#a9deb6f886b19d50e714d890c3c268efc", null ],
       [ "dz", "a00181.html#a5a198de8c3f38514f4e55231aa69cd10", null ]
     ] ],
-    [ "Body3D", "a00181.html#a00607", [
+    [ "Body3D", "a00181.html#a00608", [
       [ "nfacets", "a00181.html#afd755b081f4d9ca3558ef9ca9f3c35d0", null ],
       [ "surface", "a00181.html#aa7bdafcc50881d7f0f4db707755698ce", null ],
       [ "xmin", "a00181.html#ab5bbe897a0c25c58341c216a1b31fbbf", null ],
@@ -41,7 +41,7 @@ var a00181 =
       [ "zmin", "a00181.html#aaea53ab3c236de8e4f167c3807d35b47", null ],
       [ "zmax", "a00181.html#ade09ae0d27b0b7a2d1e886efc6d1a500", null ]
     ] ],
-    [ "IBNode", "a00181.html#a00619", [
+    [ "IBNode", "a00181.html#a00620", [
       [ "i", "a00181.html#acb559820d9ca11295b4500f179ef6392", null ],
       [ "j", "a00181.html#a37d972ae0b47b9099e30983131d31916", null ],
       [ "k", "a00181.html#ab66ed8e0098c0a86b458672a55a9cca9", null ],
@@ -55,7 +55,7 @@ var a00181 =
       [ "interp_node_distance", "a00181.html#a9ba638c4f33720c7289cac3bf73ca088", null ],
       [ "surface_distance", "a00181.html#a7b34733bcf53c70cfe86f22bbb05b309", null ]
     ] ],
-    [ "ImmersedBoundary", "a00181.html#a00620", [
+    [ "ImmersedBoundary", "a00181.html#a00621", [
       [ "body", "a00181.html#af858f0e9bc4a6cb1c16ad2931cf4b43d", null ],
       [ "boundary", "a00181.html#aeab4c13a1e3fce2920ce0ff616d0fac5", null ],
       [ "fmap", "a00181.html#a83fe29d69e04c222af5c68e38142336c", null ],

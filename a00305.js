@@ -1,4 +1,4 @@
 var a00305 =
 [
-    [ "IBIdentifyBody", "a00305.html#a5401c64cc2c4bd13b29d35789e107108", null ]
+    [ "IBComputeNormalGradient", "a00305.html#af2395d184c7e2d65736714d8aaeebcfe", null ]
 ];

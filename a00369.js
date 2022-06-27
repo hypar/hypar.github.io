@@ -1,4 +1,5 @@
 var a00369 =
 [
-    [ "MPIPartitionArray1D", "a00369.html#ac43b2dabcbf9ac251928a7394dc3775a", null ]
+    [ "MPIMin_integer", "a00369.html#a437a1cfd0ebedbf468b3c50e8121d90f", null ],
+    [ "MPIMin_double", "a00369.html#adf49dd531cc2a48f1545ae6b18aee020", null ]
 ];

@@ -1,4 +1,4 @@
 var a00275 =
 [
-    [ "BCThermalNoslipWallU", "a00275.html#ab17f965ac7dd617a92c7191ff65ee82b", null ]
+    [ "BCSupersonicOutflowU", "a00275.html#a791e37fae3c9489d0fc039102c57409e", null ]
 ];

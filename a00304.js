@@ -1,6 +1,4 @@
 var a00304 =
 [
-    [ "isInside", "a00304.html#ae5fc4cce9be29ebb8c3d80c534e55720", null ],
-    [ "interpNodesCoeffs", "a00304.html#ac8dd87df944e8659dedfa3171e832f44", null ],
-    [ "IBCreateFacetMapping", "a00304.html#a1eaa51b960b4fae56b2283983c7d9cf9", null ]
+    [ "IBComputeFacetVar", "a00304.html#a9c3f95ff860bcc0a29e7cdf3af41ba18", null ]
 ];

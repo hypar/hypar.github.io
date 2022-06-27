@@ -1,5 +1,4 @@
 var a00536 =
 [
-    [ "VlasovAdvectionCoeff", "a00536.html#a58d4d7eb9e93f0e81dd01ce4895d6b3a", null ],
-    [ "VlasovAdvection", "a00536.html#a5abae931957e04e898c1d3873dddce45", null ]
+    [ "ShallowWater2DTopography", "a00536.html#a6d12bd89df7aec3537ceb7ed6a2be3e9", null ]
 ];

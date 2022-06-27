@@ -1,4 +1,5 @@
 var a00500 =
 [
-    [ "Numa2DParabolicFunction", "a00500.html#a572c3429da236f2aeb16775269f0d26b", null ]
+    [ "Numa2DFlux", "a00500.html#a6a672aa8b32d8ff139204f56c11c725e", null ],
+    [ "Numa2DStiffFlux", "a00500.html#a6c56b9f36babefae799e469d7f9036df", null ]
 ];

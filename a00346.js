@@ -1,4 +1,4 @@
 var a00346 =
 [
-    [ "WriteText", "a00346.html#afc6009d99921e629e20244374914a806", null ]
+    [ "WriteTecplot2D", "a00346.html#a9f54139b318c86dab6743896cc5afcb9", null ]
 ];

@@ -1,4 +1,4 @@
 var a00263 =
 [
-    [ "BCNoFluxU", "a00263.html#a47f15d0ef1040bf42b53bd882d612b54", null ]
+    [ "BCInitialize", "a00263.html#ae3e7ccd26cf3f58d1e1ae5b7faa684c1", null ]
 ];

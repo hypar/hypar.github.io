@@ -1,4 +1,4 @@
 var a00278 =
 [
-    [ "GetStringFromInteger", "a00278.html#ad1b8919f10d5b92bac1e31e065a9439d", null ]
+    [ "BCThermalSlipWallU", "a00278.html#ad95232382b3a4969eb8e2212e00f032a", null ]
 ];

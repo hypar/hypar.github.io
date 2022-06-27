@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/HyParFunctions/CalculateConservationError.c File Reference</title>
+<title>HyPar: src/HyParFunctions/ApplyIBConditions.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,37 +114,34 @@ $(document).ready(function(){initNavTree('a00285.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CalculateConservationError.c File Reference</div>  </div>
+<div class="title">ApplyIBConditions.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Compute the conservation error.  
+<p>Apply immersed boundary conditions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;math.h&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00218_source.html">basic.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00230_source.html">mathfunctions.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00234_source.html">mpivars.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00224_source.html">hypar.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="a00236_source.html">mpivars.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00226_source.html">hypar.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00285_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aef9a903e2e2870dbadbae56ab1b62eb7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#aef9a903e2e2870dbadbae56ab1b62eb7">CalculateConservationError</a> (void *s, void *m)</td></tr>
-<tr class="separator:aef9a903e2e2870dbadbae56ab1b62eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63bad563b5163bdada0672cec6d535c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#a63bad563b5163bdada0672cec6d535c0">ApplyIBConditions</a> (void *s, void *m, double *x, double waqt)</td></tr>
+<tr class="separator:a63bad563b5163bdada0672cec6d535c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Compute the conservation error. </p>
+<div class="textblock"><p>Apply immersed boundary conditions. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00285_source.html">CalculateConservationError.c</a>.</p>
+<p>Definition in file <a class="el" href="a00285_source.html">ApplyIBConditions.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aef9a903e2e2870dbadbae56ab1b62eb7"></a>
+<a class="anchor" id="a63bad563b5163bdada0672cec6d535c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int CalculateConservationError </td>
+          <td class="memname">int ApplyIBConditions </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>s</em>, </td>
@@ -153,7 +150,19 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>m</em>&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>waqt</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -162,43 +171,32 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculates the error (L2) in conservation by computing the difference between the initial volume integral of the solution, and the sum of the current volume integral and the time integral of the boundary flux from the start of the simulation to the current simulation time. </p>
+<p>Call the physics-specific function that applies the immersed boundary conditions on the immersed boundary points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00194.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
-    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00197.html#a00622" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
+    <tr><td class="paramname">s</td><td>Object of type <a class="el" href="a00196.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> containing solver-related variables </td></tr>
+    <tr><td class="paramname">m</td><td>Object of type <a class="el" href="a00199.html#a00625" title="Structure of MPI-related variables. ">MPIVariables</a> containing MPI-related variables </td></tr>
+    <tr><td class="paramname">x</td><td>The solution vector to apply immersed BCs on </td></tr>
+    <tr><td class="paramname">waqt</td><td>Current simulation time </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00285_source.html#l00016">16</a> of file <a class="el" href="a00285_source.html">CalculateConservationError.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="a00194.html">HyPar</a>         *solver = (<a class="code" href="a00194.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">int</span>           v,nvars = solver-&gt;<a class="code" href="a00194.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordtype">double</span>        error;</div>
+<p>Definition at line <a class="el" href="a00285_source.html#l00013">13</a> of file <a class="el" href="a00285_source.html">ApplyIBConditions.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <a class="code" href="a00196.html">HyPar</a>           *solver   = (<a class="code" href="a00196.html">HyPar</a>*)          s;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <a class="code" href="a00199.html#a00625">MPIVariables</a>    *mpi      = (<a class="code" href="a00199.html#a00625">MPIVariables</a>*)   m;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="comment">/* Apply immersed boundary conditions, if applicable */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00196.html#ae83b1b0117b6a805ead2e4728945814c">flag_ib</a>) <a class="code" href="a00220.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00196.html#a0d9d4a968c52356bd63f45ad76112245">IBFunction</a>(solver,mpi,x,waqt);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">double</span> base[nvars];</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(solver-&gt;<a class="code" href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]) &gt; 1.0)</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      base[v] = <a class="code" href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(solver-&gt;<a class="code" href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">else</span> base[v] = 1.0;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    error =  (solver-&gt;<a class="code" href="a00194.html#a57f7bff1d8bf27f2ca5c00270da00d05">VolumeIntegral</a>[v]+solver-&gt;<a class="code" href="a00194.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>[v]-solver-&gt;<a class="code" href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]) </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;           * (solver-&gt;<a class="code" href="a00194.html#a57f7bff1d8bf27f2ca5c00270da00d05">VolumeIntegral</a>[v]+solver-&gt;<a class="code" href="a00194.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>[v]-solver-&gt;<a class="code" href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    solver-&gt;<a class="code" href="a00194.html#a965363cd64ce50ae17705dfb285dd0ab">ConservationError</a>[v] = sqrt(error)/base[v];</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="ttc" id="a00194_html_a57f7bff1d8bf27f2ca5c00270da00d05"><div class="ttname"><a href="a00194.html#a57f7bff1d8bf27f2ca5c00270da00d05">HyPar::VolumeIntegral</a></div><div class="ttdeci">double * VolumeIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00354">hypar.h:354</a></div></div>
-<div class="ttc" id="a00229_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00032">math_ops.h:32</a></div></div>
-<div class="ttc" id="a00194_html_a3aec36aeb5caac1e87f5b4f5f75d5a23"><div class="ttname"><a href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">HyPar::VolumeIntegralInitial</a></div><div class="ttdeci">double * VolumeIntegralInitial</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00356">hypar.h:356</a></div></div>
-<div class="ttc" id="a00194_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00194.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00194_html_a965363cd64ce50ae17705dfb285dd0ab"><div class="ttname"><a href="a00194.html#a965363cd64ce50ae17705dfb285dd0ab">HyPar::ConservationError</a></div><div class="ttdeci">double * ConservationError</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00350">hypar.h:350</a></div></div>
-<div class="ttc" id="a00194_html"><div class="ttname"><a href="a00194.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00194_html_a644ed0ed36ed4af1c396c0af6aca043d"><div class="ttname"><a href="a00194.html#a644ed0ed36ed4af1c396c0af6aca043d">HyPar::TotalBoundaryIntegral</a></div><div class="ttdeci">double * TotalBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00362">hypar.h:362</a></div></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="ttc" id="a00196_html_ae83b1b0117b6a805ead2e4728945814c"><div class="ttname"><a href="a00196.html#ae83b1b0117b6a805ead2e4728945814c">HyPar::flag_ib</a></div><div class="ttdeci">int flag_ib</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00422">hypar.h:422</a></div></div>
+<div class="ttc" id="a00196_html"><div class="ttname"><a href="a00196.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00199_html_a00625"><div class="ttname"><a href="a00199.html#a00625">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00220_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00220.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00012">basic.h:12</a></div></div>
+<div class="ttc" id="a00196_html_a0d9d4a968c52356bd63f45ad76112245"><div class="ttname"><a href="a00196.html#a0d9d4a968c52356bd63f45ad76112245">HyPar::IBFunction</a></div><div class="ttdeci">int(* IBFunction)(void *, void *, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00427">hypar.h:427</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

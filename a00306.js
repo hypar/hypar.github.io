@@ -1,6 +1,6 @@
 var a00306 =
 [
-    [ "CountBoundaryPoints", "a00306.html#ac20a15dad8cdc1021b559f08cd60bdf4", null ],
-    [ "SetBoundaryPoints", "a00306.html#a684729950453b8313d61c1731acf5e5c", null ],
-    [ "IBIdentifyBoundary", "a00306.html#a65f57f0636944e8a45906b00c8882a8a", null ]
+    [ "isInside", "a00306.html#ae5fc4cce9be29ebb8c3d80c534e55720", null ],
+    [ "interpNodesCoeffs", "a00306.html#ac8dd87df944e8659dedfa3171e832f44", null ],
+    [ "IBCreateFacetMapping", "a00306.html#a1eaa51b960b4fae56b2283983c7d9cf9", null ]
 ];

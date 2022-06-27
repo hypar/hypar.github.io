@@ -1,5 +1,4 @@
 var a00373 =
 [
-    [ "MPISum_integer", "a00373.html#a3fdbda19a80373d03b0034694d7309b7", null ],
-    [ "MPISum_double", "a00373.html#ab72730180adfeeb505a716952545d591", null ]
+    [ "MPIRank1D", "a00373.html#a5eb76d97a1620a8446043bba3a8adfe3", null ]
 ];

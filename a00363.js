@@ -1,4 +1,5 @@
 var a00363 =
 [
-    [ "MPIGetFilename", "a00363.html#a3bea94d51bdf0cd76ac4a0b0d52a5baa", null ]
+    [ "MPIGatherArraynD", "a00363.html#a169eaecbc7a45469c78354f9cb1fed64", null ],
+    [ "MPIGatherArraynDwGhosts", "a00363.html#a76ea9ac59e9d6a89230273c959adaa1d", null ]
 ];

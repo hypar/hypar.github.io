@@ -13,6 +13,7 @@ var a00126 =
     [ "3D Navier-Stokes - Steady, incompressible, viscous flow around a cylinder (Time-Windowed DMD)", "a00142.html", null ],
     [ "3D Navier-Stokes - Unsteady, incompressible, viscous flow around a cylinder with vortex shedding (Time-Windowed DMD)", "a00144.html", null ],
     [ "3D Navier-Stokes - Inviscid Shock-Cylinder Interaction (Time-Windowed DMD)", "a00150.html", null ],
+    [ "3D Navier-Stokes Equations (with gravitational force) - Rising Thermal Bubble (Time-Windowed DMD) with PETSc IMEX time integration", "a00172.html", null ],
     [ "1D Linear Advection - Sine Wave", "a00152.html", null ],
     [ "1D Linear Advection - Discontinuous Waves (Time Windowed DMD)", "a00154.html", null ],
     [ "1D Euler Equations - Sod Shock Tube (Time Windowed DMD)", "a00156.html", null ],

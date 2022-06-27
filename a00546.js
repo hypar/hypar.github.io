@@ -1,5 +1,5 @@
 var a00546 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00546.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "SecondDerivativeSecondOrderCentral", "a00546.html#a84c8a8f68736a8644c442f8c27628445", null ]
+    [ "VlasovAdvectionCoeff", "a00546.html#a58d4d7eb9e93f0e81dd01ce4895d6b3a", null ],
+    [ "VlasovUpwind", "a00546.html#a015b8faeb43366a6c48d294ef1aaa2b0", null ]
 ];

@@ -1,4 +1,5 @@
 var a00293 =
 [
-    [ "ParabolicFunctionCons1Stage", "a00293.html#a5e79cc5efd6d3e4c93717a67e0fbf918", null ]
+    [ "IncrementFilenameIndex", "a00293.html#a9fda82ed752188f3af821e2c30f63c21", null ],
+    [ "ResetFilenameIndex", "a00293.html#ad22799259c966d7dcc526452eaf7e855", null ]
 ];

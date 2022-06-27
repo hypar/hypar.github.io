@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/MPIFunctions/MPICommunicators.c Source File</title>
+<title>HyPar: src/MathFunctions/TrilinearInterpolation.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,78 +112,46 @@ $(document).ready(function(){initNavTree('a00357_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">MPICommunicators.c</div>  </div>
+<div class="title">TrilinearInterpolation.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00357.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00217.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00234.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="a00357.html#a8f52d58fa2c0c94914befd51b6d413a1">   35</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00234.html#ade449de8860c4b1060ca15bf7a80476f">MPICreateCommunicators</a>(</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                            <span class="keywordtype">int</span>   ndims,  </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                            <span class="keywordtype">void</span>  *m      </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                          )</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="a00197.html#a00622">MPIVariables</a> *mpi = (<a class="code" href="a00197.html#a00622">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#ifdef serial</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span>  mpi-&gt;<a class="code" href="a00197.html#a45a2dae130e8ef21ae3aa9c7a9e7a138">comm</a> = NULL;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor"></span>  <span class="keywordtype">int</span>          i,n,color,key;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">int</span>          *ip,*iproc;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  mpi-&gt;<a class="code" href="a00197.html#a45a2dae130e8ef21ae3aa9c7a9e7a138">comm</a> = (MPI_Comm*) calloc (ndims, <span class="keyword">sizeof</span>(MPI_Comm));</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">if</span> (ndims == 1) MPI_Comm_dup(mpi-&gt;<a class="code" href="a00197.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,mpi-&gt;<a class="code" href="a00197.html#a45a2dae130e8ef21ae3aa9c7a9e7a138">comm</a>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    ip    = (<span class="keywordtype">int</span>*) calloc (ndims-1,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    iproc = (<span class="keywordtype">int</span>*) calloc (ndims-1,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">for</span> (n=0; n&lt;ndims; n++) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      <span class="keywordtype">int</span> tick=0; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;ndims; i++) {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordflow">if</span> (i != n) {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;          ip[tick]    = mpi-&gt;<a class="code" href="a00197.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[i];</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;          iproc[tick] = mpi-&gt;<a class="code" href="a00197.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[i];</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;          tick++;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      <a class="code" href="a00217.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims-1,iproc,ip,0,color); </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      key   = mpi-&gt;<a class="code" href="a00197.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[n];</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      MPI_Comm_split(mpi-&gt;<a class="code" href="a00197.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,color,key,&amp;mpi-&gt;<a class="code" href="a00197.html#a45a2dae130e8ef21ae3aa9c7a9e7a138">comm</a>[n]);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    free(ip);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    free(iproc);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="a00357.html#a56b1ce0eb3d932698ac49d3c3183d39a">   75</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00234.html#af59eb9eb78e6e99df5630429e5383617">MPIFreeCommunicators</a>(</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                          <span class="keywordtype">int</span>   ndims,  </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                          <span class="keywordtype">void</span>  *m      </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                        )</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;{</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span>  <a class="code" href="a00197.html#a00622">MPIVariables</a> *mpi = (<a class="code" href="a00197.html#a00622">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">int</span>          n;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordflow">for</span> (n=0; n&lt;ndims; n++) MPI_Comm_free(&amp;mpi-&gt;<a class="code" href="a00197.html#a45a2dae130e8ef21ae3aa9c7a9e7a138">comm</a>[n]);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  free(mpi-&gt;<a class="code" href="a00197.html#a45a2dae130e8ef21ae3aa9c7a9e7a138">comm</a>);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00197.html#a92096d6b87420d0e71b38c6dc5e10b14">IOParticipant</a>) MPI_Comm_free(&amp;mpi-&gt;<a class="code" href="a00197.html#ae297d101be8576bfb36202ebb61085e6">IOWorld</a>);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  MPI_Comm_free(&amp;mpi-&gt;<a class="code" href="a00197.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
-<div class="ttc" id="a00197_html_aa3c28612a64b8a97bde66b720e15c700"><div class="ttname"><a href="a00197.html#aa3c28612a64b8a97bde66b720e15c700">MPIVariables::ip</a></div><div class="ttdeci">int * ip</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00028">mpivars_struct.h:28</a></div></div>
-<div class="ttc" id="a00234_html_ade449de8860c4b1060ca15bf7a80476f"><div class="ttname"><a href="a00234.html#ade449de8860c4b1060ca15bf7a80476f">MPICreateCommunicators</a></div><div class="ttdeci">int MPICreateCommunicators(int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00357_source.html#l00035">MPICommunicators.c:35</a></div></div>
-<div class="ttc" id="a00197_html_a45a2dae130e8ef21ae3aa9c7a9e7a138"><div class="ttname"><a href="a00197.html#a45a2dae130e8ef21ae3aa9c7a9e7a138">MPIVariables::comm</a></div><div class="ttdeci">MPI_Comm * comm</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00038">mpivars_struct.h:38</a></div></div>
-<div class="ttc" id="a00234_html_af59eb9eb78e6e99df5630429e5383617"><div class="ttname"><a href="a00234.html#af59eb9eb78e6e99df5630429e5383617">MPIFreeCommunicators</a></div><div class="ttdeci">int MPIFreeCommunicators(int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00357_source.html#l00075">MPICommunicators.c:75</a></div></div>
-<div class="ttc" id="a00217_html"><div class="ttname"><a href="a00217.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00197_html_a92096d6b87420d0e71b38c6dc5e10b14"><div class="ttname"><a href="a00197.html#a92096d6b87420d0e71b38c6dc5e10b14">MPIVariables::IOParticipant</a></div><div class="ttdeci">int IOParticipant</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00042">mpivars_struct.h:42</a></div></div>
-<div class="ttc" id="a00197_html_a00622"><div class="ttname"><a href="a00197.html#a00622">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00234_html"><div class="ttname"><a href="a00234.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
-<div class="ttc" id="a00197_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00197.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00037">mpivars_struct.h:37</a></div></div>
-<div class="ttc" id="a00197_html_ae297d101be8576bfb36202ebb61085e6"><div class="ttname"><a href="a00197.html#ae297d101be8576bfb36202ebb61085e6">MPIVariables::IOWorld</a></div><div class="ttdeci">MPI_Comm IOWorld</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00048">mpivars_struct.h:48</a></div></div>
-<div class="ttc" id="a00217_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00217.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00217_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00197_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00197.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00027">mpivars_struct.h:27</a></div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00232.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="a00357.html#a2b2d0a0b7891c994d6956c72dfafb80b">   22</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00232.html#a04d4e04f1f9112958dca24fc68c1818a">TrilinearInterpCoeffs</a>(</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                            <span class="keywordtype">double</span> xmin,  </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                            <span class="keywordtype">double</span> xmax,  </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                            <span class="keywordtype">double</span> ymin,  </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                            <span class="keywordtype">double</span> ymax,  </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                            <span class="keywordtype">double</span> zmin,  </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                            <span class="keywordtype">double</span> zmax,  </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                            <span class="keywordtype">double</span> x,     </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                            <span class="keywordtype">double</span> y,     </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                            <span class="keywordtype">double</span> z,     </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                            <span class="keywordtype">double</span> *coeffs</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                          )</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">double</span> vol_inv = 1 / ((xmax-xmin)*(ymax-ymin)*(zmax-zmin));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">double</span> tldx1 = x - xmin;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">double</span> tldx2 = xmax - x;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">double</span> tldy1 = y - ymin;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">double</span> tldy2 = ymax - y;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">double</span> tldz1 = z - zmin;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">double</span> tldz2 = zmax - z;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    coeffs[0] = tldz2 * tldy2 * tldx2 * vol_inv;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    coeffs[1] = tldz2 * tldy2 * tldx1 * vol_inv;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    coeffs[2] = tldz2 * tldy1 * tldx2 * vol_inv;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    coeffs[3] = tldz2 * tldy1 * tldx1 * vol_inv;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    coeffs[4] = tldz1 * tldy2 * tldx2 * vol_inv;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    coeffs[5] = tldz1 * tldy2 * tldx1 * vol_inv;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    coeffs[6] = tldz1 * tldy1 * tldx2 * vol_inv;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    coeffs[7] = tldz1 * tldy1 * tldx1 * vol_inv;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="ttc" id="a00232_html_a04d4e04f1f9112958dca24fc68c1818a"><div class="ttname"><a href="a00232.html#a04d4e04f1f9112958dca24fc68c1818a">TrilinearInterpCoeffs</a></div><div class="ttdeci">void TrilinearInterpCoeffs(double, double, double, double, double, double, double, double, double, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00357_source.html#l00022">TrilinearInterpolation.c:22</a></div></div>
+<div class="ttc" id="a00232_html"><div class="ttname"><a href="a00232.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

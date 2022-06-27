@@ -1,5 +1,4 @@
 var a00506 =
 [
-    [ "Numa3DCalculateStandardAtmosphere_1", "a00506.html#ac2be313ce1c2510c61ea35f6fd56f254", null ],
-    [ "Numa3DCalculateStandardAtmosphere_2", "a00506.html#a276b2e95fcf1c00b0e9d8bd641c9deed", null ]
+    [ "Numa3DCleanup", "a00506.html#af62517a2d64232969b52ddcb4e01c150", null ]
 ];

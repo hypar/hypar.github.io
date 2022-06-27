@@ -1,4 +1,6 @@
 var a00396 =
 [
-    [ "BurgersComputeCFL", "a00396.html#a99db371c78dc383aca3e51b342adb724", null ]
+    [ "__FUNCT__", "a00396.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
+    [ "TransferVecToPETSc", "a00396.html#ae1075941f7a47427c08028de05efd60f", null ],
+    [ "TransferMatToPETSc", "a00396.html#abbb95954ce9349ea01f27f0c37af56ff", null ]
 ];

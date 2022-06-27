@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/HyParFunctions/CalculateConservationError.c Source File</title>
+<title>HyPar: src/HyParFunctions/ApplyIBConditions.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,52 +112,35 @@ $(document).ready(function(){initNavTree('a00285_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">CalculateConservationError.c</div>  </div>
+<div class="title">ApplyIBConditions.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00285.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00218.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00230.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00234.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00224.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00557.html#a59bed56c53d29cca4a7c25a28d38e7b5">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00285.html#aef9a903e2e2870dbadbae56ab1b62eb7">CalculateConservationError</a>(</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                                <span class="keywordtype">void</span> *s, </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                                <span class="keywordtype">void</span> *m  </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                              )</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="a00194.html">HyPar</a>         *solver = (<a class="code" href="a00194.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">int</span>           v,nvars = solver-&gt;<a class="code" href="a00194.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordtype">double</span>        error;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00236.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00226.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00560.html#a4cf60474c83d29277a8c9060143113ff">   13</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00285.html#a63bad563b5163bdada0672cec6d535c0">ApplyIBConditions</a>(<span class="keywordtype">void</span>    *s, </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                      <span class="keywordtype">void</span>    *m, </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                      <span class="keywordtype">double</span>  *x, </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                      <span class="keywordtype">double</span>  waqt </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                     ) </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <a class="code" href="a00196.html">HyPar</a>           *solver   = (<a class="code" href="a00196.html">HyPar</a>*)          s;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <a class="code" href="a00199.html#a00625">MPIVariables</a>    *mpi      = (<a class="code" href="a00199.html#a00625">MPIVariables</a>*)   m;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="comment">/* Apply immersed boundary conditions, if applicable */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00196.html#ae83b1b0117b6a805ead2e4728945814c">flag_ib</a>) <a class="code" href="a00220.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00196.html#a0d9d4a968c52356bd63f45ad76112245">IBFunction</a>(solver,mpi,x,waqt);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">double</span> base[nvars];</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(solver-&gt;<a class="code" href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]) &gt; 1.0)</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      base[v] = <a class="code" href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(solver-&gt;<a class="code" href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">else</span> base[v] = 1.0;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    error =  (solver-&gt;<a class="code" href="a00194.html#a57f7bff1d8bf27f2ca5c00270da00d05">VolumeIntegral</a>[v]+solver-&gt;<a class="code" href="a00194.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>[v]-solver-&gt;<a class="code" href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]) </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;           * (solver-&gt;<a class="code" href="a00194.html#a57f7bff1d8bf27f2ca5c00270da00d05">VolumeIntegral</a>[v]+solver-&gt;<a class="code" href="a00194.html#a644ed0ed36ed4af1c396c0af6aca043d">TotalBoundaryIntegral</a>[v]-solver-&gt;<a class="code" href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">VolumeIntegralInitial</a>[v]);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    solver-&gt;<a class="code" href="a00194.html#a965363cd64ce50ae17705dfb285dd0ab">ConservationError</a>[v] = sqrt(error)/base[v];</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="ttc" id="a00224_html"><div class="ttname"><a href="a00224.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00230_html"><div class="ttname"><a href="a00230.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00285_html_aef9a903e2e2870dbadbae56ab1b62eb7"><div class="ttname"><a href="a00285.html#aef9a903e2e2870dbadbae56ab1b62eb7">CalculateConservationError</a></div><div class="ttdeci">int CalculateConservationError(void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00285_source.html#l00016">CalculateConservationError.c:16</a></div></div>
-<div class="ttc" id="a00194_html_a57f7bff1d8bf27f2ca5c00270da00d05"><div class="ttname"><a href="a00194.html#a57f7bff1d8bf27f2ca5c00270da00d05">HyPar::VolumeIntegral</a></div><div class="ttdeci">double * VolumeIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00354">hypar.h:354</a></div></div>
-<div class="ttc" id="a00229_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00229.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00032">math_ops.h:32</a></div></div>
-<div class="ttc" id="a00234_html"><div class="ttname"><a href="a00234.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
-<div class="ttc" id="a00194_html_a3aec36aeb5caac1e87f5b4f5f75d5a23"><div class="ttname"><a href="a00194.html#a3aec36aeb5caac1e87f5b4f5f75d5a23">HyPar::VolumeIntegralInitial</a></div><div class="ttdeci">double * VolumeIntegralInitial</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00356">hypar.h:356</a></div></div>
-<div class="ttc" id="a00194_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00194.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00194_html_a965363cd64ce50ae17705dfb285dd0ab"><div class="ttname"><a href="a00194.html#a965363cd64ce50ae17705dfb285dd0ab">HyPar::ConservationError</a></div><div class="ttdeci">double * ConservationError</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00350">hypar.h:350</a></div></div>
-<div class="ttc" id="a00194_html"><div class="ttname"><a href="a00194.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00194_html_a644ed0ed36ed4af1c396c0af6aca043d"><div class="ttname"><a href="a00194.html#a644ed0ed36ed4af1c396c0af6aca043d">HyPar::TotalBoundaryIntegral</a></div><div class="ttdeci">double * TotalBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00224_source.html#l00362">hypar.h:362</a></div></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="ttc" id="a00196_html_ae83b1b0117b6a805ead2e4728945814c"><div class="ttname"><a href="a00196.html#ae83b1b0117b6a805ead2e4728945814c">HyPar::flag_ib</a></div><div class="ttdeci">int flag_ib</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00422">hypar.h:422</a></div></div>
+<div class="ttc" id="a00196_html"><div class="ttname"><a href="a00196.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00285_html_a63bad563b5163bdada0672cec6d535c0"><div class="ttname"><a href="a00285.html#a63bad563b5163bdada0672cec6d535c0">ApplyIBConditions</a></div><div class="ttdeci">int ApplyIBConditions(void *s, void *m, double *x, double waqt)</div><div class="ttdef"><b>Definition:</b> <a href="a00285_source.html#l00013">ApplyIBConditions.c:13</a></div></div>
+<div class="ttc" id="a00226_html"><div class="ttname"><a href="a00226.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00199_html_a00625"><div class="ttname"><a href="a00199.html#a00625">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00220_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00220.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00012">basic.h:12</a></div></div>
+<div class="ttc" id="a00196_html_a0d9d4a968c52356bd63f45ad76112245"><div class="ttname"><a href="a00196.html#a0d9d4a968c52356bd63f45ad76112245">HyPar::IBFunction</a></div><div class="ttdeci">int(* IBFunction)(void *, void *, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00427">hypar.h:427</a></div></div>
+<div class="ttc" id="a00236_html"><div class="ttname"><a href="a00236.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

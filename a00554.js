@@ -1,4 +1,5 @@
 var a00554 =
 [
-    [ "InitializeImmersedBoundaries", "a00554.html#ac723913d7bb4237ff8029b3e7366ecb0", null ]
+    [ "CalculateLocalExtent", "a00554.html#a33293e35159e6411e3574409bf7d90db", null ],
+    [ "InitializeBoundaries", "a00554.html#a915577ea88d59ab33c6c1e53cfc67737", null ]
 ];

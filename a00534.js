@@ -1,5 +1,6 @@
 var a00534 =
 [
-    [ "ShallowWater2DUpwindRoe", "a00534.html#a0e7ae51d13b353863d26192dc37573f7", null ],
-    [ "ShallowWater2DUpwindLLF", "a00534.html#a82a4bea512a2584e39a96945d1855225", null ]
+    [ "ShallowWater2DSourceFunction1", "a00534.html#a4d5b3f3e933170ce53af12d19ba4ef01", null ],
+    [ "ShallowWater2DSourceFunction2", "a00534.html#a5ed617f0405e97ed489c4843d482e692", null ],
+    [ "ShallowWater2DSource", "a00534.html#a40d3a942960d07b188d08a46bec76768", null ]
 ];

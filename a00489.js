@@ -1,5 +1,8 @@
 var a00489 =
 [
-    [ "NavierStokes3DJacobian", "a00489.html#a6c45dc91596bd65c52421d51d32aa77e", null ],
-    [ "NavierStokes3DStiffJacobian", "a00489.html#a4e52fd52b4a07d5a31ceda8e28fab91a", null ]
+    [ "NavierStokes3DComputePressure", "a00489.html#a9d676025e80592838ea77fee6c337205", null ],
+    [ "NavierStokes3DComputeTemperature", "a00489.html#a3504476955bd4a5dd49600eed715e209", null ],
+    [ "ComputeShear", "a00489.html#a3e14cd172223ee5c22e1cd7a425266cc", null ],
+    [ "WriteSurfaceData", "a00489.html#aba43a5d5f52f4c98f85a87e0ccc88b63", null ],
+    [ "NavierStokes3DIBForces", "a00489.html#ac66d24485c83422b6ec21fdf9e1363e5", null ]
 ];

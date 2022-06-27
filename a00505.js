@@ -1,5 +1,5 @@
 var a00505 =
 [
-    [ "Numa3DFlux", "a00505.html#a173a0e31d874adff608b905549a58a11", null ],
-    [ "Numa3DStiffFlux", "a00505.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
+    [ "Numa2DRusanovFlux", "a00505.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
+    [ "Numa2DRusanovLinearFlux", "a00505.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
 ];

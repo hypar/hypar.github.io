@@ -1,4 +1,5 @@
 var a00413 =
 [
-    [ "Euler2DComputeCFL", "a00413.html#af4be0dfa0c4017155bb18bfc3e46505a", null ]
+    [ "Euler1DSourceUpwindLLF", "a00413.html#a229db12fad7bac6cf5f1223f204fe1f9", null ],
+    [ "Euler1DSourceUpwindRoe", "a00413.html#ad94cc03bc96444b2f8ce0e701fe489f3", null ]
 ];

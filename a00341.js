@@ -1,5 +1,7 @@
 var a00341 =
 [
-    [ "ReadArraywInterpSerial", "a00341.html#ac1fd9c1e0d7b79e7047db352b8aeb0b8", null ],
-    [ "ReadArraywInterp", "a00341.html#a84eb363896d58f78282bd0426638c13d", null ]
+    [ "WENOFifthOrderCalculateWeights", "a00341.html#a3107c4ab0a55a53d58b3b7c1c456be75", null ],
+    [ "WENOFifthOrderCalculateWeightsChar", "a00341.html#a44d32cb52b0ef592fbf15b18edade695", null ],
+    [ "WENOFifthOrderInitializeWeights", "a00341.html#a522dbf81bca4ddfffd0a49b88f6bc6bc", null ],
+    [ "WENOInitialize", "a00341.html#ab998cb7839e6b350b0450adabcfeafc7", null ]
 ];

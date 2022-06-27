@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sign',['sign',['../a00229.html#a1e471b644e7fd684cd5dbb144e00ee81',1,'math_ops.h']]]
+  ['sign',['sign',['../a00231.html#a1e471b644e7fd684cd5dbb144e00ee81',1,'math_ops.h']]]
 ];

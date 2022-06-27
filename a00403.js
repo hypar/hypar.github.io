@@ -1,4 +1,4 @@
 var a00403 =
 [
-    [ "Euler1DRoeAverage", "a00403.html#a25f26ae1ec34783770e761553ae617ae", null ]
+    [ "Euler1DComputeCFL", "a00403.html#a820145e91372888fca738bcf320495d9", null ]
 ];
