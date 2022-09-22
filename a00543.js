@@ -1,7 +1,5 @@
 var a00543 =
 [
-    [ "FFTFreqNum", "a00543.html#a2e8ac03dacd504430b782e32f29f1752", null ],
-    [ "SetEFieldPrescribed", "a00543.html#a477c1adf87252a88cfe1898fbf93dc56", null ],
-    [ "SetEFieldSelfConsistent", "a00543.html#a429479a8700d356e2e51b16c78796e35", null ],
-    [ "VlasovEField", "a00543.html#a8e381609f93eb532c655a22c920ebacb", null ]
+    [ "Numa2DRusanovFlux", "a00543.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
+    [ "Numa2DRusanovLinearFlux", "a00543.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
 ];

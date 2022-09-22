@@ -1,4 +1,5 @@
 var a00469 =
 [
-    [ "LinearADRWriteAdvField", "a00469.html#a8c8e0d7e89d122535974a3817d41218f", null ]
+    [ "FPPowerSystem1BusDriftFunction", "a00469.html#ace8e98b299156d0b6dbac42538068a73", null ],
+    [ "FPPowerSystem1BusDissipationFunction", "a00469.html#a5f26bc15752e591bc4010dec7dc3c285", null ]
 ];

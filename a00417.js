@@ -1,5 +1,4 @@
 var a00417 =
 [
-    [ "Euler2DLeftEigenvectors", "a00417.html#a965cafbf06fa0cfd5c0664dc94fcfd3f", null ],
-    [ "Euler2DRightEigenvectors", "a00417.html#a2e9802c52e7497ece4e65e55c77c7b22", null ]
+    [ "PetscSetInitialGuessROM", "a00417.html#a949f817dababd4cd887045d56ce2ffa3", null ]
 ];

@@ -1,5 +1,4 @@
 var a00335 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00335.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimThirdOrderMUSCLChar", "a00335.html#aef318a3caa68e37228d169fde39cae91", null ]
+    [ "CompactSchemeInitialize", "a00335.html#a666601a9c9c7e3084adef44396a87827", null ]
 ];

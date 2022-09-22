@@ -1,5 +1,4 @@
 var a00485 =
 [
-    [ "NavierStokes3DLeftEigenvectors", "a00485.html#ab376732168de139806c9f77828caa063", null ],
-    [ "NavierStokes3DRightEigenvectors", "a00485.html#a62b44025b86e4d73a34142b32301ee7c", null ]
+    [ "LinearADRComputeCFL", "a00485.html#a483cca53816c96d4d08c12241688f75d", null ]
 ];

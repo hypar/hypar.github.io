@@ -1,6 +1,5 @@
 var a00473 =
 [
-    [ "NavierStokes2DFlux", "a00473.html#af9474905c4b501fdee9a18e490f6499d", null ],
-    [ "NavierStokes2DStiffFlux", "a00473.html#ae5da2defa681602a634b5e5455bae4cb", null ],
-    [ "NavierStokes2DNonStiffFlux", "a00473.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
+    [ "FPPowerSystem1BusDriftFunction", "a00473.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
+    [ "FPPowerSystem1BusUpwind", "a00473.html#aba11a90b1aa788700496713f3aa355b5", null ]
 ];

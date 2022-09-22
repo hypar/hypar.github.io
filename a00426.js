@@ -1,4 +1,4 @@
 var a00426 =
 [
-    [ "FPDoubleWellDiffusion", "a00426.html#a923f14d1d7321a84a65695f0c5c0f7d0", null ]
+    [ "Euler1DComputeCFL", "a00426.html#a820145e91372888fca738bcf320495d9", null ]
 ];

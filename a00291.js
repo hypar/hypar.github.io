@@ -1,4 +1,4 @@
 var a00291 =
 [
-    [ "ExactSolution", "a00291.html#a4e85e6c06e8140c5eb2e6efe6ff33f53", null ]
+    [ "BCSupersonicOutflowU", "a00291.html#a791e37fae3c9489d0fc039102c57409e", null ]
 ];

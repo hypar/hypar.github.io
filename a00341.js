@@ -1,7 +1,5 @@
 var a00341 =
 [
-    [ "WENOFifthOrderCalculateWeights", "a00341.html#a3107c4ab0a55a53d58b3b7c1c456be75", null ],
-    [ "WENOFifthOrderCalculateWeightsChar", "a00341.html#a44d32cb52b0ef592fbf15b18edade695", null ],
-    [ "WENOFifthOrderInitializeWeights", "a00341.html#a522dbf81bca4ddfffd0a49b88f6bc6bc", null ],
-    [ "WENOInitialize", "a00341.html#ab998cb7839e6b350b0450adabcfeafc7", null ]
+    [ "_MINIMUM_GHOSTS_", "a00341.html#ab2278b4768059f198821dbf4d1a80389", null ],
+    [ "Interp1PrimFifthOrderHCWENOChar", "a00341.html#a2e43ae211de60776d2cf914a389d54af", null ]
 ];

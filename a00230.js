@@ -1,11 +1,21 @@
 var a00230 =
 [
-    [ "_LIM_GM_", "a00230.html#a709c944f0d1acdf4471cebadad905603", null ],
-    [ "_LIM_MM_", "a00230.html#ab5921c3e03f8c8afdcdc402008f70119", null ],
-    [ "_LIM_VANLEER_", "a00230.html#a367f4f3889293e279da34b5325e45c0b", null ],
-    [ "_LIM_SUPERBEE_", "a00230.html#a1eb2f1d88c4ccd13f08d495a7740ba19", null ],
-    [ "LimiterGeneralizedMinMod", "a00230.html#aa3a1bfccb1c53cfcdb4ce40e8dcdf754", null ],
-    [ "LimiterMinMod", "a00230.html#a5a7e3e6ec209bbe35f9278625ccae845", null ],
-    [ "LimiterVanLeer", "a00230.html#a65cac92ad79132ce522202535b165dbf", null ],
-    [ "LimiterSuperBee", "a00230.html#af8c1bbcc710852804d9be359bb88c770", null ]
+    [ "gpuMemcpyKind", "a00230.html#ad3729453a5f50a2a289e41900432368a", [
+      [ "gpuMemcpyHostToDevice", "a00230.html#ad3729453a5f50a2a289e41900432368aaa732de921ba541463d795cc30a0e3ade", null ],
+      [ "gpuMemcpyDeviceToHost", "a00230.html#ad3729453a5f50a2a289e41900432368aa5e83a902b81b823a48c8a81680640e35", null ],
+      [ "gpuMemcpyDeviceToDevice", "a00230.html#ad3729453a5f50a2a289e41900432368aa932aef65a46962e3238aa213f941e100", null ]
+    ] ],
+    [ "gpuSetDevice", "a00230.html#a7d27111e4e8163df2f97cff08d470f1e", null ],
+    [ "gpuMemcpy", "a00230.html#ac87405a3a13250d12c0f033f29a47bab", null ],
+    [ "gpuMalloc", "a00230.html#ab7f70a36ab5fb0b91469e8a64afc5571", null ],
+    [ "gpuMemset", "a00230.html#a5211607a9910a4d3fd4c7001794c91ee", null ],
+    [ "gpuFree", "a00230.html#a480c2621b48a7323bc59581a5f6a58da", null ],
+    [ "gpuArrayCopy1D", "a00230.html#a110a55a49f973e7fe6e12614c157d084", null ],
+    [ "gpuArraySetValue", "a00230.html#a87d57be18f4bf913a4d3e8bb9536c0f4", null ],
+    [ "gpuArrayAXPY", "a00230.html#ab3678ace133a9d91cfb9154d500f0e70", null ],
+    [ "gpuArrayBlockMultiply", "a00230.html#afd6620a5112f7aeb8391dc20e0f3b048", null ],
+    [ "gpuArraySumSquarenD", "a00230.html#a091998705327b277138fdd81cb2c1816", null ],
+    [ "gpuArrayCopy1DNewScheme", "a00230.html#ab604a42798cd5947c44029c7f7da8b66", null ],
+    [ "gpuArrayCheckEqual", "a00230.html#ad31d9342d3b93520124dc517f552df75", null ],
+    [ "gpuArrayCheckEqual2", "a00230.html#ab86d48d73a48520ed454495d4cbc4746", null ]
 ];

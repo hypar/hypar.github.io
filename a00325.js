@@ -1,5 +1,4 @@
 var a00325 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00325.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderWENOChar", "a00325.html#a7425e9ed9dae3f0fa4cbf6eb299fd5b3", null ]
+    [ "IBComputeNormalGradient", "a00325.html#af2395d184c7e2d65736714d8aaeebcfe", null ]
 ];

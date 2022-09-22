@@ -1,5 +1,6 @@
 var a00328 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00328.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFourthOrderCentral", "a00328.html#af45fe547593d21575ad86b4d542422d2", null ]
+    [ "CountBoundaryPoints", "a00328.html#ac20a15dad8cdc1021b559f08cd60bdf4", null ],
+    [ "SetBoundaryPoints", "a00328.html#a684729950453b8313d61c1731acf5e5c", null ],
+    [ "IBIdentifyBoundary", "a00328.html#a65f57f0636944e8a45906b00c8882a8a", null ]
 ];

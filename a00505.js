@@ -1,5 +1,4 @@
 var a00505 =
 [
-    [ "Numa2DRusanovFlux", "a00505.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
-    [ "Numa2DRusanovLinearFlux", "a00505.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
+    [ "NavierStokes2DParabolicFunction", "a00505.html#a3b7da8c25125ac4681035c3bcd35c449", null ]
 ];

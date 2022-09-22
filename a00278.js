@@ -1,4 +1,5 @@
 var a00278 =
 [
-    [ "BCThermalSlipWallU", "a00278.html#ad95232382b3a4969eb8e2212e00f032a", null ]
+    [ "BCReadTurbulentInflowData", "a00278.html#ae90485b7beacc863180d194634c9e6d5", null ],
+    [ "BCReadTemperatureData", "a00278.html#a482110904d4b11dd863786c9d425bc7e", null ]
 ];

@@ -1,5 +1,5 @@
 var a00546 =
 [
-    [ "VlasovAdvectionCoeff", "a00546.html#a58d4d7eb9e93f0e81dd01ce4895d6b3a", null ],
-    [ "VlasovUpwind", "a00546.html#a015b8faeb43366a6c48d294ef1aaa2b0", null ]
+    [ "Numa3DFlux", "a00546.html#a173a0e31d874adff608b905549a58a11", null ],
+    [ "Numa3DStiffFlux", "a00546.html#a6fed3d0e85c6ae04c0c28f2b58c6781b", null ]
 ];

@@ -1,4 +1,5 @@
 var a00495 =
 [
-    [ "NavierStokes3DPreStep", "a00495.html#ac8eb8d2fcaa813fe63b214ea1b51a46b", null ]
+    [ "NavierStokes2DLeftEigenvectors", "a00495.html#a497cabf9429ce30c3107d526bc18a798", null ],
+    [ "NavierStokes2DRightEigenvectors", "a00495.html#a2267c0825e485249fdee53ee44981636", null ]
 ];

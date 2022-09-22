@@ -1,4 +1,5 @@
 var a00312 =
 [
-    [ "IBReadBodySTL", "a00312.html#ab11c40c53b44e72e03b788ab2fa769c2", null ]
+    [ "IncrementFilenameIndex", "a00312.html#a9fda82ed752188f3af821e2c30f63c21", null ],
+    [ "ResetFilenameIndex", "a00312.html#ad22799259c966d7dcc526452eaf7e855", null ]
 ];

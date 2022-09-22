@@ -1,6 +1,6 @@
 var a00496 =
 [
-    [ "NavierStokes3DSourceFunction", "a00496.html#a5739b6201e713236cb2238d24652a3ff", null ],
-    [ "NavierStokes3DSourceUpwind", "a00496.html#a2ddfc64d5cf2cdd903d97e424135e10f", null ],
-    [ "NavierStokes3DSource", "a00496.html#a7f9699c7335983c5880b7877eff73de3", null ]
+    [ "NavierStokes2DFlux", "a00496.html#af9474905c4b501fdee9a18e490f6499d", null ],
+    [ "NavierStokes2DStiffFlux", "a00496.html#ae5da2defa681602a634b5e5455bae4cb", null ],
+    [ "NavierStokes2DNonStiffFlux", "a00496.html#a2802ed8fe8286d03b51bf3487952f59c", null ]
 ];

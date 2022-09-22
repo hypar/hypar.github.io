@@ -1,5 +1,4 @@
 var a00464 =
 [
-    [ "LinearADRDiffusionG", "a00464.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
-    [ "LinearADRDiffusionH", "a00464.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
+    [ "FPPowerSystem1BusAdvection", "a00464.html#ad7e78d17ce9013c5e3929a7c13847d83", null ]
 ];

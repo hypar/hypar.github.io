@@ -1,4 +1,4 @@
 var a00370 =
 [
-    [ "MPIPartition1D", "a00370.html#a87127187b566bfa02b692247f9e3c798", null ]
+    [ "WriteText", "a00370.html#afc6009d99921e629e20244374914a806", null ]
 ];

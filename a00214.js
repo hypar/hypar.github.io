@@ -1,26 +1,12 @@
 var a00214 =
 [
-    [ "TridiagLU", "a00214.html#a00630", [
-      [ "reducedsolvetype", "a00214.html#ae50ec60868beaab2cb84897adefda09f", null ],
-      [ "evaluate_norm", "a00214.html#a584c0fc0b1e845800ad511dffc60e032", null ],
-      [ "maxiter", "a00214.html#a274519264a28477940f161ddb4b61feb", null ],
-      [ "atol", "a00214.html#a60c6dfc476dd9596072f61c2ec8d58ed", null ],
-      [ "rtol", "a00214.html#a4587afeee8941ba7c208b3690a3eeaa7", null ],
-      [ "exititer", "a00214.html#a846172807b19cf19a2587ede74b06828", null ],
-      [ "exitnorm", "a00214.html#a0a20107c06f29ce4d4ac23a4e7cfb17a", null ],
-      [ "verbose", "a00214.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ],
-      [ "total_time", "a00214.html#abc276e47b85df9dd59f248e663b3b971", null ],
-      [ "stage1_time", "a00214.html#a8cd56611f6cd8c71a991c9ed2b97ca29", null ],
-      [ "stage2_time", "a00214.html#ab956b3ef566ffdd35d9ddc39c2662875", null ],
-      [ "stage3_time", "a00214.html#a45e5bf315927ed87c57bcf220ec49861", null ],
-      [ "stage4_time", "a00214.html#ac7df4fddfc5aa2827b346dcfd80346fb", null ]
-    ] ],
-    [ "_TRIDIAG_JACOBI_", "a00214.html#a79ddfe354b89d113b72db4b5ae6c6e3d", null ],
-    [ "_TRIDIAG_GS_", "a00214.html#adf756eb923ab79f911e38a82da7a6cab", null ],
-    [ "tridiagLU", "a00214.html#a83b53dedf034d67bf2dde46eebf492ee", null ],
-    [ "tridiagLUGS", "a00214.html#a3d43d79472727ef201c8a48f3073decd", null ],
-    [ "tridiagIterJacobi", "a00214.html#a1b0ccd6fb49ee8efe7c87a78e1bbe0ec", null ],
-    [ "tridiagLUInit", "a00214.html#a52d21dfe1d76916811879bf0d7a29d72", null ],
-    [ "blocktridiagLU", "a00214.html#ad2c404dd44e760ee729740176b186bd0", null ],
-    [ "blocktridiagIterJacobi", "a00214.html#a8c48f135943fe35da85072714d4b1b23", null ]
+    [ "bt_type", "a00214.html#a6f84a1093abf57dcbf0406b33f40f766", null ],
+    [ "topo_flag", "a00214.html#a71b5cdadb8aec7421fa05a93ec51c102", null ],
+    [ "g", "a00214.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
+    [ "b", "a00214.html#a9f92e5582bf339a3c95df78b9c684fe0", null ],
+    [ "fhat", "a00214.html#acc808f03e31ad5612b724fe23dea05ab", null ],
+    [ "beta", "a00214.html#a9424343761f8c4f4c1afe8f5b6bf471b", null ],
+    [ "D", "a00214.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
+    [ "upw_choice", "a00214.html#a57894a0f53d5b228bf64053367736bf9", null ],
+    [ "SourceUpwind", "a00214.html#a3cb843ad67e4b14387b7fa21f6d4090b", null ]
 ];

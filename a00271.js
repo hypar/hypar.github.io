@@ -1,4 +1,4 @@
 var a00271 =
 [
-    [ "BCSubsonicAmbivalentU", "a00271.html#aa06b35b07659fa413f72a90372e325d0", null ]
+    [ "BandedMatrixDestroy", "a00271.html#a75f8c3de645719ac147311358c3bff73", null ]
 ];

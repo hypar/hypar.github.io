@@ -1,5 +1,5 @@
 var a00381 =
 [
-    [ "ApplyPeriodicity", "a00381.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e", null ],
-    [ "PetscGlobalDOF", "a00381.html#a15c41ba7e2d10e4803226f42708a6ef8", null ]
+    [ "MPICreateCommunicators", "a00381.html#a8f52d58fa2c0c94914befd51b6d413a1", null ],
+    [ "MPIFreeCommunicators", "a00381.html#a56b1ce0eb3d932698ac49d3c3183d39a", null ]
 ];

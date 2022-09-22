@@ -1,4 +1,5 @@
 var a00337 =
 [
-    [ "MUSCLInitialize", "a00337.html#ab9c0c7ce0e00510c982d1408fc3f8ee7", null ]
+    [ "_MINIMUM_GHOSTS_", "a00337.html#ab2278b4768059f198821dbf4d1a80389", null ],
+    [ "Interp1PrimFifthOrderCompactUpwindChar", "a00337.html#ac2a332a729ea0b4a674b147a60d67f52", null ]
 ];

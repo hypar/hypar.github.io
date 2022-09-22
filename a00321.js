@@ -1,5 +1,4 @@
 var a00321 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00321.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderHCWENOChar", "a00321.html#a2e43ae211de60776d2cf914a389d54af", null ]
+    [ "IBAssembleGlobalFacetData", "a00321.html#a7383f93f03644bda100a1f27742232a3", null ]
 ];

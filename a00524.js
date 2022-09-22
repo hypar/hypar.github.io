@@ -1,5 +1,4 @@
 var a00524 =
 [
-    [ "ShallowWater1DUpwindRoe", "a00524.html#ace4421562e3ac0bce55ddde7c58d2239", null ],
-    [ "ShallowWater1DUpwindLLF", "a00524.html#a19452a335e50ca04b8d55db58acccc53", null ]
+    [ "gpuNavierStokes3DInitialize", "a00524.html#aff1027153b10ee5eaac63a0d83cd49c4", null ]
 ];

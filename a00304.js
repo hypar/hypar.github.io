@@ -1,4 +1,4 @@
 var a00304 =
 [
-    [ "IBComputeFacetVar", "a00304.html#a9c3f95ff860bcc0a29e7cdf3af41ba18", null ]
+    [ "BoundaryIntegral", "a00304.html#abf698222199fe88976002228400c428d", null ]
 ];

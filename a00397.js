@@ -1,4 +1,4 @@
 var a00397 =
 [
-    [ "BurgersAdvection", "a00397.html#af8efd7171101567d22ced87ae3d72097", null ]
+    [ "MPIRanknD", "a00397.html#aa849b75c6eefcd0c18231a625638eaa4", null ]
 ];

@@ -1,19 +1,11 @@
 var a00243 =
 [
-    [ "ShallowWater2D", "a00208.html", "a00208" ],
-    [ "_SHALLOW_WATER_2D_", "a00243.html#aebe5d4a29761b0784c3d3e67e325105b", null ],
-    [ "_MODEL_NDIMS_", "a00243.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00243.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "_ROE_", "a00243.html#abffeadaaee7a3a2baeeb28e395411d73", null ],
-    [ "_LLF_", "a00243.html#a98a6bcc1b69abface4bef84cf0d51955", null ],
-    [ "_XDIR_", "a00243.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
-    [ "_YDIR_", "a00243.html#a7fd32e06617f4489079bc50ce9bfc00c", null ],
-    [ "_ShallowWater2DGetFlowVar_", "a00243.html#a66b88d6a05555a192a0e455ed99341a4", null ],
-    [ "_ShallowWater2DSetFlux_", "a00243.html#a54eddcc3639c7d46da043d04165fc67c", null ],
-    [ "_ShallowWater2DRoeAverage_", "a00243.html#aa3a68e66edc692ac67a2026121be2927", null ],
-    [ "_ShallowWater2DEigenvalues_", "a00243.html#ab51465579037455f044ab58f387caf15", null ],
-    [ "_ShallowWater2DLeftEigenvectors_", "a00243.html#a9fedf0f1165028b0f256b59e72fc5e9a", null ],
-    [ "_ShallowWater2DRightEigenvectors_", "a00243.html#ac2a20407c8e10d3f59b52281ae4e0f39", null ],
-    [ "ShallowWater2DInitialize", "a00243.html#a9182e40f0c923b05a4280c768bb5a1f6", null ],
-    [ "ShallowWater2DCleanup", "a00243.html#a5cfeeae3a3729d15543d8954060a48d4", null ]
+    [ "min", "a00243.html#ac6afabdc09a49a433ee19d8a9486056d", null ],
+    [ "max", "a00243.html#affe776513b24d84b39af8ab0930fef7f", null ],
+    [ "min3", "a00243.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a", null ],
+    [ "max3", "a00243.html#aa0d45e1e67c5cacf5c9251fcd90a971b", null ],
+    [ "absolute", "a00243.html#adf1be5ccbb7a2522b4f3a64043c72880", null ],
+    [ "raiseto", "a00243.html#a840eef18a5986381093ff8c176a2153c", null ],
+    [ "raiseto_int", "a00243.html#a74ca90b3ea1d23b2f0ab160523e2f477", null ],
+    [ "sign", "a00243.html#a1e471b644e7fd684cd5dbb144e00ee81", null ]
 ];

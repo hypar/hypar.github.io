@@ -1,5 +1,4 @@
 var a00359 =
 [
-    [ "MPICreateCommunicators", "a00359.html#a8f52d58fa2c0c94914befd51b6d413a1", null ],
-    [ "MPIFreeCommunicators", "a00359.html#a56b1ce0eb3d932698ac49d3c3183d39a", null ]
+    [ "WENOCleanup", "a00359.html#a0b9646a73bff302b31b7abc252e27e2f", null ]
 ];

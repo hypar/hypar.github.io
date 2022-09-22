@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/PETScFunctions/PetscCreatePointList.cpp Source File</title>
+<title>HyPar: src/MathFunctions/TrilinearInterpolation.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -101,7 +101,7 @@ $(document).ready(function(){initNavTree('a00379_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,104 +112,46 @@ $(document).ready(function(){initNavTree('a00379_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">PetscCreatePointList.cpp</div>  </div>
+<div class="title">TrilinearInterpolation.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00379.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifdef with_petsc</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00219.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00237.html">mpivars_cpp.h</a>&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00210.html">simulation_object.h</a>&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00205.html">petscinterface_struct.h</a>&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="a00379.html#a1bb8435ce56995de809e6d1bf932e466">   25</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00238.html#ae4a99505d5f322bfc1c590e3d31fcc0b">PetscCreatePointList</a>(<span class="keywordtype">void</span> *obj )</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="a00205.html#a00628">PETScContext</a>* ctxt = (<a class="code" href="a00205.html#a00628">PETScContext</a>*) obj;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00210.html#a00629">SimulationObject</a>* sim = (<a class="code" href="a00210.html#a00629">SimulationObject</a>*) ctxt-&gt;<a class="code" href="a00205.html#a4e2f35037563217c8dc84c095af9e35f">simobj</a>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">int</span> nsims = ctxt-&gt;<a class="code" href="a00205.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">int</span> ndims = sim[0].<a class="code" href="a00210.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00196.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="comment">/* count the number of computational points */</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  ctxt-&gt;<a class="code" href="a00205.html#a515ec0fe2abce5449e37ae520974cf5f">npoints</a> = 0; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  ctxt-&gt;<a class="code" href="a00205.html#a578ef595dcbe28b2bde5c152c50f85e7">ndofs</a> = 0; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  ctxt-&gt;<a class="code" href="a00205.html#ad2182a08b22eed3bb3b0728725841875">offsets</a> = (<span class="keywordtype">int</span>*) calloc(nsims, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ctxt-&gt;<a class="code" href="a00205.html#a515ec0fe2abce5449e37ae520974cf5f">npoints</a> += sim[ns].<a class="code" href="a00210.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00196.html#afae6319baba315ac1f0c56505610ed85">npoints_local</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    ctxt-&gt;<a class="code" href="a00205.html#ad2182a08b22eed3bb3b0728725841875">offsets</a>[ns] = ctxt-&gt;<a class="code" href="a00205.html#a578ef595dcbe28b2bde5c152c50f85e7">ndofs</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    ctxt-&gt;<a class="code" href="a00205.html#a578ef595dcbe28b2bde5c152c50f85e7">ndofs</a> += (sim[ns].<a class="code" href="a00210.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00196.html#afae6319baba315ac1f0c56505610ed85">npoints_local</a>*sim[ns].<a class="code" href="a00210.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00196.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  }</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00244.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="a00379.html#a2b2d0a0b7891c994d6956c72dfafb80b">   22</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00244.html#a04d4e04f1f9112958dca24fc68c1818a">TrilinearInterpCoeffs</a>(</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                            <span class="keywordtype">double</span> xmin,  </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                            <span class="keywordtype">double</span> xmax,  </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                            <span class="keywordtype">double</span> ymin,  </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                            <span class="keywordtype">double</span> ymax,  </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                            <span class="keywordtype">double</span> zmin,  </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                            <span class="keywordtype">double</span> zmax,  </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                            <span class="keywordtype">double</span> x,     </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                            <span class="keywordtype">double</span> y,     </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                            <span class="keywordtype">double</span> z,     </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                            <span class="keywordtype">double</span> *coeffs</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                          )</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">double</span> vol_inv = 1 / ((xmax-xmin)*(ymax-ymin)*(zmax-zmin));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">double</span> tldx1 = x - xmin;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">double</span> tldx2 = xmax - x;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">double</span> tldy1 = y - ymin;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">double</span> tldy2 = ymax - y;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">double</span> tldz1 = z - zmin;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">double</span> tldz2 = zmax - z;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">int</span> nv = ndims+1;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  ctxt-&gt;<a class="code" href="a00205.html#a3968caf0290e18143989738dd36f2623">points</a>.resize(nsims, <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">int</span> npoints = sim[ns].<a class="code" href="a00210.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00196.html#afae6319baba315ac1f0c56505610ed85">npoints_local</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    ctxt-&gt;<a class="code" href="a00205.html#a3968caf0290e18143989738dd36f2623">points</a>[ns] = (<span class="keywordtype">int</span>*) calloc (npoints*nv,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span>* <span class="keyword">const</span> dim( sim[ns].solver.dim_local );</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> ghosts( sim[ns].solver.ghosts );</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">int</span> done = 0, i = 0;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    std::vector&lt;int&gt; index(ndims,0);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <span class="keywordtype">int</span> p; <a class="code" href="a00219.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims, dim, index.data(), ghosts, p);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <a class="code" href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index.data(), (ctxt-&gt;<a class="code" href="a00205.html#a3968caf0290e18143989738dd36f2623">points</a>[ns]+i*nv), ndims);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      (ctxt-&gt;<a class="code" href="a00205.html#a3968caf0290e18143989738dd36f2623">points</a>[ns]+i*nv)[ndims] = p;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      <a class="code" href="a00219.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      i++;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">if</span> (i != npoints) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      fprintf(stderr,<span class="stringliteral">&quot;Error in PetscCreatePointList() on rank %d:\n&quot;</span>, sim[ns].mpi.rank);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      fprintf(stderr,<span class="stringliteral">&quot;Inconsistency in point count - %d, %d.\n&quot;</span>,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;              i, npoints);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordtype">int</span> global_npoints;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordtype">int</span> global_ndofs;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="a00236.html#a25c7df0ff2e4f81a64368ea72894a4f8">MPISum_integer</a>(&amp;global_npoints,&amp;(ctxt-&gt;<a class="code" href="a00205.html#a515ec0fe2abce5449e37ae520974cf5f">npoints</a>),1,&amp;sim[0].<a class="code" href="a00210.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>.<a class="code" href="a00199.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <a class="code" href="a00236.html#a25c7df0ff2e4f81a64368ea72894a4f8">MPISum_integer</a>(&amp;global_ndofs,&amp;(ctxt-&gt;<a class="code" href="a00205.html#a578ef595dcbe28b2bde5c152c50f85e7">ndofs</a>),1,&amp;sim[0].<a class="code" href="a00210.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>.<a class="code" href="a00199.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span> (!ctxt-&gt;<a class="code" href="a00205.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    printf(<span class="stringliteral">&quot;PETSc:    total number of computational points is %d.\n&quot;</span>,global_npoints);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    printf(<span class="stringliteral">&quot;PETSc:    total number of computational DOFs is %d.\n&quot;</span>,global_ndofs);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00210_html"><div class="ttname"><a href="a00210.html">simulation_object.h</a></div><div class="ttdoc">Simulation object. </div></div>
-<div class="ttc" id="a00238_html_ae4a99505d5f322bfc1c590e3d31fcc0b"><div class="ttname"><a href="a00238.html#ae4a99505d5f322bfc1c590e3d31fcc0b">PetscCreatePointList</a></div><div class="ttdeci">int PetscCreatePointList(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00379_source.html#l00025">PetscCreatePointList.cpp:25</a></div></div>
-<div class="ttc" id="a00219_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00219.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00125">arrayfunctions.h:125</a></div></div>
-<div class="ttc" id="a00210_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00210.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00026">simulation_object.h:26</a></div></div>
-<div class="ttc" id="a00205_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00205.html#a9a0e87291e0e8b9c1445e5482e814c92">PETScContext::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00054">petscinterface_struct.h:54</a></div></div>
-<div class="ttc" id="a00205_html_a578ef595dcbe28b2bde5c152c50f85e7"><div class="ttname"><a href="a00205.html#a578ef595dcbe28b2bde5c152c50f85e7">PETScContext::ndofs</a></div><div class="ttdeci">int ndofs</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00083">petscinterface_struct.h:83</a></div></div>
-<div class="ttc" id="a00205_html_a515ec0fe2abce5449e37ae520974cf5f"><div class="ttname"><a href="a00205.html#a515ec0fe2abce5449e37ae520974cf5f">PETScContext::npoints</a></div><div class="ttdeci">int npoints</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00079">petscinterface_struct.h:79</a></div></div>
-<div class="ttc" id="a00199_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00199.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00037">mpivars_struct.h:37</a></div></div>
-<div class="ttc" id="a00205_html_a3968caf0290e18143989738dd36f2623"><div class="ttname"><a href="a00205.html#a3968caf0290e18143989738dd36f2623">PETScContext::points</a></div><div class="ttdeci">std::vector&lt; int * &gt; points</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00089">petscinterface_struct.h:89</a></div></div>
-<div class="ttc" id="a00205_html_a4e2f35037563217c8dc84c095af9e35f"><div class="ttname"><a href="a00205.html#a4e2f35037563217c8dc84c095af9e35f">PETScContext::simobj</a></div><div class="ttdeci">void * simobj</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00051">petscinterface_struct.h:51</a></div></div>
-<div class="ttc" id="a00205_html"><div class="ttname"><a href="a00205.html">petscinterface_struct.h</a></div><div class="ttdoc">Contains structure that defines the interface for time integration with PETSc (https://petsc.org/release/) </div></div>
-<div class="ttc" id="a00205_html_a00628"><div class="ttname"><a href="a00205.html#a00628">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00042">petscinterface_struct.h:42</a></div></div>
-<div class="ttc" id="a00237_html"><div class="ttname"><a href="a00237.html">mpivars_cpp.h</a></div><div class="ttdoc">C++ declarations for MPI-related functions. </div></div>
-<div class="ttc" id="a00210_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00210.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00025">simulation_object.h:25</a></div></div>
-<div class="ttc" id="a00196_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00196.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00196_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00196.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00210_html_a00629"><div class="ttname"><a href="a00210.html#a00629">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00023">simulation_object.h:23</a></div></div>
-<div class="ttc" id="a00205_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00205.html#a6cfd95afd0afebd625b889fb6e58371c">PETScContext::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00045">petscinterface_struct.h:45</a></div></div>
-<div class="ttc" id="a00219_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00219.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00205_html_ad2182a08b22eed3bb3b0728725841875"><div class="ttname"><a href="a00205.html#ad2182a08b22eed3bb3b0728725841875">PETScContext::offsets</a></div><div class="ttdeci">int * offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00092">petscinterface_struct.h:92</a></div></div>
-<div class="ttc" id="a00236_html_a25c7df0ff2e4f81a64368ea72894a4f8"><div class="ttname"><a href="a00236.html#a25c7df0ff2e4f81a64368ea72894a4f8">MPISum_integer</a></div><div class="ttdeci">int MPISum_integer(int *, int *, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00375_source.html#l00016">MPISum.c:16</a></div></div>
-<div class="ttc" id="a00196_html_afae6319baba315ac1f0c56505610ed85"><div class="ttname"><a href="a00196.html#afae6319baba315ac1f0c56505610ed85">HyPar::npoints_local</a></div><div class="ttdeci">int npoints_local</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00040">hypar.h:40</a></div></div>
-<div class="ttc" id="a00219_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00219_html"><div class="ttname"><a href="a00219.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    coeffs[0] = tldz2 * tldy2 * tldx2 * vol_inv;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    coeffs[1] = tldz2 * tldy2 * tldx1 * vol_inv;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    coeffs[2] = tldz2 * tldy1 * tldx2 * vol_inv;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    coeffs[3] = tldz2 * tldy1 * tldx1 * vol_inv;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    coeffs[4] = tldz1 * tldy2 * tldx2 * vol_inv;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    coeffs[5] = tldz1 * tldy2 * tldx1 * vol_inv;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    coeffs[6] = tldz1 * tldy1 * tldx2 * vol_inv;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    coeffs[7] = tldz1 * tldy1 * tldx1 * vol_inv;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="ttc" id="a00244_html"><div class="ttname"><a href="a00244.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00244_html_a04d4e04f1f9112958dca24fc68c1818a"><div class="ttname"><a href="a00244.html#a04d4e04f1f9112958dca24fc68c1818a">TrilinearInterpCoeffs</a></div><div class="ttdeci">void TrilinearInterpCoeffs(double, double, double, double, double, double, double, double, double, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00379_source.html#l00022">TrilinearInterpolation.c:22</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

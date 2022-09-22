@@ -1,4 +1,4 @@
 var a00287 =
 [
-    [ "CalculateConservationError", "a00287.html#aef9a903e2e2870dbadbae56ab1b62eb7", null ]
+    [ "BCSubsonicAmbivalentU", "a00287.html#aa06b35b07659fa413f72a90372e325d0", null ]
 ];

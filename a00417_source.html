@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/PhysicalModels/Euler2D/Euler2DEigen.c Source File</title>
+<title>HyPar: src/PETScFunctions/PetscSetInitialGuessROM.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -101,7 +101,7 @@ $(document).ready(function(){initNavTree('a00417_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,47 +112,71 @@ $(document).ready(function(){initNavTree('a00417_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Euler2DEigen.c</div>  </div>
+<div class="title">PetscSetInitialGuessROM.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00417.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00220.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00219.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00232.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00190.html">physicalmodels/euler2d.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00226.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">  Rohde, A., &quot;Eigenvalues and Eigenvectors of the Euler Equations</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">  in General Geometries&quot;, AIAA 2001-2609</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00420.html#abc3249c6e004e0eed1149fcff50d090c">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00417.html#a965cafbf06fa0cfd5c0664dc94fcfd3f">Euler2DLeftEigenvectors</a>(<span class="keywordtype">double</span> *u,<span class="keywordtype">double</span> *L,<span class="keywordtype">void</span> *p,<span class="keywordtype">int</span> dir)</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <a class="code" href="a00190.html#a00613">Euler2D</a> *param  = (<a class="code" href="a00190.html#a00613">Euler2D</a>*)  p;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <a class="code" href="a00190.html#a590ff560306927f56be7a719747324dc">_Euler2DLeftEigenvectors_</a>(u,L,param,dir);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="a00420.html#ade37c0fac7a8b529ca43bbc113e5934b">   23</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00417.html#a2e9802c52e7497ece4e65e55c77c7b22">Euler2DRightEigenvectors</a>(<span class="keywordtype">double</span> *u,<span class="keywordtype">double</span> *R,<span class="keywordtype">void</span> *p,<span class="keywordtype">int</span> dir)</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00190.html#a00613">Euler2D</a> *param  = (<a class="code" href="a00190.html#a00613">Euler2D</a>*)  p;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <a class="code" href="a00190.html#a2548fc93774ad99d2d9be0ec40325978">_Euler2DRightEigenvectors_</a>(u,R,param,dir);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="ttc" id="a00417_html_a2e9802c52e7497ece4e65e55c77c7b22"><div class="ttname"><a href="a00417.html#a2e9802c52e7497ece4e65e55c77c7b22">Euler2DRightEigenvectors</a></div><div class="ttdeci">int Euler2DRightEigenvectors(double *u, double *R, void *p, int dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00417_source.html#l00023">Euler2DEigen.c:23</a></div></div>
-<div class="ttc" id="a00190_html_a00613"><div class="ttname"><a href="a00190.html#a00613">Euler2D</a></div><div class="ttdef"><b>Definition:</b> <a href="a00190_source.html#l00244">euler2d.h:244</a></div></div>
-<div class="ttc" id="a00190_html"><div class="ttname"><a href="a00190.html">euler2d.h</a></div></div>
-<div class="ttc" id="a00226_html"><div class="ttname"><a href="a00226.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00417_html_a965cafbf06fa0cfd5c0664dc94fcfd3f"><div class="ttname"><a href="a00417.html#a965cafbf06fa0cfd5c0664dc94fcfd3f">Euler2DLeftEigenvectors</a></div><div class="ttdeci">int Euler2DLeftEigenvectors(double *u, double *L, void *p, int dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00417_source.html#l00016">Euler2DEigen.c:16</a></div></div>
-<div class="ttc" id="a00232_html"><div class="ttname"><a href="a00232.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00220_html"><div class="ttname"><a href="a00220.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00190_html_a2548fc93774ad99d2d9be0ec40325978"><div class="ttname"><a href="a00190.html#a2548fc93774ad99d2d9be0ec40325978">_Euler2DRightEigenvectors_</a></div><div class="ttdeci">#define _Euler2DRightEigenvectors_(u, R, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00190_source.html#l00189">euler2d.h:189</a></div></div>
-<div class="ttc" id="a00190_html_a590ff560306927f56be7a719747324dc"><div class="ttname"><a href="a00190.html#a590ff560306927f56be7a719747324dc">_Euler2DLeftEigenvectors_</a></div><div class="ttdeci">#define _Euler2DLeftEigenvectors_(u, L, p, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00190_source.html#l00135">euler2d.h:135</a></div></div>
-<div class="ttc" id="a00219_html"><div class="ttname"><a href="a00219.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<a href="a00417.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifdef with_petsc</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00218.html">simulation_object.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00250.html">petscinterface.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#ifdef with_librom</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="a00241.html">librom_interface.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifdef with_librom</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="a00417.html#a949f817dababd4cd887045d56ce2ffa3">   18</a></span>&#160;PetscErrorCode <a class="code" href="a00250.html#ac08ff8a5b9eaa1841e573df91789801e">PetscSetInitialGuessROM</a>( SNES  snes, </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                                        Vec   X,    </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                                        <span class="keywordtype">void</span>* ctxt   )</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <a class="code" href="a00211.html#a00666">PETScContext</a>* context = (<a class="code" href="a00211.html#a00666">PETScContext</a>*) ctxt;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00218.html#a00667">SimulationObject</a>* sim = (<a class="code" href="a00218.html#a00667">SimulationObject</a>*) context-&gt;<a class="code" href="a00211.html#a4e2f35037563217c8dc84c095af9e35f">simobj</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordtype">int</span> nsims = context-&gt;<a class="code" href="a00211.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  PetscFunctionBegin;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">double</span> stage_time = context-&gt;<a class="code" href="a00211.html#a1b01a4354147da92a548ea1a5f96d592">t_start</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  if (context-&gt;<a class="code" href="a00211.html#a22ceb3bed48bc42e41131982f61a839f">stage_times</a>.size() &gt; (context-&gt;<a class="code" href="a00211.html#ad55778d618804ddb359e18c9312c1454">stage_index</a>+1)) {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    stage_time += context-&gt;<a class="code" href="a00211.html#a22ceb3bed48bc42e41131982f61a839f">stage_times</a>[context-&gt;<a class="code" href="a00211.html#ad55778d618804ddb359e18c9312c1454">stage_index</a>+1] * context-&gt;<a class="code" href="a00211.html#a03e28be41881b703c836edbfe9b51b17">dt</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    stage_time += context-&gt;<a class="code" href="a00211.html#a03e28be41881b703c836edbfe9b51b17">dt</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  ((<a class="code" href="a00203.html">libROMInterface</a>*)context-&gt;<a class="code" href="a00211.html#af8049501def09c2e14fbec0a72c8c66c">rom_interface</a>)-&gt;predict(sim, stage_time);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordflow">if</span> (!context-&gt;<a class="code" href="a00211.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    printf(  <span class="stringliteral">&quot;libROM: Predicted ROM intial guess (time %1.4e), wallclock time: %f.\n&quot;</span>, </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;             stage_time, ((<a class="code" href="a00203.html">libROMInterface</a>*)context-&gt;<a class="code" href="a00211.html#af8049501def09c2e14fbec0a72c8c66c">rom_interface</a>)-&gt;predictWallclockTime() );</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; nsims; ns++) {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="a00250.html#a6c64bea980c3a8b0a752113bbeb40cf3">TransferVecToPETSc</a>(sim[ns].solver.u,X,context,ns,context-&gt;<a class="code" href="a00211.html#ad2182a08b22eed3bb3b0728725841875">offsets</a>[ns]);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  PetscFunctionReturn(0);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00211_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00211.html#a6cfd95afd0afebd625b889fb6e58371c">PETScContext::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00045">petscinterface_struct.h:45</a></div></div>
+<div class="ttc" id="a00203_html"><div class="ttname"><a href="a00203.html">libROMInterface</a></div><div class="ttdoc">Class implementing interface with libROM. </div><div class="ttdef"><b>Definition:</b> <a href="a00241_source.html#l00045">librom_interface.h:45</a></div></div>
+<div class="ttc" id="a00218_html_a00667"><div class="ttname"><a href="a00218.html#a00667">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00023">simulation_object.h:23</a></div></div>
+<div class="ttc" id="a00211_html_a22ceb3bed48bc42e41131982f61a839f"><div class="ttname"><a href="a00211.html#a22ceb3bed48bc42e41131982f61a839f">PETScContext::stage_times</a></div><div class="ttdeci">std::vector&lt; double &gt; stage_times</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00069">petscinterface_struct.h:69</a></div></div>
+<div class="ttc" id="a00250_html"><div class="ttname"><a href="a00250.html">petscinterface.h</a></div></div>
+<div class="ttc" id="a00250_html_ac08ff8a5b9eaa1841e573df91789801e"><div class="ttname"><a href="a00250.html#ac08ff8a5b9eaa1841e573df91789801e">PetscSetInitialGuessROM</a></div><div class="ttdeci">PetscErrorCode PetscSetInitialGuessROM(SNES, Vec, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00417_source.html#l00018">PetscSetInitialGuessROM.cpp:18</a></div></div>
+<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">simulation_object.h</a></div><div class="ttdoc">Simulation object. </div></div>
+<div class="ttc" id="a00241_html"><div class="ttname"><a href="a00241.html">librom_interface.h</a></div><div class="ttdoc">libROM interface class </div></div>
+<div class="ttc" id="a00250_html_a6c64bea980c3a8b0a752113bbeb40cf3"><div class="ttname"><a href="a00250.html#a6c64bea980c3a8b0a752113bbeb40cf3">TransferVecToPETSc</a></div><div class="ttdeci">int TransferVecToPETSc(const double *const, Vec, void *, const int, const int)</div><div class="ttdef"><b>Definition:</b> <a href="a00419_source.html#l00024">TransferToPETSc.cpp:24</a></div></div>
+<div class="ttc" id="a00211_html_a00666"><div class="ttname"><a href="a00211.html#a00666">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00042">petscinterface_struct.h:42</a></div></div>
+<div class="ttc" id="a00211_html_af8049501def09c2e14fbec0a72c8c66c"><div class="ttname"><a href="a00211.html#af8049501def09c2e14fbec0a72c8c66c">PETScContext::rom_interface</a></div><div class="ttdeci">void * rom_interface</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00137">petscinterface_struct.h:137</a></div></div>
+<div class="ttc" id="a00211_html_ad55778d618804ddb359e18c9312c1454"><div class="ttname"><a href="a00211.html#ad55778d618804ddb359e18c9312c1454">PETScContext::stage_index</a></div><div class="ttdeci">int stage_index</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00072">petscinterface_struct.h:72</a></div></div>
+<div class="ttc" id="a00211_html_a4e2f35037563217c8dc84c095af9e35f"><div class="ttname"><a href="a00211.html#a4e2f35037563217c8dc84c095af9e35f">PETScContext::simobj</a></div><div class="ttdeci">void * simobj</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00051">petscinterface_struct.h:51</a></div></div>
+<div class="ttc" id="a00211_html_a1b01a4354147da92a548ea1a5f96d592"><div class="ttname"><a href="a00211.html#a1b01a4354147da92a548ea1a5f96d592">PETScContext::t_start</a></div><div class="ttdeci">double t_start</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00063">petscinterface_struct.h:63</a></div></div>
+<div class="ttc" id="a00211_html_a03e28be41881b703c836edbfe9b51b17"><div class="ttname"><a href="a00211.html#a03e28be41881b703c836edbfe9b51b17">PETScContext::dt</a></div><div class="ttdeci">double dt</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00066">petscinterface_struct.h:66</a></div></div>
+<div class="ttc" id="a00211_html_ad2182a08b22eed3bb3b0728725841875"><div class="ttname"><a href="a00211.html#ad2182a08b22eed3bb3b0728725841875">PETScContext::offsets</a></div><div class="ttdeci">int * offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00092">petscinterface_struct.h:92</a></div></div>
+<div class="ttc" id="a00211_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00211.html#a9a0e87291e0e8b9c1445e5482e814c92">PETScContext::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00054">petscinterface_struct.h:54</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

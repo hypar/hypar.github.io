@@ -1,4 +1,5 @@
 var a00365 =
 [
-    [ "MPIGetFilename", "a00365.html#a3bea94d51bdf0cd76ac4a0b0d52a5baa", null ]
+    [ "ReadArraywInterpSerial", "a00365.html#ac1fd9c1e0d7b79e7047db352b8aeb0b8", null ],
+    [ "ReadArraywInterp", "a00365.html#a84eb363896d58f78282bd0426638c13d", null ]
 ];

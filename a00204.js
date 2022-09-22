@@ -1,12 +1,14 @@
 var a00204 =
 [
-    [ "gamma", "a00204.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
-    [ "R", "a00204.html#a228eb5e837a644887ac6e7bab3f42485", null ],
-    [ "Omega", "a00204.html#a1b5bf6735b7465aec5c931281d240737", null ],
-    [ "g", "a00204.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
-    [ "init_atmos", "a00204.html#a8033c1255ef443c5e72e120e7519ff6a", null ],
-    [ "Pref", "a00204.html#ad2988f8045b70fe0950d361d8814faa6", null ],
-    [ "Tref", "a00204.html#abfc9a78d9685d39295be4f8cfefed2f2", null ],
-    [ "StandardAtmosphere", "a00204.html#a5025a527e19d84e42fead49061ed7fec", null ],
-    [ "upwind", "a00204.html#aea473d706c30accecfe35e5d76d4b50a", null ]
+    [ "LinearADR", "a00204.html#a00662", [
+      [ "constant_advection", "a00204.html#a857e5fcb8a5cb035175f21e4dc3de26f", null ],
+      [ "adv_filename", "a00204.html#a143c0b09170c16ca8af49f337e5f672d", null ],
+      [ "adv_arr_size", "a00204.html#a6faf530242605d8f7a3dd4b2bf46693d", null ],
+      [ "a", "a00204.html#a1c93565457c6d07aa9691346f0086e14", null ],
+      [ "d", "a00204.html#ae6261d15419eb591b3f65c5f8cd7b8cb", null ],
+      [ "centered_flux", "a00204.html#a478f311f31e56d8a950586cd25867daa", null ]
+    ] ],
+    [ "_LINEAR_ADVECTION_DIFFUSION_REACTION_", "a00204.html#a44c745170d88218420752d150856b01c", null ],
+    [ "LinearADRInitialize", "a00204.html#a78c1fbb2ddae048ddb9d2863ad4f65b3", null ],
+    [ "LinearADRCleanup", "a00204.html#a114e6f1e977ae4220d29e8097e017f19", null ]
 ];

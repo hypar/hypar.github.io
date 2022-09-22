@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/PhysicalModels/Euler1D/Euler1DSourceUpwind.c Source File</title>
+<title>HyPar: src/PETScFunctions/PetscPreTimeStep.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -101,7 +101,7 @@ $(document).ready(function(){initNavTree('a00413_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,105 +112,165 @@ $(document).ready(function(){initNavTree('a00413_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Euler1DSourceUpwind.c</div>  </div>
+<div class="title">PetscPreTimeStep.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00413.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00220.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00219.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00232.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00239.html">physicalmodels/euler1d.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00226.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifdef with_petsc</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00229.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00249.html">mpivars_cpp.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00218.html">simulation_object.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00250.html">petscinterface.h</a>&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="a00413.html#a229db12fad7bac6cf5f1223f204fe1f9">   21</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00408.html#a9626db6c422f313b9762b0223f1a52da">Euler1DSourceUpwindLLF</a>(</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                            <span class="keywordtype">double</span>  *fI, </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                            <span class="keywordtype">double</span>  *fL, </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                            <span class="keywordtype">double</span>  *fR, </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                            <span class="keywordtype">double</span>  *u,  </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                            <span class="keywordtype">int</span>     dir, </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                            <span class="keywordtype">void</span>    *s,  </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                            <span class="keywordtype">double</span>  t    </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                          )</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <a class="code" href="a00196.html">HyPar</a>     *solver = (<a class="code" href="a00196.html">HyPar</a>*)    s;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span>       done,k;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="a00220.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordtype">int</span> ndims = solver-&gt;<a class="code" href="a00196.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">int</span> *dim  = solver-&gt;<a class="code" href="a00196.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">int</span> index_outer[ndims], index_inter[ndims], bounds_outer[ndims], bounds_inter[ndims];</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_inter,ndims); bounds_inter[dir] += 1;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifdef with_librom</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="a00241.html">librom_interface.h</a>&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00411.html#a5981de613724cb667e98aa872157534e">OutputSolution</a> (<span class="keywordtype">void</span>*,<span class="keywordtype">int</span>);   </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#undef __FUNCT__</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="a00413.html#ae60511a9aa5cbf216a00a1bb81006bc5">   21</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __FUNCT__ &quot;PetscPreTimeStep&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="a00413.html#afd0d852423b377a3759c8bc0500903c7">   24</a></span>&#160;PetscErrorCode <a class="code" href="a00250.html#ace222db5eadd0e0bd27229641e43fa9b">PetscPreTimeStep</a>(TS ts )</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <a class="code" href="a00211.html#a00666">PETScContext</a>* context(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  PetscFunctionBegin;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  TSGetApplicationContext(ts,&amp;context);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordflow">if</span> (!context) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in PetscPreTimeStep: Null context!\n&quot;</span>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  gettimeofday(&amp;(context-&gt;<a class="code" href="a00211.html#aa1847bba899448143ec45e158291f51a">iter_start_time</a>),NULL);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="a00218.html#a00667">SimulationObject</a>* sim = (<a class="code" href="a00218.html#a00667">SimulationObject</a>*) context-&gt;<a class="code" href="a00211.html#a4e2f35037563217c8dc84c095af9e35f">simobj</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">int</span> nsims = context-&gt;<a class="code" href="a00211.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  Vec Y;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  TSGetSolution(ts,&amp;Y);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  done = 0; <a class="code" href="a00219.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,index_inter,ndims);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">for</span> (index_inter[dir] = 0; index_inter[dir] &lt; bounds_inter[dir]; index_inter[dir]++) {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      <span class="keywordtype">int</span> p;  <a class="code" href="a00219.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds_inter,index_inter,0,p);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      <span class="comment">/* Local Lax-Friedrich upwinding scheme */</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="a00239.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>; k++) </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        (fI+_MODEL_NVARS_*p)[k] = 0.5 * ((fL+_MODEL_NVARS_*p)[k] + (fR+_MODEL_NVARS_*p)[k]);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="a00219.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="a00413.html#ad94cc03bc96444b2f8ce0e701fe489f3">   64</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00408.html#a564a6dcdf1979d59610503201e6f2619">Euler1DSourceUpwindRoe</a>(</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                            <span class="keywordtype">double</span>  *fI, </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                            <span class="keywordtype">double</span>  *fL, </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                            <span class="keywordtype">double</span>  *fR, </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                            <span class="keywordtype">double</span>  *u,  </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                            <span class="keywordtype">int</span>     dir, </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                            <span class="keywordtype">void</span>    *s,  </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                            <span class="keywordtype">double</span>  t    </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                          )</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="a00196.html">HyPar</a>     *solver = (<a class="code" href="a00196.html">HyPar</a>*)    s;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordtype">int</span>       done,k;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="a00220.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">int</span> ndims = solver-&gt;<a class="code" href="a00196.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">int</span> *dim  = solver-&gt;<a class="code" href="a00196.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordtype">int</span> index_outer[ndims], index_inter[ndims], bounds_outer[ndims], bounds_inter[ndims];</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <a class="code" href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <a class="code" href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_inter,ndims); bounds_inter[dir] += 1;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  done = 0; <a class="code" href="a00219.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,index_inter,ndims);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">for</span> (index_inter[dir] = 0; index_inter[dir] &lt; bounds_inter[dir]; index_inter[dir]++) {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      <span class="keywordtype">int</span> p;  <a class="code" href="a00219.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds_inter,index_inter,0,p);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      <span class="comment">/* Local Lax-Friedrich upwinding scheme */</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="a00239.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>; k++) </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        (fI+_MODEL_NVARS_*p)[k] = 0.5 * ((fL+_MODEL_NVARS_*p)[k] + (fR+_MODEL_NVARS_*p)[k]);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="a00219.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="ttc" id="a00196_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00196.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00035">hypar.h:35</a></div></div>
-<div class="ttc" id="a00239_html"><div class="ttname"><a href="a00239.html">euler1d.h</a></div><div class="ttdoc">1D Euler Equations (inviscid, compressible flows) </div></div>
-<div class="ttc" id="a00219_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00219.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00125">arrayfunctions.h:125</a></div></div>
-<div class="ttc" id="a00408_html_a9626db6c422f313b9762b0223f1a52da"><div class="ttname"><a href="a00408.html#a9626db6c422f313b9762b0223f1a52da">Euler1DSourceUpwindLLF</a></div><div class="ttdeci">int Euler1DSourceUpwindLLF(double *, double *, double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00413_source.html#l00021">Euler1DSourceUpwind.c:21</a></div></div>
-<div class="ttc" id="a00196_html"><div class="ttname"><a href="a00196.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00220_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00220.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00013">basic.h:13</a></div></div>
-<div class="ttc" id="a00219_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00219.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00168">arrayfunctions.h:168</a></div></div>
-<div class="ttc" id="a00226_html"><div class="ttname"><a href="a00226.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00239_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00239.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00239_source.html#l00058">euler1d.h:58</a></div></div>
-<div class="ttc" id="a00232_html"><div class="ttname"><a href="a00232.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00220_html"><div class="ttname"><a href="a00220.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00196_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00196.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00226_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00408_html_a564a6dcdf1979d59610503201e6f2619"><div class="ttname"><a href="a00408.html#a564a6dcdf1979d59610503201e6f2619">Euler1DSourceUpwindRoe</a></div><div class="ttdeci">int Euler1DSourceUpwindRoe(double *, double *, double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00413_source.html#l00064">Euler1DSourceUpwind.c:64</a></div></div>
-<div class="ttc" id="a00219_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00219.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00039">arrayfunctions.h:39</a></div></div>
-<div class="ttc" id="a00219_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00219.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00219_source.html#l00318">arrayfunctions.h:318</a></div></div>
-<div class="ttc" id="a00219_html"><div class="ttname"><a href="a00219.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">double</span> waqt;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  TSGetTime(ts,&amp;waqt);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">double</span> dt;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  TSGetTimeStep(ts,&amp;dt);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">int</span> iter;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  TSGetStepNumber(ts,&amp;iter);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  context-&gt;<a class="code" href="a00211.html#a03e28be41881b703c836edbfe9b51b17">dt</a> = dt;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  context-&gt;<a class="code" href="a00211.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a> = waqt;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  context-&gt;<a class="code" href="a00211.html#a1b01a4354147da92a548ea1a5f96d592">t_start</a> = waqt;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  TSType time_scheme;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  TSGetType(ts,&amp;time_scheme);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; nsims; ns++) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="a00202.html">HyPar</a>* solver = &amp;(sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="a00205.html#a00663">MPIVariables</a>* mpi = &amp;(sim[ns].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="comment">/* get solution */</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="a00250.html#a9f443ff08a9a8852ab1e9cabb793ddaa">TransferVecFromPETSc</a>(solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,Y,context,ns,context-&gt;<a class="code" href="a00211.html#ad2182a08b22eed3bb3b0728725841875">offsets</a>[ns]);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">/* save a copy of the solution to compute norm at end of time step */</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,solver-&gt;<a class="code" href="a00202.html#acab4b9b417d6c3745ad789099d3731c6">u0</a>,(solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>*solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>));</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="comment">/* apply boundary conditions and exchange data over MPI interfaces */</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    solver-&gt;<a class="code" href="a00202.html#aa4de7bdc1e62417caf51b9c45184268d">ApplyBoundaryConditions</a>(solver,mpi,solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,NULL,waqt);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    solver-&gt;<a class="code" href="a00202.html#a83d97dfc50e6bfefd0db6503d365d5bd">ApplyIBConditions</a>(solver,mpi,solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,waqt);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="a00248.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(  solver-&gt;<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                              solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                              solver-&gt;<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                              solver-&gt;<a class="code" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                              mpi,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                              solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a> );</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">/* Call any physics-specific pre-step function */</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00202.html#a6a34ae8a3044f521e57180a7260f3b42">PreStep</a>) solver-&gt;<a class="code" href="a00202.html#a6a34ae8a3044f521e57180a7260f3b42">PreStep</a>(solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,solver,mpi,waqt);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">/* If using a non-linear scheme with ARKIMEX methods, </span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">       compute the non-linear finite-difference operator */</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">if</span> (!strcmp(time_scheme,TSARKIMEX)) {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      solver-&gt;<a class="code" href="a00202.html#a228697ae6a0f0fe7a928a9ddad45da54">NonlinearInterp</a>(solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,solver,mpi,waqt,solver-&gt;<a class="code" href="a00202.html#a0d895f9bb0c8a3e79a64dd2379e1f2dd">FFunction</a>); </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">/* set the step boundary flux integral value to zero */</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(solver-&gt;<a class="code" href="a00202.html#a6dfeed442d18083b68fd0f28d5f63fa7">StepBoundaryIntegral</a>,2*solver-&gt;<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>*solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,0.0);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <a class="code" href="a00250.html#a6c64bea980c3a8b0a752113bbeb40cf3">TransferVecToPETSc</a>(solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,Y,context,ns,context-&gt;<a class="code" href="a00211.html#ad2182a08b22eed3bb3b0728725841875">offsets</a>[ns]);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">if</span> (!iter) { </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; nsims; ns++) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <a class="code" href="a00202.html">HyPar</a>* solver = &amp;(sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <a class="code" href="a00205.html#a00663">MPIVariables</a>* mpi = &amp;(sim[ns].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00202.html#ab4c55736e92f7d72f04b8a957d82b054">PhysicsOutput</a>) solver-&gt;<a class="code" href="a00202.html#ab4c55736e92f7d72f04b8a957d82b054">PhysicsOutput</a>(solver,mpi);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <a class="code" href="a00411.html#a5981de613724cb667e98aa872157534e">OutputSolution</a>(sim, nsims);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#ifdef with_librom</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor"></span>    context-&gt;<a class="code" href="a00211.html#aac65a15cdd8e87c5c788db46e1ca0347">op_times_arr</a>.push_back(waqt);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor"></span>  }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#ifdef with_librom</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (      (context-&gt;<a class="code" href="a00211.html#ae1766c1c76f0ef119388c4fa8a6d64f4">rom_mode</a> == <a class="code" href="a00241.html#a8d7f058ce028038a98a49ad28176390e">_ROM_MODE_TRAIN_</a>) </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        &amp;&amp;  (iter%((<a class="code" href="a00203.html">libROMInterface</a>*)context-&gt;<a class="code" href="a00211.html#af8049501def09c2e14fbec0a72c8c66c">rom_interface</a>)-&gt;samplingFrequency() == 0)  ) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    ((<a class="code" href="a00203.html">libROMInterface</a>*)context-&gt;<a class="code" href="a00211.html#af8049501def09c2e14fbec0a72c8c66c">rom_interface</a>)-&gt;takeSample( sim, waqt );</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  PetscFunctionReturn(0);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00211_html_aa1847bba899448143ec45e158291f51a"><div class="ttname"><a href="a00211.html#aa1847bba899448143ec45e158291f51a">PETScContext::iter_start_time</a></div><div class="ttdeci">struct timeval iter_start_time</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00127">petscinterface_struct.h:127</a></div></div>
+<div class="ttc" id="a00229_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00169">arrayfunctions.h:169</a></div></div>
+<div class="ttc" id="a00248_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00248.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00383_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
+<div class="ttc" id="a00211_html_a28e4e78c0bf258662bef21d26c51fc0b"><div class="ttname"><a href="a00211.html#a28e4e78c0bf258662bef21d26c51fc0b">PETScContext::waqt</a></div><div class="ttdeci">double waqt</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00060">petscinterface_struct.h:60</a></div></div>
+<div class="ttc" id="a00203_html"><div class="ttname"><a href="a00203.html">libROMInterface</a></div><div class="ttdoc">Class implementing interface with libROM. </div><div class="ttdef"><b>Definition:</b> <a href="a00241_source.html#l00045">librom_interface.h:45</a></div></div>
+<div class="ttc" id="a00218_html_a00667"><div class="ttname"><a href="a00218.html#a00667">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00023">simulation_object.h:23</a></div></div>
+<div class="ttc" id="a00229_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00319">arrayfunctions.h:319</a></div></div>
+<div class="ttc" id="a00211_html_ae1766c1c76f0ef119388c4fa8a6d64f4"><div class="ttname"><a href="a00211.html#ae1766c1c76f0ef119388c4fa8a6d64f4">PETScContext::rom_mode</a></div><div class="ttdeci">std::string rom_mode</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00139">petscinterface_struct.h:139</a></div></div>
+<div class="ttc" id="a00250_html"><div class="ttname"><a href="a00250.html">petscinterface.h</a></div></div>
+<div class="ttc" id="a00250_html_ace222db5eadd0e0bd27229641e43fa9b"><div class="ttname"><a href="a00250.html#ace222db5eadd0e0bd27229641e43fa9b">PetscPreTimeStep</a></div><div class="ttdeci">PetscErrorCode PetscPreTimeStep(TS)</div><div class="ttdef"><b>Definition:</b> <a href="a00413_source.html#l00024">PetscPreTimeStep.cpp:24</a></div></div>
+<div class="ttc" id="a00202_html_a228697ae6a0f0fe7a928a9ddad45da54"><div class="ttname"><a href="a00202.html#a228697ae6a0f0fe7a928a9ddad45da54">HyPar::NonlinearInterp</a></div><div class="ttdeci">int(* NonlinearInterp)(double *, void *, void *, double, int(*)(double *, double *, int, void *, double))</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00223">hypar.h:223</a></div></div>
+<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">simulation_object.h</a></div><div class="ttdoc">Simulation object. </div></div>
+<div class="ttc" id="a00241_html"><div class="ttname"><a href="a00241.html">librom_interface.h</a></div><div class="ttdoc">libROM interface class </div></div>
+<div class="ttc" id="a00202_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00202.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00250_html_a6c64bea980c3a8b0a752113bbeb40cf3"><div class="ttname"><a href="a00250.html#a6c64bea980c3a8b0a752113bbeb40cf3">TransferVecToPETSc</a></div><div class="ttdeci">int TransferVecToPETSc(const double *const, Vec, void *, const int, const int)</div><div class="ttdef"><b>Definition:</b> <a href="a00419_source.html#l00024">TransferToPETSc.cpp:24</a></div></div>
+<div class="ttc" id="a00218_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00025">simulation_object.h:25</a></div></div>
+<div class="ttc" id="a00211_html_a00666"><div class="ttname"><a href="a00211.html#a00666">PETScContext</a></div><div class="ttdoc">Structure containing the variables for time-integration with PETSc. </div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00042">petscinterface_struct.h:42</a></div></div>
+<div class="ttc" id="a00202_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00037">hypar.h:37</a></div></div>
+<div class="ttc" id="a00211_html_af8049501def09c2e14fbec0a72c8c66c"><div class="ttname"><a href="a00211.html#af8049501def09c2e14fbec0a72c8c66c">PETScContext::rom_interface</a></div><div class="ttdeci">void * rom_interface</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00137">petscinterface_struct.h:137</a></div></div>
+<div class="ttc" id="a00202_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00052">hypar.h:52</a></div></div>
+<div class="ttc" id="a00202_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00202.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00042">hypar.h:42</a></div></div>
+<div class="ttc" id="a00202_html_ab4c55736e92f7d72f04b8a957d82b054"><div class="ttname"><a href="a00202.html#ab4c55736e92f7d72f04b8a957d82b054">HyPar::PhysicsOutput</a></div><div class="ttdeci">int(* PhysicsOutput)(void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00342">hypar.h:342</a></div></div>
+<div class="ttc" id="a00211_html_aac65a15cdd8e87c5c788db46e1ca0347"><div class="ttname"><a href="a00211.html#aac65a15cdd8e87c5c788db46e1ca0347">PETScContext::op_times_arr</a></div><div class="ttdeci">std::vector&lt; double &gt; op_times_arr</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00141">petscinterface_struct.h:141</a></div></div>
+<div class="ttc" id="a00229_html"><div class="ttname"><a href="a00229.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00202_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00205_html_a00663"><div class="ttname"><a href="a00205.html#a00663">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00211_html_a4e2f35037563217c8dc84c095af9e35f"><div class="ttname"><a href="a00211.html#a4e2f35037563217c8dc84c095af9e35f">PETScContext::simobj</a></div><div class="ttdeci">void * simobj</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00051">petscinterface_struct.h:51</a></div></div>
+<div class="ttc" id="a00249_html"><div class="ttname"><a href="a00249.html">mpivars_cpp.h</a></div><div class="ttdoc">C++ declarations for MPI-related functions. </div></div>
+<div class="ttc" id="a00202_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00116">hypar.h:116</a></div></div>
+<div class="ttc" id="a00241_html_a8d7f058ce028038a98a49ad28176390e"><div class="ttname"><a href="a00241.html#a8d7f058ce028038a98a49ad28176390e">_ROM_MODE_TRAIN_</a></div><div class="ttdeci">#define _ROM_MODE_TRAIN_</div><div class="ttdef"><b>Definition:</b> <a href="a00241_source.html#l00014">librom_interface.h:14</a></div></div>
+<div class="ttc" id="a00202_html_a83d97dfc50e6bfefd0db6503d365d5bd"><div class="ttname"><a href="a00202.html#a83d97dfc50e6bfefd0db6503d365d5bd">HyPar::ApplyIBConditions</a></div><div class="ttdeci">int(* ApplyIBConditions)(void *, void *, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00212">hypar.h:212</a></div></div>
+<div class="ttc" id="a00211_html_a1b01a4354147da92a548ea1a5f96d592"><div class="ttname"><a href="a00211.html#a1b01a4354147da92a548ea1a5f96d592">PETScContext::t_start</a></div><div class="ttdeci">double t_start</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00063">petscinterface_struct.h:63</a></div></div>
+<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00202_html_acab4b9b417d6c3745ad789099d3731c6"><div class="ttname"><a href="a00202.html#acab4b9b417d6c3745ad789099d3731c6">HyPar::u0</a></div><div class="ttdeci">double * u0</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00391">hypar.h:391</a></div></div>
+<div class="ttc" id="a00411_html_a5981de613724cb667e98aa872157534e"><div class="ttname"><a href="a00411.html#a5981de613724cb667e98aa872157534e">OutputSolution</a></div><div class="ttdeci">int OutputSolution(void *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00601_source.html#l00026">OutputSolution.c:26</a></div></div>
+<div class="ttc" id="a00202_html_a0d895f9bb0c8a3e79a64dd2379e1f2dd"><div class="ttname"><a href="a00202.html#a0d895f9bb0c8a3e79a64dd2379e1f2dd">HyPar::FFunction</a></div><div class="ttdeci">int(* FFunction)(double *, double *, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00271">hypar.h:271</a></div></div>
+<div class="ttc" id="a00202_html_a6dfeed442d18083b68fd0f28d5f63fa7"><div class="ttname"><a href="a00202.html#a6dfeed442d18083b68fd0f28d5f63fa7">HyPar::StepBoundaryIntegral</a></div><div class="ttdeci">double * StepBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00379">hypar.h:379</a></div></div>
+<div class="ttc" id="a00202_html_aa4de7bdc1e62417caf51b9c45184268d"><div class="ttname"><a href="a00202.html#aa4de7bdc1e62417caf51b9c45184268d">HyPar::ApplyBoundaryConditions</a></div><div class="ttdeci">int(* ApplyBoundaryConditions)(void *, void *, double *, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00209">hypar.h:209</a></div></div>
+<div class="ttc" id="a00202_html_a6a34ae8a3044f521e57180a7260f3b42"><div class="ttname"><a href="a00202.html#a6a34ae8a3044f521e57180a7260f3b42">HyPar::PreStep</a></div><div class="ttdeci">int(* PreStep)(double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00334">hypar.h:334</a></div></div>
+<div class="ttc" id="a00202_html"><div class="ttname"><a href="a00202.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00218_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00218.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00026">simulation_object.h:26</a></div></div>
+<div class="ttc" id="a00211_html_a03e28be41881b703c836edbfe9b51b17"><div class="ttname"><a href="a00211.html#a03e28be41881b703c836edbfe9b51b17">PETScContext::dt</a></div><div class="ttdeci">double dt</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00066">petscinterface_struct.h:66</a></div></div>
+<div class="ttc" id="a00211_html_ad2182a08b22eed3bb3b0728725841875"><div class="ttname"><a href="a00211.html#ad2182a08b22eed3bb3b0728725841875">PETScContext::offsets</a></div><div class="ttdeci">int * offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00092">petscinterface_struct.h:92</a></div></div>
+<div class="ttc" id="a00211_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00211.html#a9a0e87291e0e8b9c1445e5482e814c92">PETScContext::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00211_source.html#l00054">petscinterface_struct.h:54</a></div></div>
+<div class="ttc" id="a00250_html_a9f443ff08a9a8852ab1e9cabb793ddaa"><div class="ttname"><a href="a00250.html#a9f443ff08a9a8852ab1e9cabb793ddaa">TransferVecFromPETSc</a></div><div class="ttdeci">int TransferVecFromPETSc(double *const, const Vec, void *, const int, const int)</div><div class="ttdef"><b>Definition:</b> <a href="a00418_source.html#l00023">TransferFromPETSc.cpp:23</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

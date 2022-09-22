@@ -2,25 +2,25 @@ var NAVTREE =
 [
   [ "HyPar", "index.html", [
     [ "Examples", "a00002.html", "a00002" ],
-    [ "Input Files", "a00174.html", [
-      [ "solver.inp", "a00174.html#solver_inp", null ],
-      [ "boundary.inp", "a00174.html#boundary_inp", null ],
-      [ "initial.inp", "a00174.html#initial_inp", null ],
-      [ "lusolver.inp", "a00174.html#lusolver_inp", null ],
-      [ "weno.inp", "a00174.html#weno_inp", null ],
-      [ "physics.inp", "a00174.html#physics_inp", null ],
-      [ ".petscrc", "a00174.html#petscrc", null ],
-      [ "Immersed Body", "a00174.html#immersed_body", null ],
-      [ "simulation.inp", "a00174.html#simulation_inp", null ],
-      [ "sparse_grids.inp", "a00174.html#sparse_grids_inp", null ],
-      [ "librom.inp", "a00174.html#librom_inp", null ]
+    [ "Input Files", "a00180.html", [
+      [ "solver.inp", "a00180.html#solver_inp", null ],
+      [ "boundary.inp", "a00180.html#boundary_inp", null ],
+      [ "initial.inp", "a00180.html#initial_inp", null ],
+      [ "lusolver.inp", "a00180.html#lusolver_inp", null ],
+      [ "weno.inp", "a00180.html#weno_inp", null ],
+      [ "physics.inp", "a00180.html#physics_inp", null ],
+      [ ".petscrc", "a00180.html#petscrc", null ],
+      [ "Immersed Body", "a00180.html#immersed_body", null ],
+      [ "simulation.inp", "a00180.html#simulation_inp", null ],
+      [ "sparse_grids.inp", "a00180.html#sparse_grids_inp", null ],
+      [ "librom.inp", "a00180.html#librom_inp", null ]
     ] ],
-    [ "Numerical Method", "a00176.html", [
-      [ "Spatial Discretization", "a00176.html#spatial_discretization", null ],
-      [ "Time Integration", "a00176.html#time_integration", null ]
+    [ "Numerical Method", "a00182.html", [
+      [ "Spatial Discretization", "a00182.html#spatial_discretization", null ],
+      [ "Time Integration", "a00182.html#time_integration", null ]
     ] ],
-    [ "License", "a00178.html", null ],
-    [ "README", "a00180.html", null ],
+    [ "License", "a00184.html", null ],
+    [ "README", "a00186.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -45,6 +45,8 @@ var NAVTREE =
         [ "Functions", "globals_func.html", "globals_func" ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
+        [ "Enumerations", "globals_enum.html", null ],
+        [ "Enumerator", "globals_eval.html", null ],
         [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
@@ -54,18 +56,19 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00002.html",
-"a00185.html#abf3b032fdc8c0e84b86909db9e0b93c3",
-"a00196.html",
-"a00201.html#aed6abeb9de440ef71c2709218395317d",
-"a00213.html#a3b6b999a764f1e2ea94bb5f28c7a558c",
-"a00235.html#a625c8dc5d5de2ed16dc1a211fc998d36",
-"a00252.html#aa1ffb2050f4788b7c49b4576a9fe52ca",
-"a00325.html#ab2278b4768059f198821dbf4d1a80389",
-"a00388.html#a624085839298ab49e9bdf47745993844",
-"a00444_source.html",
-"a00491.html#a6b9e51e0b0616757b90e26f51b47f761",
-"a00544.html#a4a0ad37ab72c61e69aae5b4b5000ef72",
-"dir_b8c575fbce9e88769cd973c21567fab3.html"
+"a00191.html#aabd83eb3f8a7e3bb9f79a4a943bbd508",
+"a00201.html#a9e4c7ae4dc16b007fd1d8e77b539c077",
+"a00207.html#a1e6f66261d19a1c1c272e8808bd2657b",
+"a00220.html#a2aba074a93f3c8800e268b85aa14a3a9",
+"a00233.html#ad9d2689e44a644319a6cc72249c68e49",
+"a00254.html#a57771c952ec174601addf43e1c0202b2",
+"a00297.html#ae39af8c237ab8ba9d1cac0a3e8731b4a",
+"a00361.html",
+"a00423.html#ab0719d2d497323143ec7a6f64b08dd34",
+"a00478_source.html",
+"a00525.html",
+"a00578.html",
+"dir_531c58e2f640b66dd7b38146e63059cd.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

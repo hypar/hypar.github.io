@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: Numerical Method</title>
+<title>HyPar: 3D Navier-Stokes Equations - Isotropic Turbulence Decay</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('a00176.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -106,143 +106,686 @@ $(document).ready(function(){initNavTree('a00176.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Numerical Method </div>  </div>
+<div class="title">3D Navier-Stokes Equations - Isotropic Turbulence Decay </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="a00196.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solves the following partial differential equation (PDE) using a conservative finite-difference algorithm on a Cartesian grid. </p>
-<p class="formulaDsp">
-\begin{equation} \frac {\partial {\bf u}} {\partial t} = {\bf F}_{\rm hyp}\left({\bf u}\right) + {\bf F}_{\rm par}\left({\bf u}\right) + {\bf F}_{\rm sou}\left({\bf u}\right) \end{equation}
-</p>
-<p> where \({\bf F}_{\rm hyp}\) is the hyperbolic term, \({\bf F}_{\rm par}\) is the parabolic term, and \({\bf F}_{\rm sou}\) is the source term. Each of these is discretized in space as described below (in the section "Spatial Discretization"), to obtain the following semi-discrete ordinary differential equation (ODE) in time: </p>
-<p class="formulaDsp">
-\begin{equation} \frac {d {\bf u}} {d t} = \hat{\bf F}_{\rm hyp}\left({\bf u}\right) + \hat{\bf F}_{\rm par}\left({\bf u}\right) + \hat{\bf F}_{\rm sou}\left({\bf u}\right) \end{equation}
-</p>
-<p> where \(\hat{\left(\cdot\right)}\) represents the spatially discretized terms. The governing PDE can be of any space dimension.</p>
-<h1><a class="anchor" id="spatial_discretization"></a>
-Spatial Discretization</h1>
-<h2>Hyperbolic term </h2>
-<p>The hyperbolic term is of the following form: </p>
-<p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm hyp}\left({\bf u}\right) = -\sum_{d=0}^{D-1} \frac{\partial {\bf f}_d\left({\bf u}\right)}{\partial x_d} \end{equation}
-</p>
-<p> and is discretized as: </p>
-<p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm hyp}\left({\bf u}\right) \approx - \sum_{d=0}^{D-1} \frac{1}{\Delta x_d} \left[ \hat{\bf f}_{d,j+1/2} - \hat{\bf f}_{d,j-1/2} \right] \end{equation}
-</p>
-<p> where \(d\) is the spatial dimension, \(D\) is the total number of spatial dimensions, \(j\) denotes the grid index along \(d\). This is implemented in <a class="el" href="a00292.html#a0096c47175c007dbe805b34129835b84">HyperbolicFunction()</a>.</p>
-<p>The numerical approximation \(\hat{\bf f}_{d,j+1/2}\) of the primitive of the flux \({\bf f}_d\left({\bf u}\right)\) at the grid interfaces \(j+1/2\) is expressed as </p>
-<p class="formulaDsp">
-\begin{equation} \hat{\bf f}_{d,j+1/2} = \mathcal{U}\left(\hat{\bf f}^L_{d,j+1/2},\hat{\bf f}^R_{d,j+1/2},\hat{\bf u}^L_{d,j+1/2},\hat{\bf u}^R_{d,j+1/2}\right) \end{equation}
-</p>
-<p> where \(\mathcal{U}\) is an upwinding function. <a class="el" href="a00196.html#a7eb68b9643feb74bd49f3a171b66eef1">HyPar::Upwind</a> points to the physical model-specific upwinding function that implements \(\mathcal{U}\), and is set by the initialization function of a specific physical model (for example <a class="el" href="a00239.html#a2143f7f3c03f53cf752a344a613fe429">Euler1DInitialize()</a>). The physical model is specified by setting <a class="el" href="a00196.html#ad3fe4b266b398f3a7567ac1b241d99a2">HyPar::model</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00247.html#a31fac45bcc0a8e9dd578cc1d8515d173">ReadInputs()</a>).</p>
-<p>\(\hat{\bf f}^{L,R}_{d,j+1/2}\) are the left- and right-biased numerically interpolated values of the primitive of the flux \({\bf f}_d\left({\bf u}\right)\) at the grid interfaces and are computed using <a class="el" href="a00196.html#a17e1cfc7de4fe33c6ee88f2cc42883e7">HyPar::InterpolateInterfacesHyp</a>. They are initialized in <a class="el" href="a00247.html#ad3f393b89ecd5a544c52e1099722337a">InitializeSolvers()</a> based on the value of <a class="el" href="a00196.html#ad29846eeb9c83b329a8d7c1fe69d46b2">HyPar::spatial_scheme_hyp</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00247.html#a31fac45bcc0a8e9dd578cc1d8515d173">ReadInputs()</a>). See <a class="el" href="a00185.html" title="Definitions for the functions computing the interpolated value of the primitive at the cell interface...">interpolation.h</a> for all the spatial discretization schemes implemented.</p>
-<p><a class="el" href="a00196.html#aa245f8c9e6af37e47c5867dccbbc208b">HyPar::HyperbolicFunction</a> points to <a class="el" href="a00292.html#a0096c47175c007dbe805b34129835b84">HyperbolicFunction()</a>.</p>
-<h2>Parabolic term </h2>
-<p>The parabolic term can take two different forms as described below:-</p>
-<p><b>No</b> <b>cross-derivatives</b>: In this form, the parabolic term is of the following form: </p>
-<p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) = \sum_{d=0}^{D-1} \frac {\partial^2 {\bf g}_d\left({\bf u}\right)} {\partial x_d^2} \end{equation}
-</p>
-<p> where \(d\) is the spatial dimension, and \(D\) is the total number of spatial dimensions. If the parabolic function is in this form, then the physical model must specify <a class="el" href="a00196.html#ad8f03ca8c9fd6e1e235203495e8f2173">HyPar::GFunction</a> which must point to the function that computes \({\bf g}_d\left({\bf u}\right)\). In this case, the spatial discretization is carried out in one of two ways:-</p>
+<div class="textblock"><p>See <a class="el" href="a00060.html">3D Navier-Stokes Equations - Isotropic Turbulence Decay</a> to familiarize yourself with this case.</p>
+<p>Location: <b>hypar/Examples/3D/NavierStokes3D/DNS_IsotropicTurbulenceDecay_CUDA</b> (This directory contains all the input files needed to run this case.)</p>
+<p>Governing equations: 3D Navier-Stokes Equations (<a class="el" href="a00208.html" title="3D Navier Stokes equations (compressible flows) ">navierstokes3d.h</a>)</p>
+<p>Domain: \(0 \le x,y,z &lt; 2\pi\), "periodic" (<a class="el" href="a00233.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundaries everywhere.</p>
+<p>Initial solution: Isotropic turbulent flow - The initial solution is specified in the Fourier space (with an energy distribution similar to that of turbulent flow), and then transformed to the physical space through an inverse transform.</p>
+<p>Other parameters:</p>
 <ul>
-<li>Conservative discretization, implemented in <a class="el" href="a00295.html#a5e79cc5efd6d3e4c93717a67e0fbf918">ParabolicFunctionCons1Stage()</a> and invoked by setting <a class="el" href="a00196.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00226.html#aabd653aa5d489ae2d0d8140290f6f026">_CONS_1STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \hat{\bf g}_{d,j+1/2} - \hat{\bf g}_{d,j-1/2} \right] \end{equation}
-</p>
- where \(j\) denotes the grid index along \(d\). \(\hat{\bf g}_{d,j+1/2}\) is the numerical approximation to the second primitive of \({\bf g}_d\left({\bf u}\right)\) and is computed using <a class="el" href="a00196.html#a13a0f9420009a55a3689f407a2c8efea">HyPar::InterpolateInterfacesPar</a>.</li>
-<li>Non-conservative, 1-Stage discretization, implemented in <a class="el" href="a00297.html#a2faa78314e07ca739b7652ceb22ef083">ParabolicFunctionNC1Stage()</a> and invoked by setting <a class="el" href="a00196.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00226.html#a18ee8cd9b4297a259b08aa4cdfe30aa1">_NC_1STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \mathcal{L}_d\left({\bf g}_d\right) \right] \end{equation}
-</p>
- where \(\mathcal{L}\) represents the finite-difference Laplacian operator, and is computed using <a class="el" href="a00196.html#a4b350316573a1d93caf01c5f1d43a45f">HyPar::SecondDerivativePar</a>.</li>
+<li>\(\gamma = 1.4\) (<a class="el" href="a00208.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes3D::gamma</a>)</li>
+<li>\(Re = \frac {\rho u L } {\mu} = 333.33\) (<a class="el" href="a00208.html#a3b92a4b98cedf64473b3c13dfa7674b4">NavierStokes3D::Re</a>)</li>
+<li>\(Pr = 0.72\) (Prandtl number) (<a class="el" href="a00208.html#af0f6e03342b9eb912e25f94ce0249a2c">NavierStokes3D::Pr</a>)</li>
+<li>\(M_\infty = 0.3\) (turbulence fluctuation Mach number) (<a class="el" href="a00208.html#aa5f774fe7b4f69be5e085f1988ef2a6d">NavierStokes3D::Minf</a>)</li>
 </ul>
-<p><b>With</b> <b>cross-derivatives</b>: In this form, the parabolic term is of the following form: </p>
-<p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) = \sum_{d1=0}^{D-1}\sum_{d2=0}^{D-1} \frac {\partial^2 h_{d1,d2}\left({\bf u}\right)} {\partial x_{d1} \partial x_{d2}} \end{equation}
-</p>
-<p> where \(d1,d2\) are spatial dimensions, \(D\) is the total number of spatial dimensions. If the parabolic function is in this form, then the physical model must specify <a class="el" href="a00196.html#a122bcc1ec2e20b3bc69d169580529021">HyPar::HFunction</a> which must point to the function that computes \({\bf h}_{d1,d2}\left({\bf u}\right)\). In this case, the spatial discretization is carried out in one of two ways:-</p>
+<p>Numerical Method:</p>
 <ul>
-<li>Non-conservative 2-stage discretization, implemented in <a class="el" href="a00298.html#a153eb91ec9b118a7b8c971facbc8d920">ParabolicFunctionNC2Stage()</a> and invoked by setting <a class="el" href="a00196.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00226.html#a9f4de86b900c9aa5f097c2746e17612a">_NC_2STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d1=0}^{D-1}\sum_{d2=0}^{D-1} \frac {1}{\Delta x_{d1} \Delta x_{d2}} \left[ \mathcal{D}_{d1}\left(\mathcal{D}_{d2}\left({\bf g}_d\right)\right) \right] \end{equation}
-</p>
- where \(\mathcal{D}_d\) denotes the finite-difference first derivative operator along spatial dimension \(d\), and is computed using <a class="el" href="a00196.html#add4554e1a8a541607b867db7ec38d7a9">HyPar::FirstDerivativePar</a>.</li>
-<li>Non-conservative, "1.5-Stage" discretization, implemented in <a class="el" href="a00296.html#af9331a439bf243524c027eba50fdbbfd">ParabolicFunctionNC1_5Stage()</a> and invoked by setting <a class="el" href="a00196.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00226.html#a7bc6f9c42df5610bc5d844ad95c74fb8">_NC_1_5STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
-\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d1=0}^{D-1}\sum_{d2=0,d2 \ne d1}^{D-1} \frac {1}{\Delta x_{d1} \Delta x_{d2}} \left[ \mathcal{D}_{d1}\left(\mathcal{D}_{d2}\left({\bf g}_d\right)\right) \right] + \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \mathcal{L}_d\left({\bf g}_d\right) \right] \end{equation}
-</p>
- where \(\mathcal{D}_d\) denotes the finite-difference first derivative operator along spatial dimension \(d\) (computed using <a class="el" href="a00196.html#add4554e1a8a541607b867db7ec38d7a9">HyPar::FirstDerivativePar</a>). and \(\mathcal{L}\) represents the finite-difference Laplacian operator (computed using <a class="el" href="a00196.html#a4b350316573a1d93caf01c5f1d43a45f">HyPar::SecondDerivativePar</a>).</li>
+<li>Spatial discretization (hyperbolic): 5th order CRWENO (<a class="el" href="a00191.html#a33b1e24c12129941b0027a83c543a654" title="5th order CRWENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderCRWENO()</a>)</li>
+<li>Spatial discretization (parabolic) : 4th order (<a class="el" href="a00237.html#a08c28e6bc4493172df7b7867e1f3d815">FirstDerivativeFourthOrderCentral()</a>) non-conservative 2-stage (<a class="el" href="a00317.html#a153eb91ec9b118a7b8c971facbc8d920">ParabolicFunctionNC2Stage()</a>)</li>
+<li>Time integration: RK4 (<a class="el" href="a00265.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00197.html#a47de987716954223b3c26bb842b21bf8">_RK_44_</a>)</li>
 </ul>
-<p>The function pointers <a class="el" href="a00196.html#a13a0f9420009a55a3689f407a2c8efea">HyPar::InterpolateInterfacesPar</a>, <a class="el" href="a00196.html#a4b350316573a1d93caf01c5f1d43a45f">HyPar::SecondDerivativePar</a>, and <a class="el" href="a00196.html#add4554e1a8a541607b867db7ec38d7a9">HyPar::FirstDerivativePar</a> are set in <a class="el" href="a00247.html#ad3f393b89ecd5a544c52e1099722337a">InitializeSolvers()</a> based on the value of <a class="el" href="a00196.html#a170f2f6cc8ac86b78fcb376c2392e290">HyPar::spatial_scheme_par</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00247.html#a31fac45bcc0a8e9dd578cc1d8515d173">ReadInputs()</a>). See <a class="el" href="a00185.html" title="Definitions for the functions computing the interpolated value of the primitive at the cell interface...">interpolation.h</a>, <a class="el" href="a00225.html" title="Definitions for the functions computing the first derivative. ">firstderivative.h</a>, and <a class="el" href="a00246.html" title="Definitions for the functions computing the second derivative. ">secondderivative.h</a> for the spatial disretization methods implemented.</p>
-<p>Depending on which of the above forms are used, <a class="el" href="a00196.html#a75e8be4ea8c1ae2e99fc1e802e69a573">HyPar::ParabolicFunction</a> points to either of <a class="el" href="a00295.html#a5e79cc5efd6d3e4c93717a67e0fbf918">ParabolicFunctionCons1Stage()</a>, <a class="el" href="a00297.html#a2faa78314e07ca739b7652ceb22ef083">ParabolicFunctionNC1Stage()</a>, <a class="el" href="a00298.html#a153eb91ec9b118a7b8c971facbc8d920">ParabolicFunctionNC2Stage()</a>, or <a class="el" href="a00296.html#af9331a439bf243524c027eba50fdbbfd">ParabolicFunctionNC1_5Stage()</a> (set in <a class="el" href="a00247.html#ad3f393b89ecd5a544c52e1099722337a">InitializeSolvers()</a>).</p>
-<h2>Source term </h2>
-<p><a class="el" href="a00196.html#a662e256e081a2b74f971d02c747892b8">HyPar::SourceFunction</a> points to <a class="el" href="a00299.html#a930d3b66826111c93dc222f5f6382744">SourceFunction()</a>. There is no discretization involved in general, and this function just calls the physical model-specific source function to which <a class="el" href="a00196.html#a1685cd0c6b8c413bdbbe86d8f4475c58">HyPar::SFunction</a> points.</p>
-<h1><a class="anchor" id="time_integration"></a>
-Time Integration</h1>
-<h2>Native Time Integrators </h2>
-<p>The semi-discrete ODE is integrated in time using explicit multi-stage time integration methods. The ODE can be written as: </p>
-<p class="formulaDsp">
-\begin{equation} \frac {d {\bf u}} {d t} = {\bf F}\left({\bf u}\right) \end{equation}
-</p>
-<p> where </p>
-<p class="formulaDsp">
-\begin{equation} {\bf F}\left({\bf u}\right) = \hat{\bf F}_{\rm hyp}\left({\bf u}\right) + \hat{\bf F}_{\rm par}\left({\bf u}\right) + \hat{\bf F}_{\rm sou}\left({\bf u}\right) \end{equation}
-</p>
-<p> The following explicit time integration methods are implemented in <a class="el" href="a00196.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> (see <a class="el" href="a00252.html" title="Contains function declarations for time integration. ">timeintegration.h</a>):</p>
+<p>Hardware Details:</p>
 <ul>
-<li>Forward Euler - <a class="el" href="a00252.html#a5fe3d9828c6afcbc00cf6fdd940ebe4b">TimeForwardEuler()</a>, <a class="el" href="a00191.html#af9b1e641532cff8859c5c5a8377f5feb">_FORWARD_EULER_</a></li>
-<li>Explicit Runge-Kutta - <a class="el" href="a00252.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00191.html#a50d4bf1e7e4825cc062fca99a770e5ce">_RK_</a></li>
-<li>Explicit General Linear Methods with Global Error Estimation - <a class="el" href="a00252.html#a7b76988ab950d39d505042dc1f09b875">TimeGLMGEE()</a>, <a class="el" href="a00191.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a></li>
+<li>GPU: NVIDIA V100 (Volta)</li>
+<li>CPU: IBM Power9</li>
+<li>Configuration: 16 nodes, 4 GPUs and 4 MPI ranks per node (64 GPUs and 64 MPI ranks).</li>
 </ul>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00247.html#a7347183ec04d39b43cf35d1fe68ace4d">Solve()</a></dd></dl>
-<h2>PETSc Time Integrators </h2>
-<p>If compiled with PETSc (<a href="https://petsc.org/release/">https://petsc.org/release/</a>), <a class="el" href="a00196.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> can use all the time integration methods and features implemented in the <b>TS</b> module of PETSc. See the following for relevant documentation of PETSc time integrators:</p>
-<ul>
-<li><a href="https://petsc.org/release/docs/manualpages/TS/index.html">https://petsc.org/release/docs/manualpages/TS/index.html</a></li>
-<li><a href="https://petsc.org/release/src/ts/examples/tutorials/index.html">https://petsc.org/release/src/ts/examples/tutorials/index.html</a></li>
-<li><a href="https://petsc.org/release/docs/manual.pdf">https://petsc.org/release/docs/manual.pdf</a> (Chapter 6: Scalable ODE and DAE Solvers)</li>
-</ul>
-<p>In addition to explicit time integration, the semi-discrete ODE can be solved using</p>
-<ul>
-<li><b>Implicit</b> <b>methods</b> (Eg. backward Euler (TSBEULER - <a href="https://petsc.org/release/docs/manualpages/TS/TSBEULER.html">https://petsc.org/release/docs/manualpages/TS/TSBEULER.html</a>), Crank-Nicholson (TSCN - <a href="https://petsc.org/release/docs/manualpages/TS/TSCN.html#TSCN">https://petsc.org/release/docs/manualpages/TS/TSCN.html#TSCN</a>), \(\theta\)-method (TSTHETA - <a href="https://petsc.org/release/docs/manualpages/TS/TSTHETA.html#TSTHETA">https://petsc.org/release/docs/manualpages/TS/TSTHETA.html#TSTHETA</a>), etc.)</li>
-<li><b>Semi-implicit (IMEX) methods</b> (TSARKIMEX - <a href="https://petsc.org/release/docs/manualpages/TS/TSARKIMEX.html">https://petsc.org/release/docs/manualpages/TS/TSARKIMEX.html</a>)</li>
-</ul>
-<p>Implementation: see <a class="el" href="a00238.html">petscinterface.h</a> and <a class="el" href="a00247.html#a1a054e1b92ee41a9e38926d18c6628bf" title="Integrate in time with PETSc. ">SolvePETSc()</a>.</p>
-<p><b>Implicit</b> and <b>IMEX</b> time integration:</p>
-<ul>
-<li>The Jacobian-free approach is used to compute the Jacobian of the implicit term (i.e., the action of the Jacobian on a vector is approximated using a directional derivative). Use the flag <b>-jfnk_epsilon &lt;value&gt;</b> to specify the parameter \(\epsilon\) for the directional derivative computation (default: \(10^{-6}\)). See <a class="el" href="a00238.html#a4edf057726501be3e8fe54e16fafe07b">PetscJacobianFunctionIMEX_JFNK()</a>, <a class="el" href="a00238.html#a68f5a93a79d56fcb964224f649af4ac9">PetscJacobianFunction_JFNK()</a>.</li>
-<li>A preconditioner can only be used for physical models that define the Jacobian (<a class="el" href="a00196.html#a528a3cd1723c061f3e8dfa6ffe1f5012">HyPar::JFunction</a>) (for example, LinearADRJacobian(), <a class="el" href="a00408.html#ac7c99a6d1d0a2d211e784f6e4453d421">Euler1DJacobian()</a>, <a class="el" href="a00476.html#a03a81aa87fb633f004f8289803054ef8">NavierStokes2DJacobian()</a>, <a class="el" href="a00491.html#a6076aead78081b94885913dc51bad714">NavierStokes3DJacobian()</a>, etc). The flag <b>-with_pc</b> should be specified to use a preconditioner.</li>
-</ul>
-<p><b>IMEX Time Integration</b>: For implicit-explicit (IMEX) time integration, the semi-discrete ODE can be written as follows: </p>
-<p class="formulaDsp">
-\begin{equation} \frac {d {\bf u}} {d t} = {\bf F}\left({\bf u}\right) + {\bf G}\left({\bf u}\right) \end{equation}
-</p>
-<p> where \({\bf F}\left({\bf u}\right)\) is integrated explicitly in time and \({\bf G}\left({\bf u}\right)\) is integrated implicitly in time. The following flags (specified in the command line or in the <b>.petscrc</b> file) can be used to specify which of the hyperbolic, parabolic, or source terms are treated explicitly, and which are treated implicitly.</p>
-<table class="doxtable">
-<tr>
-<th>Term </th><th>Explicit </th><th>Implicit  </th></tr>
-<tr>
-<td>Hyperbolic \(\hat{\bf F}_{\rm hyp}\left({\bf u}\right)\) </td><td>-hyperbolic_explicit </td><td>-hyperbolic_implicit </td></tr>
-<tr>
-<td>Parabolic \(\hat{\bf F}_{\rm par}\left({\bf u}\right)\) </td><td>-parabolic_explicit </td><td>-parabolic_implicit </td></tr>
-<tr>
-<td>Source \(\hat{\bf F}_{\rm sou}\left({\bf u}\right)\) </td><td>-source_explicit </td><td>-source_implicit </td></tr>
-</table>
-<ul>
-<li><p class="startli">If contradictory flags are specified, i.e., </p>
-<pre class="fragment">  -parabolic_explicit -parabolic_implicit
-</pre><p class="startli">the flag specifying implicit treatment takes precedence.</p>
-</li>
-<li>In addition, if a partitioning of the hyperbolic flux is defined and is being used (<a class="el" href="a00196.html#a5bed0cb9665daad89f4377c4f7609df4">HyPar::SplitHyperbolicFlux</a>), i.e, <p class="formulaDsp">
-\begin{equation} \hat{\bf F}_{\rm hyp}\left({\bf u}\right) = \left[\hat{\bf F}_{\rm hyp}\left({\bf u}\right) - \delta\hat{\bf F}_{\rm hyp}\left({\bf u}\right)\right] + \delta\hat{\bf F}_{\rm hyp}\left({\bf u}\right) \end{equation}
-</p>
- the following flags can be used to specify which of these two terms are treated explicitly and which are treated implicitly.</li>
-</ul>
-<table class="doxtable">
-<tr>
-<th>Term </th><th>Explicit </th><th>Implicit  </th></tr>
-<tr>
-<td>\(\left[\hat{\bf F}_{\rm hyp}\left({\bf u}\right) - \delta\hat{\bf F}_{\rm hyp}\left({\bf u}\right)\right]\) </td><td>-hyperbolic_f_explicit </td><td>-hyperbolic_f_implicit </td></tr>
-<tr>
-<td>\(\delta\hat{\bf F}_{\rm hyp}\left({\bf u}\right)\) </td><td>-hyperbolic_df_explicit </td><td>-hyperbolic_df_implicit </td></tr>
-</table>
-</div></div><!-- contents -->
+<h2>Input files required: </h2>
+<p><b>solver.inp</b> </p>
+<div class="fragment"><div class="line">begin</div>
+<div class="line">  ndims               3</div>
+<div class="line">  nvars               5</div>
+<div class="line">  size                256 256 256</div>
+<div class="line">  iproc               4 4 4</div>
+<div class="line">  ghost               3</div>
+<div class="line">  n_iter              1000</div>
+<div class="line">  restart_iter        0</div>
+<div class="line">  time_scheme         rk</div>
+<div class="line">  time_scheme_type    ssprk3</div>
+<div class="line">  hyp_space_scheme    weno5</div>
+<div class="line">  hyp_interp_type     components</div>
+<div class="line">  par_space_type      nonconservative-2stage</div>
+<div class="line">  par_space_scheme    4</div>
+<div class="line">  dt                  0.005</div>
+<div class="line">  screen_op_iter      50</div>
+<div class="line">  file_op_iter        100</div>
+<div class="line">  ip_file_type        binary</div>
+<div class="line">  input_mode          serial</div>
+<div class="line">  op_file_format      binary</div>
+<div class="line">  op_overwrite        no</div>
+<div class="line">  model               navierstokes3d</div>
+<div class="line">  use_gpu             yes</div>
+<div class="line">  gpu_device_no       0</div>
+<div class="line">end</div>
+</div><!-- fragment --><p><b>boundary.inp</b> </p>
+<div class="fragment"><div class="line">6</div>
+<div class="line">periodic      0     1     0     0      0    6.3     0      6.3</div>
+<div class="line">periodic      0    -1     0     0      0    6.3     0      6.3</div>
+<div class="line">periodic      1     1     0   6.3      0      0     0      6.3</div>
+<div class="line">periodic      1    -1     0   6.3      0      0     0      6.3</div>
+<div class="line">periodic      2     1     0   6.3      0    6.3     0        0</div>
+<div class="line">periodic      2    -1     0   6.3      0    6.3     0        0</div>
+</div><!-- fragment --><p><b>physics.inp</b> </p>
+<div class="fragment"><div class="line">begin</div>
+<div class="line">  gamma     1.4</div>
+<div class="line">  upwinding roe</div>
+<div class="line">  Pr        0.72</div>
+<div class="line">  Minf      0.3</div>
+<div class="line">  Re        333.333333333333333</div>
+<div class="line">end</div>
+</div><!-- fragment --><p><b>weno.inp</b> (optional) </p>
+<div class="fragment"><div class="line">begin</div>
+<div class="line">  mapped        1</div>
+<div class="line">  borges        0</div>
+<div class="line">  yc            0</div>
+<div class="line">  no_limiting   0</div>
+<div class="line">  epsilon       0.000001</div>
+<div class="line">  p             2.0</div>
+<div class="line">  rc            0.3</div>
+<div class="line">  xi            0.001</div>
+<div class="line">end</div>
+</div><!-- fragment --><p>To generate <b>initial.inp</b> (initial solution), compile and run the following code in the run directory. <b>Note:</b> this code requires the <b>FFTW</b> library installed (<a href="http://www.fftw.org/">http://www.fftw.org/</a>). To compile: </p>
+<pre class="fragment">gcc -I/path/to/fftw3.h -L/path/to/libfftw3.a -lfftw3 init.c
+</pre><p>(see the FFTW website on ways to install it). </p>
+<div class="fragment"><div class="line"><span class="comment">/*</span></div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">  This code generates the initial solution for the</span></div>
+<div class="line"><span class="comment">  isotropic turbulence decay problem, using the technique </span></div>
+<div class="line"><span class="comment">  described in the 1981 NASA report by Rogallo.</span></div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">  It needs the FFTW3 library installed. To compile it, </span></div>
+<div class="line"><span class="comment">  make sure the fftw3.h and libfftw3 are available in</span></div>
+<div class="line"><span class="comment">  the include and linking paths.</span></div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">*/</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;fftw3.h&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">double</span> <a class="code" href="a00243.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> a) {</div>
+<div class="line">    <span class="keywordflow">return</span> exp(a*log(x));</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">double</span> magnitude(<span class="keywordtype">double</span> a, <span class="keywordtype">double</span> b) {</div>
+<div class="line">    <span class="keywordflow">return</span> sqrt(a*a + b*b);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00375.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">double</span> PI = 4 * atan(1.0);</div>
+<div class="line">  <span class="comment">/* initial spectrum parameters */</span></div>
+<div class="line">    <span class="keywordtype">double</span> kp = 4.0;</div>
+<div class="line">    <span class="keywordtype">double</span> u0 = 0.3;</div>
+<div class="line"></div>
+<div class="line">    FILE *out, *in;</div>
+<div class="line">    <span class="keywordtype">int</span> NI,NJ,NK,ndims;</div>
+<div class="line">  <span class="keywordtype">char</span> ip_file_type[50];</div>
+<div class="line">  strcpy(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>);</div>
+<div class="line"></div>
+<div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;solver.inp\&quot;...\n&quot;</span>);</div>
+<div class="line">  in = fopen(<span class="stringliteral">&quot;solver.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (!in) printf(<span class="stringliteral">&quot;Error: Input file \&quot;solver.inp\&quot; not found. Default values will be used.\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">else</span> {</div>
+<div class="line">    <span class="keywordtype">char</span> word[500];</div>
+<div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
+<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
+<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
+<div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
+<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
+<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>)) {</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NI);</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NJ);</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NK);</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ip_file_type&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,ip_file_type);</div>
+<div class="line">      }</div>
+<div class="line">    } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
+<div class="line">  }</div>
+<div class="line">  fclose(in);</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">if</span> (ndims != 3) {</div>
+<div class="line">    printf(<span class="stringliteral">&quot;ndims is not 3 in solver.inp. this code is to generate 3D exact conditions\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span>(0);</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">    printf(<span class="stringliteral">&quot;Grid:\t\t\t%d x %d x %d\n&quot;</span>,NI,NJ,NK);</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">if</span> ((NI != NJ) || (NI != NK) || (NJ != NK)) { </div>
+<div class="line">    printf(<span class="stringliteral">&quot;Error: NI,NJ,NK not equal. Bye!\n&quot;</span>); </div>
+<div class="line">    <span class="keywordflow">return</span>(0); </div>
+<div class="line">  }</div>
+<div class="line">    <span class="keywordtype">int</span> N = NI, N3 = N*N*N;</div>
+<div class="line">    <span class="keywordtype">int</span> i,j,k;</div>
+<div class="line">    <span class="keywordtype">double</span> dx = 2*PI / ((double)N);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* Calculating the velocity components through a Fourier transform */</span></div>
+<div class="line"></div>
+<div class="line">    <span class="keywordtype">double</span> kk = sqrt(3 * (N/2)*(N/2));</div>
+<div class="line">    <span class="keywordtype">int</span> kkmax = (int) kk;</div>
+<div class="line"></div>
+<div class="line">    fftw_complex *uhat = (fftw_complex*) fftw_malloc(N*N*N * <span class="keyword">sizeof</span>(fftw_complex)); </div>
+<div class="line">    fftw_complex *vhat = (fftw_complex*) fftw_malloc(N*N*N * <span class="keyword">sizeof</span>(fftw_complex)); </div>
+<div class="line">    fftw_complex *what = (fftw_complex*) fftw_malloc(N*N*N * <span class="keyword">sizeof</span>(fftw_complex)); </div>
+<div class="line">    fftw_complex *u = (fftw_complex*) fftw_malloc(N*N*N * <span class="keyword">sizeof</span>(fftw_complex));    </div>
+<div class="line">    fftw_complex *v = (fftw_complex*) fftw_malloc(N*N*N * <span class="keyword">sizeof</span>(fftw_complex));    </div>
+<div class="line">    fftw_complex *w = (fftw_complex*) fftw_malloc(N*N*N * <span class="keyword">sizeof</span>(fftw_complex));    </div>
+<div class="line"></div>
+<div class="line">    fftw_plan transform_u, transform_v, transform_w;</div>
+<div class="line">    fftw_plan inv_trans_u, inv_trans_v, inv_trans_w;</div>
+<div class="line"></div>
+<div class="line">    transform_u = fftw_plan_dft_3d(N, N, N, u, uhat, -1, FFTW_MEASURE);</div>
+<div class="line">    transform_v = fftw_plan_dft_3d(N, N, N, v, vhat, -1, FFTW_MEASURE);</div>
+<div class="line">    transform_w = fftw_plan_dft_3d(N, N, N, w, what, -1, FFTW_MEASURE);</div>
+<div class="line">    inv_trans_u = fftw_plan_dft_3d(N, N, N, uhat, u, 1, FFTW_MEASURE);</div>
+<div class="line">    inv_trans_v = fftw_plan_dft_3d(N, N, N, vhat, v, 1, FFTW_MEASURE);</div>
+<div class="line">    inv_trans_w = fftw_plan_dft_3d(N, N, N, what, w, 1, FFTW_MEASURE);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* Specifying the velocities in Fourier space */</span></div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;N*N*N; i++) uhat[i][0] = uhat[i][1] = 0.0;</div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;N*N*N; i++) uhat[i][0] = vhat[i][1] = 0.0;</div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;N*N*N; i++) uhat[i][0] = what[i][1] = 0.0;</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">for</span> (i = 1; i &lt; N/2; i++){</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N/2; j++){</div>
+<div class="line">            <span class="keywordflow">for</span> (k = 0; k &lt; N/2; k++){</div>
+<div class="line">                <span class="keywordtype">double</span> kk   = sqrt(i*i + j*j + k*k);</div>
+<div class="line">                <span class="keywordtype">double</span> th1  = 2*PI * ((double)rand())/((<span class="keywordtype">double</span>)RAND_MAX);</div>
+<div class="line">                <span class="keywordtype">double</span> th2  = 2*PI * ((<span class="keywordtype">double</span>)rand())/((<span class="keywordtype">double</span>)RAND_MAX);</div>
+<div class="line">                <span class="keywordtype">double</span> phi1 = 2*PI * ((<span class="keywordtype">double</span>)rand())/((<span class="keywordtype">double</span>)RAND_MAX);</div>
+<div class="line"></div>
+<div class="line">                <span class="keywordtype">double</span> E = 16.0 * sqrt(2.0/PI) * (u0*u0/kp) * <a class="code" href="a00243.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(kk/kp, 4.0) </div>
+<div class="line">                        * exp(-2.0*(kk/kp)*(kk/kp));</div>
+<div class="line">                <span class="keywordtype">double</span> alfa_real = sqrt(E/(4*PI*kk*kk))*cos(th1)*cos(phi1);</div>
+<div class="line">                <span class="keywordtype">double</span> alfa_imag = sqrt(E/(4*PI*kk*kk))*sin(th1)*cos(phi1);</div>
+<div class="line">                <span class="keywordtype">double</span> beta_real = sqrt(E/(4*PI*kk*kk))*cos(th2)*sin(phi1);</div>
+<div class="line">                <span class="keywordtype">double</span> beta_imag = sqrt(E/(4*PI*kk*kk))*sin(th2)*sin(phi1);</div>
+<div class="line"></div>
+<div class="line">                uhat[k+N*(j+N*i)][0] = (alfa_real*kk*j+beta_real*i*k)/(kk*sqrt(i*i+j*j));</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] = (beta_real*j*k-alfa_real*kk*i)/(kk*sqrt(i*i+j*j));</div>
+<div class="line">                what[k+N*(j+N*i)][0] = -(beta_real*sqrt(i*i+j*j))/kk;</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = (alfa_imag*kk*j+beta_imag*i*k)/(kk*sqrt(i*i+j*j));</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = (beta_imag*j*k-alfa_imag*kk*i)/(kk*sqrt(i*i+j*j));</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -(beta_imag*sqrt(i*i+j*j))/kk;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    for (i = 0; i &lt; 1; i++){</div>
+<div class="line">        <span class="keywordflow">for</span> (k = 0; k &lt; N/2; k++){</div>
+<div class="line">            <span class="keywordflow">for</span> (j = 1; j &lt; N/2; j++){</div>
+<div class="line">                <span class="keywordtype">double</span> kk   = sqrt(i*i + j*j + k*k);</div>
+<div class="line">                <span class="keywordtype">double</span> th1  = 2*PI * ((double)rand())/((<span class="keywordtype">double</span>)RAND_MAX);</div>
+<div class="line">                <span class="keywordtype">double</span> th2  = 2*PI * ((<span class="keywordtype">double</span>)rand())/((<span class="keywordtype">double</span>)RAND_MAX);</div>
+<div class="line">                <span class="keywordtype">double</span> phi1 = 2*PI * ((<span class="keywordtype">double</span>)rand())/((<span class="keywordtype">double</span>)RAND_MAX);</div>
+<div class="line"></div>
+<div class="line">                <span class="keywordtype">double</span> E = 16.0 * sqrt(2.0/PI) * (u0*u0/kp) * <a class="code" href="a00243.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(kk/kp, 4.0) </div>
+<div class="line">                        * exp(-2.0*(kk/kp)*(kk/kp));</div>
+<div class="line">                <span class="keywordtype">double</span> alfa_real = sqrt(E/(4*PI*kk*kk))*cos(th1)*cos(phi1);</div>
+<div class="line">                <span class="keywordtype">double</span> alfa_imag = sqrt(E/(4*PI*kk*kk))*sin(th1)*cos(phi1);</div>
+<div class="line">                <span class="keywordtype">double</span> beta_real = sqrt(E/(4*PI*kk*kk))*cos(th2)*sin(phi1);</div>
+<div class="line">                <span class="keywordtype">double</span> beta_imag = sqrt(E/(4*PI*kk*kk))*sin(th2)*sin(phi1);</div>
+<div class="line"></div>
+<div class="line">                uhat[k+N*(j+N*i)][0] = (alfa_real*kk*j+beta_real*i*k)/(kk*sqrt(i*i+j*j));</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] = (beta_real*j*k-alfa_real*kk*i)/(kk*sqrt(i*i+j*j));</div>
+<div class="line">                what[k+N*(j+N*i)][0] = -(beta_real*sqrt(i*i+j*j))/kk;</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = (alfa_imag*kk*j+beta_imag*i*k)/(kk*sqrt(i*i+j*j));</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = (beta_imag*j*k-alfa_imag*kk*i)/(kk*sqrt(i*i+j*j));</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -(beta_imag*sqrt(i*i+j*j))/kk;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    for (i = 0; i &lt; 1; i++){</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; 1; j++){</div>
+<div class="line">            <span class="keywordflow">for</span> (k = 0; k &lt; N/2; k++){</div>
+<div class="line">                uhat[k+N*(j+N*i)][0] = 0;</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] = 0;</div>
+<div class="line">                what[k+N*(j+N*i)][0] = 0;</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = 0;</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = 0;</div>
+<div class="line">                what[k+N*(j+N*i)][1] = 0;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* The following is necessary to ensure that the inverse Fourier</span></div>
+<div class="line"><span class="comment">     transform yields a real velocity field with zero imaginary</span></div>
+<div class="line"><span class="comment">     components */</span></div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">for</span> (i=N/2+1; i&lt;N; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=N/2+1; j&lt;N; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=N/2+1; k&lt;N; k++) {</div>
+<div class="line">                uhat[k+N*(j+N*i)][0] =  uhat[(N-k)+N*((N-j)+N*(N-i))][0];</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] =  vhat[(N-k)+N*((N-j)+N*(N-i))][0];</div>
+<div class="line">                what[k+N*(j+N*i)][0] =  what[(N-k)+N*((N-j)+N*(N-i))][0];</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = -uhat[(N-k)+N*((N-j)+N*(N-i))][1];</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = -vhat[(N-k)+N*((N-j)+N*(N-i))][1];</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -what[(N-k)+N*((N-j)+N*(N-i))][1];</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">for</span> (i=N/2+1; i&lt;N; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=N/2+1; j&lt;N; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=0; k&lt;1; k++) {</div>
+<div class="line">                uhat[k+N*(j+N*i)][0] =  uhat[k+N*((N-j)+N*(N-i))][0];</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] =  vhat[k+N*((N-j)+N*(N-i))][0];</div>
+<div class="line">                what[k+N*(j+N*i)][0] =  what[k+N*((N-j)+N*(N-i))][0];</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = -uhat[k+N*((N-j)+N*(N-i))][1];</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = -vhat[k+N*((N-j)+N*(N-i))][1];</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -what[k+N*((N-j)+N*(N-i))][1];</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">for</span> (i=N/2+1; i&lt;N; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=0; j&lt;1; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=N/2+1; k&lt;N; k++) {</div>
+<div class="line">                uhat[k+N*(j+N*i)][0] =  uhat[(N-k)+N*(j+N*(N-i))][0];</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] =  vhat[(N-k)+N*(j+N*(N-i))][0];</div>
+<div class="line">                what[k+N*(j+N*i)][0] =  what[(N-k)+N*(j+N*(N-i))][0];</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = -uhat[(N-k)+N*(j+N*(N-i))][1];</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = -vhat[(N-k)+N*(j+N*(N-i))][1];</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -what[(N-k)+N*(j+N*(N-i))][1];</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;1; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=N/2+1; j&lt;N; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=N/2+1; k&lt;N; k++) {</div>
+<div class="line">                uhat[k+N*(j+N*i)][0] =  uhat[(N-k)+N*((N-j)+N*i)][0];</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] =  vhat[(N-k)+N*((N-j)+N*i)][0];</div>
+<div class="line">                what[k+N*(j+N*i)][0] =  what[(N-k)+N*((N-j)+N*i)][0];</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = -uhat[(N-k)+N*((N-j)+N*i)][1];</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = -vhat[(N-k)+N*((N-j)+N*i)][1];</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -what[(N-k)+N*((N-j)+N*i)][1];</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;1; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=0; j&lt;1; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=N/2+1; k&lt;N; k++) {</div>
+<div class="line">                uhat[k+N*(j+N*i)][0] =  uhat[(N-k)+N*(j+N*i)][0];</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] =  vhat[(N-k)+N*(j+N*i)][0];</div>
+<div class="line">                what[k+N*(j+N*i)][0] =  what[(N-k)+N*(j+N*i)][0];</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = -uhat[(N-k)+N*(j+N*i)][1];</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = -vhat[(N-k)+N*(j+N*i)][1];</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -what[(N-k)+N*(j+N*i)][1];</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;1; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=N/2+1; j&lt;N; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=0; k&lt;1; k++) {</div>
+<div class="line">                uhat[k+N*(j+N*i)][0] =  uhat[k+N*((N-j)+N*i)][0];</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] =  vhat[k+N*((N-j)+N*i)][0];</div>
+<div class="line">                what[k+N*(j+N*i)][0] =  what[k+N*((N-j)+N*i)][0];</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = -uhat[k+N*((N-j)+N*i)][1];</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = -vhat[k+N*((N-j)+N*i)][1];</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -what[k+N*((N-j)+N*i)][1];</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">for</span> (i=N/2+1; i&lt;N; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=0; j&lt;1; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=0; k&lt;1; k++) {</div>
+<div class="line">                uhat[k+N*(j+N*i)][0] =  uhat[k+N*(j+N*(N-i))][0];</div>
+<div class="line">                vhat[k+N*(j+N*i)][0] =  vhat[k+N*(j+N*(N-i))][0];</div>
+<div class="line">                what[k+N*(j+N*i)][0] =  what[k+N*(j+N*(N-i))][0];</div>
+<div class="line">                uhat[k+N*(j+N*i)][1] = -uhat[k+N*(j+N*(N-i))][1];</div>
+<div class="line">                vhat[k+N*(j+N*i)][1] = -vhat[k+N*(j+N*(N-i))][1];</div>
+<div class="line">                what[k+N*(j+N*i)][1] = -what[k+N*(j+N*(N-i))][1];</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* Inverse Fourier transform */</span></div>
+<div class="line">    fftw_execute(inv_trans_u);</div>
+<div class="line">    fftw_execute(inv_trans_v);</div>
+<div class="line">    fftw_execute(inv_trans_w);</div>
+<div class="line"></div>
+<div class="line">    fftw_free(uhat);</div>
+<div class="line">    fftw_free(vhat);</div>
+<div class="line">    fftw_free(what);</div>
+<div class="line"></div>
+<div class="line">    fftw_destroy_plan(transform_u);</div>
+<div class="line">    fftw_destroy_plan(transform_v);</div>
+<div class="line">    fftw_destroy_plan(transform_w);</div>
+<div class="line">    fftw_destroy_plan(inv_trans_u);</div>
+<div class="line">    fftw_destroy_plan(inv_trans_v);</div>
+<div class="line">    fftw_destroy_plan(inv_trans_w);</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordtype">double</span> rms_velocity = 0;</div>
+<div class="line">  <span class="keywordtype">double</span> imag_velocity = 0;</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; N; i++){</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++){</div>
+<div class="line">            <span class="keywordflow">for</span> (k = 0; k &lt; N; k++){</div>
+<div class="line">        <span class="keywordtype">double</span> uu, vv, ww;</div>
+<div class="line">                uu = u[k+N*(j+N*i)][0];</div>
+<div class="line">                vv = v[k+N*(j+N*i)][0];</div>
+<div class="line">                ww = w[k+N*(j+N*i)][0];</div>
+<div class="line">                rms_velocity += (uu*uu + vv*vv + ww*ww);</div>
+<div class="line">                uu = u[k+N*(j+N*i)][1];</div>
+<div class="line">                vv = v[k+N*(j+N*i)][1];</div>
+<div class="line">                ww = w[k+N*(j+N*i)][1];</div>
+<div class="line">                imag_velocity += (uu*uu + vv*vv + ww*ww);</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    rms_velocity = sqrt(rms_velocity / (3*N*N*N));</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* scale the velocity components so that rms velocity matches u0 */</span></div>
+<div class="line">  <span class="keywordtype">double</span> factor = u0 / rms_velocity;</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Scaling factor = %1.16E\n&quot;</span>,factor);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; N; i++){</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++){</div>
+<div class="line">            <span class="keywordflow">for</span> (k = 0; k &lt; N; k++){</div>
+<div class="line">                u[k+N*(j+N*i)][0] *= factor;</div>
+<div class="line">                v[k+N*(j+N*i)][0] *= factor;</div>
+<div class="line">                w[k+N*(j+N*i)][0] *= factor;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    rms_velocity = 0;</div>
+<div class="line">  imag_velocity = 0;</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; N; i++){</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++){</div>
+<div class="line">            <span class="keywordflow">for</span> (k = 0; k &lt; N; k++){</div>
+<div class="line">        <span class="keywordtype">double</span> uu, vv, ww;</div>
+<div class="line">                uu = u[k+N*(j+N*i)][0];</div>
+<div class="line">                vv = v[k+N*(j+N*i)][0];</div>
+<div class="line">                ww = w[k+N*(j+N*i)][0];</div>
+<div class="line">                rms_velocity += (uu*uu + vv*vv + ww*ww);</div>
+<div class="line">                uu = u[k+N*(j+N*i)][1];</div>
+<div class="line">                vv = v[k+N*(j+N*i)][1];</div>
+<div class="line">                ww = w[k+N*(j+N*i)][1];</div>
+<div class="line">                imag_velocity += (uu*uu + vv*vv + ww*ww);</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    rms_velocity = sqrt(rms_velocity / (3*N*N*N));</div>
+<div class="line">    printf(<span class="stringliteral">&quot;RMS velocity (component-wise): %1.16E\n&quot;</span>,rms_velocity);</div>
+<div class="line">    printf(<span class="stringliteral">&quot;RMS of imaginary velocity (component-wise): %1.16E\n&quot;</span>,imag_velocity);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* calculate the divergence of velocity */</span></div>
+<div class="line">  <span class="keywordtype">double</span> DivergenceNorm = 0;</div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;N; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=0; j&lt;N; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=0; k&lt;N; k++) {</div>
+<div class="line">        <span class="keywordtype">double</span> u1, u2, v1, v2, w1, w2;</div>
+<div class="line">        u1 = (i==0   ? u[k+N*(j+N*(N-1))][0] : u[k+N*(j+N*(i-1))][0] );</div>
+<div class="line">        u2 = (i==N-1 ? u[k+N*(j+N*(0  ))][0] : u[k+N*(j+N*(i+1))][0] );</div>
+<div class="line">        v1 = (j==0   ? v[k+N*((N-1)+N*i)][0] : v[k+N*((j-1)+N*i)][0] );</div>
+<div class="line">        v2 = (j==N-1 ? v[k+N*((0  )+N*i)][0] : v[k+N*((j+1)+N*i)][0] );</div>
+<div class="line">        w1 = (k==0   ? w[(N-1)+N*(j+N*i)][0] : w[(k-1)+N*(j+N*i)][0] );</div>
+<div class="line">        w2 = (k==N-1 ? w[(0  )+N*(j+N*i)][0] : w[(k+1)+N*(j+N*i)][0] );</div>
+<div class="line">        <span class="keywordtype">double</span> Divergence = ( (u2-u1) + (v2-v1) + (w2-w1) ) / (2.0*dx);</div>
+<div class="line">        DivergenceNorm += (Divergence*Divergence);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  DivergenceNorm = sqrt(DivergenceNorm / (N*N*N));</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Velocity divergence: %1.16E\n&quot;</span>,DivergenceNorm);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* calculate the Taylor microscales */</span></div>
+<div class="line">  <span class="keywordtype">double</span> TaylorMicroscale[3];</div>
+<div class="line">  <span class="keywordtype">double</span> Numerator[3] = {0,0,0};</div>
+<div class="line">  <span class="keywordtype">double</span> Denominator[3] = {0,0,0};</div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;N; i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (j=0; j&lt;N; j++) {</div>
+<div class="line">      <span class="keywordflow">for</span> (k=0; k&lt;N; k++) {</div>
+<div class="line">        <span class="keywordtype">double</span> u1, u2, uu, v1, v2, vv, w1, w2, ww;</div>
+<div class="line">        u1 = (i==0   ? u[k+N*(j+N*(N-1))][0] : u[k+N*(j+N*(i-1))][0] );</div>
+<div class="line">        u2 = (i==N-1 ? u[k+N*(j+N*(0  ))][0] : u[k+N*(j+N*(i+1))][0] );</div>
+<div class="line">        v1 = (j==0   ? v[k+N*((N-1)+N*i)][0] : v[k+N*((j-1)+N*i)][0] );</div>
+<div class="line">        v2 = (j==N-1 ? v[k+N*((0  )+N*i)][0] : v[k+N*((j+1)+N*i)][0] );</div>
+<div class="line">        w1 = (k==0   ? w[(N-1)+N*(j+N*i)][0] : w[(k-1)+N*(j+N*i)][0] );</div>
+<div class="line">        w2 = (k==N-1 ? w[(0  )+N*(j+N*i)][0] : w[(k+1)+N*(j+N*i)][0] );</div>
+<div class="line">        uu  = u[k+N*(j+N*i)][0];</div>
+<div class="line">        vv  = v[k+N*(j+N*i)][0];</div>
+<div class="line">        ww  = w[k+N*(j+N*i)][0];</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordtype">double</span> du, dv, dw;</div>
+<div class="line">        du = (u2 - u1) / (2.0*dx);</div>
+<div class="line">        dv = (v2 - v1) / (2.0*dx);</div>
+<div class="line">        dw = (w2 - w1) / (2.0*dx);</div>
+<div class="line"></div>
+<div class="line">        Numerator[0] += (uu*uu);</div>
+<div class="line">        Numerator[1] += (vv*vv);</div>
+<div class="line">        Numerator[2] += (ww*ww);</div>
+<div class="line"></div>
+<div class="line">        Denominator[0] += (du*du);</div>
+<div class="line">        Denominator[1] += (dv*dv);</div>
+<div class="line">        Denominator[2] += (dw*dw);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  Numerator[0] /= (N*N*N); Denominator[0] /= (N*N*N);</div>
+<div class="line">  Numerator[1] /= (N*N*N); Denominator[1] /= (N*N*N);</div>
+<div class="line">  Numerator[2] /= (N*N*N); Denominator[2] /= (N*N*N);</div>
+<div class="line"></div>
+<div class="line">  TaylorMicroscale[0] = sqrt(Numerator[0]/Denominator[0]);</div>
+<div class="line">  TaylorMicroscale[1] = sqrt(Numerator[1]/Denominator[1]);</div>
+<div class="line">  TaylorMicroscale[2] = sqrt(Numerator[2]/Denominator[2]);</div>
+<div class="line"></div>
+<div class="line">  printf(<span class="stringliteral">&quot;Taylor microscales: %1.16E, %1.16E, %1.16E\n&quot;</span>,</div>
+<div class="line">         TaylorMicroscale[0],TaylorMicroscale[1],TaylorMicroscale[2]);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* grid and solution in conserved variable form */</span></div>
+<div class="line">  <span class="keywordtype">double</span> *x,*y,*z,*U;</div>
+<div class="line">    x    = (<span class="keywordtype">double</span>*) calloc (N, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    y    = (<span class="keywordtype">double</span>*) calloc (N, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    z    = (<span class="keywordtype">double</span>*) calloc (N, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    U  = (<span class="keywordtype">double</span>*) calloc (5*N3, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; N; i++){</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++){</div>
+<div class="line">      <span class="keywordflow">for</span> (k = 0; k &lt; N; k++){</div>
+<div class="line">          x[i] = i*dx;</div>
+<div class="line">          y[j] = j*dx;</div>
+<div class="line">          z[k] = k*dx;</div>
+<div class="line">        <span class="keywordtype">double</span> RHO, uvel, vvel, wvel, P;</div>
+<div class="line">        RHO = 1.0;</div>
+<div class="line">                uvel = u[k+N*(j+N*i)][0];</div>
+<div class="line">                vvel = v[k+N*(j+N*i)][0];</div>
+<div class="line">                wvel = w[k+N*(j+N*i)][0];</div>
+<div class="line">        P   = 1.0/1.4;</div>
+<div class="line">        <span class="keywordtype">int</span> p = i + N*j + N*N*k;</div>
+<div class="line">        U[5*p+0] = RHO;</div>
+<div class="line">        U[5*p+1] = RHO*uvel;</div>
+<div class="line">        U[5*p+2] = RHO*vvel;</div>
+<div class="line">        U[5*p+3] = RHO*wvel;</div>
+<div class="line">        U[5*p+4] = P/0.4 + 0.5 * RHO * (uvel*uvel + vvel*vvel + wvel*wvel);</div>
+<div class="line">      }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    fftw_free(u);</div>
+<div class="line">    fftw_free(v);</div>
+<div class="line">    fftw_free(w);</div>
+<div class="line"></div>
+<div class="line">  FILE *op;</div>
+<div class="line">  <span class="keywordflow">if</span> (!strcmp(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>)) {</div>
+<div class="line"></div>
+<div class="line">    printf(<span class="stringliteral">&quot;Writing ASCII initial solution file initial.inp\n&quot;</span>);</div>
+<div class="line">    op = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; N; i++)  fprintf(op,<span class="stringliteral">&quot;%1.16E &quot;</span>,x[i]);</div>
+<div class="line">    fprintf(op,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; N; j++)  fprintf(op,<span class="stringliteral">&quot;%1.16E &quot;</span>,y[j]);</div>
+<div class="line">    fprintf(op,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (k = 0; k &lt; N; k++)  fprintf(op,<span class="stringliteral">&quot;%1.16E &quot;</span>,z[k]);</div>
+<div class="line">    fprintf(op,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; N; i++) {</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++) {</div>
+<div class="line">          <span class="keywordflow">for</span> (k = 0; k &lt; N; k++) {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + N*j + N*N*k;</div>
+<div class="line">          fprintf(op,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+0]);</div>
+<div class="line">        }</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(op,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; N; i++) {</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++) {</div>
+<div class="line">          <span class="keywordflow">for</span> (k = 0; k &lt; N; k++) {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + N*j + N*N*k;</div>
+<div class="line">          fprintf(op,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+1]);</div>
+<div class="line">        }</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(op,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; N; i++) {</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++) {</div>
+<div class="line">          <span class="keywordflow">for</span> (k = 0; k &lt; N; k++) {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + N*j + N*N*k;</div>
+<div class="line">          fprintf(op,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+2]);</div>
+<div class="line">        }</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(op,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; N; i++) {</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++) {</div>
+<div class="line">          <span class="keywordflow">for</span> (k = 0; k &lt; N; k++) {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + N*j + N*N*k;</div>
+<div class="line">          fprintf(op,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+3]);</div>
+<div class="line">        }</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(op,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; N; i++) {</div>
+<div class="line">        <span class="keywordflow">for</span> (j = 0; j &lt; N; j++) {</div>
+<div class="line">          <span class="keywordflow">for</span> (k = 0; k &lt; N; k++) {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + N*j + N*N*k;</div>
+<div class="line">          fprintf(op,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+4]);</div>
+<div class="line">        }</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(op,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">      fclose(op);</div>
+<div class="line"></div>
+<div class="line">  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((!strcmp(ip_file_type,<span class="stringliteral">&quot;binary&quot;</span>)) || (!strcmp(ip_file_type,<span class="stringliteral">&quot;bin&quot;</span>))) {</div>
+<div class="line"></div>
+<div class="line">    printf(<span class="stringliteral">&quot;Writing binary initial solution file initial.inp\n&quot;</span>);</div>
+<div class="line">    op = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;wb&quot;</span>);</div>
+<div class="line">    fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),N,op);</div>
+<div class="line">    fwrite(y,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),N,op);</div>
+<div class="line">    fwrite(z,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),N,op);</div>
+<div class="line">    fwrite(U,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),5*N3,op);</div>
+<div class="line">    fclose(op);</div>
+<div class="line"></div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">    free(x);</div>
+<div class="line">    free(y);</div>
+<div class="line">    free(z);</div>
+<div class="line">  free(U);</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">return</span>(0);</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2>Output: </h2>
+<p>Note that <b>iproc</b> is set to </p>
+<pre class="fragment">  4 4 4
+</pre><p>in <b>solver.inp</b> (i.e., 4 processors along <em>x</em>, 4 processors along <em>y</em>, and 4 processor along <em>z</em>). Thus, this example should be run with 64 MPI ranks (or change <b>iproc</b>) and 64 GPUs.</p>
+<p>After running the code, there should be 11 output files <b>op_00000.bin</b>, <b>op_00001.bin</b>, ... <b>op_00010.bin</b>; the first one is the solution at \(t=0\) and the final one is the solution at \(t=5\).</p>
+<p>See <a class="el" href="a00060.html">3D Navier-Stokes Equations - Isotropic Turbulence Decay</a> for detailed postprocessing instructions. The following figure shows the initial and final (t=5) energy spectra: </p>
+<div class="image">
+<img src="Solution_3DNavStok_IsoTurb_CUDA_Spectrum.png" alt="Solution_3DNavStok_IsoTurb_CUDA_Spectrum.png"/>
+</div>
+<p>The following figures show the density and internal energy contours on the X-Y plane mid-slice at the final time: </p>
+<div class="image">
+<img src="Solution_3DNavStok_IsoTurb_CUDA_density.png" alt="Solution_3DNavStok_IsoTurb_CUDA_density.png"/>
+</div>
+ <div class="image">
+<img src="Solution_3DNavStok_IsoTurb_CUDA_energy.png" alt="Solution_3DNavStok_IsoTurb_CUDA_energy.png"/>
+</div>
+<p>Expected screen output: </p>
+<div class="fragment"><div class="line"><a class="code" href="a00202.html">HyPar</a> - Parallel (MPI) version with 64 processes</div>
+<div class="line">Allocated simulation <span class="keywordtype">object</span>(s).</div>
+<div class="line">Reading solver inputs from file &quot;solver.inp&quot;.</div>
+<div class="line">  No. of dimensions                          : 3</div>
+<div class="line">  No. of variables                           : 5</div>
+<div class="line">  Domain size                                : 256 256 256 </div>
+<div class="line">  Processes along each dimension             : 4 4 4 </div>
+<div class="line">  Exact solution domain size                 : 256 256 256 </div>
+<div class="line">  No. of ghosts pts                          : 3</div>
+<div class="line">  No. of iter.                               : 1000</div>
+<div class="line">  Restart iteration                          : 0</div>
+<div class="line">  Time integration scheme                    : rk (ssprk3)</div>
+<div class="line">  Spatial discretization scheme (hyperbolic) : weno5</div>
+<div class="line">  Split hyperbolic flux term?                : no</div>
+<div class="line">  Interpolation type for hyperbolic term     : components</div>
+<div class="line">  Spatial discretization type   (parabolic ) : nonconservative-2stage</div>
+<div class="line">  Spatial discretization scheme (parabolic ) : 4</div>
+<div class="line">  Time Step                                  : 5.000000E-03</div>
+<div class="line">  Check for conservation                     : no</div>
+<div class="line">  Screen output iterations                   : 50</div>
+<div class="line">  File output iterations                     : 100</div>
+<div class="line">  Initial solution file type                 : binary</div>
+<div class="line">  Initial solution read mode                 : serial</div>
+<div class="line">  Solution file write mode                   : serial</div>
+<div class="line">  Solution file format                       : binary</div>
+<div class="line">  Overwrite solution file                    : no</div>
+<div class="line">  Use GPU                                    : yes</div>
+<div class="line">  GPU device no                              : 0</div>
+<div class="line">  Physical model                             : navierstokes3d</div>
+<div class="line">Partitioning domain and allocating data arrays.</div>
+<div class="line">Reading array from binary file initial.inp (Serial mode).</div>
+<div class="line">Volume integral of the initial solution:</div>
+<div class="line"> 0:  2.4805021344162057E+02</div>
+<div class="line"> 1:  3.6748382115092681E-14</div>
+<div class="line"> 2:  5.6732396558345499E-14</div>
+<div class="line"> 3:  3.9412917374193057E-14</div>
+<div class="line"> 4:  4.7643358853329369E+02</div>
+<div class="line">Reading boundary conditions from boundary.inp.</div>
+<div class="line">  Boundary                       periodic:  Along dimension  0 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  0 and face -1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  1 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  1 and face -1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  2 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  2 and face -1</div>
+<div class="line">6 boundary condition(s) read.</div>
+<div class="line">Initializing solvers.</div>
+<div class="line">Reading WENO parameters from weno.inp.</div>
+<div class="line">Initializing physics. Model = &quot;navierstokes3d&quot;</div>
+<div class="line">Reading physical model inputs from file &quot;physics.inp&quot;.</div>
+<div class="line">Setting up time integration.</div>
+<div class="line">Solving in time (from 0 to 1000 iterations)</div>
+<div class="line">Writing solution file op_00000.bin.</div>
+<div class="line">iter=     50  t=2.500E-01  wctime: 8.3E-02 (s)  </div>
+<div class="line">iter=    100  t=5.000E-01  wctime: 8.2E-02 (s)  </div>
+<div class="line">Writing solution file op_00001.bin.</div>
+<div class="line">iter=    150  t=7.500E-01  wctime: 8.2E-02 (s)  </div>
+<div class="line">iter=    200  t=1.000E+00  wctime: 8.3E-02 (s)  </div>
+<div class="line">Writing solution file op_00002.bin.</div>
+<div class="line">iter=    250  t=1.250E+00  wctime: 8.3E-02 (s)  </div>
+<div class="line">iter=    300  t=1.500E+00  wctime: 8.3E-02 (s)  </div>
+<div class="line">Writing solution file op_00003.bin.</div>
+<div class="line">iter=    350  t=1.750E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">iter=    400  t=2.000E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">Writing solution file op_00004.bin.</div>
+<div class="line">iter=    450  t=2.250E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">iter=    500  t=2.500E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">Writing solution file op_00005.bin.</div>
+<div class="line">iter=    550  t=2.750E+00  wctime: 8.3E-02 (s)  </div>
+<div class="line">iter=    600  t=3.000E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">Writing solution file op_00006.bin.</div>
+<div class="line">iter=    650  t=3.250E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">iter=    700  t=3.500E+00  wctime: 8.3E-02 (s)  </div>
+<div class="line">Writing solution file op_00007.bin.</div>
+<div class="line">iter=    750  t=3.750E+00  wctime: 8.3E-02 (s)  </div>
+<div class="line">iter=    800  t=4.000E+00  wctime: 8.3E-02 (s)  </div>
+<div class="line">Writing solution file op_00008.bin.</div>
+<div class="line">iter=    850  t=4.250E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">iter=    900  t=4.500E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">Writing solution file op_00009.bin.</div>
+<div class="line">iter=    950  t=4.750E+00  wctime: 8.3E-02 (s)  </div>
+<div class="line">iter=   1000  t=5.000E+00  wctime: 8.2E-02 (s)  </div>
+<div class="line">Completed time integration (Final time: 5.000000), total wctime: 82.421372 (seconds).</div>
+<div class="line">Writing solution file op_00010.bin.</div>
+<div class="line">Solver runtime (in seconds): 9.5411868999999996E+01</div>
+<div class="line">Total  runtime (in seconds): 1.0222746800000000E+02</div>
+<div class="line">Deallocating arrays.</div>
+<div class="line">Finished.</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->
 <script type="text/javascript">

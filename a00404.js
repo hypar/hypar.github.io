@@ -1,5 +1,5 @@
 var a00404 =
 [
-    [ "Euler1DLeftEigenvectors", "a00404.html#a1815fa0e825f5544526165566c75a619", null ],
-    [ "Euler1DRightEigenvectors", "a00404.html#af93bb74bc4643347f59e3bdb722e864b", null ]
+    [ "ApplyPeriodicity", "a00404.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e", null ],
+    [ "PetscGlobalDOF", "a00404.html#a15c41ba7e2d10e4803226f42708a6ef8", null ]
 ];

@@ -1,6 +1,8 @@
 var a00521 =
 [
-    [ "ShallowWater1DSourceFunction1", "a00521.html#a784d099e1efac1033289d50478b47ccd", null ],
-    [ "ShallowWater1DSourceFunction2", "a00521.html#a6734df3ba5f1473c2bbaf2b9fb4df174", null ],
-    [ "ShallowWater1DSource", "a00521.html#ac11e8a3b0844ffe0a62597cf3d929021", null ]
+    [ "NavierStokes3DComputePressure", "a00521.html#a9d676025e80592838ea77fee6c337205", null ],
+    [ "NavierStokes3DComputeTemperature", "a00521.html#a3504476955bd4a5dd49600eed715e209", null ],
+    [ "ComputeShear", "a00521.html#a3e14cd172223ee5c22e1cd7a425266cc", null ],
+    [ "WriteSurfaceData", "a00521.html#aba43a5d5f52f4c98f85a87e0ccc88b63", null ],
+    [ "NavierStokes3DIBForces", "a00521.html#ac66d24485c83422b6ec21fdf9e1363e5", null ]
 ];

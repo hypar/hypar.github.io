@@ -1,5 +1,6 @@
 var a00468 =
 [
-    [ "LinearADRUpwind", "a00468.html#a2bc2527c84fa0ebf5ef27cf7c4e52bbc", null ],
-    [ "LinearADRCenteredFlux", "a00468.html#abb39556f9cdec82d2cfd95d1681c87c2", null ]
+    [ "FPPowerSystem1BusDissipationFunction", "a00468.html#acac5cf39f57e55707b4239333dd7a3a2", null ],
+    [ "FPPowerSystem1BusDiffusionLaplacian", "a00468.html#aab91f803575c434eba177a5b36ddeecc", null ],
+    [ "FPPowerSystem1BusDiffusionGeneral", "a00468.html#a9eaab3023576479a97c08eb308076cf9", null ]
 ];

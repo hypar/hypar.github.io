@@ -1,21 +1,25 @@
 var a00194 =
 [
-    [ "FPPowerSystem1Bus", "a00194.html#a00619", [
-      [ "omegaB", "a00194.html#ac789ae1b1c053a68151c68902fee8ac9", null ],
-      [ "omegaS", "a00194.html#a9b6bd0a73a0ef62d17fad2c55823ff29", null ],
-      [ "H", "a00194.html#a982cf43f120ff8978010e078bd49d9a3", null ],
-      [ "D", "a00194.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
-      [ "Pm_avg", "a00194.html#a56c71d67270967a7c7a4978ccd0eaedc", null ],
-      [ "Pmax", "a00194.html#ab070db6beb517f3c727e4f259f3c43de", null ],
-      [ "sigma", "a00194.html#a4ef930be9d7ab47d59cc0668d0d1fac8", null ],
-      [ "lambda", "a00194.html#a3db359547eed8cfd48ca821d95f577af", null ],
-      [ "pdf_integral", "a00194.html#adca2e435527ef52d18b3626b0e2ca852", null ]
-    ] ],
-    [ "_FP_POWER_SYSTEM_1BUS_", "a00194.html#a104fb063ee608b39fdab8d5e1e752ca3", null ],
-    [ "_MODEL_NDIMS_", "a00194.html#a57771c952ec174601addf43e1c0202b2", null ],
-    [ "_MODEL_NVARS_", "a00194.html#ad3395a55a5fde64d6603c7a82d7bf2c7", null ],
-    [ "_XDIR_", "a00194.html#a6a44057228e5f4b86e1c4d04b2a28977", null ],
-    [ "_YDIR_", "a00194.html#a7fd32e06617f4489079bc50ce9bfc00c", null ],
-    [ "FPPowerSystem1BusInitialize", "a00194.html#aa498ad8f4fd87b8a18d2d81e327d7013", null ],
-    [ "FPPowerSystem1BusCleanup", "a00194.html#aa1df50611026cfcfb6c36f53a7620fef", null ]
+    [ "EnsembleSimulation", "a00194.html#a60ea92ebbfd79b631a6706ea158a0ebe", null ],
+    [ "~EnsembleSimulation", "a00194.html#a170d6fe0135c35549f642f2f6a9fa89a", null ],
+    [ "define", "a00194.html#a663f682bd957ae31ef61104e3f896e8f", null ],
+    [ "ReadInputs", "a00194.html#aac7b43be31f27809e990d0d583faea0a", null ],
+    [ "Initialize", "a00194.html#a16e58435a7965b6c304c4d3e1600f0d7", null ],
+    [ "InitialSolution", "a00194.html#a4f0b968820fa465fde318fa0100ff23f", null ],
+    [ "InitializeBoundaries", "a00194.html#a60dd5da5980e23e6ac932f984aae72ec", null ],
+    [ "InitializeImmersedBoundaries", "a00194.html#af0ad837e34bcb8c380a457b2dfa27519", null ],
+    [ "InitializePhysics", "a00194.html#a9ace884b88e00a7bfa10eb8289924b2a", null ],
+    [ "InitializePhysicsData", "a00194.html#a5a04edfc0f9d6150b2e39b6939a53ef2", null ],
+    [ "InitializeSolvers", "a00194.html#a4a9517d2ee1026d57dd45f731c362ba6", null ],
+    [ "Solve", "a00194.html#a38b49ec2d9158c100958ea64b2a24ecc", null ],
+    [ "WriteErrors", "a00194.html#a3a7ba049bd5a445207af4e7fceca2e3a", null ],
+    [ "isDefined", "a00194.html#af190741994ca1c2e1128f2b1c197f041", null ],
+    [ "mpiCommDup", "a00194.html#a7c792ddc33ca725235519d368dba286a", null ],
+    [ "usePetscTS", "a00194.html#af8fbcad8a3907d33ca0ec196ba3b2009", null ],
+    [ "SolvePETSc", "a00194.html#a7ca501c3eb23eabd91098fdcd5263048", null ],
+    [ "m_is_defined", "a00194.html#a4c049947a4c07f2d2df7d1374a4babae", null ],
+    [ "m_nsims", "a00194.html#a83fea48aac89fe345a02e50af79531ae", null ],
+    [ "m_rank", "a00194.html#ac6a822dc76382e4027cf94ac3e510056", null ],
+    [ "m_nproc", "a00194.html#ae5bbe5daa629a4f92b569cb632256780", null ],
+    [ "m_sims", "a00194.html#a0c9ab319658a3d6fda6148db66266cf4", null ]
 ];

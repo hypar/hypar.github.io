@@ -1,5 +1,4 @@
 var a00490 =
 [
-    [ "NavierStokes3DIBAdiabatic", "a00490.html#a0f7ac290f54e925b5e5554a69bba5c16", null ],
-    [ "NavierStokes3DIBIsothermal", "a00490.html#a8988fb5737b2ad7f660c21326f2e1049", null ]
+    [ "LinearADRReaction", "a00490.html#acf077873308539e006e15cda9f9d137d", null ]
 ];

@@ -1,5 +1,5 @@
 var a00386 =
 [
-    [ "__FUNCT__", "a00386.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscJacobianMatNonzeroEntriesImpl", "a00386.html#a2d1d7e54d693b8d7a3b57ef76305c1ba", null ]
+    [ "MPIGatherArraynD", "a00386.html#a169eaecbc7a45469c78354f9cb1fed64", null ],
+    [ "MPIGatherArraynDwGhosts", "a00386.html#a76ea9ac59e9d6a89230273c959adaa1d", null ]
 ];

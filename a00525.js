@@ -1,4 +1,5 @@
 var a00525 =
 [
-    [ "ShallowWater1DWriteTopography", "a00525.html#ae50e47efa2c1d1d314c4b2f19fbf4932", null ]
+    [ "NavierStokes3DJacobian", "a00525.html#afd866f915dde8b83de4be0d205dff9f0", null ],
+    [ "NavierStokes3DStiffJacobian", "a00525.html#a7841b3f1114b1dcb705d5abed166b3b3", null ]
 ];

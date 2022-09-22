@@ -1,5 +1,5 @@
 var a00522 =
 [
-    [ "ShallowWater1DSourceUpwindLLF", "a00522.html#a7ff86870738e940b355fc34e9989b4cf", null ],
-    [ "ShallowWater1DSourceUpwindRoe", "a00522.html#a120e0e4b2185cdef19b4f78efd1dfe1b", null ]
+    [ "NavierStokes3DIBAdiabatic", "a00522.html#a0f7ac290f54e925b5e5554a69bba5c16", null ],
+    [ "NavierStokes3DIBIsothermal", "a00522.html#a8988fb5737b2ad7f660c21326f2e1049", null ]
 ];

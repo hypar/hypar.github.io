@@ -1,4 +1,5 @@
 var a00573 =
 [
-    [ "VolumeIntegral", "a00573.html#a1f30168f72fce94d12bd0cc8d9322494", null ]
+    [ "ShallowWater2DSourceUpwindLLF", "a00573.html#a12c14b7e0827bc83f1b1cc26f6106de7", null ],
+    [ "ShallowWater2DSourceUpwindRoe", "a00573.html#ae351c73f881dba794dd07de10c8bafa4", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/LimiterFunctions/LimiterGeneralizedMinMod.c File Reference</title>
+<title>HyPar: src/InterpolationFunctions/Interp1PrimFourthOrderCentral.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -101,7 +101,7 @@ $(document).ready(function(){initNavTree('a00349.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,64 +112,249 @@ $(document).ready(function(){initNavTree('a00349.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LimiterGeneralizedMinMod.c File Reference</div>  </div>
+<div class="title">Interp1PrimFourthOrderCentral.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Generalized MinMod limiter.  
+<p>4th order central scheme (component-wise application to vectors)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00232_source.html">mathfunctions.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00230_source.html">limiters.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00231_source.html">basic.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00229_source.html">arrayfunctions.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00191_source.html">interpolation.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00248_source.html">mpivars.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00238_source.html">hypar.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00349_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ab2278b4768059f198821dbf4d1a80389"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00349.html#ab2278b4768059f198821dbf4d1a80389">_MINIMUM_GHOSTS_</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:ab2278b4768059f198821dbf4d1a80389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acff4747eace2d9f9b3bc66aaa99cb384"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00349.html#acff4747eace2d9f9b3bc66aaa99cb384">LimiterGeneralizedMinMod</a> (double r)</td></tr>
-<tr class="separator:acff4747eace2d9f9b3bc66aaa99cb384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af45fe547593d21575ad86b4d542422d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00349.html#af45fe547593d21575ad86b4d542422d2">Interp1PrimFourthOrderCentral</a> (double *fI, double *fC, double *u, double *x, int upw, int dir, void *s, void *m, int uflag)</td></tr>
+<tr class="memdesc:af45fe547593d21575ad86b4d542422d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">4th order central reconstruction (component-wise) on a uniform grid  <a href="#af45fe547593d21575ad86b4d542422d2">More...</a><br/></td></tr>
+<tr class="separator:af45fe547593d21575ad86b4d542422d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Generalized MinMod limiter. </p>
+<div class="textblock"><p>4th order central scheme (component-wise application to vectors) </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00349_source.html">LimiterGeneralizedMinMod.c</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="acff4747eace2d9f9b3bc66aaa99cb384"></a>
+<p>Definition in file <a class="el" href="a00349_source.html">Interp1PrimFourthOrderCentral.c</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ab2278b4768059f198821dbf4d1a80389"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double LimiterGeneralizedMinMod </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>r</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define _MINIMUM_GHOSTS_&#160;&#160;&#160;2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Generalized MinMod limiter</p>
-<p>Reference:</p>
+<p>Minimum number of ghost points required for this interpolation method. </p>
+
+<p>Definition at line <a class="el" href="a00349_source.html#l00023">23</a> of file <a class="el" href="a00349_source.html">Interp1PrimFourthOrderCentral.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="af45fe547593d21575ad86b4d542422d2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Interp1PrimFourthOrderCentral </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>fI</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>fC</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>upw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>uflag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>4th order central reconstruction (component-wise) on a uniform grid </p>
+<p>Computes the interpolated values of the first primitive of a function \({\bf f}\left({\bf u}\right)\) at the interfaces from the cell-centered values of the function using the 4th order central scheme on a uniform grid. The first primitive is defined as a function \({\bf h}\left({\bf u}\right)\) that satisfies: </p>
+<p class="formulaDsp">
+\begin{equation} {\bf f}\left({\bf u}\left(x\right)\right) = \frac{1}{\Delta x} \int_{x-\Delta x/2}^{x+\Delta x/2} {\bf h}\left({\bf u}\left(\zeta\right)\right)d\zeta, \end{equation}
+</p>
+<p> where \(x\) is the spatial coordinate along the dimension of the interpolation. This function computes the 4th order central numerical approximation \(\hat{\bf f}_{j+1/2} \approx {\bf h}_{j+1/2}\) as: </p>
+<p class="formulaDsp">
+\begin{equation} \hat{\bf f}_{j+1/2} = -\frac{1}{12} {\bf f}_{j-1} + \frac{7}{12} {\bf f}_{j} + \frac{7}{12} {\bf f}_{j+1} - \frac{1}{12} {\bf f}_{j+2}. \end{equation}
+</p>
+<p><b>Implementation</b> <b>Notes:</b> </p>
 <ul>
-<li>Van Leer, B. (1979), "Towards the ultimate conservative difference scheme V. 
-  A second order sequel to Godunov's method", J. Comput. Phys., 32: 101–136, doi:10.1016/0021-9991(79)90145-1 </li>
+<li>The scalar interpolation method is applied to the vector function in a component-wise manner.</li>
+<li>Since this is a central scheme, the input argument <b>upw</b> has no effect.</li>
+<li>The function computes the interpolant for the entire grid in one call. It loops over all the grid lines along the interpolation direction and carries out the 1D interpolation along these grid lines.</li>
+<li>Location of cell-centers and cell interfaces along the spatial dimension of the interpolation is shown in the following figure: <div class="image">
+<img src="chap1_1Ddomain.png" alt="chap1_1Ddomain.png"/>
+</div>
+ </li>
 </ul>
+<p><b>Function</b> <b>arguments:</b> </p>
+<table class="doxtable">
+<tr>
+<th>Argument </th><th>Type </th><th>Explanation  </th></tr>
+<tr>
+<td>fI </td><td>double* </td><td>Array to hold the computed interpolant at the grid interfaces. This array must have the same layout as the solution, but with <b>no</b> <b>ghost</b> <b>points</b>. Its size should be the same as u in all dimensions, except dir (the dimension along which to interpolate) along which it should be larger by 1 (number of interfaces is 1 more than the number of interior cell centers). </td></tr>
+<tr>
+<td>fC </td><td>double* </td><td>Array with the cell-centered values of the flux function \({\bf f}\left({\bf u}\right)\). This array must have the same layout and size as the solution, <b>with</b> <b>ghost</b> <b>points</b>. </td></tr>
+<tr>
+<td>u </td><td>double* </td><td>The solution array \({\bf u}\) (with ghost points). If the interpolation is characteristic based, this is needed to compute the eigendecomposition. For a multidimensional problem, the layout is as follows: u is a contiguous 1D array of size (nvars*dim[0]*dim[1]*...*dim[D-1]) corresponding to the multi-dimensional solution, with the following ordering - nvars, dim[0], dim[1], ..., dim[D-1], where nvars is the number of solution components (<a class="el" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a>), dim is the local size (<a class="el" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a>), D is the number of spatial dimensions. </td></tr>
+<tr>
+<td>x </td><td>double* </td><td>The grid array (with ghost points). This is used only by non-uniform-grid interpolation methods. For multidimensional problems, the layout is as follows: x is a contiguous 1D array of size (dim[0]+dim[1]+...+dim[D-1]), with the spatial coordinates along dim[0] stored from 0,...,dim[0]-1, the spatial coordinates along dim[1] stored along dim[0],...,dim[0]+dim[1]-1, and so forth. </td></tr>
+<tr>
+<td>upw </td><td>int </td><td>Upwinding direction: if positive, a left-biased interpolant will be computed; if negative, a right-biased interpolant will be computed. If the interpolation method is central, then this has no effect. </td></tr>
+<tr>
+<td>dir </td><td>int </td><td>Spatial dimension along which to interpolate (eg: 0 for 1D; 0 or 1 for 2D; 0,1 or 2 for 3D) </td></tr>
+<tr>
+<td>s </td><td>void* </td><td>Solver object of type <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a>: the following variables are needed - <a class="el" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a>, <a class="el" href="a00202.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a>, <a class="el" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a>, <a class="el" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a>. </td></tr>
+<tr>
+<td>m </td><td>void* </td><td>MPI object of type <a class="el" href="a00205.html#a00663" title="Structure of MPI-related variables. ">MPIVariables</a>: this is needed only by compact interpolation method that need to solve a global implicit system across MPI ranks. </td></tr>
+<tr>
+<td>uflag </td><td>int </td><td>A flag indicating if the function being interpolated \({\bf f}\) is the solution itself \({\bf u}\) (if 1, \({\bf f}\left({\bf u}\right) \equiv {\bf u}\)). </td></tr>
+</table>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">r</td><td>Input slope ratio </td></tr>
+    <tr><td class="paramname">fI</td><td>Array of interpolated function values at the interfaces </td></tr>
+    <tr><td class="paramname">fC</td><td>Array of cell-centered values of the function \({\bf f}\left({\bf u}\right)\) </td></tr>
+    <tr><td class="paramname">u</td><td>Array of cell-centered values of the solution \({\bf u}\) </td></tr>
+    <tr><td class="paramname">x</td><td>Grid coordinates </td></tr>
+    <tr><td class="paramname">upw</td><td>Upwind direction (left or right biased) </td></tr>
+    <tr><td class="paramname">dir</td><td>Spatial dimension along which to interpolation </td></tr>
+    <tr><td class="paramname">s</td><td>Object of type <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> containing solver-related variables </td></tr>
+    <tr><td class="paramname">m</td><td>Object of type <a class="el" href="a00205.html#a00663" title="Structure of MPI-related variables. ">MPIVariables</a> containing MPI-related variables </td></tr>
+    <tr><td class="paramname">uflag</td><td>Flag to indicate if \(f(u) \equiv u\), i.e, if the solution is being reconstructed </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00349_source.html#l00016">16</a> of file <a class="el" href="a00349_source.html">LimiterGeneralizedMinMod.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">double</span> theta = 1.0;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordtype">double</span> retval = <a class="code" href="a00231.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0.0,<a class="code" href="a00231.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a">min3</a>(theta*r,0.5*(1.0+r),theta));</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">return</span> retval;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
-<div class="ttc" id="a00231_html_ab1e1ffb6aa15887fa3bda4cfdef1f53a"><div class="ttname"><a href="a00231.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a">min3</a></div><div class="ttdeci">#define min3(a, b, c)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00023">math_ops.h:23</a></div></div>
-<div class="ttc" id="a00231_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00231.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00018">math_ops.h:18</a></div></div>
+<p>Definition at line <a class="el" href="a00349_source.html#l00062">62</a> of file <a class="el" href="a00349_source.html">Interp1PrimFourthOrderCentral.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;{</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="a00202.html">HyPar</a>         *solver = (<a class="code" href="a00202.html">HyPar</a>*)        s;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordtype">int</span> ghosts = solver-&gt;<a class="code" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">int</span> ndims  = solver-&gt;<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">int</span> nvars  = solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">int</span> *dim   = solver-&gt;<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="comment">/* create index and bounds for the outer loop, i.e., to loop over all 1D lines along</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">     dimension &quot;dir&quot;                                                                    */</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordtype">int</span> indexL[ndims], </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      indexR[ndims], </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      indexLL[ndims], </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      indexRR[ndims], </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      indexI[ndims], </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      index_outer[ndims], </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      bounds_outer[ndims], </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      bounds_inter[ndims];</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_inter,ndims); bounds_inter[dir] += 1;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordtype">int</span> N_outer; <a class="code" href="a00229.html#abc65e9c6a51b875f46fdb054a0ecf604">_ArrayProduct1D_</a>(bounds_outer,ndims,N_outer);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">double</span> c1 = 7.0 / 12.0;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">double</span> c2 = -1.0 / 12.0;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#pragma omp parallel for schedule(auto) default(shared) private(i,index_outer,indexL,indexR,indexI)</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">for</span> (i=0; i&lt;N_outer; i++) {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <a class="code" href="a00229.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a>(ndims,i,bounds_outer,index_outer,0);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexL,ndims);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexLL,ndims);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexR,ndims);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexRR,ndims);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexI,ndims);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">for</span> (indexI[dir] = 0; indexI[dir] &lt; dim[dir]+1; indexI[dir]++) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      indexLL[dir] = indexI[dir]-2;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      indexL[dir]  = indexI[dir]-1;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      indexR[dir]  = indexI[dir];</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      indexRR[dir] = indexI[dir]+1;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordtype">int</span> p;    <a class="code" href="a00229.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds_inter,indexI ,0     ,p);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <span class="keywordtype">int</span> qLL;  <a class="code" href="a00229.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim         ,indexLL,ghosts,qLL);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <span class="keywordtype">int</span> qL;   <a class="code" href="a00229.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim         ,indexL ,ghosts,qL );</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <span class="keywordtype">int</span> qR;   <a class="code" href="a00229.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim         ,indexR ,ghosts,qR );</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <span class="keywordtype">int</span> qRR;  <a class="code" href="a00229.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim         ,indexRR,ghosts,qRR);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      <span class="keywordtype">int</span> v; <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++)  {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        fI[p*nvars+v] =   c2 * fC[qLL*nvars+v]</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                        + c1 * fC[qL *nvars+v]</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                        + c1 * fC[qR *nvars+v]</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                        + c2 * fC[qRR*nvars+v];</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
+<div class="ttc" id="a00229_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00229.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00040">arrayfunctions.h:40</a></div></div>
+<div class="ttc" id="a00229_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00319">arrayfunctions.h:319</a></div></div>
+<div class="ttc" id="a00202_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00202.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00202_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00037">hypar.h:37</a></div></div>
+<div class="ttc" id="a00202_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00052">hypar.h:52</a></div></div>
+<div class="ttc" id="a00229_html_a03f49e4d44ae8aca85cb04cfe91e4ce4"><div class="ttname"><a href="a00229.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a></div><div class="ttdeci">#define _ArrayIndexnD_(N, index, imax, i, ghost)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00021">arrayfunctions.h:21</a></div></div>
+<div class="ttc" id="a00202_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00229_html_abc65e9c6a51b875f46fdb054a0ecf604"><div class="ttname"><a href="a00229.html#abc65e9c6a51b875f46fdb054a0ecf604">_ArrayProduct1D_</a></div><div class="ttdeci">#define _ArrayProduct1D_(x, size, p)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00377">arrayfunctions.h:377</a></div></div>
+<div class="ttc" id="a00202_html"><div class="ttname"><a href="a00202.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00023">hypar.h:23</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

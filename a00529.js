@@ -1,4 +1,10 @@
 var a00529 =
 [
-    [ "ShallowWater2DFlux", "a00529.html#a402c3b0d9e533619a23dc5a06a0c0bd3", null ]
+    [ "gpuNavierStokes3DParabolicFunction_Q_kernel", "a00529.html#a6d81cafe72b99e9dfedc17ccfa471a58", null ],
+    [ "gpuNavierStokes3DParabolicFunction_QDeriv_kernel", "a00529.html#aed011bbf771cb730338214036ca8cfde", null ],
+    [ "gpuNavierStokes3DParabolicFunction_Xdir_kernel", "a00529.html#ab58cddae812df829602dd187dd66d609", null ],
+    [ "gpuNavierStokes3DParabolicFunction_Ydir_kernel", "a00529.html#a883e986e6ec1ec4d2a3f4d9f12ed74bc", null ],
+    [ "gpuNavierStokes3DParabolicFunction_Zdir_kernel", "a00529.html#a7a13759038ad4bfdecc12c9f69e3db65", null ],
+    [ "gpuNavierStokes3DParabolicFunction_par_kernel", "a00529.html#ac93d2dd0f138357c465a33a1bbfd7592", null ],
+    [ "gpuNavierStokes3DParabolicFunction", "a00529.html#a8cc7f5c6a830e004704e2bd0c15f247e", null ]
 ];

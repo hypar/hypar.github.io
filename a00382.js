@@ -1,5 +1,4 @@
 var a00382 =
 [
-    [ "__FUNCT__", "a00382.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscIFunctionIMEX", "a00382.html#a9c3f35134656885f3ef5cc8810efb3b7", null ]
+    [ "MPIExchangeBoundaries1D", "a00382.html#af9f32944efd136da82cdc63a893f9b3b", null ]
 ];

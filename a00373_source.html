@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/MPIFunctions/MPIRank1D.c Source File</title>
+<title>HyPar: src/LimiterFunctions/LimiterSuperBee.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -101,7 +101,7 @@ $(document).ready(function(){initNavTree('a00373_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,28 +112,25 @@ $(document).ready(function(){initNavTree('a00373_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">MPIRank1D.c</div>  </div>
+<div class="title">LimiterSuperBee.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00373.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00236.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="a00373.html#a5eb76d97a1620a8446043bba3a8adfe3">   26</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00236.html#a36e2be86c7dc0d9dd088ed2f5842f556">MPIRank1D</a>(</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                <span class="keywordtype">int</span> ndims,    </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                <span class="keywordtype">int</span> *iproc,   </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                <span class="keywordtype">int</span> *ip       </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;             )</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> i,rank = 0, term = 1;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;ndims; i++) {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    rank += (ip[i]*term);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    term *= iproc[i];</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">return</span>(rank);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="ttc" id="a00236_html_a36e2be86c7dc0d9dd088ed2f5842f556"><div class="ttname"><a href="a00236.html#a36e2be86c7dc0d9dd088ed2f5842f556">MPIRank1D</a></div><div class="ttdeci">int MPIRank1D(int, int *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00373_source.html#l00026">MPIRank1D.c:26</a></div></div>
-<div class="ttc" id="a00236_html"><div class="ttname"><a href="a00236.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00244.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00242.html">limiters.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00373.html#a71c26191c45ded29d838008e85a39632">   16</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="a00242.html#af8c1bbcc710852804d9be359bb88c770">LimiterSuperBee</a>( </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                        <span class="keywordtype">double</span> r </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                      )</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">double</span> retval = <a class="code" href="a00243.html#aa0d45e1e67c5cacf5c9251fcd90a971b">max3</a>(0, <a class="code" href="a00243.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(2*r,1), <a class="code" href="a00243.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(r,2));</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">return</span> retval;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
+<div class="ttc" id="a00244_html"><div class="ttname"><a href="a00244.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00243_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00243.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00243_source.html#l00014">math_ops.h:14</a></div></div>
+<div class="ttc" id="a00242_html"><div class="ttname"><a href="a00242.html">limiters.h</a></div><div class="ttdoc">Definitions for limiter functions used in MUSCL-type reconstruction schemes. </div></div>
+<div class="ttc" id="a00243_html_aa0d45e1e67c5cacf5c9251fcd90a971b"><div class="ttname"><a href="a00243.html#aa0d45e1e67c5cacf5c9251fcd90a971b">max3</a></div><div class="ttdeci">#define max3(a, b, c)</div><div class="ttdef"><b>Definition:</b> <a href="a00243_source.html#l00027">math_ops.h:27</a></div></div>
+<div class="ttc" id="a00242_html_af8c1bbcc710852804d9be359bb88c770"><div class="ttname"><a href="a00242.html#af8c1bbcc710852804d9be359bb88c770">LimiterSuperBee</a></div><div class="ttdeci">double LimiterSuperBee(double)</div><div class="ttdef"><b>Definition:</b> <a href="a00373_source.html#l00016">LimiterSuperBee.c:16</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

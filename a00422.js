@@ -1,4 +1,4 @@
 var a00422 =
 [
-    [ "FPDoubleWellAdvection", "a00422.html#a26fb36ec8e908db54dff371cedc63df5", null ]
+    [ "BurgersComputeCFL", "a00422.html#a99db371c78dc383aca3e51b342adb724", null ]
 ];

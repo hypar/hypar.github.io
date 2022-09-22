@@ -1,4 +1,4 @@
 var a00441 =
 [
-    [ "FPPowerSystem1BusAdvection", "a00441.html#ad7e78d17ce9013c5e3929a7c13847d83", null ]
+    [ "Euler2DFlux", "a00441.html#a70c70562a0ea84c0ebf99494b43bbcb0", null ]
 ];

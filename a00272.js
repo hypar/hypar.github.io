@@ -1,4 +1,4 @@
 var a00272 =
 [
-    [ "BCSubsonicInflowU", "a00272.html#a9c5eb47fb65476896445cc90ec945312", null ]
+    [ "BandedMatrixInitialize", "a00272.html#a3aa5082246356161ecda533e8244f374", null ]
 ];

@@ -1,5 +1,5 @@
 var a00466 =
 [
-    [ "LinearADRAdvectionJacobian", "a00466.html#ae6f15f61fa73eaaa061529df391c5fb9", null ],
-    [ "LinearADRDiffusionJacobian", "a00466.html#ade0ddc49b37c33e2f34fba5c7ab9bd44", null ]
+    [ "FPPowerSystem1BusDriftFunction", "a00466.html#a51ed6fb393dd167c9711f68a63a8d786", null ],
+    [ "FPPowerSystem1BusComputeCFL", "a00466.html#a55b31508f49708c46c4bb3e44939f982", null ]
 ];

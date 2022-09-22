@@ -1,5 +1,8 @@
 var a00535 =
 [
-    [ "ShallowWater2DSourceUpwindLLF", "a00535.html#a12c14b7e0827bc83f1b1cc26f6106de7", null ],
-    [ "ShallowWater2DSourceUpwindRoe", "a00535.html#ae351c73f881dba794dd07de10c8bafa4", null ]
+    [ "gpuNavierStokes3DUpwindRusanov_kernel", "a00535.html#ad5890814307febb45509807a80968296", null ],
+    [ "gpuNavierStokes3DUpwindRusanov", "a00535.html#aa87c1a2da417bfe18b963d9a90e8852a", null ],
+    [ "gpuNavierStokes3DUpwindRoe_kernel", "a00535.html#aa2a84d92a42c4acd2787158ad34e7850", null ],
+    [ "gpuNavierStokes3DUpwindRoe", "a00535.html#aab323d8eca2a12bb579ec1af13529885", null ],
+    [ "dummy", "a00535.html#aa2fb15c0a04b9778d8c9592a32a8793d", null ]
 ];

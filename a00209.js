@@ -1,21 +1,12 @@
 var a00209 =
 [
-    [ "Simulation", "a00209.html#a58593a84fc0ce797ddb852d3f64c1971", null ],
-    [ "~Simulation", "a00209.html#ad0c02236c1d45f09c48a648186b5f4b1", null ],
-    [ "define", "a00209.html#a9d077b2f2c810dd3b49e73c3f5971f1e", null ],
-    [ "ReadInputs", "a00209.html#a244e2e73cec1f0fea51644611b95a948", null ],
-    [ "Initialize", "a00209.html#a3b0c02ebf15841723aa500ffe7631fa8", null ],
-    [ "InitialSolution", "a00209.html#aca2404a81eabb4a12292d1e2e0475b13", null ],
-    [ "InitializeBoundaries", "a00209.html#a23867c4c08aaef0cbff05a2d4a5df403", null ],
-    [ "InitializeImmersedBoundaries", "a00209.html#a999753d52ffe3a04de2035b561e4d025", null ],
-    [ "InitializePhysics", "a00209.html#a08475c88f057469d3c288deee654711a", null ],
-    [ "InitializePhysicsData", "a00209.html#ab2386217f33289d0cc5a34b5851c846b", null ],
-    [ "InitializeSolvers", "a00209.html#a3bf2a3376442f0cb6d1678a1cc22ca70", null ],
-    [ "InitializationWrapup", "a00209.html#a3363557142da54ab3760911592b80f97", null ],
-    [ "Solve", "a00209.html#abf72f928c73259f7ce4cde2f6a2d8955", null ],
-    [ "WriteErrors", "a00209.html#a556dad02c6a5947283592e416a33b605", null ],
-    [ "isDefined", "a00209.html#ab803f9379402affcb69a16a6eb2e82f9", null ],
-    [ "mpiCommDup", "a00209.html#aaf41c7505a305098ab14a34a640ccfc8", null ],
-    [ "usePetscTS", "a00209.html#a14f1a22d151d2bac9c294f1e18b140d5", null ],
-    [ "SolvePETSc", "a00209.html#ac6435b301a05aa540522666da5d92353", null ]
+    [ "gamma", "a00209.html#a72f9e01745b3a8203067ab84aefc9aea", null ],
+    [ "R", "a00209.html#a228eb5e837a644887ac6e7bab3f42485", null ],
+    [ "g", "a00209.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
+    [ "init_atmos", "a00209.html#a8033c1255ef443c5e72e120e7519ff6a", null ],
+    [ "mu", "a00209.html#a74577585cf12d1712ab9c57616d49205", null ],
+    [ "Pref", "a00209.html#ad2988f8045b70fe0950d361d8814faa6", null ],
+    [ "Tref", "a00209.html#abfc9a78d9685d39295be4f8cfefed2f2", null ],
+    [ "StandardAtmosphere", "a00209.html#a5025a527e19d84e42fead49061ed7fec", null ],
+    [ "upwind", "a00209.html#aea473d706c30accecfe35e5d76d4b50a", null ]
 ];
