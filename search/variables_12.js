@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['r',['R',['../a00992.html#ac06de847603f5cfaec085f6fe500f3c8',1,'CompactScheme::R()'],['../a01064.html#a228eb5e837a644887ac6e7bab3f42485',1,'NavierStokes2D::R()'],['../a01067.html#a228eb5e837a644887ac6e7bab3f42485',1,'NavierStokes3D::R()'],['../a02377.html#a228eb5e837a644887ac6e7bab3f42485',1,'Numa2D::R()'],['../a02381.html#a228eb5e837a644887ac6e7bab3f42485',1,'Numa3D::R()'],['../a01118.html#acab531abaa74a7e664e3986f2522b33a',1,'GLMGEEParameters::r()']]],
+  ['rank',['rank',['../a01028.html#a6cfd95afd0afebd625b889fb6e58371c',1,'MPIVariables::rank()'],['../a01034.html#a6cfd95afd0afebd625b889fb6e58371c',1,'PETScContext::rank()'],['../a02421.html#a6cfd95afd0afebd625b889fb6e58371c',1,'TimeIntegration::rank()']]],
+  ['rc',['rc',['../a00992.html#af77cf650495294f69237f94cc237cba3',1,'WENOParameters']]],
+  ['re',['Re',['../a01064.html#a3b92a4b98cedf64473b3c13dfa7674b4',1,'NavierStokes2D::Re()'],['../a01067.html#a3b92a4b98cedf64473b3c13dfa7674b4',1,'NavierStokes3D::Re()']]],
+  ['recvbuf',['recvbuf',['../a00992.html#afc23e46e08649e112e8d64d780cea5cb',1,'CompactScheme::recvbuf()'],['../a01028.html#afc23e46e08649e112e8d64d780cea5cb',1,'MPIVariables::recvbuf()']]],
+  ['reducedsolvetype',['reducedsolvetype',['../a01121.html#ae50ec60868beaab2cb84897adefda09f',1,'TridiagLU']]],
+  ['residualfile',['ResidualFile',['../a02421.html#aadc7e3b297d31fd0f7f791fd24e5c810',1,'TimeIntegration']]],
+  ['restart_5fiter',['restart_iter',['../a02289.html#aafb41b96563d9966e8e9f458751f2960',1,'HyPar::restart_iter()'],['../a02421.html#aafb41b96563d9966e8e9f458751f2960',1,'TimeIntegration::restart_iter()']]],
+  ['rho0',['rho0',['../a01064.html#a1e6f66261d19a1c1c272e8808bd2657b',1,'NavierStokes2D::rho0()'],['../a01067.html#a1e6f66261d19a1c1c272e8808bd2657b',1,'NavierStokes3D::rho0()']]],
+  ['rhs',['rhs',['../a02289.html#ade4650485fe35fd3e12fea272fc80209',1,'HyPar::rhs()'],['../a02421.html#ade4650485fe35fd3e12fea272fc80209',1,'TimeIntegration::rhs()']]],
+  ['rhsfunction',['RHSFunction',['../a02421.html#a0339c3e521ebb08df7edc73dbf78dc2d',1,'TimeIntegration']]],
+  ['rhsref',['rhsref',['../a02289.html#ad587a58397d439c443ae325450a01a13',1,'HyPar']]],
+  ['rom_5fdiff_5fnorms',['rom_diff_norms',['../a02289.html#aaacee284a041d53cf335ae299d5eb929',1,'HyPar']]],
+  ['rom_5finterface',['rom_interface',['../a01034.html#af8049501def09c2e14fbec0a72c8c66c',1,'PETScContext']]],
+  ['rom_5fmode',['rom_mode',['../a01034.html#ae1766c1c76f0ef119388c4fa8a6d64f4',1,'PETScContext']]],
+  ['rtol',['rtol',['../a01121.html#a4587afeee8941ba7c208b3690a3eeaa7',1,'TridiagLU']]]
+];

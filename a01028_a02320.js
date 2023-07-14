@@ -1,0 +1,28 @@
+var a01028_a02320 =
+[
+    [ "rank", "a01028.html#a6cfd95afd0afebd625b889fb6e58371c", null ],
+    [ "nproc", "a01028.html#ae68326adc3b3862f1162832f70727b06", null ],
+    [ "iproc", "a01028.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716", null ],
+    [ "ip", "a01028.html#aa3c28612a64b8a97bde66b720e15c700", null ],
+    [ "is", "a01028.html#a481013ba007a99a4237cde5eeb3c9a29", null ],
+    [ "ie", "a01028.html#a7602de5ebb1b59ec35217e78a35a531e", null ],
+    [ "bcperiodic", "a01028.html#af40a5a3066fdb53a47e4627071abc2bc", null ],
+    [ "world", "a01028.html#adad7a6f85831f3ac84d854b6c80aef43", null ],
+    [ "comm", "a01028.html#a45a2dae130e8ef21ae3aa9c7a9e7a138", null ],
+    [ "N_IORanks", "a01028.html#a297fca986fa3aa27de07a0c746ffaaa8", null ],
+    [ "IOParticipant", "a01028.html#a92096d6b87420d0e71b38c6dc5e10b14", null ],
+    [ "CommGroup", "a01028.html#a1654ada98aca560c6cb1dc79bb6576c3", null ],
+    [ "IORank", "a01028.html#a1e6b9b6dca494aa45e43214f120e6630", null ],
+    [ "GroupStartRank", "a01028.html#aff30abd72b51ad067b03ec6d574973a1", null ],
+    [ "GroupEndRank", "a01028.html#ada7c6833a6ee759beee80a693cf86072", null ],
+    [ "IOWorld", "a01028.html#ae297d101be8576bfb36202ebb61085e6", null ],
+    [ "sendbuf", "a01028.html#aba3b15034da676474db917f9f5533085", null ],
+    [ "recvbuf", "a01028.html#afc23e46e08649e112e8d64d780cea5cb", null ],
+    [ "maxbuf", "a01028.html#a4c12bdea025b404c7dd79f368fc03efd", null ],
+    [ "ncalls", "a01028.html#a9c398709d2858a20536907016b4ab7f2", null ],
+    [ "wctime", "a01028.html#a2a2c4e097d25c6403d8a3b0a861195a7", null ],
+    [ "wctime_total", "a01028.html#a884575cab417fcb692a477e0733dd6bf", null ],
+    [ "cpu_dim", "a01028.html#a4804ff42d9aefc4b70447ff108d984be", null ],
+    [ "gpu_sendbuf", "a01028.html#a73c3021159f4b79da5c994d9d71a189c", null ],
+    [ "gpu_recvbuf", "a01028.html#a359113ba6e1b7430114456decec20cf1", null ]
+];
