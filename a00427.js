@@ -1,5 +1,4 @@
 var a00427 =
 [
-    [ "Euler1DLeftEigenvectors", "a00427.html#a1815fa0e825f5544526165566c75a619", null ],
-    [ "Euler1DRightEigenvectors", "a00427.html#af93bb74bc4643347f59e3bdb722e864b", null ]
+    [ "BurgersComputeCFL", "a00427.html#a99db371c78dc383aca3e51b342adb724", null ]
 ];

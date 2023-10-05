@@ -1,4 +1,4 @@
 var a00295 =
 [
-    [ "BCTurbulentSupersonicInflowU", "a00295.html#aff45ce4055fde7a8f9579686e8e08d82", null ]
+    [ "BCSupersonicOutflowU", "a00295.html#a791e37fae3c9489d0fc039102c57409e", null ]
 ];

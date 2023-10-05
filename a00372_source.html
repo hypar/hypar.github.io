@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/LimiterFunctions/LimiterMinMod.c Source File</title>
+<title>HyPar: src/IOFunctions/WriteBinary.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,25 +112,73 @@ $(document).ready(function(){initNavTree('a00372_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LimiterMinMod.c</div>  </div>
+<div class="title">WriteBinary.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00372.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00244.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00242.html">limiters.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="a00372.html#a26b80a8b0c4841aa43ee83081bfa2b7a">   16</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="a00242.html#a5a7e3e6ec209bbe35f9278625ccae845">LimiterMinMod</a>( </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                      <span class="keywordtype">double</span> r </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    )</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">double</span> retval = <a class="code" href="a00243.html#affe776513b24d84b39af8ab0930fef7f">max</a>(0.0,<a class="code" href="a00243.html#ac6afabdc09a49a433ee19d8a9486056d">min</a>(1.0,r));</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">return</span> retval;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="ttc" id="a00242_html_a5a7e3e6ec209bbe35f9278625ccae845"><div class="ttname"><a href="a00242.html#a5a7e3e6ec209bbe35f9278625ccae845">LimiterMinMod</a></div><div class="ttdeci">double LimiterMinMod(double)</div><div class="ttdef"><b>Definition:</b> <a href="a00372_source.html#l00016">LimiterMinMod.c:16</a></div></div>
-<div class="ttc" id="a00243_html_affe776513b24d84b39af8ab0930fef7f"><div class="ttname"><a href="a00243.html#affe776513b24d84b39af8ab0930fef7f">max</a></div><div class="ttdeci">#define max(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00243_source.html#l00018">math_ops.h:18</a></div></div>
-<div class="ttc" id="a00244_html"><div class="ttname"><a href="a00244.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00243_html_ac6afabdc09a49a433ee19d8a9486056d"><div class="ttname"><a href="a00243.html#ac6afabdc09a49a433ee19d8a9486056d">min</a></div><div class="ttdeci">#define min(a, b)</div><div class="ttdef"><b>Definition:</b> <a href="a00243_source.html#l00014">math_ops.h:14</a></div></div>
-<div class="ttc" id="a00242_html"><div class="ttname"><a href="a00242.html">limiters.h</a></div><div class="ttdoc">Definitions for limiter functions used in MUSCL-type reconstruction schemes. </div></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00233.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="a00372.html#a50ece3698b176f0251f3308300a333bb">   34</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00241.html#a067f454c26d85d6cfb4d7d878b3783c9">WriteBinary</a>(</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                  <span class="keywordtype">int</span> ndims,  </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                  <span class="keywordtype">int</span> nvars,  </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                  <span class="keywordtype">int</span> *dim,   </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                  <span class="keywordtype">double</span> *x,  </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                  <span class="keywordtype">double</span> *u,  </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                  <span class="keywordtype">char</span> *f,    </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                  <span class="keywordtype">int</span> *index  </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;               )</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;{</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span> size, d;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">size_t</span> bytes;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  FILE *out;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  out = fopen(f,<span class="stringliteral">&quot;wb&quot;</span>);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">if</span> (!out) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error: could not open %s for writing.\n&quot;</span>,f);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="comment">/* write ndims, nvars */</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  bytes = fwrite(&amp;ndims,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>),1,out);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)bytes != 1) {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in WriteBinary(): Unable to write ndims to output file.\n&quot;</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  bytes = fwrite(&amp;nvars,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>),1,out);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)bytes != 1) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in WriteBinary(): Unable to write nvars to output file.\n&quot;</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="comment">/* write dimensions */</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  bytes = fwrite(dim,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>),ndims,out);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)bytes != ndims) {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in WriteBinary(): Unable to write dimensions to output file.\n&quot;</span>);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="comment">/* write grid */</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  size = 0;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) size += dim[d];</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  bytes = fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),size,out);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)bytes != size) {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in WriteBinary(): Unable to write grid to output file.\n&quot;</span>);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="comment">/* write solution */</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  size = 1;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) size *= dim[d]; size *= nvars;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  bytes = fwrite(u,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),size,out);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>)bytes != size) {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in WriteBinary(): Unable to write solution to output file.\n&quot;</span>);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  fclose(out);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="ttc" id="a00233_html"><div class="ttname"><a href="a00233.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00241_html_a067f454c26d85d6cfb4d7d878b3783c9"><div class="ttname"><a href="a00241.html#a067f454c26d85d6cfb4d7d878b3783c9">WriteBinary</a></div><div class="ttdeci">int WriteBinary(int, int, int *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00372_source.html#l00034">WriteBinary.c:34</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

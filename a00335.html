@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/InterpolationFunctions/CompactSchemeInitialize.c File Reference</title>
+<title>HyPar: src/ImmersedBoundaries/IBInterpCoeffs.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,41 +114,40 @@ $(document).ready(function(){initNavTree('a00335.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CompactSchemeInitialize.c File Reference</div>  </div>
+<div class="title">IBInterpCoeffs.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Initializes the compact schemes.  
+<p>Compute interpolation nodes and coefficients for immersed boundary points.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
-<code>#include &lt;stdlib.h&gt;</code><br/>
-<code>#include &lt;string.h&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00191_source.html">interpolation.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00248_source.html">mpivars.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00238_source.html">hypar.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="a00233_source.html">basic.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00231_source.html">arrayfunctions.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00246_source.html">mathfunctions.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00250_source.html">mpivars.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00191_source.html">immersedboundaries.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00335_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a666601a9c9c7e3084adef44396a87827"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00335.html#a666601a9c9c7e3084adef44396a87827">CompactSchemeInitialize</a> (void *s, void *m, char *type)</td></tr>
-<tr class="separator:a666601a9c9c7e3084adef44396a87827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55a017ffd535afc3cb077a4ecc568402"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00335.html#a55a017ffd535afc3cb077a4ecc568402">IBInterpCoeffs</a> (void *ib, void *m, double *X, int *dim_l, int ghosts, double *blank)</td></tr>
+<tr class="separator:a55a017ffd535afc3cb077a4ecc568402"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Initializes the compact schemes. </p>
+<div class="textblock"><p>Compute interpolation nodes and coefficients for immersed boundary points. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
 
-<p>Definition in file <a class="el" href="a00335_source.html">CompactSchemeInitialize.c</a>.</p>
+<p>Definition in file <a class="el" href="a00335_source.html">IBInterpCoeffs.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a666601a9c9c7e3084adef44396a87827"></a>
+<a class="anchor" id="a55a017ffd535afc3cb077a4ecc568402"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int CompactSchemeInitialize </td>
+          <td class="memname">int IBInterpCoeffs </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
+          <td class="paramname"><em>ib</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -159,8 +158,26 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>dim_l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>blank</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -169,55 +186,250 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the compact finite-difference methods: allocates the arrays to store the tridiagonal system. </p>
+<p>Compute the interpolation nodes and coefficients for immersed boundary points: For each immersed boundary point, do the following:</p>
+<ul>
+<li>From the immersed boundary point, extend a probe in the direction defined by the outward normal of the "nearest" facet (computed in <a class="el" href="a00191.html#ac877ecf361b72916a491e4759f8af040">IBNearestFacetNormal()</a>), till the probe tip reaches a point in space such that all surrounding (<a class="el" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>) grid points are "interior" points, i.e., outside the immersed body (they are "interior" to the computational domain).</li>
+<li>Store the indices of the surrounding grid points, as well as the trilinear interpolation coefficients to interpolate a variable from the surrounding points to the probe tip. </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
-    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00205.html#a00663" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
-    <tr><td class="paramname">type</td><td>Type of interpolation </td></tr>
+    <tr><td class="paramname">ib</td><td>Immersed boundary object of type <a class="el" href="a00191.html#a00672" title="Structure containing variables for immersed boundary implementation. ">ImmersedBoundary</a> </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00207.html#a00674" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
+    <tr><td class="paramname">X</td><td>Array of (local) spatial coordinates </td></tr>
+    <tr><td class="paramname">dim_l</td><td>Integer array of local grid size in each spatial dimension </td></tr>
+    <tr><td class="paramname">ghosts</td><td>Number of ghost points </td></tr>
+    <tr><td class="paramname">blank</td><td>Blanking array: for grid points within the body, this value will be set to 0 </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00335_source.html#l00017">17</a> of file <a class="el" href="a00335_source.html">CompactSchemeInitialize.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="a00202.html">HyPar</a>         *solver = (<a class="code" href="a00202.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00205.html#a00663">MPIVariables</a>  *mpi    = (<a class="code" href="a00205.html#a00663">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="a00191.html#a00650">CompactScheme</a> *compact   = (<a class="code" href="a00191.html#a00650">CompactScheme</a>*) solver-&gt;<a class="code" href="a00202.html#a56318721d534e74a96b440f8542a0232">compact</a>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span> nvars = solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">int</span> ndims = solver-&gt;<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">int</span> size = 1, d;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  for (d=0; d&lt;solver-&gt;<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) size *= (solver-&gt;<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d]+1);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  size *= solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00202.html#a9591ba0fadb863561474e2ba251d2594">interp_type</a>,<a class="code" href="a00191.html#aa7752b40155314f9f2c063d4d9d8339d">_CHARACTERISTIC_</a>)) size *= solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  compact-&gt;<a class="code" href="a00191.html#ac900805a486cbb8489e3c176ed6e0d8e">A</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  compact-&gt;<a class="code" href="a00191.html#ad36954709307649365515214a02ab06d">B</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  compact-&gt;<a class="code" href="a00191.html#a0a26ce8d1878aac6ddc87e3f6290e039">C</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  compact-&gt;<a class="code" href="a00191.html#ac06de847603f5cfaec085f6fe500f3c8">R</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<p>Definition at line <a class="el" href="a00335_source.html#l00022">22</a> of file <a class="el" href="a00335_source.html">IBInterpCoeffs.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <a class="code" href="a00191.html#a00672">ImmersedBoundary</a>  *IB       = (<a class="code" href="a00191.html#a00672">ImmersedBoundary</a>*) ib;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="a00207.html#a00674">MPIVariables</a>      *mpi      = (<a class="code" href="a00207.html#a00674">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="a00191.html#a00671">IBNode</a>            *boundary = IB-&gt;<a class="code" href="a00191.html#aeab4c13a1e3fce2920ce0ff616d0fac5">boundary</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">double</span>  eps         = IB-&gt;<a class="code" href="a00191.html#a97eab6d709b80585fe9e8a54b1e3da27">tolerance</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">int</span>     maxiter     = IB-&gt;<a class="code" href="a00191.html#a5a34c6ed89d3769fb1200fdfbdc8ae33">itr_max</a>,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;          n_boundary  = IB-&gt;<a class="code" href="a00191.html#a7f578e3fbaeeea97b65e3ade80f60a78">n_boundary_nodes</a>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  compact-&gt;<a class="code" href="a00191.html#aba3b15034da676474db917f9f5533085">sendbuf</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  compact-&gt;<a class="code" href="a00191.html#afc23e46e08649e112e8d64d780cea5cb">recvbuf</a> = (<span class="keywordtype">double</span>*) calloc (size, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
-<div class="ttc" id="a00191_html_a0a26ce8d1878aac6ddc87e3f6290e039"><div class="ttname"><a href="a00191.html#a0a26ce8d1878aac6ddc87e3f6290e039">CompactScheme::C</a></div><div class="ttdeci">double * C</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00562">interpolation.h:562</a></div></div>
-<div class="ttc" id="a00191_html_afc23e46e08649e112e8d64d780cea5cb"><div class="ttname"><a href="a00191.html#afc23e46e08649e112e8d64d780cea5cb">CompactScheme::recvbuf</a></div><div class="ttdeci">double * recvbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00567">interpolation.h:567</a></div></div>
-<div class="ttc" id="a00202_html_a56318721d534e74a96b440f8542a0232"><div class="ttname"><a href="a00202.html#a56318721d534e74a96b440f8542a0232">HyPar::compact</a></div><div class="ttdeci">void * compact</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00359">hypar.h:359</a></div></div>
-<div class="ttc" id="a00191_html_a00650"><div class="ttname"><a href="a00191.html#a00650">CompactScheme</a></div><div class="ttdoc">Structure of variables/parameters needed by the compact schemes. </div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00560">interpolation.h:560</a></div></div>
-<div class="ttc" id="a00191_html_ac900805a486cbb8489e3c176ed6e0d8e"><div class="ttname"><a href="a00191.html#ac900805a486cbb8489e3c176ed6e0d8e">CompactScheme::A</a></div><div class="ttdeci">double * A</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00562">interpolation.h:562</a></div></div>
-<div class="ttc" id="a00191_html_aa7752b40155314f9f2c063d4d9d8339d"><div class="ttname"><a href="a00191.html#aa7752b40155314f9f2c063d4d9d8339d">_CHARACTERISTIC_</a></div><div class="ttdeci">#define _CHARACTERISTIC_</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00033">interpolation.h:33</a></div></div>
-<div class="ttc" id="a00191_html_ad36954709307649365515214a02ab06d"><div class="ttname"><a href="a00191.html#ad36954709307649365515214a02ab06d">CompactScheme::B</a></div><div class="ttdeci">double * B</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00562">interpolation.h:562</a></div></div>
-<div class="ttc" id="a00191_html_aba3b15034da676474db917f9f5533085"><div class="ttname"><a href="a00191.html#aba3b15034da676474db917f9f5533085">CompactScheme::sendbuf</a></div><div class="ttdeci">double * sendbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00567">interpolation.h:567</a></div></div>
-<div class="ttc" id="a00202_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00202.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00202_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00037">hypar.h:37</a></div></div>
-<div class="ttc" id="a00202_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00205_html_a00663"><div class="ttname"><a href="a00205.html#a00663">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00202_html_a9591ba0fadb863561474e2ba251d2594"><div class="ttname"><a href="a00202.html#a9591ba0fadb863561474e2ba251d2594">HyPar::interp_type</a></div><div class="ttdeci">char interp_type[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00088">hypar.h:88</a></div></div>
-<div class="ttc" id="a00191_html_ac06de847603f5cfaec085f6fe500f3c8"><div class="ttname"><a href="a00191.html#ac06de847603f5cfaec085f6fe500f3c8">CompactScheme::R</a></div><div class="ttdeci">double * R</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00562">interpolation.h:562</a></div></div>
-<div class="ttc" id="a00202_html"><div class="ttname"><a href="a00202.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00023">hypar.h:23</a></div></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">int</span> imax        = dim_l[0],</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      jmax        = dim_l[1],</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      kmax        = dim_l[2];</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">int</span> is = mpi-&gt;<a class="code" href="a00207.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>[0],</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      js = mpi-&gt;<a class="code" href="a00207.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>[1],</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      ks = mpi-&gt;<a class="code" href="a00207.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>[2];</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">int</span> index[<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>];</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">int</span> dg;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">for</span> (dg = 0; dg &lt; n_boundary; dg++) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">int</span>    i, j, k, p;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">double</span> xb, yb, zb;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">double</span> nx, ny, nz;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">double</span> xx, yy, zz;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">double</span> dx, dy, dz;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">double</span> ds, dist;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordtype">double</span> xtip, ytip, ztip;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        index[0] = i = boundary[dg].<a class="code" href="a00191.html#acb559820d9ca11295b4500f179ef6392">i</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        index[1] = j = boundary[dg].<a class="code" href="a00191.html#a37d972ae0b47b9099e30983131d31916">j</a>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        index[2] = k = boundary[dg].<a class="code" href="a00191.html#ab66ed8e0098c0a86b458672a55a9cca9">k</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,p);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        xb = boundary[dg].<a class="code" href="a00191.html#af88b946fb90d5f08b5fb740c70e98c10">x</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        yb = boundary[dg].<a class="code" href="a00191.html#ab927965981178aa1fba979a37168db2a">y</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        zb = boundary[dg].<a class="code" href="a00191.html#ab3e6ed577a7c669c19de1f9c1b46c872">z</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        nx = boundary[dg].<a class="code" href="a00191.html#a84f780956fce41006ca0d5bd16478490">face</a>-&gt;<a class="code" href="a00191.html#a74d07ed95c86939416c6a88f1daf8e1a">nx</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        ny = boundary[dg].<a class="code" href="a00191.html#a84f780956fce41006ca0d5bd16478490">face</a>-&gt;<a class="code" href="a00191.html#a147a8b14bbd79c0f1a3457805e2065ba">ny</a>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        nz = boundary[dg].<a class="code" href="a00191.html#a84f780956fce41006ca0d5bd16478490">face</a>-&gt;<a class="code" href="a00191.html#a463bf8b21578003b62221acf2e522134">nz</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        xx = boundary[dg].<a class="code" href="a00191.html#a84f780956fce41006ca0d5bd16478490">face</a>-&gt;<a class="code" href="a00191.html#ac75b803b570527306e1e744bfb7a604f">x1</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        yy = boundary[dg].<a class="code" href="a00191.html#a84f780956fce41006ca0d5bd16478490">face</a>-&gt;<a class="code" href="a00191.html#ac3b72e5b77595ca2340ecf8ccfe5fd99">y1</a>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        zz = boundary[dg].<a class="code" href="a00191.html#a84f780956fce41006ca0d5bd16478490">face</a>-&gt;<a class="code" href="a00191.html#a0e1fe82df628138c8f3907ecddb514ae">z1</a>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        dist = nx*(xx-xb) + ny*(yy-yb) + nz*(zz-zb);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">double</span> x1, x2, y1, y2, z1, z2;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,(i+1),dim_l,ghosts,X,x1);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,(i-1),dim_l,ghosts,X,x2);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,(j+1),dim_l,ghosts,X,y1);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,(j-1),dim_l,ghosts,X,y2);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,(k+1),dim_l,ghosts,X,z1);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,(k-1),dim_l,ghosts,X,z2);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    dx = 0.5 * (x1 - x2);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    dy = 0.5 * (y1 - y2);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    dz = 0.5 * (z1 - z2);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        ds = <a class="code" href="a00245.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a">min3</a>(dx, dy, dz);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        xtip = xb + dist*nx;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        ytip = yb + dist*ny;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        ztip = zb + dist*nz;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordtype">int</span> is_it_in = 0;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordtype">int</span> iter = 0;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordtype">int</span> itip, jtip, ktip;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">while</span>(!is_it_in &amp;&amp; (iter &lt; maxiter)) {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            iter++;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            itip = i;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            jtip = j;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            ktip = k;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;          </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="keywordflow">if</span> (xtip &gt; xb)  {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordtype">double</span> xx;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,itip,dim_l,ghosts,X,xx);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">while</span> ((xx &lt; xtip) &amp;&amp; (itip &lt; imax+ghosts-1)) {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;          itip++;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;          <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,itip,dim_l,ghosts,X,xx);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordtype">double</span> xx;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,(itip-1),dim_l,ghosts,X,xx);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">while</span> ((xx &gt; xtip) &amp;&amp; (itip &gt; -ghosts)) {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;          itip--;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;          <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,(itip-1),dim_l,ghosts,X,xx);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keywordflow">if</span> (ytip &gt; yb) {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordtype">double</span> yy;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,jtip,dim_l,ghosts,X,yy);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordflow">while</span> ((yy &lt; ytip) &amp;&amp; (jtip &lt; jmax+ghosts-1)) {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;          jtip++;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;          <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,jtip,dim_l,ghosts,X,yy);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordtype">double</span> yy;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,(jtip-1),dim_l,ghosts,X,yy);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">while</span> ((yy &gt; ytip) &amp;&amp; (jtip &gt; -ghosts)) {</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;          jtip--;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;          <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,(jtip-1),dim_l,ghosts,X,yy);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        }</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      }</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keywordflow">if</span> (ztip &gt; zb) {</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordtype">double</span> zz;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,ktip,dim_l,ghosts,X,zz);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordflow">while</span> ((zz &lt; ztip) &amp;&amp; (ktip &lt; kmax+ghosts-1))   {</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;          ktip++;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;          <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,ktip,dim_l,ghosts,X,zz);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        }</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordtype">double</span> zz;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,(ktip-1),dim_l,ghosts,X,zz);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keywordflow">while</span> ((zz &gt; ztip) &amp;&amp; (ktip &gt; -ghosts)) {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;          ktip--;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;          <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,(ktip-1),dim_l,ghosts,X,zz);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      }</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      <span class="keywordtype">int</span> ptip[<a class="code" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>];</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      index[0] = itip  ; index[1] = jtip  ; index[2] = ktip  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[0]);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      index[0] = itip-1; index[1] = jtip  ; index[2] = ktip  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[1]);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      index[0] = itip  ; index[1] = jtip-1; index[2] = ktip  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[2]);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      index[0] = itip  ; index[1] = jtip  ; index[2] = ktip-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[3]);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      index[0] = itip-1; index[1] = jtip-1; index[2] = ktip  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[4]);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      index[0] = itip  ; index[1] = jtip-1; index[2] = ktip-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[5]);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      index[0] = itip-1; index[1] = jtip  ; index[2] = ktip-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[6]);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      index[0] = itip-1; index[1] = jtip-1; index[2] = ktip-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[7]);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            <span class="keywordtype">int</span> nflow = 0;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            nflow += blank[ptip[0]];</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            nflow += blank[ptip[1]];</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            nflow += blank[ptip[2]];</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            nflow += blank[ptip[3]];</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            nflow += blank[ptip[4]];</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            nflow += blank[ptip[5]];</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            nflow += blank[ptip[6]];</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            nflow += blank[ptip[7]];</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            <span class="keywordflow">if</span> (nflow == <a class="code" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>) {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                is_it_in = 1;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nflow &lt; <a class="code" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>) {</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                is_it_in = 0;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                xtip += nx*<a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(ds);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                ytip += ny*<a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(ds);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                ztip += nz*<a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(ds);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                fprintf(stderr,<span class="stringliteral">&quot;Error in IBInterpCoeffs() (Bug in code) - counting interior points surrounding probe tip \n&quot;</span>);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        fprintf(stderr,<span class="stringliteral">&quot;on rank %d.\n&quot;</span>, mpi-&gt;<a class="code" href="a00207.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        fprintf(stderr,<span class="stringliteral">&quot;Value of nflow is %d but can only be positive and &lt;= %d.\n&quot;</span>,nflow,<a class="code" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            }</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        }</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">if</span> (!is_it_in) {</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      fprintf(stderr,<span class="stringliteral">&quot;Error in IBInterpCoeffs() on rank %d - interior point not found for immersed boundary point (%d,%d,%d)!\n&quot;</span>,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;              mpi-&gt;<a class="code" href="a00207.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>, i, j, k);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;      <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    }    </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="keywordtype">double</span> tlx[2],tly[2],tlz[2];</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,(itip-1),dim_l,ghosts,X,tlx[0]);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(0,(itip  ),dim_l,ghosts,X,tlx[1]);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,(jtip-1),dim_l,ghosts,X,tly[0]);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(1,(jtip  ),dim_l,ghosts,X,tly[1]);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,(ktip-1),dim_l,ghosts,X,tlz[0]);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <a class="code" href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(2,(ktip  ),dim_l,ghosts,X,tlz[1]);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordtype">int</span> ptip[<a class="code" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>];</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    index[0]=itip-1; index[1]=jtip-1; index[2]=ktip-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[0]);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    index[0]=itip  ; index[1]=jtip-1; index[2]=ktip-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[1]);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    index[0]=itip-1; index[1]=jtip  ; index[2]=ktip-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[2]);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    index[0]=itip  ; index[1]=jtip  ; index[2]=ktip-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[3]);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    index[0]=itip-1; index[1]=jtip-1; index[2]=ktip  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[4]);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    index[0]=itip  ; index[1]=jtip-1; index[2]=ktip  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[5]);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    index[0]=itip-1; index[1]=jtip  ; index[2]=ktip  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[6]);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    index[0]=itip  ; index[1]=jtip  ; index[2]=ktip  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(<a class="code" href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a>,dim_l,index,ghosts,ptip[7]);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(ptip,boundary[dg].interp_nodes,<a class="code" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keywordtype">double</span> coeffs[<a class="code" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>];</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <a class="code" href="a00246.html#a04d4e04f1f9112958dca24fc68c1818a">TrilinearInterpCoeffs</a>(tlx[0],tlx[1],tly[0],tly[1],tlz[0],tlz[1],xtip,ytip,ztip,&amp;coeffs[0]);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(coeffs,boundary[dg].interp_coeffs,<a class="code" href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <span class="keywordtype">double</span> tipdist = <a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(nx*(xx-xtip) + ny*(yy-ytip) + nz*(zz-ztip));</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    boundary[dg].<a class="code" href="a00191.html#a9ba638c4f33720c7289cac3bf73ca088">interp_node_distance</a> = tipdist;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    boundary[dg].<a class="code" href="a00191.html#a7b34733bcf53c70cfe86f22bbb05b309">surface_distance</a> = <a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(dist);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <span class="keywordflow">if</span> (tipdist &lt; eps) {</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            fprintf(stderr,<span class="stringliteral">&quot;Warning in IBInterpCoeffs() on rank %d - how can probe tip be on surface? Tipdist = %e\n&quot;</span>,</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;              mpi-&gt;<a class="code" href="a00207.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>,tipdist);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        }</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    }</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;}</div>
+<div class="ttc" id="a00191_html_af88b946fb90d5f08b5fb740c70e98c10"><div class="ttname"><a href="a00191.html#af88b946fb90d5f08b5fb740c70e98c10">IBNode::x</a></div><div class="ttdeci">double x</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00130">immersedboundaries.h:130</a></div></div>
+<div class="ttc" id="a00191_html_a00671"><div class="ttname"><a href="a00191.html#a00671">IBNode</a></div><div class="ttdoc">Structure defining an immersed boundary node. </div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00125">immersedboundaries.h:125</a></div></div>
+<div class="ttc" id="a00191_html_a00672"><div class="ttname"><a href="a00191.html#a00672">ImmersedBoundary</a></div><div class="ttdoc">Structure containing variables for immersed boundary implementation. </div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00153">immersedboundaries.h:153</a></div></div>
+<div class="ttc" id="a00191_html_ac75b803b570527306e1e744bfb7a604f"><div class="ttname"><a href="a00191.html#ac75b803b570527306e1e744bfb7a604f">Facet3D::x1</a></div><div class="ttdeci">double x1</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00040">immersedboundaries.h:40</a></div></div>
+<div class="ttc" id="a00245_html_ab1e1ffb6aa15887fa3bda4cfdef1f53a"><div class="ttname"><a href="a00245.html#ab1e1ffb6aa15887fa3bda4cfdef1f53a">min3</a></div><div class="ttdeci">#define min3(a, b, c)</div><div class="ttdef"><b>Definition:</b> <a href="a00245_source.html#l00023">math_ops.h:23</a></div></div>
+<div class="ttc" id="a00191_html_a0f59ba2c552bae2f35a03ce3964a2b4a"><div class="ttname"><a href="a00191.html#a0f59ba2c552bae2f35a03ce3964a2b4a">_IB_NDIMS_</a></div><div class="ttdeci">#define _IB_NDIMS_</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00010">immersedboundaries.h:10</a></div></div>
+<div class="ttc" id="a00191_html_ac3b72e5b77595ca2340ecf8ccfe5fd99"><div class="ttname"><a href="a00191.html#ac3b72e5b77595ca2340ecf8ccfe5fd99">Facet3D::y1</a></div><div class="ttdeci">double y1</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00040">immersedboundaries.h:40</a></div></div>
+<div class="ttc" id="a00191_html_a7f578e3fbaeeea97b65e3ade80f60a78"><div class="ttname"><a href="a00191.html#a7f578e3fbaeeea97b65e3ade80f60a78">ImmersedBoundary::n_boundary_nodes</a></div><div class="ttdeci">int n_boundary_nodes</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00161">immersedboundaries.h:161</a></div></div>
+<div class="ttc" id="a00191_html_a5a34c6ed89d3769fb1200fdfbdc8ae33"><div class="ttname"><a href="a00191.html#a5a34c6ed89d3769fb1200fdfbdc8ae33">ImmersedBoundary::itr_max</a></div><div class="ttdeci">int itr_max</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00160">immersedboundaries.h:160</a></div></div>
+<div class="ttc" id="a00191_html_acb559820d9ca11295b4500f179ef6392"><div class="ttname"><a href="a00191.html#acb559820d9ca11295b4500f179ef6392">IBNode::i</a></div><div class="ttdeci">int i</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00126">immersedboundaries.h:126</a></div></div>
+<div class="ttc" id="a00233_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00233.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00031">basic.h:31</a></div></div>
+<div class="ttc" id="a00231_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00040">arrayfunctions.h:40</a></div></div>
+<div class="ttc" id="a00246_html_a04d4e04f1f9112958dca24fc68c1818a"><div class="ttname"><a href="a00246.html#a04d4e04f1f9112958dca24fc68c1818a">TrilinearInterpCoeffs</a></div><div class="ttdeci">void TrilinearInterpCoeffs(double, double, double, double, double, double, double, double, double, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00384_source.html#l00022">TrilinearInterpolation.c:22</a></div></div>
+<div class="ttc" id="a00191_html_a0e1fe82df628138c8f3907ecddb514ae"><div class="ttname"><a href="a00191.html#a0e1fe82df628138c8f3907ecddb514ae">Facet3D::z1</a></div><div class="ttdeci">double z1</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00040">immersedboundaries.h:40</a></div></div>
+<div class="ttc" id="a00191_html_a9ba638c4f33720c7289cac3bf73ca088"><div class="ttname"><a href="a00191.html#a9ba638c4f33720c7289cac3bf73ca088">IBNode::interp_node_distance</a></div><div class="ttdeci">double interp_node_distance</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00136">immersedboundaries.h:136</a></div></div>
+<div class="ttc" id="a00191_html_a37d972ae0b47b9099e30983131d31916"><div class="ttname"><a href="a00191.html#a37d972ae0b47b9099e30983131d31916">IBNode::j</a></div><div class="ttdeci">int j</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00126">immersedboundaries.h:126</a></div></div>
+<div class="ttc" id="a00231_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00319">arrayfunctions.h:319</a></div></div>
+<div class="ttc" id="a00191_html_a74d07ed95c86939416c6a88f1daf8e1a"><div class="ttname"><a href="a00191.html#a74d07ed95c86939416c6a88f1daf8e1a">Facet3D::nx</a></div><div class="ttdeci">double nx</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00040">immersedboundaries.h:40</a></div></div>
+<div class="ttc" id="a00191_html_a463bf8b21578003b62221acf2e522134"><div class="ttname"><a href="a00191.html#a463bf8b21578003b62221acf2e522134">Facet3D::nz</a></div><div class="ttdeci">double nz</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00040">immersedboundaries.h:40</a></div></div>
+<div class="ttc" id="a00191_html_ab3e6ed577a7c669c19de1f9c1b46c872"><div class="ttname"><a href="a00191.html#ab3e6ed577a7c669c19de1f9c1b46c872">IBNode::z</a></div><div class="ttdeci">double z</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00130">immersedboundaries.h:130</a></div></div>
+<div class="ttc" id="a00191_html_ab66ed8e0098c0a86b458672a55a9cca9"><div class="ttname"><a href="a00191.html#ab66ed8e0098c0a86b458672a55a9cca9">IBNode::k</a></div><div class="ttdeci">int k</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00126">immersedboundaries.h:126</a></div></div>
+<div class="ttc" id="a00207_html_a481013ba007a99a4237cde5eeb3c9a29"><div class="ttname"><a href="a00207.html#a481013ba007a99a4237cde5eeb3c9a29">MPIVariables::is</a></div><div class="ttdeci">int * is</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00029">mpivars_struct.h:29</a></div></div>
+<div class="ttc" id="a00245_html_adf1be5ccbb7a2522b4f3a64043c72880"><div class="ttname"><a href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a></div><div class="ttdeci">#define absolute(a)</div><div class="ttdef"><b>Definition:</b> <a href="a00245_source.html#l00032">math_ops.h:32</a></div></div>
+<div class="ttc" id="a00191_html_a7b34733bcf53c70cfe86f22bbb05b309"><div class="ttname"><a href="a00191.html#a7b34733bcf53c70cfe86f22bbb05b309">IBNode::surface_distance</a></div><div class="ttdeci">double surface_distance</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00136">immersedboundaries.h:136</a></div></div>
+<div class="ttc" id="a00191_html_aeab4c13a1e3fce2920ce0ff616d0fac5"><div class="ttname"><a href="a00191.html#aeab4c13a1e3fce2920ce0ff616d0fac5">ImmersedBoundary::boundary</a></div><div class="ttdeci">IBNode * boundary</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00155">immersedboundaries.h:155</a></div></div>
+<div class="ttc" id="a00207_html_a00674"><div class="ttname"><a href="a00207.html#a00674">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00191_html_a97eab6d709b80585fe9e8a54b1e3da27"><div class="ttname"><a href="a00191.html#a97eab6d709b80585fe9e8a54b1e3da27">ImmersedBoundary::tolerance</a></div><div class="ttdeci">double tolerance</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00158">immersedboundaries.h:158</a></div></div>
+<div class="ttc" id="a00191_html_a147a8b14bbd79c0f1a3457805e2065ba"><div class="ttname"><a href="a00191.html#a147a8b14bbd79c0f1a3457805e2065ba">Facet3D::ny</a></div><div class="ttdeci">double ny</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00040">immersedboundaries.h:40</a></div></div>
+<div class="ttc" id="a00191_html_ab927965981178aa1fba979a37168db2a"><div class="ttname"><a href="a00191.html#ab927965981178aa1fba979a37168db2a">IBNode::y</a></div><div class="ttdeci">double y</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00130">immersedboundaries.h:130</a></div></div>
+<div class="ttc" id="a00191_html_a9e114382f922a879776df13fd2f414a5"><div class="ttname"><a href="a00191.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a></div><div class="ttdeci">#define _IB_NNODES_</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00013">immersedboundaries.h:13</a></div></div>
+<div class="ttc" id="a00207_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00207.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00025">mpivars_struct.h:25</a></div></div>
+<div class="ttc" id="a00191_html_a84f780956fce41006ca0d5bd16478490"><div class="ttname"><a href="a00191.html#a84f780956fce41006ca0d5bd16478490">IBNode::face</a></div><div class="ttdeci">Facet3D * face</div><div class="ttdef"><b>Definition:</b> <a href="a00191_source.html#l00133">immersedboundaries.h:133</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

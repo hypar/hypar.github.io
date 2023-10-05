@@ -1,4 +1,4 @@
 var a00330 =
 [
-    [ "IBInterpCoeffs", "a00330.html#a55a017ffd535afc3cb077a4ecc568402", null ]
+    [ "IBComputeNormalGradient", "a00330.html#af2395d184c7e2d65736714d8aaeebcfe", null ]
 ];

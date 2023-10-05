@@ -1,4 +1,4 @@
 var a00429 =
 [
-    [ "Euler1DRoeAverage", "a00429.html#a25f26ae1ec34783770e761553ae617ae", null ]
+    [ "BurgersUpwind", "a00429.html#acdb7cb154ca3e4d6c7f9b948df0ea7ef", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/PhysicalModels/NavierStokes3D/NavierStokes3DFlux_GPU.cu Source File</title>
+<title>HyPar: src/PhysicalModels/NavierStokes3D/NavierStokes3DCleanup.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,120 +112,30 @@ $(document).ready(function(){initNavTree('a00518_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">NavierStokes3DFlux_GPU.cu</div>  </div>
+<div class="title">NavierStokes3DCleanup.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00518.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00232.html">basic_gpu.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00230.html">arrayfunctions_gpu.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00244.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00246.html">matmult_native.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00208.html">physicalmodels/navierstokes3d.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00238.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#ifdef CUDA_VAR_ORDERDING_AOS</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;__global__</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00518.html#aca59d14f90d41790ab0ff321ed753f53">gpuNavierStokes3DFlux_kernel</a>(</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordtype">int</span> npoints_grid,</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordtype">int</span> dir,</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">double</span> gamma,</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">double</span> * __restrict__ u,</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">double</span>       * __restrict__ f</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;)</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">int</span> p = blockDim.x * blockIdx.x + threadIdx.x;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">if</span> (p &lt; npoints_grid) {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">double</span> rho, vx, vy, vz, e, P;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="a00208.html#afa5cf2c674c540ba8b8a9d69f21b531a">_NavierStokes3DGetFlowVar_</a>((u+<a class="code" href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),<a class="code" href="a00208.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a>,rho,vx,vy,vz,e,P,gamma);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="a00208.html#a69f735b253346387f86fbc52a6c1bf8d">_NavierStokes3DSetFlux_</a>((f+<a class="code" href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>*p),<a class="code" href="a00208.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a>,rho,vx,vy,vz,e,P,dir);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00518.html#a5b8972a5926439838d7da94a91598350">gpuNavierStokes3DFlux</a>(</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">double</span> *__restrict__ f,  </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">double</span> *__restrict__ u,  </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span>    dir, </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">void</span>   *__restrict__ s,  </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">double</span> t  </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="a00202.html">HyPar</a>             *solver = (<a class="code" href="a00202.html">HyPar</a>*)   s;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="a00208.html#a00665">NavierStokes3D</a>    *param  = (<a class="code" href="a00208.html#a00665">NavierStokes3D</a>*) solver-&gt;<a class="code" href="a00202.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordtype">int</span> nblocks = (solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>-1)/<a class="code" href="a00232.html#aceca9611b1e048e233f2d9cc02f70796">GPU_THREADS_PER_BLOCK</a> + 1;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  gpuNavierStokes3DFlux_kernel&lt;&lt;&lt;nblocks, GPU_THREADS_PER_BLOCK&gt;&gt;&gt;(</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>, dir, param-&gt;<a class="code" href="a00208.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>, u, f</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  );</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  cudaDeviceSynchronize();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;__global__</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="a00518.html#aca59d14f90d41790ab0ff321ed753f53">   69</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00518.html#aca59d14f90d41790ab0ff321ed753f53">gpuNavierStokes3DFlux_kernel</a>(</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordtype">int</span> npoints_grid,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordtype">int</span> dir,</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordtype">double</span> gamma,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">double</span> * __restrict__ u,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordtype">double</span>       * __restrict__ f</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;{</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">int</span> p = blockDim.x * blockIdx.x + threadIdx.x;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordflow">if</span> (p &lt; npoints_grid) {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">double</span> rho, vx, vy, vz, e, P;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="a00208.html#afa5cf2c674c540ba8b8a9d69f21b531a">_NavierStokes3DGetFlowVar_</a>((u+p),npoints_grid,rho,vx,vy,vz,e,P,gamma);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="a00208.html#a69f735b253346387f86fbc52a6c1bf8d">_NavierStokes3DSetFlux_</a>((f+p),npoints_grid,rho,vx,vy,vz,e,P,dir);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="a00518.html#a5b8972a5926439838d7da94a91598350">   96</a></span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> <a class="code" href="a00518.html#a5b8972a5926439838d7da94a91598350">gpuNavierStokes3DFlux</a>(</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">double</span> *__restrict__ f,  </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">double</span> *__restrict__ u,  </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordtype">int</span>    dir, </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordtype">void</span>   *__restrict__ s,  </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordtype">double</span> t  </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;)</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <a class="code" href="a00202.html">HyPar</a>             *solver = (<a class="code" href="a00202.html">HyPar</a>*)   s;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <a class="code" href="a00208.html#a00665">NavierStokes3D</a>    *param  = (<a class="code" href="a00208.html#a00665">NavierStokes3D</a>*) solver-&gt;<a class="code" href="a00202.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordtype">int</span> nblocks = (solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>-1)/<a class="code" href="a00232.html#aceca9611b1e048e233f2d9cc02f70796">GPU_THREADS_PER_BLOCK</a> + 1;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  gpuNavierStokes3DFlux_kernel&lt;&lt;&lt;nblocks, GPU_THREADS_PER_BLOCK&gt;&gt;&gt;(</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>, dir, param-&gt;<a class="code" href="a00208.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>, u, f</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  );</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  cudaDeviceSynchronize();</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00244_html"><div class="ttname"><a href="a00244.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00208_html_a00665"><div class="ttname"><a href="a00208.html#a00665">NavierStokes3D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 3D Navier Stokes equations. This structure contains the physical parameters, variables, and function pointers specific to the 3D Navier-Stokes equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00482">navierstokes3d.h:482</a></div></div>
-<div class="ttc" id="a00230_html"><div class="ttname"><a href="a00230.html">arrayfunctions_gpu.h</a></div><div class="ttdoc">Contains function definitions for common array operations on GPU. </div></div>
-<div class="ttc" id="a00202_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00202.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00261">hypar.h:261</a></div></div>
-<div class="ttc" id="a00251_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00251_source.html#l00058">euler1d.h:58</a></div></div>
-<div class="ttc" id="a00208_html_a69f735b253346387f86fbc52a6c1bf8d"><div class="ttname"><a href="a00208.html#a69f735b253346387f86fbc52a6c1bf8d">_NavierStokes3DSetFlux_</a></div><div class="ttdeci">#define _NavierStokes3DSetFlux_(f, stride, rho, vx, vy, vz, e, P, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00118">navierstokes3d.h:118</a></div></div>
-<div class="ttc" id="a00238_html"><div class="ttname"><a href="a00238.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00202_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00202.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00042">hypar.h:42</a></div></div>
-<div class="ttc" id="a00518_html_a5b8972a5926439838d7da94a91598350"><div class="ttname"><a href="a00518.html#a5b8972a5926439838d7da94a91598350">gpuNavierStokes3DFlux</a></div><div class="ttdeci">int gpuNavierStokes3DFlux(double *__restrict__ f, double *__restrict__ u, int dir, void *__restrict__ s, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00518_source.html#l00096">NavierStokes3DFlux_GPU.cu:96</a></div></div>
-<div class="ttc" id="a00246_html"><div class="ttname"><a href="a00246.html">matmult_native.h</a></div><div class="ttdoc">Contains macros and function definitions for common matrix multiplication. </div></div>
-<div class="ttc" id="a00208_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00208.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes3D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00483">navierstokes3d.h:483</a></div></div>
-<div class="ttc" id="a00232_html"><div class="ttname"><a href="a00232.html">basic_gpu.h</a></div></div>
-<div class="ttc" id="a00208_html_a730983e0f5568c133702da6393a6ea6f"><div class="ttname"><a href="a00208.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a></div><div class="ttdeci">static const int _NavierStokes3D_stride_</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00559">navierstokes3d.h:559</a></div></div>
-<div class="ttc" id="a00208_html"><div class="ttname"><a href="a00208.html">navierstokes3d.h</a></div><div class="ttdoc">3D Navier Stokes equations (compressible flows) </div></div>
-<div class="ttc" id="a00518_html_aca59d14f90d41790ab0ff321ed753f53"><div class="ttname"><a href="a00518.html#aca59d14f90d41790ab0ff321ed753f53">gpuNavierStokes3DFlux_kernel</a></div><div class="ttdeci">__global__ void gpuNavierStokes3DFlux_kernel(int npoints_grid, int dir, double gamma, const double *__restrict__ u, double *__restrict__ f)</div><div class="ttdef"><b>Definition:</b> <a href="a00518_source.html#l00069">NavierStokes3DFlux_GPU.cu:69</a></div></div>
-<div class="ttc" id="a00202_html"><div class="ttname"><a href="a00202.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00208_html_afa5cf2c674c540ba8b8a9d69f21b531a"><div class="ttname"><a href="a00208.html#afa5cf2c674c540ba8b8a9d69f21b531a">_NavierStokes3DGetFlowVar_</a></div><div class="ttdeci">#define _NavierStokes3DGetFlowVar_(u, stride, rho, vx, vy, vz, e, P, gamma)</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00098">navierstokes3d.h:98</a></div></div>
-<div class="ttc" id="a00232_html_aceca9611b1e048e233f2d9cc02f70796"><div class="ttname"><a href="a00232.html#aceca9611b1e048e233f2d9cc02f70796">GPU_THREADS_PER_BLOCK</a></div><div class="ttdeci">#define GPU_THREADS_PER_BLOCK</div><div class="ttdef"><b>Definition:</b> <a href="a00232_source.html#l00007">basic_gpu.h:7</a></div></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00210.html">physicalmodels/navierstokes3d.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="a00518.html#a57ed248d95cef9ec72880105eae499ca">   11</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00210.html#a5467b4e62f223583e901763082eb0d57">NavierStokes3DCleanup</a>(<span class="keywordtype">void</span> *s )</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <a class="code" href="a00210.html#a00676">NavierStokes3D</a>  *param  = (<a class="code" href="a00210.html#a00676">NavierStokes3D</a>*) s;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  free(param-&gt;<a class="code" href="a00210.html#aed6abeb9de440ef71c2709218395317d">grav_field_f</a>);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  free(param-&gt;<a class="code" href="a00210.html#ad2261e3953cff99f1593f3b326312f28">grav_field_g</a>);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  free(param-&gt;<a class="code" href="a00210.html#a14af7516371abe115b3a1aa9269aebb5">fast_jac</a>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  free(param-&gt;<a class="code" href="a00210.html#a5e98bc441f5d361be0dd5f13bce1257e">solution</a>);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
+<div class="ttc" id="a00210_html_a5467b4e62f223583e901763082eb0d57"><div class="ttname"><a href="a00210.html#a5467b4e62f223583e901763082eb0d57">NavierStokes3DCleanup</a></div><div class="ttdeci">int NavierStokes3DCleanup(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00518_source.html#l00011">NavierStokes3DCleanup.c:11</a></div></div>
+<div class="ttc" id="a00210_html"><div class="ttname"><a href="a00210.html">navierstokes3d.h</a></div><div class="ttdoc">3D Navier Stokes equations (compressible flows) </div></div>
+<div class="ttc" id="a00210_html_a5e98bc441f5d361be0dd5f13bce1257e"><div class="ttname"><a href="a00210.html#a5e98bc441f5d361be0dd5f13bce1257e">NavierStokes3D::solution</a></div><div class="ttdeci">double * solution</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00500">navierstokes3d.h:500</a></div></div>
+<div class="ttc" id="a00210_html_aed6abeb9de440ef71c2709218395317d"><div class="ttname"><a href="a00210.html#aed6abeb9de440ef71c2709218395317d">NavierStokes3D::grav_field_f</a></div><div class="ttdeci">double * grav_field_f</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00497">navierstokes3d.h:497</a></div></div>
+<div class="ttc" id="a00210_html_a14af7516371abe115b3a1aa9269aebb5"><div class="ttname"><a href="a00210.html#a14af7516371abe115b3a1aa9269aebb5">NavierStokes3D::fast_jac</a></div><div class="ttdeci">double * fast_jac</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00500">navierstokes3d.h:500</a></div></div>
+<div class="ttc" id="a00210_html_ad2261e3953cff99f1593f3b326312f28"><div class="ttname"><a href="a00210.html#ad2261e3953cff99f1593f3b326312f28">NavierStokes3D::grav_field_g</a></div><div class="ttdeci">double * grav_field_g</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00497">navierstokes3d.h:497</a></div></div>
+<div class="ttc" id="a00210_html_a00676"><div class="ttname"><a href="a00210.html#a00676">NavierStokes3D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 3D Navier Stokes equations. This structure contains the physical parameters, variables, and function pointers specific to the 3D Navier-Stokes equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00482">navierstokes3d.h:482</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

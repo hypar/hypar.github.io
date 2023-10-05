@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/PhysicalModels/NavierStokes3D/NavierStokes3DIBForces.c Source File</title>
+<title>HyPar: src/PhysicalModels/NavierStokes3D/NavierStokes3DEigen.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,415 +112,54 @@ $(document).ready(function(){initNavTree('a00521_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">NavierStokes3DIBForces.c</div>  </div>
+<div class="title">NavierStokes3DEigen.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00521.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00234.html">common.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00229.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00244.html">mathfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00189.html">immersedboundaries.h</a>&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00208.html">physicalmodels/navierstokes3d.h</a>&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00248.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00238.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00519.html#aad0938e55e9fc3c10fe5451ff8f2ee1c">NavierStokes3DComputePressure</a>(<span class="keywordtype">double</span>*, <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span>, <span class="keywordtype">void</span>*);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00519.html#a6d78f90f0c4b9a283c603518407a5336">NavierStokes3DComputeTemperature</a>(<span class="keywordtype">double</span>*, <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span>, <span class="keywordtype">void</span>*);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00521.html#a3e14cd172223ee5c22e1cd7a425266cc">   37</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="a00521.html#a3e14cd172223ee5c22e1cd7a425266cc">ComputeShear</a>(<span class="keywordtype">void</span> *s,              </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                        <span class="keywordtype">void</span> *m,              </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                        <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span> u,</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                        <span class="keywordtype">double</span>** <span class="keyword">const</span> sf     </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                       )</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="a00202.html">HyPar</a>             *solver  = (<a class="code" href="a00202.html">HyPar</a>*)          s;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="a00205.html#a00663">MPIVariables</a>      *mpi     = (<a class="code" href="a00205.html#a00663">MPIVariables</a>*)   m; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="a00208.html#a00665">NavierStokes3D</a>    *physics = (<a class="code" href="a00208.html#a00665">NavierStokes3D</a>*) solver-&gt;<a class="code" href="a00202.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="a00189.html#a00661">ImmersedBoundary</a>  *IB      = (<a class="code" href="a00189.html#a00661">ImmersedBoundary</a>*) solver-&gt;<a class="code" href="a00202.html#a8419c1760256467c117ef5932b943259">ib</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">if</span> ((*sf) != NULL) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot;Error in ComputeShear()\n&quot;</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot; shear force array is not NULL!\n&quot;</span>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">if</span> (!solver-&gt;<a class="code" href="a00202.html#ae83b1b0117b6a805ead2e4728945814c">flag_ib</a>) <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">int</span>           nfacets_local = IB-&gt;nfacets_local;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <a class="code" href="a00189.html#a00654">FacetMap</a>      *fmap = IB-&gt;fmap;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span> v[<a class="code" href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>];</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">int</span> nv = 4;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">if</span> (nfacets_local &gt; 0) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    (*sf) = (<span class="keywordtype">double</span>*) calloc (nv*nfacets_local, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span> (physics-&gt;<a class="code" href="a00208.html#a3b92a4b98cedf64473b3c13dfa7674b4">Re</a> &gt; 0) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nfacets_local; n++) {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">double</span> *alpha;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">int</span>    *nodes, j, k;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        alpha = &amp;(fmap[n].<a class="code" href="a00189.html#a4855c244bb3e3ba9b245312a375eed76">interp_coeffs</a>[0]);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        nodes = &amp;(fmap[n].<a class="code" href="a00189.html#a849cc8a5a571348a4d50a0332d9816f8">interp_nodes</a>[0]);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(v,<a class="code" href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,0.0);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">for</span> (j=0; j&lt;<a class="code" href="a00189.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>; j++) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;          <span class="keywordflow">for</span> (k=0; k&lt;<a class="code" href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>; k++) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            v[k] += ( alpha[j] * u[_MODEL_NVARS_*nodes[j]+k] );</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;          }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordtype">double</span> rho_c, uvel_c, vvel_c, wvel_c, energy_c, pressure_c;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="a00208.html#afa5cf2c674c540ba8b8a9d69f21b531a">_NavierStokes3DGetFlowVar_</a>(v,<a class="code" href="a00208.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a>,rho_c,uvel_c,vvel_c,wvel_c,energy_c,pressure_c,physics-&gt;<a class="code" href="a00208.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        alpha = &amp;(fmap[n].<a class="code" href="a00189.html#a047220645840c2812b0c4b0a714ce824">interp_coeffs_ns</a>[0]);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        nodes = &amp;(fmap[n].<a class="code" href="a00189.html#ae7231c0798d24ebed4aec9c288cb8d4f">interp_nodes_ns</a>[0]);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(v,<a class="code" href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>,0.0);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">for</span> (j=0; j&lt;<a class="code" href="a00189.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a>; j++) {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;          <span class="keywordflow">for</span> (k=0; k&lt;<a class="code" href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a>; k++) {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            v[k] += ( alpha[j] * u[_MODEL_NVARS_*nodes[j]+k] );</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;          }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordtype">double</span> rho_ns, uvel_ns, vvel_ns, wvel_ns, energy_ns, pressure_ns;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="a00208.html#afa5cf2c674c540ba8b8a9d69f21b531a">_NavierStokes3DGetFlowVar_</a>(v,<a class="code" href="a00208.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a>,rho_ns,uvel_ns,vvel_ns,wvel_ns,energy_ns,pressure_ns,physics-&gt;<a class="code" href="a00208.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordtype">double</span> u_x = (uvel_ns - uvel_c) / fmap[n].dx;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordtype">double</span> v_x = (vvel_ns - vvel_c) / fmap[n].dx;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordtype">double</span> w_x = (wvel_ns - wvel_c) / fmap[n].dx;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordtype">double</span> u_y = (uvel_ns - uvel_c) / fmap[n].dy;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordtype">double</span> v_y = (vvel_ns - vvel_c) / fmap[n].dy;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">double</span> w_y = (wvel_ns - wvel_c) / fmap[n].dy;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordtype">double</span> u_z = (uvel_ns - uvel_c) / fmap[n].dz;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordtype">double</span> v_z = (vvel_ns - vvel_c) / fmap[n].dz;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordtype">double</span> w_z = (wvel_ns - wvel_c) / fmap[n].dz;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordtype">double</span> nx = fmap[n].<a class="code" href="a00189.html#adc15fcdbb3aaff6ced4ab10162781055">facet</a>-&gt;<a class="code" href="a00189.html#a74d07ed95c86939416c6a88f1daf8e1a">nx</a>;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordtype">double</span> ny = fmap[n].<a class="code" href="a00189.html#adc15fcdbb3aaff6ced4ab10162781055">facet</a>-&gt;<a class="code" href="a00189.html#a147a8b14bbd79c0f1a3457805e2065ba">ny</a>;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordtype">double</span> nz = fmap[n].<a class="code" href="a00189.html#adc15fcdbb3aaff6ced4ab10162781055">facet</a>-&gt;<a class="code" href="a00189.html#a463bf8b21578003b62221acf2e522134">nz</a>;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordtype">double</span> T      = physics-&gt;<a class="code" href="a00208.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>*pressure_c/rho_c;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordtype">double</span> mu     = <a class="code" href="a00243.html#a840eef18a5986381093ff8c176a2153c">raiseto</a>(T, 0.76);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordtype">double</span> inv_Re = 1.0/physics-&gt;<a class="code" href="a00208.html#a3b92a4b98cedf64473b3c13dfa7674b4">Re</a>;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordtype">double</span> tau_x = (mu*inv_Re) * (2*u_x*nx + (u_y+v_x)*ny + (u_z+w_x)*nz);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordtype">double</span> tau_y = (mu*inv_Re) * ((v_x+u_y)*nx + 2*v_y*ny + (v_z+w_y)*nz);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordtype">double</span> tau_z = (mu*inv_Re) * ((w_x+u_z)*nx + (w_y+v_z)*ny + 2*w_z*nz);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        (*sf)[n*nv+<a class="code" href="a00251.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>] = tau_x;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        (*sf)[n*nv+<a class="code" href="a00196.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>] = tau_y;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        (*sf)[n*nv+<a class="code" href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>] = tau_z;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        (*sf)[n*nv+<a class="code" href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>+1] = sqrt(tau_x*tau_x + tau_y*tau_y + tau_z*tau_z);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>((*sf), nv*nfacets_local, 0.0);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="a00521.html#aba43a5d5f52f4c98f85a87e0ccc88b63">  138</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="a00521.html#aba43a5d5f52f4c98f85a87e0ccc88b63">WriteSurfaceData</a>(  <span class="keywordtype">void</span>*               m,              </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;                              <span class="keywordtype">void</span>*               ib,             </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;                              <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span> p_surface,      </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;                              <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span> T_surface,      </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;                              <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span> ngrad_p_surface,</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;                              <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span> ngrad_T_surface,</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;                              <span class="keyword">const</span> <span class="keywordtype">double</span>* <span class="keyword">const</span> shear,          </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                              <span class="keywordtype">char</span>*               filename        </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                            )</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;{</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <a class="code" href="a00205.html#a00663">MPIVariables</a> *mpi = (<a class="code" href="a00205.html#a00663">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <a class="code" href="a00189.html#a00661">ImmersedBoundary</a> *IB  = (<a class="code" href="a00189.html#a00661">ImmersedBoundary</a>*) ib;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keywordtype">int</span> ierr;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor"></span>  MPI_Status status;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="comment">/* collect the surface data into global arrays */</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  <span class="keywordtype">double</span>* p_surface_g = NULL;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  ierr = <a class="code" href="a00189.html#a1b5b1eb59ced4b1ece449774787b83b4">IBAssembleGlobalFacetData</a>(mpi, IB, p_surface, &amp;p_surface_g, 1);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;IBAssembleGlobalFacetData() returned with an error.\n&quot;</span>);</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  }</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  <span class="keywordtype">double</span>* T_surface_g = NULL;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  ierr = <a class="code" href="a00189.html#a1b5b1eb59ced4b1ece449774787b83b4">IBAssembleGlobalFacetData</a>(mpi, IB, T_surface, &amp;T_surface_g, 1);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;IBAssembleGlobalFacetData() returned with an error.\n&quot;</span>);</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  }</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordtype">double</span>* ngrad_p_surface_g = NULL;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  ierr = <a class="code" href="a00189.html#a1b5b1eb59ced4b1ece449774787b83b4">IBAssembleGlobalFacetData</a>(mpi, IB, ngrad_p_surface, &amp;ngrad_p_surface_g, 1);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;IBAssembleGlobalFacetData() returned with an error.\n&quot;</span>);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  }</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  <span class="keywordtype">double</span>* ngrad_T_surface_g = NULL;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  ierr = <a class="code" href="a00189.html#a1b5b1eb59ced4b1ece449774787b83b4">IBAssembleGlobalFacetData</a>(mpi, IB, ngrad_T_surface, &amp;ngrad_T_surface_g, 1);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;IBAssembleGlobalFacetData() returned with an error.\n&quot;</span>);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  }</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keywordtype">double</span>* shear_g = NULL;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  ierr = <a class="code" href="a00189.html#a1b5b1eb59ced4b1ece449774787b83b4">IBAssembleGlobalFacetData</a>(mpi, IB, shear, &amp;shear_g, 4);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;IBAssembleGlobalFacetData() returned with an error.\n&quot;</span>);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  }</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="comment">/* Rank 0 writes the file */</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00205.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">int</span> nfacets_global = IB-&gt;<a class="code" href="a00189.html#af858f0e9bc4a6cb1c16ad2931cf4b43d">body</a>-&gt;<a class="code" href="a00189.html#afd755b081f4d9ca3558ef9ca9f3c35d0">nfacets</a>;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keyword">const</span> <a class="code" href="a00189.html#a00653">Facet3D</a>* <span class="keyword">const</span> facets = IB-&gt;<a class="code" href="a00189.html#af858f0e9bc4a6cb1c16ad2931cf4b43d">body</a>-&gt;<a class="code" href="a00189.html#aa7bdafcc50881d7f0f4db707755698ce">surface</a>;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        FILE *out;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    out = fopen(filename,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    fprintf(out,<span class="stringliteral">&quot;TITLE = \&quot;Surface data created by HyPar.\&quot;\n&quot;</span>);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    fprintf(out,<span class="stringliteral">&quot;VARIABLES = \&quot;X\&quot;, \&quot;Y\&quot;, \&quot;Z\&quot;, &quot;</span>);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\&quot;Surface_Pressure\&quot;, &quot;</span>);</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\&quot;Surface_Temperature\&quot;, &quot;</span>);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\&quot;Normal_Grad_Surface_Pressure\&quot;, &quot;</span>);</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\&quot;Normal_Grad_Surface_Temperature\&quot;, &quot;</span>);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\&quot;Shear_x\&quot;, &quot;</span>);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\&quot;Shear_y\&quot;, &quot;</span>);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\&quot;Shear_z\&quot;, &quot;</span>);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\&quot;Shear_magn\&quot;&quot;</span>);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    fprintf(out,<span class="stringliteral">&quot;ZONE N = %d, E = %d, DATAPACKING = POINT, ZONETYPE = FETRIANGLE\n&quot;</span>,3*nfacets_global,nfacets_global);</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nfacets_global; n++) {</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      fprintf(  out, <span class="stringliteral">&quot;%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n&quot;</span>,</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                facets[n].x1,</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                facets[n].y1,</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;                facets[n].z1,</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                p_surface_g[n],</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                T_surface_g[n],</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                ngrad_p_surface_g[n],</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                ngrad_T_surface_g[n],</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                shear_g[4*n+<a class="code" href="a00251.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>],</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                shear_g[4*n+<a class="code" href="a00196.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>],</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                shear_g[4*n+<a class="code" href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>],</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                shear_g[4*n+<a class="code" href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>+1] );</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      fprintf(  out, <span class="stringliteral">&quot;%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n&quot;</span>,</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                facets[n].x2,</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                facets[n].y2,</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;                facets[n].z2,</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;                p_surface_g[n],</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                T_surface_g[n],</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;                ngrad_p_surface_g[n],</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;                ngrad_T_surface_g[n],</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;                shear_g[4*n+<a class="code" href="a00251.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>],</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                shear_g[4*n+<a class="code" href="a00196.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>],</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                shear_g[4*n+<a class="code" href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>],</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                shear_g[4*n+<a class="code" href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>+1] );</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      fprintf(  out, <span class="stringliteral">&quot;%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n&quot;</span>,</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                facets[n].x3,</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;                facets[n].y3,</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;                facets[n].z3,</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;                p_surface_g[n],</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;                T_surface_g[n],</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;                ngrad_p_surface_g[n],</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;                ngrad_T_surface_g[n],</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;                shear_g[4*n+<a class="code" href="a00251.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a>],</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                shear_g[4*n+<a class="code" href="a00196.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a>],</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;                shear_g[4*n+<a class="code" href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>],</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                shear_g[4*n+<a class="code" href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a>+1] );</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        }</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nfacets_global; n++) fprintf(out,<span class="stringliteral">&quot;%d %d %d\n&quot;</span>,3*n+1,3*n+2,3*n+3);</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        fclose(out);</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keywordflow">if</span> (p_surface_g) free(p_surface_g);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordflow">if</span> (T_surface_g) free(T_surface_g);</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordflow">if</span> (ngrad_p_surface_g) free(ngrad_p_surface_g);</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  <span class="keywordflow">if</span> (ngrad_T_surface_g) free(ngrad_T_surface_g);</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  <span class="keywordflow">if</span> (shear_g) free(shear_g);</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;}</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
-<div class="line"><a name="l00264"></a><span class="lineno"><a class="line" href="a00523.html#a28380b3d23cb7ae40e237e1eb14607ed">  264</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00521.html#ac66d24485c83422b6ec21fdf9e1363e5">NavierStokes3DIBForces</a>( <span class="keywordtype">void</span> *s, </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                            <span class="keywordtype">void</span> *m  </div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                          )</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;{</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <a class="code" href="a00202.html">HyPar</a>             *solver  = (<a class="code" href="a00202.html">HyPar</a>*)          s;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <a class="code" href="a00205.html#a00663">MPIVariables</a>      *mpi     = (<a class="code" href="a00205.html#a00663">MPIVariables</a>*)   m; </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  <a class="code" href="a00208.html#a00665">NavierStokes3D</a>    *physics = (<a class="code" href="a00208.html#a00665">NavierStokes3D</a>*) solver-&gt;<a class="code" href="a00202.html#a48e81a1806b5774943fd9a26e9a190f2">physics</a>;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <a class="code" href="a00189.html#a00661">ImmersedBoundary</a>  *IB      = (<a class="code" href="a00189.html#a00661">ImmersedBoundary</a>*) solver-&gt;<a class="code" href="a00202.html#a8419c1760256467c117ef5932b943259">ib</a>;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="keywordtype">int</span> ierr;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <span class="keywordflow">if</span> (!solver-&gt;<a class="code" href="a00202.html#ae83b1b0117b6a805ead2e4728945814c">flag_ib</a>) <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  <span class="keywordtype">int</span> npts = solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="keywordtype">double</span>* pressure = (<span class="keywordtype">double</span>*) calloc (npts, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  ierr = <a class="code" href="a00519.html#aad0938e55e9fc3c10fe5451ff8f2ee1c">NavierStokes3DComputePressure</a>(pressure, solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>, solver);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in NavierStokes3DIBForces()\n&quot;</span>);</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;  NavierStokes3DComputePressure() returned with error.\n&quot;</span>);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  }</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <span class="keywordtype">double</span>* temperature = (<span class="keywordtype">double</span>*) calloc(npts, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  ierr = <a class="code" href="a00519.html#a6d78f90f0c4b9a283c603518407a5336">NavierStokes3DComputeTemperature</a>(temperature, solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>, solver);</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in NavierStokes3DIBForces()\n&quot;</span>);</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;  NavierStokes3DComputeTemperature() returned with error.\n&quot;</span>);</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  }</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="comment">/* Compute surface pressure */</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keywordtype">double</span>* p_surface = NULL;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  ierr = <a class="code" href="a00189.html#a9d52a5a358d7e754089a2b3818fde152">IBComputeFacetVar</a>(solver, mpi, pressure, 1, &amp;p_surface);</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in NavierStokes3DIBForces()\n&quot;</span>);</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;  IBComputeFacetVar() returned with error.\n&quot;</span>);</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  }</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <span class="comment">/* Compute surface temperature */</span></div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <span class="keywordtype">double</span>* T_surface = NULL;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  ierr = <a class="code" href="a00189.html#a9d52a5a358d7e754089a2b3818fde152">IBComputeFacetVar</a>(solver, mpi, temperature, 1, &amp;T_surface);</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in NavierStokes3DIBForces()\n&quot;</span>);</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;  IBComputeFacetVar() returned with error.\n&quot;</span>);</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  }</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  <span class="comment">/* Compute normal surface pressure gradient */</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="keywordtype">double</span> *ngrad_p_surface = NULL;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  ierr = <a class="code" href="a00189.html#ac0612f5f652fe65361752db0226cc18b">IBComputeNormalGradient</a>(solver, mpi, pressure, 1, &amp;ngrad_p_surface);</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in NavierStokes3DIBForces()\n&quot;</span>);</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;  IBComputeNormalGradient() returned with error.\n&quot;</span>);</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  }</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  <span class="comment">/* Compute normal temperature gradient */</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  <span class="keywordtype">double</span> *ngrad_T_surface = NULL;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  ierr = <a class="code" href="a00189.html#ac0612f5f652fe65361752db0226cc18b">IBComputeNormalGradient</a>(solver, mpi, temperature, 1, &amp;ngrad_T_surface);</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in NavierStokes3DIBForces()\n&quot;</span>);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;  IBComputeNormalGradient() returned with error.\n&quot;</span>);</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  }</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  <span class="comment">/* Compute shear forces */</span></div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  <span class="keywordtype">double</span> *shear = NULL;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  ierr = <a class="code" href="a00521.html#a3e14cd172223ee5c22e1cd7a425266cc">ComputeShear</a>(solver, mpi, solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>, &amp;shear);</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in NavierStokes3DIBForces()\n&quot;</span>);</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;  ComputeShear() returned with error.\n&quot;</span>);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  }</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  <span class="keywordtype">char</span> surface_filename[<a class="code" href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>] = <span class="stringliteral">&quot;surface&quot;</span>;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00202.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a> == 1) {</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00202.html#a4e93cb107e180ef982b74cef7726b70f">op_overwrite</a>,<span class="stringliteral">&quot;no&quot;</span>)) {</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      strcat(surface_filename,solver-&gt;<a class="code" href="a00202.html#a0805db42e429173752189696c3c96909">filename_index</a>);</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    }</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keywordtype">char</span> index[<a class="code" href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <a class="code" href="a00234.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a>(solver-&gt;<a class="code" href="a00202.html#a34488172a8ec6e0aaa03cbea46092d3a">my_idx</a>, index, (<span class="keywordtype">int</span>)log10(solver-&gt;<a class="code" href="a00202.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>)+1);</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    strcat(surface_filename, <span class="stringliteral">&quot;_&quot;</span>);</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    strcat(surface_filename, index);</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    strcat(surface_filename, <span class="stringliteral">&quot;_&quot;</span>);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  }</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  strcat(surface_filename,<span class="stringliteral">&quot;.dat&quot;</span>);</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  <span class="keywordflow">if</span> (!mpi-&gt;<a class="code" href="a00205.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) {</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    printf(<span class="stringliteral">&quot;Writing immersed body surface data file %s.\n&quot;</span>,surface_filename);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  }</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  ierr = <a class="code" href="a00521.html#aba43a5d5f52f4c98f85a87e0ccc88b63">WriteSurfaceData</a>(  mpi,</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;                            IB,</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;                            p_surface,</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;                            T_surface,</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;                            ngrad_p_surface,</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;                            ngrad_T_surface,</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;                            shear,</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                            surface_filename );</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;Error in NavierStokes3DIBForces()\n&quot;</span>);</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    fprintf(stderr,<span class="stringliteral">&quot;  WriteSurfaceData() returned with error\n&quot;</span>);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  }</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  free(pressure);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  free(temperature);</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keywordflow">if</span> (p_surface) free(p_surface);</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;  <span class="keywordflow">if</span> (T_surface) free(T_surface);</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  <span class="keywordflow">if</span> (ngrad_p_surface) free(ngrad_p_surface);</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  <span class="keywordflow">if</span> (ngrad_T_surface) free(ngrad_T_surface);</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  <span class="keywordflow">if</span> (shear) free(shear);</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
-<div class="ttc" id="a00189_html_adc15fcdbb3aaff6ced4ab10162781055"><div class="ttname"><a href="a00189.html#adc15fcdbb3aaff6ced4ab10162781055">FacetMap::facet</a></div><div class="ttdeci">Facet3D * facet</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00068">immersedboundaries.h:68</a></div></div>
-<div class="ttc" id="a00229_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00169">arrayfunctions.h:169</a></div></div>
-<div class="ttc" id="a00234_html_a3e3ad5aed581d9ae563190c365dadc41"><div class="ttname"><a href="a00234.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a></div><div class="ttdeci">void GetStringFromInteger(int, char *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00296_source.html#l00015">CommonFunctions.c:15</a></div></div>
-<div class="ttc" id="a00244_html"><div class="ttname"><a href="a00244.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
-<div class="ttc" id="a00208_html_a00665"><div class="ttname"><a href="a00208.html#a00665">NavierStokes3D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 3D Navier Stokes equations. This structure contains the physical parameters, variables, and function pointers specific to the 3D Navier-Stokes equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00482">navierstokes3d.h:482</a></div></div>
-<div class="ttc" id="a00202_html_a8419c1760256467c117ef5932b943259"><div class="ttname"><a href="a00202.html#a8419c1760256467c117ef5932b943259">HyPar::ib</a></div><div class="ttdeci">void * ib</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00438">hypar.h:438</a></div></div>
-<div class="ttc" id="a00519_html_a6d78f90f0c4b9a283c603518407a5336"><div class="ttname"><a href="a00519.html#a6d78f90f0c4b9a283c603518407a5336">NavierStokes3DComputeTemperature</a></div><div class="ttdeci">int NavierStokes3DComputeTemperature(double *T, const double *const u, void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00519_source.html#l00065">NavierStokes3DFunctions.c:65</a></div></div>
-<div class="ttc" id="a00196_html_a7fd32e06617f4489079bc50ce9bfc00c"><div class="ttname"><a href="a00196.html#a7fd32e06617f4489079bc50ce9bfc00c">_YDIR_</a></div><div class="ttdeci">#define _YDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00196_source.html#l00041">euler2d.h:41</a></div></div>
-<div class="ttc" id="a00243_html_a840eef18a5986381093ff8c176a2153c"><div class="ttname"><a href="a00243.html#a840eef18a5986381093ff8c176a2153c">raiseto</a></div><div class="ttdeci">#define raiseto(x, a)</div><div class="ttdef"><b>Definition:</b> <a href="a00243_source.html#l00037">math_ops.h:37</a></div></div>
-<div class="ttc" id="a00189_html_a74d07ed95c86939416c6a88f1daf8e1a"><div class="ttname"><a href="a00189.html#a74d07ed95c86939416c6a88f1daf8e1a">Facet3D::nx</a></div><div class="ttdeci">double nx</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00521_html_a3e14cd172223ee5c22e1cd7a425266cc"><div class="ttname"><a href="a00521.html#a3e14cd172223ee5c22e1cd7a425266cc">ComputeShear</a></div><div class="ttdeci">static int ComputeShear(void *s, void *m, const double *const u, double **const sf)</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00037">NavierStokes3DIBForces.c:37</a></div></div>
-<div class="ttc" id="a00202_html_a48e81a1806b5774943fd9a26e9a190f2"><div class="ttname"><a href="a00202.html#a48e81a1806b5774943fd9a26e9a190f2">HyPar::physics</a></div><div class="ttdeci">void * physics</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00261">hypar.h:261</a></div></div>
-<div class="ttc" id="a00251_html_ad3395a55a5fde64d6603c7a82d7bf2c7"><div class="ttname"><a href="a00251.html#ad3395a55a5fde64d6603c7a82d7bf2c7">_MODEL_NVARS_</a></div><div class="ttdeci">#define _MODEL_NVARS_</div><div class="ttdef"><b>Definition:</b> <a href="a00251_source.html#l00058">euler1d.h:58</a></div></div>
-<div class="ttc" id="a00189_html_af858f0e9bc4a6cb1c16ad2931cf4b43d"><div class="ttname"><a href="a00189.html#af858f0e9bc4a6cb1c16ad2931cf4b43d">ImmersedBoundary::body</a></div><div class="ttdeci">Body3D * body</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00154">immersedboundaries.h:154</a></div></div>
-<div class="ttc" id="a00202_html_a34488172a8ec6e0aaa03cbea46092d3a"><div class="ttname"><a href="a00202.html#a34488172a8ec6e0aaa03cbea46092d3a">HyPar::my_idx</a></div><div class="ttdeci">int my_idx</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00061">hypar.h:61</a></div></div>
-<div class="ttc" id="a00189_html_a147a8b14bbd79c0f1a3457805e2065ba"><div class="ttname"><a href="a00189.html#a147a8b14bbd79c0f1a3457805e2065ba">Facet3D::ny</a></div><div class="ttdeci">double ny</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00521_html_ac66d24485c83422b6ec21fdf9e1363e5"><div class="ttname"><a href="a00521.html#ac66d24485c83422b6ec21fdf9e1363e5">NavierStokes3DIBForces</a></div><div class="ttdeci">int NavierStokes3DIBForces(void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00264">NavierStokes3DIBForces.c:264</a></div></div>
-<div class="ttc" id="a00251_html_a6a44057228e5f4b86e1c4d04b2a28977"><div class="ttname"><a href="a00251.html#a6a44057228e5f4b86e1c4d04b2a28977">_XDIR_</a></div><div class="ttdeci">#define _XDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00251_source.html#l00075">euler1d.h:75</a></div></div>
-<div class="ttc" id="a00208_html_a227beecac6bef022707512c15d39e30b"><div class="ttname"><a href="a00208.html#a227beecac6bef022707512c15d39e30b">_ZDIR_</a></div><div class="ttdeci">#define _ZDIR_</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00076">navierstokes3d.h:76</a></div></div>
-<div class="ttc" id="a00238_html"><div class="ttname"><a href="a00238.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00189_html_a00661"><div class="ttname"><a href="a00189.html#a00661">ImmersedBoundary</a></div><div class="ttdoc">Structure containing variables for immersed boundary implementation. </div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00153">immersedboundaries.h:153</a></div></div>
-<div class="ttc" id="a00189_html_a00653"><div class="ttname"><a href="a00189.html#a00653">Facet3D</a></div><div class="ttdoc">Structure defining a facet. </div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00039">immersedboundaries.h:39</a></div></div>
-<div class="ttc" id="a00189_html_a00654"><div class="ttname"><a href="a00189.html#a00654">FacetMap</a></div><div class="ttdoc">Structure defining a facet map. </div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00067">immersedboundaries.h:67</a></div></div>
-<div class="ttc" id="a00202_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00202.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00042">hypar.h:42</a></div></div>
-<div class="ttc" id="a00189_html_a4855c244bb3e3ba9b245312a375eed76"><div class="ttname"><a href="a00189.html#a4855c244bb3e3ba9b245312a375eed76">FacetMap::interp_coeffs</a></div><div class="ttdeci">double interp_coeffs[_IB_NNODES_]</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00071">immersedboundaries.h:71</a></div></div>
-<div class="ttc" id="a00229_html"><div class="ttname"><a href="a00229.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00202_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00202.html#a9a0e87291e0e8b9c1445e5482e814c92">HyPar::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00064">hypar.h:64</a></div></div>
-<div class="ttc" id="a00208_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00208.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes3D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00483">navierstokes3d.h:483</a></div></div>
-<div class="ttc" id="a00189_html_a849cc8a5a571348a4d50a0332d9816f8"><div class="ttname"><a href="a00189.html#a849cc8a5a571348a4d50a0332d9816f8">FacetMap::interp_nodes</a></div><div class="ttdeci">int interp_nodes[_IB_NNODES_]</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00070">immersedboundaries.h:70</a></div></div>
-<div class="ttc" id="a00234_html"><div class="ttname"><a href="a00234.html">common.h</a></div><div class="ttdoc">Some common functions used here and there. </div></div>
-<div class="ttc" id="a00189_html_ae7231c0798d24ebed4aec9c288cb8d4f"><div class="ttname"><a href="a00189.html#ae7231c0798d24ebed4aec9c288cb8d4f">FacetMap::interp_nodes_ns</a></div><div class="ttdeci">int interp_nodes_ns[_IB_NNODES_]</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00072">immersedboundaries.h:72</a></div></div>
-<div class="ttc" id="a00189_html_a047220645840c2812b0c4b0a714ce824"><div class="ttname"><a href="a00189.html#a047220645840c2812b0c4b0a714ce824">FacetMap::interp_coeffs_ns</a></div><div class="ttdeci">double interp_coeffs_ns[_IB_NNODES_]</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00073">immersedboundaries.h:73</a></div></div>
-<div class="ttc" id="a00205_html_a00663"><div class="ttname"><a href="a00205.html#a00663">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00202_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00116">hypar.h:116</a></div></div>
-<div class="ttc" id="a00208_html_a730983e0f5568c133702da6393a6ea6f"><div class="ttname"><a href="a00208.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a></div><div class="ttdeci">static const int _NavierStokes3D_stride_</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00559">navierstokes3d.h:559</a></div></div>
-<div class="ttc" id="a00189_html_a463bf8b21578003b62221acf2e522134"><div class="ttname"><a href="a00189.html#a463bf8b21578003b62221acf2e522134">Facet3D::nz</a></div><div class="ttdeci">double nz</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00040">immersedboundaries.h:40</a></div></div>
-<div class="ttc" id="a00519_html_aad0938e55e9fc3c10fe5451ff8f2ee1c"><div class="ttname"><a href="a00519.html#aad0938e55e9fc3c10fe5451ff8f2ee1c">NavierStokes3DComputePressure</a></div><div class="ttdeci">int NavierStokes3DComputePressure(double *P, const double *const u, void *s)</div><div class="ttdef"><b>Definition:</b> <a href="a00519_source.html#l00031">NavierStokes3DFunctions.c:31</a></div></div>
-<div class="ttc" id="a00208_html_a3b92a4b98cedf64473b3c13dfa7674b4"><div class="ttname"><a href="a00208.html#a3b92a4b98cedf64473b3c13dfa7674b4">NavierStokes3D::Re</a></div><div class="ttdeci">double Re</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00484">navierstokes3d.h:484</a></div></div>
-<div class="ttc" id="a00202_html_a4e93cb107e180ef982b74cef7726b70f"><div class="ttname"><a href="a00202.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a></div><div class="ttdeci">char op_overwrite[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00191">hypar.h:191</a></div></div>
-<div class="ttc" id="a00231_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00014">basic.h:14</a></div></div>
-<div class="ttc" id="a00205_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00205.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00025">mpivars_struct.h:25</a></div></div>
-<div class="ttc" id="a00208_html"><div class="ttname"><a href="a00208.html">navierstokes3d.h</a></div><div class="ttdoc">3D Navier Stokes equations (compressible flows) </div></div>
-<div class="ttc" id="a00521_html_aba43a5d5f52f4c98f85a87e0ccc88b63"><div class="ttname"><a href="a00521.html#aba43a5d5f52f4c98f85a87e0ccc88b63">WriteSurfaceData</a></div><div class="ttdeci">static int WriteSurfaceData(void *m, void *ib, const double *const p_surface, const double *const T_surface, const double *const ngrad_p_surface, const double *const ngrad_T_surface, const double *const shear, char *filename)</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00138">NavierStokes3DIBForces.c:138</a></div></div>
-<div class="ttc" id="a00202_html_ae83b1b0117b6a805ead2e4728945814c"><div class="ttname"><a href="a00202.html#ae83b1b0117b6a805ead2e4728945814c">HyPar::flag_ib</a></div><div class="ttdeci">int flag_ib</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00436">hypar.h:436</a></div></div>
-<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00189_html"><div class="ttname"><a href="a00189.html">immersedboundaries.h</a></div><div class="ttdoc">Structures and function definitions for immersed boundaries. </div></div>
-<div class="ttc" id="a00189_html_afd755b081f4d9ca3558ef9ca9f3c35d0"><div class="ttname"><a href="a00189.html#afd755b081f4d9ca3558ef9ca9f3c35d0">Body3D::nfacets</a></div><div class="ttdeci">int nfacets</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00101">immersedboundaries.h:101</a></div></div>
-<div class="ttc" id="a00189_html_a1b5b1eb59ced4b1ece449774787b83b4"><div class="ttname"><a href="a00189.html#a1b5b1eb59ced4b1ece449774787b83b4">IBAssembleGlobalFacetData</a></div><div class="ttdeci">int IBAssembleGlobalFacetData(void *, void *, const double *const, double **const, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00321_source.html#l00022">IBAssembleGlobalFacetData.c:22</a></div></div>
-<div class="ttc" id="a00202_html_a0805db42e429173752189696c3c96909"><div class="ttname"><a href="a00202.html#a0805db42e429173752189696c3c96909">HyPar::filename_index</a></div><div class="ttdeci">char * filename_index</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00194">hypar.h:194</a></div></div>
-<div class="ttc" id="a00189_html_a9e114382f922a879776df13fd2f414a5"><div class="ttname"><a href="a00189.html#a9e114382f922a879776df13fd2f414a5">_IB_NNODES_</a></div><div class="ttdeci">#define _IB_NNODES_</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00013">immersedboundaries.h:13</a></div></div>
-<div class="ttc" id="a00189_html_aa7bdafcc50881d7f0f4db707755698ce"><div class="ttname"><a href="a00189.html#aa7bdafcc50881d7f0f4db707755698ce">Body3D::surface</a></div><div class="ttdeci">Facet3D * surface</div><div class="ttdef"><b>Definition:</b> <a href="a00189_source.html#l00102">immersedboundaries.h:102</a></div></div>
-<div class="ttc" id="a00189_html_ac0612f5f652fe65361752db0226cc18b"><div class="ttname"><a href="a00189.html#ac0612f5f652fe65361752db0226cc18b">IBComputeNormalGradient</a></div><div class="ttdeci">int IBComputeNormalGradient(void *, void *, const double *const, int, double **const)</div><div class="ttdef"><b>Definition:</b> <a href="a00325_source.html#l00033">IBComputeNormalGradient.c:33</a></div></div>
-<div class="ttc" id="a00189_html_a9d52a5a358d7e754089a2b3818fde152"><div class="ttname"><a href="a00189.html#a9d52a5a358d7e754089a2b3818fde152">IBComputeFacetVar</a></div><div class="ttdeci">int IBComputeFacetVar(void *, void *, const double *const, int, double **const)</div><div class="ttdef"><b>Definition:</b> <a href="a00324_source.html#l00033">IBComputeFacetVar.c:33</a></div></div>
-<div class="ttc" id="a00202_html"><div class="ttname"><a href="a00202.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00208_html_afa5cf2c674c540ba8b8a9d69f21b531a"><div class="ttname"><a href="a00208.html#afa5cf2c674c540ba8b8a9d69f21b531a">_NavierStokes3DGetFlowVar_</a></div><div class="ttdeci">#define _NavierStokes3DGetFlowVar_(u, stride, rho, vx, vy, vz, e, P, gamma)</div><div class="ttdef"><b>Definition:</b> <a href="a00208_source.html#l00098">navierstokes3d.h:98</a></div></div>
-<div class="ttc" id="a00248_html"><div class="ttname"><a href="a00248.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00233.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00246.html">mathfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00210.html">physicalmodels/navierstokes3d.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00240.html">hypar.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="a00528.html#a36e7a2aad240497c28cbdac866729d43">   20</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00521.html#ab376732168de139806c9f77828caa063">NavierStokes3DLeftEigenvectors</a>(</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                    <span class="keywordtype">double</span> *u, </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                                    <span class="keywordtype">double</span> *L, </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                                    <span class="keywordtype">void</span>   *p, </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                                    <span class="keywordtype">int</span>    dir </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                                  )</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="a00210.html#a00676">NavierStokes3D</a> *param  = (<a class="code" href="a00210.html#a00676">NavierStokes3D</a>*)  p;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00210.html#ac4735343694d68f11fd16400d27cc2de">_NavierStokes3DLeftEigenvectors_</a>(u,<a class="code" href="a00210.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a>,L,param-&gt;<a class="code" href="a00210.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>,dir);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a00528.html#a0781889024316819e4af16d5709ef1ad">   39</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00521.html#a62b44025b86e4d73a34142b32301ee7c">NavierStokes3DRightEigenvectors</a>(</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                      <span class="keywordtype">double</span>  *u, </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                      <span class="keywordtype">double</span>  *R, </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                      <span class="keywordtype">void</span>    *p, </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                      <span class="keywordtype">int</span>     dir </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                   )</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;{</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="a00210.html#a00676">NavierStokes3D</a> *param  = (<a class="code" href="a00210.html#a00676">NavierStokes3D</a>*)  p;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <a class="code" href="a00210.html#a5251a393e821eecd471329cbeedf4ddd">_NavierStokes3DRightEigenvectors_</a>(u,<a class="code" href="a00210.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a>,R,param-&gt;<a class="code" href="a00210.html#a72f9e01745b3a8203067ab84aefc9aea">gamma</a>,dir);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="ttc" id="a00210_html"><div class="ttname"><a href="a00210.html">navierstokes3d.h</a></div><div class="ttdoc">3D Navier Stokes equations (compressible flows) </div></div>
+<div class="ttc" id="a00210_html_a72f9e01745b3a8203067ab84aefc9aea"><div class="ttname"><a href="a00210.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes3D::gamma</a></div><div class="ttdeci">double gamma</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00483">navierstokes3d.h:483</a></div></div>
+<div class="ttc" id="a00210_html_ac4735343694d68f11fd16400d27cc2de"><div class="ttname"><a href="a00210.html#ac4735343694d68f11fd16400d27cc2de">_NavierStokes3DLeftEigenvectors_</a></div><div class="ttdeci">#define _NavierStokes3DLeftEigenvectors_(u, stride, L, ga, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00288">navierstokes3d.h:288</a></div></div>
+<div class="ttc" id="a00246_html"><div class="ttname"><a href="a00246.html">mathfunctions.h</a></div><div class="ttdoc">Contains function definitions for common mathematical functions. </div></div>
+<div class="ttc" id="a00521_html_a62b44025b86e4d73a34142b32301ee7c"><div class="ttname"><a href="a00521.html#a62b44025b86e4d73a34142b32301ee7c">NavierStokes3DRightEigenvectors</a></div><div class="ttdeci">int NavierStokes3DRightEigenvectors(double *u, double *R, void *p, int dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00039">NavierStokes3DEigen.c:39</a></div></div>
+<div class="ttc" id="a00240_html"><div class="ttname"><a href="a00240.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
+<div class="ttc" id="a00521_html_ab376732168de139806c9f77828caa063"><div class="ttname"><a href="a00521.html#ab376732168de139806c9f77828caa063">NavierStokes3DLeftEigenvectors</a></div><div class="ttdeci">int NavierStokes3DLeftEigenvectors(double *u, double *L, void *p, int dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00521_source.html#l00020">NavierStokes3DEigen.c:20</a></div></div>
+<div class="ttc" id="a00210_html_a00676"><div class="ttname"><a href="a00210.html#a00676">NavierStokes3D</a></div><div class="ttdoc">Structure containing variables and parameters specific to the 3D Navier Stokes equations. This structure contains the physical parameters, variables, and function pointers specific to the 3D Navier-Stokes equations. </div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00482">navierstokes3d.h:482</a></div></div>
+<div class="ttc" id="a00210_html_a5251a393e821eecd471329cbeedf4ddd"><div class="ttname"><a href="a00210.html#a5251a393e821eecd471329cbeedf4ddd">_NavierStokes3DRightEigenvectors_</a></div><div class="ttdeci">#define _NavierStokes3DRightEigenvectors_(u, stride, R, ga, dir)</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00384">navierstokes3d.h:384</a></div></div>
+<div class="ttc" id="a00233_html"><div class="ttname"><a href="a00233.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00210_html_a730983e0f5568c133702da6393a6ea6f"><div class="ttname"><a href="a00210.html#a730983e0f5568c133702da6393a6ea6f">_NavierStokes3D_stride_</a></div><div class="ttdeci">static const int _NavierStokes3D_stride_</div><div class="ttdef"><b>Definition:</b> <a href="a00210_source.html#l00559">navierstokes3d.h:559</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

@@ -1,4 +1,4 @@
 var a00288 =
 [
-    [ "BCSubsonicInflowU", "a00288.html#a9c5eb47fb65476896445cc90ec945312", null ]
+    [ "BCSlipWallU", "a00288.html#abdeb4e91e1441a25130cb2d3a1be09b0", null ]
 ];

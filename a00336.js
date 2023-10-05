@@ -1,5 +1,4 @@
 var a00336 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00336.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "Interp1PrimFifthOrderCompactUpwind", "a00336.html#a4ae89e757fd848238161b057fb778616", null ]
+    [ "IBNearestFacetNormal", "a00336.html#a6910727d86fc73085545f208fecdece7", null ]
 ];

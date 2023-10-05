@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/BoundaryConditions/BCDirichlet.c Source File</title>
+<title>HyPar: src/BandedMatrix/BandedMatrixDestroy.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,55 +112,29 @@ $(document).ready(function(){initNavTree('a00275_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BCDirichlet.c</div>  </div>
+<div class="title">BandedMatrixDestroy.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00275.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00229.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00233.html">boundaryconditions.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00275.html#aff556c3ed9f4a947436d47c58ea5983e">   13</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00233.html#ad9d2689e44a644319a6cc72249c68e49">BCDirichletU</a>(</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                  <span class="keywordtype">void</span>    *b,     </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                  <span class="keywordtype">void</span>    *m,     </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                  <span class="keywordtype">int</span>     ndims,  </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                  <span class="keywordtype">int</span>     nvars,  </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                  <span class="keywordtype">int</span>     *size,  </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                  <span class="keywordtype">int</span>     ghosts, </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                  <span class="keywordtype">double</span>  *phi,   </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                  <span class="keywordtype">double</span>  waqt    </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                )</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00193.html">DomainBoundary</a> *boundary = (<a class="code" href="a00193.html">DomainBoundary</a>*) b;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">if</span> (boundary-&gt;<a class="code" href="a00193.html#a2eec7e4ee612d5edc985ba81453346e1">on_this_proc</a>) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">int</span> bounds[ndims], indexb[ndims];</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="a00229.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a>(bounds,boundary-&gt;<a class="code" href="a00193.html#a7602de5ebb1b59ec35217e78a35a531e">ie</a>,boundary-&gt;<a class="code" href="a00193.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ndims);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(indexb,ndims,0); </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">int</span> done = 0;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;      <span class="keywordtype">int</span> p; <a class="code" href="a00229.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,size  ,indexb,boundary-&gt;<a class="code" href="a00193.html#a481013ba007a99a4237cde5eeb3c9a29">is</a>,ghosts,p);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;      <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>((boundary-&gt;<a class="code" href="a00193.html#a6aa65431c39a8d8177f35c338ddb7a0e">DirichletValue</a>),(phi+nvars*p),nvars);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;      <a class="code" href="a00229.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds,indexb,done);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
-<div class="ttc" id="a00229_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00169">arrayfunctions.h:169</a></div></div>
-<div class="ttc" id="a00193_html"><div class="ttname"><a href="a00193.html">DomainBoundary</a></div><div class="ttdoc">Structure containing the variables and function pointers defining a boundary. </div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00068">boundaryconditions.h:68</a></div></div>
-<div class="ttc" id="a00193_html_a7602de5ebb1b59ec35217e78a35a531e"><div class="ttname"><a href="a00193.html#a7602de5ebb1b59ec35217e78a35a531e">DomainBoundary::ie</a></div><div class="ttdeci">int * ie</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00082">boundaryconditions.h:82</a></div></div>
-<div class="ttc" id="a00229_html_ab49d0f261ea751a17d6beca0504daf78"><div class="ttname"><a href="a00229.html#ab49d0f261ea751a17d6beca0504daf78">_ArraySubtract1D_</a></div><div class="ttdeci">#define _ArraySubtract1D_(x, a, b, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00201">arrayfunctions.h:201</a></div></div>
-<div class="ttc" id="a00229_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00319">arrayfunctions.h:319</a></div></div>
-<div class="ttc" id="a00193_html_a481013ba007a99a4237cde5eeb3c9a29"><div class="ttname"><a href="a00193.html#a481013ba007a99a4237cde5eeb3c9a29">DomainBoundary::is</a></div><div class="ttdeci">int * is</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00082">boundaryconditions.h:82</a></div></div>
-<div class="ttc" id="a00229_html"><div class="ttname"><a href="a00229.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00229_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00229.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00083">arrayfunctions.h:83</a></div></div>
-<div class="ttc" id="a00229_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00229.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00126">arrayfunctions.h:126</a></div></div>
-<div class="ttc" id="a00193_html_a2eec7e4ee612d5edc985ba81453346e1"><div class="ttname"><a href="a00193.html#a2eec7e4ee612d5edc985ba81453346e1">DomainBoundary::on_this_proc</a></div><div class="ttdeci">int on_this_proc</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00081">boundaryconditions.h:81</a></div></div>
-<div class="ttc" id="a00233_html"><div class="ttname"><a href="a00233.html">boundaryconditions.h</a></div><div class="ttdoc">Containts the structures and definitions for boundary condition implementation. </div></div>
-<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00233_html_ad9d2689e44a644319a6cc72249c68e49"><div class="ttname"><a href="a00233.html#ad9d2689e44a644319a6cc72249c68e49">BCDirichletU</a></div><div class="ttdeci">int BCDirichletU(void *, void *, int, int, int *, int, double *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00275_source.html#l00013">BCDirichlet.c:13</a></div></div>
-<div class="ttc" id="a00193_html_a6aa65431c39a8d8177f35c338ddb7a0e"><div class="ttname"><a href="a00193.html#a6aa65431c39a8d8177f35c338ddb7a0e">DomainBoundary::DirichletValue</a></div><div class="ttdeci">double * DirichletValue</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00087">boundaryconditions.h:87</a></div></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00190.html">bandedmatrix.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="a00275.html#a75f8c3de645719ac147311358c3bff73">   10</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00190.html#a7481e8970799d48bf61489d2c8664291">BandedMatrixDestroy</a>(<span class="keywordtype">void</span> *A )</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <a class="code" href="a00190.html#a00658">BandedMatrix</a> *B = (<a class="code" href="a00190.html#a00658">BandedMatrix</a>*) A;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordflow">if</span> (B-&gt;<a class="code" href="a00190.html#a6db648ed09c7736e77e2c79f2a4514fd">ncol</a>) free(B-&gt;<a class="code" href="a00190.html#a6db648ed09c7736e77e2c79f2a4514fd">ncol</a>);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keywordflow">if</span> (B-&gt;<a class="code" href="a00190.html#a0a58ae803aa8c0ef7cf86577919f205e">nrow</a>) free(B-&gt;<a class="code" href="a00190.html#a0a58ae803aa8c0ef7cf86577919f205e">nrow</a>);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordflow">if</span> (B-&gt;<a class="code" href="a00190.html#a23436a7a2b44939627b59df11be7ad75">data</a>) free(B-&gt;<a class="code" href="a00190.html#a23436a7a2b44939627b59df11be7ad75">data</a>);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+<div class="ttc" id="a00190_html_a7481e8970799d48bf61489d2c8664291"><div class="ttname"><a href="a00190.html#a7481e8970799d48bf61489d2c8664291">BandedMatrixDestroy</a></div><div class="ttdeci">int BandedMatrixDestroy(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00275_source.html#l00010">BandedMatrixDestroy.c:10</a></div></div>
+<div class="ttc" id="a00190_html_a23436a7a2b44939627b59df11be7ad75"><div class="ttname"><a href="a00190.html#a23436a7a2b44939627b59df11be7ad75">BandedMatrix::data</a></div><div class="ttdeci">double * data</div><div class="ttdef"><b>Definition:</b> <a href="a00190_source.html#l00024">bandedmatrix.h:24</a></div></div>
+<div class="ttc" id="a00190_html_a6db648ed09c7736e77e2c79f2a4514fd"><div class="ttname"><a href="a00190.html#a6db648ed09c7736e77e2c79f2a4514fd">BandedMatrix::ncol</a></div><div class="ttdeci">int * ncol</div><div class="ttdef"><b>Definition:</b> <a href="a00190_source.html#l00022">bandedmatrix.h:22</a></div></div>
+<div class="ttc" id="a00190_html_a00658"><div class="ttname"><a href="a00190.html#a00658">BandedMatrix</a></div><div class="ttdoc">Structure for defining a banded block matrix. </div><div class="ttdef"><b>Definition:</b> <a href="a00190_source.html#l00018">bandedmatrix.h:18</a></div></div>
+<div class="ttc" id="a00190_html"><div class="ttname"><a href="a00190.html">bandedmatrix.h</a></div><div class="ttdoc">Data structure and some function declarations for banded block matrices. </div></div>
+<div class="ttc" id="a00190_html_a0a58ae803aa8c0ef7cf86577919f205e"><div class="ttname"><a href="a00190.html#a0a58ae803aa8c0ef7cf86577919f205e">BandedMatrix::nrow</a></div><div class="ttdeci">int * nrow</div><div class="ttdef"><b>Definition:</b> <a href="a00190_source.html#l00023">bandedmatrix.h:23</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

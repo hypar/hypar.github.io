@@ -1,5 +1,5 @@
 var a00432 =
 [
-    [ "Euler1DJacobian", "a00432.html#aec7af469f3b19d7363aa13ea7fe93b9d", null ],
-    [ "Euler1DStiffJacobian", "a00432.html#ae4ddd8d22df671fec8ecde36005e64a6", null ]
+    [ "Euler1DLeftEigenvectors", "a00432.html#a1815fa0e825f5544526165566c75a619", null ],
+    [ "Euler1DRightEigenvectors", "a00432.html#af93bb74bc4643347f59e3bdb722e864b", null ]
 ];

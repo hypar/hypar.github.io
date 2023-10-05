@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/TimeIntegration/TimeCleanup.c File Reference</title>
+<title>HyPar: src/SparseGrids/SparseGridsInitialize.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -111,138 +111,24 @@ $(document).ready(function(){initNavTree('a00623.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">TimeCleanup.c File Reference</div>  </div>
+<div class="title">SparseGridsInitialize.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Clean up time integration.  
+<p>Initialize all the stuff needed for a sparse grids simulation.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
-<code>#include &lt;stdlib.h&gt;</code><br/>
-<code>#include &lt;string.h&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00230_source.html">arrayfunctions_gpu.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00218_source.html">simulation_object.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00265_source.html">timeintegration.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="a00233_source.html">basic.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00231_source.html">arrayfunctions.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00267_source.html">sparse_grids_simulation.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00623_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa33c19ea987d175abeab4d70747fc4a5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00623.html#aa33c19ea987d175abeab4d70747fc4a5">TimeCleanup</a> (void *ts)</td></tr>
-<tr class="separator:aa33c19ea987d175abeab4d70747fc4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Clean up time integration. </p>
-<dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
+<div class="textblock"><p>Initialize all the stuff needed for a sparse grids simulation. </p>
+<dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh, John Loffeld, Lee Ricketson </dd></dl>
 
-<p>Definition in file <a class="el" href="a00623_source.html">TimeCleanup.c</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aa33c19ea987d175abeab4d70747fc4a5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int TimeCleanup </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>ts</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Clean up all allocations related to time integration </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ts</td><td>Object of type <a class="el" href="a00221.html" title="Structure of variables/parameters and function pointers for time integration. ">TimeIntegration</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="a00623_source.html#l00018">18</a> of file <a class="el" href="a00623_source.html">TimeCleanup.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <a class="code" href="a00221.html">TimeIntegration</a>* TS = (<a class="code" href="a00221.html">TimeIntegration</a>*) ts;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="a00218.html#a00667">SimulationObject</a>* sim = (<a class="code" href="a00218.html#a00667">SimulationObject</a>*) TS-&gt;<a class="code" href="a00221.html#addc618f703eab837da44852e69399e04">simulation</a>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">int</span> ns, nsims = TS-&gt;<a class="code" href="a00221.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="comment">/* close files opened for writing */</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  if (!TS-&gt;<a class="code" href="a00221.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>) <span class="keywordflow">if</span> (sim[0].solver.write_residual) fclose((FILE*)TS-&gt;<a class="code" href="a00221.html#aadc7e3b297d31fd0f7f791fd24e5c810">ResidualFile</a>);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#if defined(HAVE_CUDA)</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (sim[0].solver.use_gpu) {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">if</span> (!strcmp(sim[0].solver.time_scheme,<a class="code" href="a00197.html#a50d4bf1e7e4825cc062fca99a770e5ce">_RK_</a>)) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;      <a class="code" href="a00230.html#a480c2621b48a7323bc59581a5f6a58da">gpuFree</a>(TS-&gt;<a class="code" href="a00221.html#ab7487801c6b26c42b4b5ca7e6c882cd2">gpu_U</a>);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;      <a class="code" href="a00230.html#a480c2621b48a7323bc59581a5f6a58da">gpuFree</a>(TS-&gt;<a class="code" href="a00221.html#a648149fcc754664772c183c3307b12cb">gpu_Udot</a>);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;      <a class="code" href="a00230.html#a480c2621b48a7323bc59581a5f6a58da">gpuFree</a>(TS-&gt;<a class="code" href="a00221.html#a49c41416fcbb7a577abf65509e067129">gpu_BoundaryFlux</a>);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor"></span>    <span class="keywordflow">if</span> (!strcmp(sim[0].solver.time_scheme,<a class="code" href="a00197.html#a50d4bf1e7e4825cc062fca99a770e5ce">_RK_</a>)) {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      <a class="code" href="a00197.html#a00652">ExplicitRKParameters</a>  *params = (<a class="code" href="a00197.html#a00652">ExplicitRKParameters</a>*)  sim[0].solver.msti;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      for (i=0; i&lt;params-&gt;<a class="code" href="a00197.html#ae11575eb42a4ab3934cf6278c93010e1">nstages</a>; i++) free(TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[i]);            free(TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;params-&gt;<a class="code" href="a00197.html#ae11575eb42a4ab3934cf6278c93010e1">nstages</a>; i++) free(TS-&gt;<a class="code" href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">Udot</a>[i]);         free(TS-&gt;<a class="code" href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">Udot</a>);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;params-&gt;<a class="code" href="a00197.html#ae11575eb42a4ab3934cf6278c93010e1">nstages</a>; i++) free(TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[i]); free(TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(sim[0].solver.time_scheme,<a class="code" href="a00197.html#af9b1e641532cff8859c5c5a8377f5feb">_FORWARD_EULER_</a>)) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      <span class="keywordtype">int</span> nstages = 1, i;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;nstages; i++) free(TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[i]); free(TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(sim[0].solver.time_scheme,<a class="code" href="a00197.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      <a class="code" href="a00197.html#a00659">GLMGEEParameters</a>  *params = (<a class="code" href="a00197.html#a00659">GLMGEEParameters</a>*)  sim[0].solver.msti;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      for (i=0; i&lt;2*params-&gt;<a class="code" href="a00197.html#acab531abaa74a7e664e3986f2522b33a">r</a>-1  ; i++) free(TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[i]);            free(TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;params-&gt;<a class="code" href="a00197.html#ae11575eb42a4ab3934cf6278c93010e1">nstages</a>; i++) free(TS-&gt;<a class="code" href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">Udot</a>[i]);         free(TS-&gt;<a class="code" href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">Udot</a>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;params-&gt;<a class="code" href="a00197.html#ae11575eb42a4ab3934cf6278c93010e1">nstages</a>; i++) free(TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[i]); free(TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#if defined(HAVE_CUDA)</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor"></span>  }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="comment">/* deallocate arrays */</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  free(TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  free(TS-&gt;<a class="code" href="a00221.html#aaf135d2fee365f4aedd983fe509d19d2">u_sizes</a>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  free(TS-&gt;<a class="code" href="a00221.html#ad41eb4556b91cef16ce5bf056d2e5b71">bf_offsets</a>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  free(TS-&gt;<a class="code" href="a00221.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">bf_sizes</a>);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  free(TS-&gt;<a class="code" href="a00221.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>  );</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  free(TS-&gt;<a class="code" href="a00221.html#ade4650485fe35fd3e12fea272fc80209">rhs</a>);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a1d36fea92472416e32e039b86dea0b18">time_integrator</a> = NULL;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="ttc" id="a00221_html_ade4650485fe35fd3e12fea272fc80209"><div class="ttname"><a href="a00221.html#ade4650485fe35fd3e12fea272fc80209">TimeIntegration::rhs</a></div><div class="ttdeci">double * rhs</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00070">timeintegration_struct.h:70</a></div></div>
-<div class="ttc" id="a00218_html_a00667"><div class="ttname"><a href="a00218.html#a00667">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00023">simulation_object.h:23</a></div></div>
-<div class="ttc" id="a00197_html_af9b1e641532cff8859c5c5a8377f5feb"><div class="ttname"><a href="a00197.html#af9b1e641532cff8859c5c5a8377f5feb">_FORWARD_EULER_</a></div><div class="ttdeci">#define _FORWARD_EULER_</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00014">timeintegration_struct.h:14</a></div></div>
-<div class="ttc" id="a00197_html_aad9619c099daeb3e6b1b7ef9e03e38d8"><div class="ttname"><a href="a00197.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a></div><div class="ttdeci">#define _GLM_GEE_</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00018">timeintegration_struct.h:18</a></div></div>
-<div class="ttc" id="a00197_html_ae11575eb42a4ab3934cf6278c93010e1"><div class="ttname"><a href="a00197.html#ae11575eb42a4ab3934cf6278c93010e1">ExplicitRKParameters::nstages</a></div><div class="ttdeci">int nstages</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00178">timeintegration_struct.h:178</a></div></div>
-<div class="ttc" id="a00221_html"><div class="ttname"><a href="a00221.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00029">timeintegration_struct.h:29</a></div></div>
-<div class="ttc" id="a00221_html_ab7487801c6b26c42b4b5ca7e6c882cd2"><div class="ttname"><a href="a00221.html#ab7487801c6b26c42b4b5ca7e6c882cd2">TimeIntegration::gpu_U</a></div><div class="ttdeci">double * gpu_U</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00110">timeintegration_struct.h:110</a></div></div>
-<div class="ttc" id="a00197_html_a50d4bf1e7e4825cc062fca99a770e5ce"><div class="ttname"><a href="a00197.html#a50d4bf1e7e4825cc062fca99a770e5ce">_RK_</a></div><div class="ttdeci">#define _RK_</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00016">timeintegration_struct.h:16</a></div></div>
-<div class="ttc" id="a00230_html_a480c2621b48a7323bc59581a5f6a58da"><div class="ttname"><a href="a00230.html#a480c2621b48a7323bc59581a5f6a58da">gpuFree</a></div><div class="ttdeci">void gpuFree(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00270_source.html#l00140">ArrayImplementations_GPU.cu:140</a></div></div>
-<div class="ttc" id="a00221_html_a3d433839a0290dacbbd609e1f60b0b1d"><div class="ttname"><a href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">TimeIntegration::Udot</a></div><div class="ttdeci">double ** Udot</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00081">timeintegration_struct.h:81</a></div></div>
-<div class="ttc" id="a00221_html_a49c41416fcbb7a577abf65509e067129"><div class="ttname"><a href="a00221.html#a49c41416fcbb7a577abf65509e067129">TimeIntegration::gpu_BoundaryFlux</a></div><div class="ttdeci">double * gpu_BoundaryFlux</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00115">timeintegration_struct.h:115</a></div></div>
-<div class="ttc" id="a00221_html_a0176063b27790e17e07c9fa1b3fabdb3"><div class="ttname"><a href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">TimeIntegration::BoundaryFlux</a></div><div class="ttdeci">double ** BoundaryFlux</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00090">timeintegration_struct.h:90</a></div></div>
-<div class="ttc" id="a00221_html_ad41eb4556b91cef16ce5bf056d2e5b71"><div class="ttname"><a href="a00221.html#ad41eb4556b91cef16ce5bf056d2e5b71">TimeIntegration::bf_offsets</a></div><div class="ttdeci">int * bf_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00061">timeintegration_struct.h:61</a></div></div>
-<div class="ttc" id="a00221_html_ae21dee7e1deaf4ff3024c1476230d3b1"><div class="ttname"><a href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">TimeIntegration::U</a></div><div class="ttdeci">double ** U</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00079">timeintegration_struct.h:79</a></div></div>
-<div class="ttc" id="a00221_html_aed62497ac51211784e9bfa2608cc7413"><div class="ttname"><a href="a00221.html#aed62497ac51211784e9bfa2608cc7413">TimeIntegration::u_offsets</a></div><div class="ttdeci">long * u_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00054">timeintegration_struct.h:54</a></div></div>
-<div class="ttc" id="a00197_html_acab531abaa74a7e664e3986f2522b33a"><div class="ttname"><a href="a00197.html#acab531abaa74a7e664e3986f2522b33a">GLMGEEParameters::r</a></div><div class="ttdeci">int r</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00268">timeintegration_struct.h:268</a></div></div>
-<div class="ttc" id="a00202_html_a1d36fea92472416e32e039b86dea0b18"><div class="ttname"><a href="a00202.html#a1d36fea92472416e32e039b86dea0b18">HyPar::time_integrator</a></div><div class="ttdeci">void * time_integrator</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00165">hypar.h:165</a></div></div>
-<div class="ttc" id="a00197_html_a00652"><div class="ttname"><a href="a00197.html#a00652">ExplicitRKParameters</a></div><div class="ttdoc">Structure containing the parameters for an explicit Runge-Kutta method. </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00177">timeintegration_struct.h:177</a></div></div>
-<div class="ttc" id="a00197_html_a00659"><div class="ttname"><a href="a00197.html#a00659">GLMGEEParameters</a></div><div class="ttdoc">Structure containing the parameters for the General Linear Methods with Global Error Estimators (GLM-...</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00267">timeintegration_struct.h:267</a></div></div>
-<div class="ttc" id="a00221_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00221.html#a6cfd95afd0afebd625b889fb6e58371c">TimeIntegration::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00084">timeintegration_struct.h:84</a></div></div>
-<div class="ttc" id="a00221_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00221.html#a9a0e87291e0e8b9c1445e5482e814c92">TimeIntegration::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00050">timeintegration_struct.h:50</a></div></div>
-<div class="ttc" id="a00221_html_aadc7e3b297d31fd0f7f791fd24e5c810"><div class="ttname"><a href="a00221.html#aadc7e3b297d31fd0f7f791fd24e5c810">TimeIntegration::ResidualFile</a></div><div class="ttdeci">void * ResidualFile</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00093">timeintegration_struct.h:93</a></div></div>
-<div class="ttc" id="a00221_html_a648149fcc754664772c183c3307b12cb"><div class="ttname"><a href="a00221.html#a648149fcc754664772c183c3307b12cb">TimeIntegration::gpu_Udot</a></div><div class="ttdeci">double * gpu_Udot</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00112">timeintegration_struct.h:112</a></div></div>
-<div class="ttc" id="a00221_html_addc618f703eab837da44852e69399e04"><div class="ttname"><a href="a00221.html#addc618f703eab837da44852e69399e04">TimeIntegration::simulation</a></div><div class="ttdeci">void * simulation</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00048">timeintegration_struct.h:48</a></div></div>
-<div class="ttc" id="a00221_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00221.html#a3b6b999a764f1e2ea94bb5f28c7a558c">TimeIntegration::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00067">timeintegration_struct.h:67</a></div></div>
-<div class="ttc" id="a00221_html_aaf135d2fee365f4aedd983fe509d19d2"><div class="ttname"><a href="a00221.html#aaf135d2fee365f4aedd983fe509d19d2">TimeIntegration::u_sizes</a></div><div class="ttdeci">long * u_sizes</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00057">timeintegration_struct.h:57</a></div></div>
-<div class="ttc" id="a00218_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00218.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00026">simulation_object.h:26</a></div></div>
-<div class="ttc" id="a00221_html_a5b5bc95bd2b8eee821f73cb8427e9c4c"><div class="ttname"><a href="a00221.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">TimeIntegration::bf_sizes</a></div><div class="ttdeci">int * bf_sizes</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00064">timeintegration_struct.h:64</a></div></div>
-</div><!-- fragment -->
-</div>
-</div>
-</div><!-- contents -->
+<p>Definition in file <a class="el" href="a00623_source.html">SparseGridsInitialize.cpp</a>.</p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->
 <script type="text/javascript">

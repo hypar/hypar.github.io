@@ -1,5 +1,4 @@
 var a00566 =
 [
-    [ "ShallowWater2DLeftEigenvectors", "a00566.html#aedb92b59af4004f2a2905d741bffd00a", null ],
-    [ "ShallowWater2DRightEigenvectors", "a00566.html#a3a6704cb4b8f1724bc084eaa938c5308", null ]
+    [ "ShallowWater1DTopography", "a00566.html#abc731e6d726974de11e0ebe7aea168bb", null ]
 ];

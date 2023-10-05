@@ -1,5 +1,5 @@
 var a00589 =
 [
-    [ "_MINIMUM_GHOSTS_", "a00589.html#ab2278b4768059f198821dbf4d1a80389", null ],
-    [ "SecondDerivativeSecondOrderCentral", "a00589.html#a84c8a8f68736a8644c442f8c27628445", null ]
+    [ "NPY_NO_DEPRECATED_API", "a00589.html#ab6e6ee86736f9ebb56e74ae21bf3ff8a", null ],
+    [ "VlasovPlotSpatialField", "a00589.html#ac90c638f2fda31d350d5fe1feeb9031f", null ]
 ];

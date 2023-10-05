@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: 2D Navier-Stokes Equations -  Lid-Driven Square Cavity</title>
+<title>HyPar: 3D Navier-Stokes - Inviscid Shock-Cylinder Interaction (Time-Windowed DMD)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,394 +106,430 @@ $(document).ready(function(){initNavTree('a00168.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">2D Navier-Stokes Equations - Lid-Driven Square Cavity </div>  </div>
+<div class="title">3D Navier-Stokes - Inviscid Shock-Cylinder Interaction (Time-Windowed DMD) </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Location: <b>hypar/Examples/2D/NavierStokes2D/LidDrivenCavity_PETSc_Implicit</b> (This directory contains all the input files needed to run this case.)</p>
-<p>Governing equations: 2D Navier-Stokes Equations (<a class="el" href="a00207.html" title="2D Navier Stokes equations (compressible flows) ">navierstokes2d.h</a>)</p>
-<p>Reference:</p>
-<ul>
-<li>Erturk, E., Corke, T.C., and Gokcol, C., "Numerical Solutions of
-  2-D Steady Incompressible Driven Cavity Flow at High Reynolds Numbers", International Journal for Numerical Methods in Fluids, 48, 2005, <a href="http://dx.doi.org/10.1002/fld.953">http://dx.doi.org/10.1002/fld.953</a>.</li>
-<li>Ghia, U., Ghia, K.N., Shin, C.T., "High-Re Solutions for Incompressible
-  Flow using the Navier-Stokes Equations and a Multigrid Method", Journal of Computational Physics, 48, 1982, <a href="http://dx.doi.org/10.1016/0021-9991(82)90058-4">http://dx.doi.org/10.1016/0021-9991(82)90058-4</a>.</li>
-</ul>
-<p>Note that this is an incompressible problem being solved here using the compressible Navier-Stokes equations in terms of non-dimensional flow variables. The density and pressure are taken such that the speed of sound is 1.0, and the flow velocities specified in the initial and boundary conditions correspond to a characteristic Mach number of 0.1 (thus, they are 0.1 times the values in the above reference).</p>
-<p>The problem is solved here using <b>implicit-explicit (IMEX)</b> time integration, but with the entire RHS on the implicit side (by setting the <b>-ts_arkimex_fully_implicit</b> flag in PETSc inputs). So, the time integration is implicit (a 6-stage, 4-th order DIRK).</p>
-<p>Domain: \(0 \le x, y \le 1\)</p>
+<div class="textblock"><p>See <a class="el" href="a00098.html">Inviscid Shock-Cylinder Interaction</a> to familiarize yourself with this case. This example uses a DMD object that has already been trained (see <a class="el" href="a00152.html">3D Navier-Stokes - Inviscid Shock-Cylinder Interaction (Time-Windowed DMD)</a>).</p>
+<p>Location: <b>hypar/Examples/3D/NavierStokes3D/2D_Shock_Cylinder_Interaction_libROM_DMD_Predict</b> </p>
+<p>Governing equations: 3D Navier-Stokes Equations (<a class="el" href="a00210.html" title="3D Navier Stokes equations (compressible flows) ">navierstokes3d.h</a> - by default <a class="el" href="a00210.html#a3b92a4b98cedf64473b3c13dfa7674b4">NavierStokes3D::Re</a> is set to <b>-1</b> which makes the code skip the parabolic terms, i.e., the 3D Euler equations are solved.)</p>
+<p>Reduced Order Modeling: This example predicts the solution from a trained DMD object. The code does <b>not</b> solve the PDE by discretizing in space and integrating in time.</p>
+<p>Domain: \(-2.5 \le x \le 7.5\), \(-5 \le y \le 5\) <b>Note:</b> This is a 2D flow simulated using a 3-dimensional setup by taking the length of the domain along <em>z</em> to be very small and with only 3 grid points (the domain size along <em>z</em> <b>must</b> <b>be</b> smaller than the cylinder length).</p>
+<p>Geometry: A cylinder of radius 1.0 centered at (0,0) (<b>hypar/Examples/STLGeometries/cylinder.stl</b>)</p>
 <p>Boundary conditions:</p>
 <ul>
-<li>No-slip wall BC on \(x=0,1, 0 \le y \le 1\) (<a class="el" href="a00233.html#affb6a9c452f92435e738bd59b9c98935">_NOSLIP_WALL_</a> with 0 wall velocity).</li>
-<li>No-slip wall BC on \(y=0, 0 \le x \le 1\) (<a class="el" href="a00233.html#affb6a9c452f92435e738bd59b9c98935">_NOSLIP_WALL_</a> with 0 wall velocity).</li>
-<li>Moving no-slip wall BC on \(y=1, 0 \le x \le 1\) (<a class="el" href="a00233.html#affb6a9c452f92435e738bd59b9c98935">_NOSLIP_WALL_</a> with specified wall velocity of 0.1 in the x-direction).</li>
+<li>xmin: Subsonic inflow <a class="el" href="a00235.html#adba2024137894c96339af50efabe3771">_SUBSONIC_INFLOW_</a> (with post-shock flow conditions)</li>
+<li>xmax: Supersonic inflow <a class="el" href="a00235.html#a5a9ba63c6c48e0831e379e03a72c0047">_SUPERSONIC_OUTFLOW_</a> (with pre-shock flow conditions)</li>
+<li>ymin and ymax: Slip walls <a class="el" href="a00235.html#af3a9f3ba15bc914ed0a88295aee147e8">_SLIP_WALL_</a></li>
+<li>zmin and zmax: Periodic <a class="el" href="a00235.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a> (to simulate a 2D flow in the x-y plane)</li>
+<li>The immersed body wall is specified as adiabatic (<a class="el" href="a00210.html#afe512f0459244953fa602f9bbe841805">_IB_ADIABATIC_</a>); (this is the default).</li>
 </ul>
-<p>Initial solution: \(\rho=1, p=1/\gamma\). The velocities are specified according to the references above, but scaled by a factor of 0.1 to ensure that the characteristic Mach number is 0.1.</p>
+<p>Reference:</p>
+<ul>
+<li>O. Boiron, G. Chiavassa, R. Donat, A high-resolution penalization method for large Mach number flows in the presence of obstacles, Computers &amp; Fluids, 38 (2009), pp. 703-714, Section 5.1</li>
+</ul>
+<p>Initial solution: see reference</p>
 <p>Other parameters:</p>
 <ul>
-<li>\(\gamma = 1.4\) (<a class="el" href="a00207.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes2D::gamma</a>)</li>
-<li>\(Re = \frac {\rho u L } {\mu} = 3200\) (Reynolds number) (<a class="el" href="a00207.html#a3b92a4b98cedf64473b3c13dfa7674b4">NavierStokes2D::Re</a>), where \(L=1\) is the cavity length and width.</li>
-<li>\(Pr = 0.72\) (Prandtl number) (<a class="el" href="a00207.html#af0f6e03342b9eb912e25f94ce0249a2c">NavierStokes2D::Pr</a>)</li>
-<li>\(M_\infty = 0.1\) (characteristic Mach number) (<a class="el" href="a00207.html#aa5f774fe7b4f69be5e085f1988ef2a6d">NavierStokes2D::Minf</a>)</li>
+<li>Specific heat ratio \(\gamma = 1.4\) (<a class="el" href="a00210.html#a72f9e01745b3a8203067ab84aefc9aea">NavierStokes3D::gamma</a>)</li>
 </ul>
-<p><b>Note:</b> Pressure is taken as \(1/\gamma\) in the above so that the freestream speed of sound is 1.</p>
-<p>Numerical method:</p>
+<p>Reduced Order Modeling:</p>
 <ul>
-<li>Spatial discretization (hyperbolic): 5th order upwind (<a class="el" href="a00191.html#aea7c973ffe0c37bca0703c1bf6175aaa" title="5th order upwind reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderUpwind()</a>)</li>
-<li>Spatial discretization (parabolic) : 4th order (<a class="el" href="a00237.html#a08c28e6bc4493172df7b7867e1f3d815">FirstDerivativeFourthOrderCentral()</a>) non-conservative 2-stage (<a class="el" href="a00317.html#a153eb91ec9b118a7b8c971facbc8d920">ParabolicFunctionNC2Stage()</a>)</li>
-<li>Time integration: PETSc (<a class="el" href="a00260.html#a1a054e1b92ee41a9e38926d18c6628bf" title="Integrate in time with PETSc. ">SolvePETSc()</a>)<ul>
-<li>Method Class: <b>Additive Runge-Kutta method</b> (fully-implicit mode) (TSARKIMEX - <a href="https://petsc.org/release/docs/manualpages/TS/TSARKIMEX.html">https://petsc.org/release/docs/manualpages/TS/TSARKIMEX.html</a>)</li>
-<li>Specific method: implicit part of <b>Kennedy-Carpenter ARK4</b> (TSARKIMEX4 - <a href="https://petsc.org/release/docs/manualpages/TS/TSARKIMEX4.html">https://petsc.org/release/docs/manualpages/TS/TSARKIMEX4.html</a>)</li>
+<li>Mode: predict (<a class="el" href="a00205.html#af323868d7651bdfd2c34ea076cfaceb7">libROMInterface::m_mode</a>, <a class="el" href="a00243.html#a3035c57e07a432c8274e63259a0d506d">_ROM_MODE_PREDICT_</a>)</li>
+<li>Component Mode: monolithic (<a class="el" href="a00205.html#a3686e11d6075a6fd586dca42ab16b214">libROMInterface::m_comp_mode</a>, <a class="el" href="a00243.html#acdb79f8c89bd3e1e867e510b5546fad1">_ROM_COMP_MODE_MONOLITHIC_</a>)</li>
+<li>Type: Dynamic Mode Decomposition (DMD) with time windowing (<a class="el" href="a00205.html#ac18cb5a4597cfb6fb48127fc2156a48d">libROMInterface::m_rom_type</a>)</li>
 </ul>
-</li>
+<h2>Note: </h2>
+<p>In this mode, <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> will run just like an usual PDE simulation, except that it will swap out the numerical spatial discretization and time integration with the ROM-based prediction. The input files and output files will be the same as a regular simulation with the following comments:</p>
+<ul>
+<li>Numerical method inputs are ignored (eg. those that specify spatial discretization and time integration methods).</li>
+<li>In solver.inp, the values for dt, n_iter, and file_op_iter is used only to compute the simulation times at which to compute and write the solution. The time step size, dt, need not respect any CFL criterion.</li>
+<li><a class="el" href="a00204.html#ac92c34fe456d92c694eacd2231f5a7b1">HyPar::ConservationCheck</a> is set to "no" since it is not possible to compute conservation loss for a general domain (because boundary fluxes are not being computed).</li>
 </ul>
 <h2>Input files required: </h2>
-<p><b>.petscrc</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor"># See PETSc documentation for more details (https://petsc.org/release/overview/).</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"># Note that if the following are specified in this file, the corresponding inputs in solver.inp are *ignored*.</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"># + &quot;-ts_dt&quot; (time step size): ignores &quot;dt&quot; in solver.inp</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"># + &quot;-ts_max_steps&quot; (maximum number of time iterations): ignores &quot;n_iter&quot; in solver.inp</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"># + &quot;-ts_max_time&quot; (final simulation time): ignores &quot;n_iter&quot; X &quot;dt&quot; in solver.inp</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"># If these are not specified here, then the values in solver.inp are used.</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"># Use PETSc time-integration</span></div>
-<div class="line"><span class="preprocessor"></span>-use-petscts</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># Time integration scheme type - ARK</span></div>
-<div class="line"><span class="preprocessor"></span>-ts_type arkimex</div>
-<div class="line">-ts_arkimex_type 4</div>
-<div class="line">-ts_arkimex_fully_implicit</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># no time-step adaptivity</span></div>
-<div class="line"><span class="preprocessor"></span>-ts_adapt_type basic</div>
-<div class="line">-ts_max_snes_failures -1</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># Nonlinear solver (SNES) type</span></div>
-<div class="line"><span class="preprocessor"></span>-snes_type newtonls</div>
-<div class="line"><span class="preprocessor"># Set relative tolerance</span></div>
-<div class="line"><span class="preprocessor"></span>-snes_rtol 1e-4</div>
-<div class="line"><span class="preprocessor"># Set absolute tolerance</span></div>
-<div class="line"><span class="preprocessor"></span>-snes_atol 1e-4</div>
-<div class="line"><span class="preprocessor"># Set step size tolerance</span></div>
-<div class="line"><span class="preprocessor"></span>-snes_stol 1e-16</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># Linear solver (KSP) type</span></div>
-<div class="line"><span class="preprocessor"></span>-ksp_type gmres</div>
-<div class="line"><span class="preprocessor"># Set relative tolerance</span></div>
-<div class="line"><span class="preprocessor"></span>-ksp_rtol 1e-4</div>
-<div class="line"><span class="preprocessor"># Set absolute tolerance</span></div>
-<div class="line"><span class="preprocessor"></span>-ksp_atol 1e-4</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># use a preconditioner for solving the system</span></div>
-<div class="line"><span class="preprocessor"></span>-with_pc</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># preconditioner type - SOR</span></div>
-<div class="line"><span class="preprocessor"></span>-pc_type sor</div>
-<div class="line">-pc_sor_omega 1.0</div>
-<div class="line">-pc_sor_its 5</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># apply right preconditioner</span></div>
-<div class="line"><span class="preprocessor"></span>-ksp_pc_side RIGHT</div>
+<p><b> DMD Object(s) </b>:<br/>
+The trained DMD object(s) must be located in the directory specified in <b>librom.inp</b> as <em>dmd_dirname</em> (<a class="el" href="a00194.html#a4a2342bcda8d44940111704f8423f38f">DMDROMObject::m_dirname</a>). For this example, they were generated using <a class="el" href="a00152.html">3D Navier-Stokes - Inviscid Shock-Cylinder Interaction (Time-Windowed DMD)</a>.</p>
+<p><b>librom.inp</b> </p>
+<div class="fragment"><div class="line">begin</div>
+<div class="line">  mode        predict</div>
+<div class="line">  dmd_dirname DMD</div>
+<div class="line">end</div>
 </div><!-- fragment --><p><b>solver.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
-<div class="line">  ndims               2</div>
-<div class="line">  nvars               4</div>
-<div class="line">  size                128 128</div>
-<div class="line">  iproc               4 4</div>
+<div class="line">  ndims               3</div>
+<div class="line">  nvars               5</div>
+<div class="line">  size                256 256 3</div>
+<div class="line">  iproc               4 4 1</div>
 <div class="line">  ghost               3</div>
-<div class="line">  n_iter              25000</div>
-<div class="line">  time_scheme         rk</div>
-<div class="line">  time_scheme_type    44</div>
-<div class="line">  hyp_space_scheme    upw5</div>
-<div class="line">  hyp_flux_split      no</div>
-<div class="line">  hyp_interp_type     components</div>
-<div class="line">  par_space_type      nonconservative-2stage</div>
-<div class="line">  par_space_scheme    4</div>
-<div class="line">  dt                  0.01</div>
-<div class="line">  screen_op_iter      10</div>
-<div class="line">  file_op_iter        100</div>
-<div class="line">  input_mode          serial</div>
+<div class="line">  n_iter              10</div>
+<div class="line">  dt                  0.2</div>
+<div class="line">  file_op_iter        1</div>
 <div class="line">  ip_file_type        binary</div>
-<div class="line">  output_mode         serial</div>
 <div class="line">  op_file_format      binary</div>
-<div class="line">  op_overwrite        yes</div>
-<div class="line">  model               navierstokes2d</div>
+<div class="line">  op_overwrite        no</div>
+<div class="line">  model               navierstokes3d</div>
+<div class="line">  immersed_body       cylinder.stl</div>
 <div class="line">end</div>
 </div><!-- fragment --><p><b>boundary.inp</b> </p>
-<div class="fragment"><div class="line">4</div>
-<div class="line">noslip-wall   0     1     0     0      0   1.0</div>
-<div class="line">0.0 0.0</div>
-<div class="line">noslip-wall   0    -1     0     0      0   1.0</div>
-<div class="line">0.0 0.0</div>
-<div class="line">noslip-wall   1     1     0   1.0      0      0</div>
-<div class="line">0.0 0.0</div>
-<div class="line">noslip-wall   1    -1     0   1.0      0      0</div>
-<div class="line">0.1 0.0</div>
-</div><!-- fragment --><p><b>physics.inp</b> (<b>Note:</b> this file specifies \(Re = 3200\), change <em>Re</em> here for other Reynolds numbers.) </p>
+<div class="fragment"><div class="line">6</div>
+<div class="line"></div>
+<div class="line">subsonic-inflow       0     1        0       0       -9999.0    9999.0    -9999.0    9999.0</div>
+<div class="line">3.8571428571428572 2.6293687924887181 0.0 0.0</div>
+<div class="line"></div>
+<div class="line">supersonic-inflow     0    -1        0       0       -9999.0    9999.0    -9999.0    9999.0</div>
+<div class="line">1.0 0.0 0.0 0.0 1.0</div>
+<div class="line"></div>
+<div class="line">slip-wall             1     1  -9999.0  9999.0             0         0    -9999.0    9999.0</div>
+<div class="line">slip-wall             1    -1  -9999.0  9999.0             0         0    -9999.0    9999.0</div>
+<div class="line"></div>
+<div class="line">periodic              2     1  -9999.0  9999.0       -9999.0    9999.0          0         0</div>
+<div class="line">periodic              2    -1  -9999.0  9999.0       -9999.0    9999.0          0         0</div>
+</div><!-- fragment --><p><b>physics.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
 <div class="line">  gamma     1.4</div>
 <div class="line">  upwinding roe</div>
-<div class="line">  Pr        0.72</div>
-<div class="line">  Minf      0.1</div>
-<div class="line">  Re        3200</div>
 <div class="line">end</div>
-</div><!-- fragment --><p>To generate <b>initial.inp</b> (initial solution), compile and run the following code in the run directory. </p>
+</div><!-- fragment --><p><b>cylinder.stl</b> : the filename "cylinder.stl" <b>must</b> match the input for <em>immersed_body</em> in <em>solver.inp</em>.<br/>
+Located at <b>hypar/Examples/STLGeometries/cylinder.stl</b> </p>
+<p>To generate <b>initial.inp</b> (initial solution), compile and run the following code in the run directory. </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00375.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordtype">double</span> gamma  = 1.4;</div>
-<div class="line">  </div>
-<div class="line">    <span class="keywordtype">int</span>   NI,NJ,ndims;</div>
-<div class="line">  <span class="keywordtype">char</span>  ip_file_type[50]; strcpy(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>);</div>
 <div class="line"></div>
-<div class="line">  FILE *in;</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00380.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>()</div>
+<div class="line">{</div>
+<div class="line">  </div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">double</span>  gamma  = 1.4;</div>
+<div class="line">    <span class="keywordtype">int</span>           NI,NJ,NK,ndims;</div>
+<div class="line">  <span class="keywordtype">char</span>          ip_file_type[50];</div>
+<div class="line">  FILE          *in;</div>
+<div class="line"></div>
+<div class="line">  strcpy(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>);</div>
+<div class="line"></div>
 <div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;solver.inp\&quot;...\n&quot;</span>);</div>
 <div class="line">  in = fopen(<span class="stringliteral">&quot;solver.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (!in) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Input file \&quot;solver.inp\&quot; not found. Default values will be used.\n&quot;</span>);</div>
+<div class="line">    printf(<span class="stringliteral">&quot;Error: Input file \&quot;solver.inp\&quot; not found.\n&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
 <div class="line">    <span class="keywordtype">char</span> word[500];</div>
 <div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)) {</div>
-<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)) {</div>
+<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
+<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
 <div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>)) {</div>
+<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>)) {</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span> )) {</div>
 <div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NI);</div>
 <div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NJ);</div>
-<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ip_file_type&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,ip_file_type);</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NK);</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ip_file_type&quot;</span>)) {</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,ip_file_type);</div>
+<div class="line">        }</div>
 <div class="line">      }</div>
-<div class="line">    } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
+<div class="line">    } <span class="keywordflow">else</span> {</div>
+<div class="line">      printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
+<div class="line">      <span class="keywordflow">return</span>(0);</div>
+<div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">  fclose(in);</div>
 <div class="line"></div>
-<div class="line">  <span class="keywordflow">if</span> (ndims != 2) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;ndims is not 2 in solver.inp. this code is to generate 2D initial conditions\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (ndims != 3) {</div>
+<div class="line">    printf(<span class="stringliteral">&quot;Error: ndims is not 3 in solver.inp.\n&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">  }</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Grid:\t\t\t%d X %d\n&quot;</span>,NI,NJ);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Grid: %3d x %3d x %3d.\n&quot;</span>,NI,NJ,NK);</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordtype">int</span> i,j;</div>
-<div class="line">    <span class="keywordtype">double</span> dx = 1.0 / ((double)NI-1);</div>
-<div class="line">    <span class="keywordtype">double</span> dy = 1.0 / ((double)NJ-1);</div>
+<div class="line">  <span class="keywordtype">double</span> Lx = 10.0; <span class="comment">/* length of domain along x */</span></div>
+<div class="line">  <span class="keywordtype">double</span> Ly = 10.0; <span class="comment">/* length of domain along y */</span></div>
 <div class="line"></div>
-<div class="line">  <span class="keywordtype">double</span> Minf = 0.1;</div>
+<div class="line">  <span class="keywordtype">double</span> xmin = -2.5; <span class="comment">/* left x-boundary */</span></div>
+<div class="line">  <span class="keywordtype">double</span> ymin = -5.0; <span class="comment">/* left y-boundary */</span></div>
 <div class="line"></div>
-<div class="line">    <span class="keywordtype">double</span> *x, *y, *u0, *u1, *u2, *u3;</div>
-<div class="line">    x   = (<span class="keywordtype">double</span>*) calloc (NI   , <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    y   = (<span class="keywordtype">double</span>*) calloc (NJ   , <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    u0  = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    u1  = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    u2  = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    u3  = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">  <span class="keywordtype">double</span> xs = -2.0; <span class="comment">/* location of initial shock */</span></div>
+<div class="line">  <span class="keywordtype">double</span> Ms = 3.0;  <span class="comment">/* shock Mach number */</span></div>
 <div class="line"></div>
+<div class="line">    <span class="keywordtype">int</span> i,j,k;</div>
+<div class="line">    <span class="keywordtype">double</span> *x, *y, *z;</div>
+<div class="line">  <span class="keywordtype">double</span> dx, dy, dz;</div>
+<div class="line"></div>
+<div class="line">    x   = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    y   = (<span class="keywordtype">double</span>*) calloc (NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    z   = (<span class="keywordtype">double</span>*) calloc (NK, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"></div>
+<div class="line">  dx = Lx / ((double)(NI-1));</div>
+<div class="line">  <span class="keywordflow">for</span> (i=0; i&lt;NI; i++) x[i] = xmin + i*dx;</div>
+<div class="line">  dy = Ly / ((double)(NJ-1));</div>
+<div class="line">  <span class="keywordflow">for</span> (j=0; j&lt;NJ; j++) y[j] = ymin + j*dy;</div>
+<div class="line">    dz = 0.5 * (dx +dy);</div>
+<div class="line">  <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++) z[k] = (k-NK/2) * dz;</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* pre-shock conditions */</span></div>
+<div class="line">  <span class="keywordtype">double</span> rho_inf  = 1.0;</div>
+<div class="line">  <span class="keywordtype">double</span> p_inf    = 1.0;</div>
+<div class="line">  <span class="keywordtype">double</span> u_inf    = 0.0; <span class="comment">//- Ms * sqrt(gamma*p_inf/rho_inf);</span></div>
+<div class="line">  <span class="keywordtype">double</span> v_inf    = 0.0;</div>
+<div class="line">  <span class="keywordtype">double</span> w_inf    = 0.0;</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* post-shock conditions */</span></div>
+<div class="line">  <span class="keywordtype">double</span> rho_ps   = rho_inf * ((gamma+1.0)*Ms*Ms) / ((gamma-1.0)*Ms*Ms+2.0);</div>
+<div class="line">  <span class="keywordtype">double</span> p_ps     = p_inf * (2.0*gamma*Ms*Ms-(gamma-1.0)) / (gamma+1.0);</div>
+<div class="line">  <span class="keywordtype">double</span> M2       = sqrt (((gamma-1.0)*Ms*Ms+2.0) / (2.0*gamma*Ms*Ms-(gamma-1.0)));</div>
+<div class="line">  <span class="keywordtype">double</span> u_ps     = - (M2 * sqrt(gamma*p_ps/rho_ps) - Ms * sqrt(gamma*p_inf/rho_inf));</div>
+<div class="line">  <span class="keywordtype">double</span> v_ps     = 0.0;</div>
+<div class="line">  <span class="keywordtype">double</span> w_ps     = 0.0;</div>
+<div class="line"></div>
+<div class="line">  printf(<span class="stringliteral">&quot;Pre-shock conditions:-\n&quot;</span>);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Density    = %1.16E\n&quot;</span>, rho_inf);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Pressure   = %1.16E\n&quot;</span>, p_inf  );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;u-velocity = %1.16E\n&quot;</span>, u_inf  );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;v-velocity = %1.16E\n&quot;</span>, v_inf  );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;w-velocity = %1.16E\n&quot;</span>, w_inf  );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Mach number= %1.16E\n&quot;</span>, Ms     );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Post-shock conditions:-\n&quot;</span>);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Density    = %1.16E\n&quot;</span>, rho_ps);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Pressure   = %1.16E\n&quot;</span>, p_ps  );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;u-velocity = %1.16E\n&quot;</span>, u_ps  );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;v-velocity = %1.16E\n&quot;</span>, v_ps  );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;w-velocity = %1.16E\n&quot;</span>, w_ps  );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Mach number= %1.16E\n&quot;</span>, M2     );</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Ratios:-\n&quot;</span>);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;p2/p1      = %1.16E\n&quot;</span>,p_ps/p_inf);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;rho2/rho1  = %1.16E\n&quot;</span>,rho_ps/rho_inf);</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordtype">double</span> *U = (<span class="keywordtype">double</span>*) calloc (5*NI*NJ*NK, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++){</div>
 <div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++){</div>
-<div class="line">        x[i] = i*dx;</div>
-<div class="line">        y[j] = j*dy;</div>
-<div class="line">      <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">      <span class="keywordtype">double</span> rho, u, v, P;</div>
-<div class="line">      rho = 1.0;</div>
-<div class="line">      P   = 1.0/gamma;</div>
-<div class="line">      u   =   Minf * (y[j]-0.5);</div>
-<div class="line">      v   = - Minf * (x[i]-0.5);</div>
-<div class="line">      u0[p] = rho;</div>
-<div class="line">      u1[p] = rho*u;</div>
-<div class="line">      u2[p] = rho*v;</div>
-<div class="line">      u3[p] = P/(gamma-1.0) + 0.5*rho*(u*u+v*v);</div>
+<div class="line">      <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++){</div>
+<div class="line">        <span class="keywordtype">int</span> p = i + NI*j + NI*NJ*k;</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordtype">double</span> rho, u, v, w, P;</div>
+<div class="line">        <span class="keywordflow">if</span>  (x[i] &gt; xs) {</div>
+<div class="line">          rho = rho_inf;</div>
+<div class="line">          u   = u_inf;</div>
+<div class="line">          v   = v_inf;</div>
+<div class="line">          w   = w_inf;</div>
+<div class="line">          P   = p_inf;</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">          rho = rho_ps;</div>
+<div class="line">          u   = u_ps;</div>
+<div class="line">          v   = v_ps;</div>
+<div class="line">          w   = w_ps;</div>
+<div class="line">          P   = p_ps;</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        U[5*p+0] = rho;</div>
+<div class="line">        U[5*p+1] = rho*u;</div>
+<div class="line">        U[5*p+2] = rho*v;</div>
+<div class="line">        U[5*p+3] = rho*w;</div>
+<div class="line">        U[5*p+4] = P/(gamma-1.0) + 0.5*rho*(u*u+v*v+w*w);</div>
+<div class="line">      }</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">  FILE *out;</div>
 <div class="line">  <span class="keywordflow">if</span> (!strcmp(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>)) {</div>
+<div class="line"></div>
 <div class="line">    printf(<span class="stringliteral">&quot;Writing ASCII initial solution file initial.inp\n&quot;</span>);</div>
 <div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,x[i]);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,x[i]);</div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,y[j]);</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,y[j]);</div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
-<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
-<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u0[p]);</div>
+<div class="line">    <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++)  fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,z[k]);</div>
+<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++)    {</div>
+<div class="line">      <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  {</div>
+<div class="line">          <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + NK*j + NI*NJ*k;</div>
+<div class="line">          fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+0]);</div>
+<div class="line">        }</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
-<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
-<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u1[p]);</div>
+<div class="line">    <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++)    {</div>
+<div class="line">      <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  {</div>
+<div class="line">          <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + NK*j + NI*NJ*k;</div>
+<div class="line">          fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+1]);</div>
+<div class="line">        }</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
-<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
-<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u2[p]);</div>
+<div class="line">    <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++)    {</div>
+<div class="line">      <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  {</div>
+<div class="line">          <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + NK*j + NI*NJ*k;</div>
+<div class="line">          fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+2]);</div>
+<div class="line">        }</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
-<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
-<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u3[p]);</div>
+<div class="line">    <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++)    {</div>
+<div class="line">      <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  {</div>
+<div class="line">          <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + NK*j + NI*NJ*k;</div>
+<div class="line">          fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+3]);</div>
+<div class="line">        }</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">for</span> (k = 0; k &lt; NK; k++)    {</div>
+<div class="line">      <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  {</div>
+<div class="line">          <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  {</div>
+<div class="line">          <span class="keywordtype">int</span> p = i + NK*j + NI*NJ*k;</div>
+<div class="line">          fprintf(out,<span class="stringliteral">&quot;%1.16E &quot;</span>,U[5*p+4]);</div>
+<div class="line">        }</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line">      fclose(out);</div>
+<div class="line"></div>
 <div class="line">  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((!strcmp(ip_file_type,<span class="stringliteral">&quot;binary&quot;</span>)) || (!strcmp(ip_file_type,<span class="stringliteral">&quot;bin&quot;</span>))) {</div>
+<div class="line"></div>
 <div class="line">    printf(<span class="stringliteral">&quot;Writing binary initial solution file initial.inp\n&quot;</span>);</div>
 <div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;wb&quot;</span>);</div>
 <div class="line">    fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
 <div class="line">    fwrite(y,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NJ,out);</div>
-<div class="line">    <span class="keywordtype">double</span> *U = (<span class="keywordtype">double</span>*) calloc (4*NI*NJ,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    <span class="keywordflow">for</span> (i=0; i &lt; NI; i++) {</div>
-<div class="line">      <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++) {</div>
-<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">        <span class="keywordtype">int</span> q = NI*j + i;</div>
-<div class="line">        U[4*q+0] = u0[p];</div>
-<div class="line">        U[4*q+1] = u1[p];</div>
-<div class="line">        U[4*q+2] = u2[p];</div>
-<div class="line">        U[4*q+3] = u3[p];</div>
-<div class="line">      }</div>
-<div class="line">    }</div>
-<div class="line">    fwrite(U,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),4*NI*NJ,out);</div>
-<div class="line">    free(U);</div>
+<div class="line">    fwrite(z,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NK,out);</div>
+<div class="line">    fwrite(U,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),5*NI*NJ*NK,out);</div>
 <div class="line">    fclose(out);</div>
+<div class="line"></div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">    free(x);</div>
 <div class="line">    free(y);</div>
-<div class="line">    free(u0);</div>
-<div class="line">    free(u1);</div>
-<div class="line">    free(u2);</div>
-<div class="line">    free(u3);</div>
+<div class="line">    free(z);</div>
+<div class="line">    free(U);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2>Output: </h2>
 <p>Note that <b>iproc</b> is set to </p>
-<pre class="fragment">  4 4
-</pre><p>in <b>solver.inp</b> (i.e., 4 processors along <em>x</em>, and 4 processor along <em>y</em>). Thus, this example should be run with 16 MPI ranks (or change <b>iproc</b>).</p>
-<p>After running the code, there should be one output file <b>op.bin</b>, since <a class="el" href="a00202.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>yes</em> in <b>solver.inp</b>. Since <a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>binary</em> in <b>solver.inp</b>.</p>
-<p>The provided Python script (<b>Examples/Python/plotStreamlines_2DBinary.py</b>) can be used to generate streamline plots from the binary file. Alternatively, <a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>tecplot2d</em>, and Tecplot/VisIt or something similar can be used to plot the resulting files.</p>
-<p>The following plot shows the final solution (velocity streamlines colored by the velocity magnitude): </p>
-<div class="image">
-<img src="Solution_2DNavStokLDSC_Re3200_PETSc_Implicit.png" alt="Solution_2DNavStokLDSC_Re3200_PETSc_Implicit.png"/>
-</div>
-<p>The file <b>function_counts.dat</b> reports the computational expense (in terms of the number of function counts): </p>
-<div class="fragment"><div class="line">269</div>
-<div class="line">121110</div>
-<div class="line">121110</div>
-<div class="line">121110</div>
-<div class="line">4277</div>
-<div class="line">4277</div>
-<div class="line">2654</div>
-<div class="line">116833</div>
-</div><!-- fragment --><p> The numbers are, respectively,</p>
+<pre class="fragment">  4 4 1
+</pre><p>in <b>solver.inp</b> (i.e., 4 processors along <em>x</em>, 4 processors along <em>y</em>, and 1 processor along <em>z</em>). Thus, this example should be run with 16 MPI ranks (or change <b>iproc</b>).</p>
+<p>Please see the original example in the "Immersed Boundaries Examples" section for a full description of the output files and how to view them. The following only contains libROM-specific comments.</p>
+<p>After running the code, there should be the following output files:</p>
 <ul>
-<li>Time iterations</li>
-<li>Number of times the hyperbolic term was evaluated</li>
-<li>Number of times the parabolic term was evaluated</li>
-<li>Number of times the source term was evaluated</li>
-<li>Number of calls to the explicit right-hand-side function (<a class="el" href="a00250.html#ac7d9b0a219eb22bfd37482b741bd79c9">PetscRHSFunctionIMEX()</a> or <a class="el" href="a00250.html#ac67533553372ed2b44b32d095c775f5c">PetscRHSFunctionExpl()</a>)</li>
-<li>Number of calls to the implicit right-hand-side function (<a class="el" href="a00250.html#a9d093c3140369a1178dd5b9589a926b1">PetscIFunctionIMEX()</a> or PetscRHSFunctionImpl())</li>
-<li>Number of calls to the Jacobian (<a class="el" href="a00250.html#a82aacb94c1481144ce3e43d40d1f04d4">PetscIJacobianIMEX()</a> or <a class="el" href="a00250.html#a3d6a695a879ec54937525109ac912355">PetscIJacobian()</a>)</li>
-<li>Number of calls to the matrix-free Jacobian function (<a class="el" href="a00250.html#a8778c346e27f42f0583c63909c2ea544">PetscJacobianFunctionIMEX_Linear()</a>, <a class="el" href="a00250.html#a4edf057726501be3e8fe54e16fafe07b">PetscJacobianFunctionIMEX_JFNK()</a>, <a class="el" href="a00250.html#a68f5a93a79d56fcb964224f649af4ac9">PetscJacobianFunction_JFNK()</a>, or <a class="el" href="a00250.html#abed41de2efef801be98f8338aa2672f2">PetscJacobianFunction_Linear()</a>).</li>
+<li>11 output file <b>op_00000.bin</b>, ..., op_00010.bin; these are the <b>predicted</b> solutions from the DMD object(s)<b></b>.</li>
 </ul>
-<p>Expected screen output (for Reynolds number 3200): </p>
-<div class="fragment"><div class="line">srun: job 9980406 queued and waiting <span class="keywordflow">for</span> resources</div>
-<div class="line">srun: job 9980406 has been allocated resources</div>
-<div class="line"><a class="code" href="a00202.html">HyPar</a> - Parallel (MPI) version with 16 processes</div>
+<p>All the files are binary (<a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>binary</em> in <b>solver.inp</b>).</p>
+<p>The provided Python script (<b><a class="el" href="a00594.html">plotSolution.py</a></b>) can be used to generate plots from the binary files. Alternatively, <a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>tecplot3d</em>, and Tecplot/VisIt or something similar can be used to plot the resulting text files.</p>
+<p>The following plot shows the density contours for the final solution (t=2). </p>
+<div class="image">
+<img src="Solution_3DNavStokShockCyl_Density_libROM_DMD_Predict.png" alt="Solution_3DNavStokShockCyl_Density_libROM_DMD_Predict.png"/>
+</div>
+<p>Expected screen output: </p>
+<div class="fragment"><div class="line">srun: job 9716432 queued and waiting <span class="keywordflow">for</span> resources</div>
+<div class="line">srun: job 9716432 has been allocated resources</div>
+<div class="line"><a class="code" href="a00204.html">HyPar</a> - Parallel (MPI) version with 16 processes</div>
 <div class="line">Compiled with PETSc time integration.</div>
 <div class="line">Allocated simulation <span class="keywordtype">object</span>(s).</div>
 <div class="line">Reading solver inputs from file &quot;solver.inp&quot;.</div>
-<div class="line">  No. of dimensions                          : 2</div>
-<div class="line">  No. of variables                           : 4</div>
-<div class="line">  Domain size                                : 128 128 </div>
-<div class="line">  Processes along each dimension             : 4 4 </div>
-<div class="line">  Exact solution domain size                 : 128 128 </div>
+<div class="line">  No. of dimensions                          : 3</div>
+<div class="line">  No. of variables                           : 5</div>
+<div class="line">  Domain size                                : 256 256 3 </div>
+<div class="line">  Processes along each dimension             : 4 4 1 </div>
+<div class="line">  Exact solution domain size                 : 256 256 3 </div>
 <div class="line">  No. of ghosts pts                          : 3</div>
-<div class="line">  No. of iter.                               : 25000</div>
+<div class="line">  No. of iter.                               : 10</div>
 <div class="line">  Restart iteration                          : 0</div>
-<div class="line">  Time integration scheme                    : PETSc </div>
-<div class="line">  Spatial discretization scheme (hyperbolic) : upw5</div>
+<div class="line">  Time integration scheme                    : euler </div>
+<div class="line">  Spatial discretization scheme (hyperbolic) : 1</div>
 <div class="line">  Split hyperbolic flux term?                : no</div>
-<div class="line">  Interpolation type for hyperbolic term     : components</div>
-<div class="line">  Spatial discretization type   (parabolic ) : nonconservative-2stage</div>
-<div class="line">  Spatial discretization scheme (parabolic ) : 4</div>
-<div class="line">  Time Step                                  : 1.000000E-02</div>
+<div class="line">  Interpolation type for hyperbolic term     : characteristic</div>
+<div class="line">  Spatial discretization type   (parabolic ) : nonconservative-1stage</div>
+<div class="line">  Spatial discretization scheme (parabolic ) : 2</div>
+<div class="line">  Time Step                                  : 2.000000E-01</div>
 <div class="line">  Check for conservation                     : no</div>
-<div class="line">  Screen output iterations                   : 10</div>
-<div class="line">  File output iterations                     : 100</div>
+<div class="line">  Screen output iterations                   : 1</div>
+<div class="line">  File output iterations                     : 1</div>
 <div class="line">  Initial solution file type                 : binary</div>
 <div class="line">  Initial solution read mode                 : serial</div>
 <div class="line">  Solution file write mode                   : serial</div>
 <div class="line">  Solution file format                       : binary</div>
-<div class="line">  Overwrite solution file                    : yes</div>
-<div class="line">  Physical model                             : navierstokes2d</div>
+<div class="line">  Overwrite solution file                    : no</div>
+<div class="line">  Physical model                             : navierstokes3d</div>
+<div class="line">  Immersed Body                              : cylinder.stl</div>
 <div class="line">Partitioning domain and allocating data arrays.</div>
 <div class="line">Reading array from binary file initial.inp (Serial mode).</div>
 <div class="line">Volume integral of the initial solution:</div>
-<div class="line"> 0:  1.0158100316200525E+00</div>
-<div class="line"> 1:  -1.7347234759768071E-17</div>
-<div class="line"> 2:  -8.6736173798840355E-19</div>
-<div class="line"> 3:  1.8148063242358203E+00</div>
+<div class="line"> 0:  1.3577505742780760E+01</div>
+<div class="line"> 1:  6.1066251110367062E+00</div>
+<div class="line"> 2:  0.0000000000000000E+00</div>
+<div class="line"> 3:  0.0000000000000000E+00</div>
+<div class="line"> 4:  5.1720680582882707E+01</div>
 <div class="line">Reading boundary conditions from boundary.inp.</div>
-<div class="line">  Boundary                    noslip-wall:  Along dimension  0 and face +1</div>
-<div class="line">  Boundary                    noslip-wall:  Along dimension  0 and face -1</div>
-<div class="line">  Boundary                    noslip-wall:  Along dimension  1 and face +1</div>
-<div class="line">  Boundary                    noslip-wall:  Along dimension  1 and face -1</div>
-<div class="line">4 boundary condition(s) read.</div>
+<div class="line">  Boundary                subsonic-inflow:  Along dimension  0 and face +1</div>
+<div class="line">  Boundary              supersonic-inflow:  Along dimension  0 and face -1</div>
+<div class="line">  Boundary                      slip-wall:  Along dimension  1 and face +1</div>
+<div class="line">  Boundary                      slip-wall:  Along dimension  1 and face -1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  2 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  2 and face -1</div>
+<div class="line">6 boundary condition(s) read.</div>
+<div class="line">Immersed body read from cylinder.stl:</div>
+<div class="line">    Number of facets: 628</div>
+<div class="line">    Bounding box: [-1.0,1.0] X [-1.0,1.0] X [-5.0,5.0]</div>
+<div class="line">    Number of grid points inside immersed body: 6408 ( 3.3%).</div>
+<div class="line">    Number of immersed boundary points        : 1242 ( 0.6%).</div>
+<div class="line">    Immersed body simulation mode             : 2d (xy).</div>
 <div class="line">Initializing solvers.</div>
-<div class="line">Initializing physics. Model = &quot;navierstokes2d&quot;</div>
+<div class="line">Initializing physics. Model = &quot;navierstokes3d&quot;</div>
 <div class="line">Reading physical model inputs from file &quot;physics.inp&quot;.</div>
-<div class="line">Setting up PETSc time integration... </div>
-<div class="line">PETSc:    total number of computational points is 16384.</div>
-<div class="line">PETSc:    total number of computational DOFs is 65536.</div>
-<div class="line">Implicit-Explicit time-integration:-</div>
-<div class="line">Hyperbolic        term: Implicit</div>
-<div class="line">Parabolic         term: Implicit</div>
-<div class="line">Source            term: Implicit</div>
-<div class="line"><a class="code" href="a00260.html#a1a054e1b92ee41a9e38926d18c6628bf">SolvePETSc</a>(): Problem type is nonlinear.</div>
-<div class="line">** Starting PETSc time integration **</div>
-<div class="line">Writing solution file op.bin.</div>
-<div class="line">iter=     10  dt=4.525E-02  t=3.198E-01  CFL=6.262E+00  norm=3.0309E-02  </div>
-<div class="line">iter=     20  dt=5.962E-02  t=8.389E-01  CFL=8.241E+00  norm=3.2289E-02  </div>
-<div class="line">iter=     30  dt=7.221E-02  t=1.492E+00  CFL=1.015E+01  norm=3.3464E-02  </div>
-<div class="line">iter=     40  dt=8.504E-02  t=2.273E+00  CFL=1.187E+01  norm=3.8478E-02  </div>
-<div class="line">iter=     50  dt=9.766E-02  t=3.178E+00  CFL=1.360E+01  norm=4.0025E-02  </div>
-<div class="line">iter=     60  dt=1.107E-01  t=4.210E+00  CFL=1.557E+01  norm=4.3005E-02  </div>
-<div class="line">iter=     70  dt=1.232E-01  t=5.370E+00  CFL=1.740E+01  norm=3.7940E-02  </div>
-<div class="line">iter=     80  dt=1.375E-01  t=6.668E+00  CFL=1.939E+01  norm=3.7970E-02  </div>
-<div class="line">iter=     90  dt=1.507E-01  t=8.101E+00  CFL=2.119E+01  norm=3.9712E-02  </div>
-<div class="line">iter=    100  dt=1.646E-01  t=9.677E+00  CFL=2.289E+01  norm=4.4672E-02  </div>
-<div class="line">Writing solution file op.bin.</div>
-<div class="line">iter=    110  dt=1.798E-01  t=1.140E+01  CFL=2.523E+01  norm=2.3712E-02  </div>
-<div class="line">iter=    120  dt=1.956E-01  t=1.328E+01  CFL=2.731E+01  norm=3.0056E-02  </div>
-<div class="line">iter=    130  dt=2.123E-01  t=1.531E+01  CFL=2.975E+01  norm=3.0924E-02  </div>
-<div class="line">iter=    140  dt=2.305E-01  t=1.751E+01  CFL=3.246E+01  norm=2.1651E-02  </div>
-<div class="line">iter=    150  dt=2.505E-01  t=1.989E+01  CFL=3.484E+01  norm=2.8821E-02  </div>
-<div class="line">iter=    160  dt=2.679E-01  t=2.247E+01  CFL=3.747E+01  norm=2.2700E-02  </div>
-<div class="line">iter=    170  dt=2.914E-01  t=2.526E+01  CFL=4.049E+01  norm=3.7055E-02  </div>
-<div class="line">iter=    180  dt=3.156E-01  t=2.827E+01  CFL=4.396E+01  norm=3.2539E-02  </div>
-<div class="line">iter=    190  dt=3.463E-01  t=3.156E+01  CFL=4.831E+01  norm=2.8748E-02  </div>
-<div class="line">iter=    200  dt=3.667E-01  t=3.512E+01  CFL=5.109E+01  norm=2.1596E-02  </div>
-<div class="line">Writing solution file op.bin.</div>
-<div class="line">iter=    210  dt=3.916E-01  t=3.893E+01  CFL=5.466E+01  norm=2.0914E-02  </div>
-<div class="line">iter=    220  dt=4.255E-01  t=4.299E+01  CFL=5.886E+01  norm=1.6388E-02  </div>
-<div class="line">iter=    230  dt=4.671E-01  t=4.740E+01  CFL=6.490E+01  norm=1.6122E-02  </div>
-<div class="line">iter=    240  dt=5.491E-01  t=5.238E+01  CFL=7.615E+01  norm=8.1433E-03  </div>
-<div class="line">iter=    250  dt=8.980E-01  t=5.890E+01  CFL=1.246E+02  norm=1.3328E-03  </div>
-<div class="line">iter=    260  dt=6.192E+01  t=1.187E+02  CFL=8.590E+03  norm=1.0463E-03  </div>
-<div class="line">** Completed PETSc time integration **</div>
-<div class="line">Writing solution file op.bin.</div>
-<div class="line">Solver runtime (in seconds): 4.0300219099999998E+02</div>
-<div class="line">Total  runtime (in seconds): 4.0305459200000001E+02</div>
+<div class="line">Writing solution file iblank_00000.bin.</div>
+<div class="line">Setting up libROM interface.</div>
+<div class="line">libROM inputs and parameters:</div>
+<div class="line">  reduced model dimensionality:  0</div>
+<div class="line">  sampling frequency:  0</div>
+<div class="line">  mode: predict</div>
+<div class="line">  type: DMD</div>
+<div class="line">  save to file: true</div>
+<div class="line">libROM DMD inputs:</div>
+<div class="line">  number of samples per window:   2147483647</div>
+<div class="line">  directory name for DMD onjects: DMD</div>
+<div class="line"><a class="code" href="a00205.html">libROMInterface</a>::loadROM() - loading ROM objects.</div>
+<div class="line">  Loading DMD <span class="keywordtype">object</span> (DMD/dmdobj_0000), time window=[0.00e+00,5.00e-01].</div>
+<div class="line">  Loading DMD <span class="keywordtype">object</span> (DMD/dmdobj_0001), time window=[5.00e-01,1.00e+00].</div>
+<div class="line">  Loading DMD <span class="keywordtype">object</span> (DMD/dmdobj_0002), time window=[1.00e+00,1.50e+00].</div>
+<div class="line">  Loading DMD <span class="keywordtype">object</span> (DMD/dmdobj_0003), time window=[1.50e+00,-1.00e+00].</div>
+<div class="line">libROM: Predicted solution at time 0.0000e+00 using ROM, wallclock time: 2.920385.</div>
+<div class="line">Writing immersed body surface data file surface00000.dat.</div>
+<div class="line">Writing solution file op_00000.bin.</div>
+<div class="line">libROM: Predicted solution at time 2.0000e-01 using ROM, wallclock time: 3.025760.</div>
+<div class="line">Writing immersed body surface data file surface00001.dat.</div>
+<div class="line">Writing solution file op_00001.bin.</div>
+<div class="line">libROM: Predicted solution at time 4.0000e-01 using ROM, wallclock time: 3.076432.</div>
+<div class="line">Writing immersed body surface data file surface00002.dat.</div>
+<div class="line">Writing solution file op_00002.bin.</div>
+<div class="line">libROM: Predicted solution at time 6.0000e-01 using ROM, wallclock time: 3.057626.</div>
+<div class="line">Writing immersed body surface data file surface00003.dat.</div>
+<div class="line">Writing solution file op_00003.bin.</div>
+<div class="line">libROM: Predicted solution at time 8.0000e-01 using ROM, wallclock time: 3.049425.</div>
+<div class="line">Writing immersed body surface data file surface00004.dat.</div>
+<div class="line">Writing solution file op_00004.bin.</div>
+<div class="line">libROM: Predicted solution at time 1.0000e+00 using ROM, wallclock time: 3.158879.</div>
+<div class="line">Writing immersed body surface data file surface00005.dat.</div>
+<div class="line">Writing solution file op_00005.bin.</div>
+<div class="line">libROM: Predicted solution at time 1.2000e+00 using ROM, wallclock time: 3.187523.</div>
+<div class="line">Writing immersed body surface data file surface00006.dat.</div>
+<div class="line">Writing solution file op_00006.bin.</div>
+<div class="line">libROM: Predicted solution at time 1.4000e+00 using ROM, wallclock time: 3.042254.</div>
+<div class="line">Writing immersed body surface data file surface00007.dat.</div>
+<div class="line">Writing solution file op_00007.bin.</div>
+<div class="line">libROM: Predicted solution at time 1.6000e+00 using ROM, wallclock time: 3.046216.</div>
+<div class="line">Writing immersed body surface data file surface00008.dat.</div>
+<div class="line">Writing solution file op_00008.bin.</div>
+<div class="line">libROM: Predicted solution at time 1.8000e+00 using ROM, wallclock time: 3.068598.</div>
+<div class="line">Writing immersed body surface data file surface00009.dat.</div>
+<div class="line">Writing solution file op_00009.bin.</div>
+<div class="line">libROM: Predicted solution at time 2.0000e+00 using ROM, wallclock time: 3.130178.</div>
+<div class="line">Writing immersed body surface data file surface00010.dat.</div>
+<div class="line">Writing solution file op_00010.bin.</div>
+<div class="line">libROM: total prediction/query wallclock time: 33.763276 (seconds).</div>
+<div class="line">Solver runtime (in seconds): 9.7125058999999993E+01</div>
+<div class="line">Total  runtime (in seconds): 9.7660359999999997E+01</div>
 <div class="line">Deallocating arrays.</div>
 <div class="line">Finished.</div>
 </div><!-- fragment --> </div></div><!-- contents -->

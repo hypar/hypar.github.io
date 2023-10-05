@@ -1,4 +1,6 @@
 var a00524 =
 [
-    [ "gpuNavierStokes3DInitialize", "a00524.html#aff1027153b10ee5eaac63a0d83cd49c4", null ]
+    [ "NavierStokes3DRoeAverage", "a00524.html#a8910dbe2aaf01714c0136e887ab88a89", null ],
+    [ "NavierStokes3DComputePressure", "a00524.html#aad0938e55e9fc3c10fe5451ff8f2ee1c", null ],
+    [ "NavierStokes3DComputeTemperature", "a00524.html#a6d78f90f0c4b9a283c603518407a5336", null ]
 ];

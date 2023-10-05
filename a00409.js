@@ -1,5 +1,5 @@
 var a00409 =
 [
-    [ "__FUNCT__", "a00409.html#ae60511a9aa5cbf216a00a1bb81006bc5", null ],
-    [ "PetscJacobianMatNonzeroEntriesImpl", "a00409.html#a2d1d7e54d693b8d7a3b57ef76305c1ba", null ]
+    [ "ApplyPeriodicity", "a00409.html#ab4b43dadf0cb676d61aee6c8f1fb5a2e", null ],
+    [ "PetscGlobalDOF", "a00409.html#a15c41ba7e2d10e4803226f42708a6ef8", null ]
 ];

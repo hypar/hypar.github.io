@@ -1,5 +1,5 @@
 var a00440 =
 [
-    [ "Euler2DLeftEigenvectors", "a00440.html#a965cafbf06fa0cfd5c0664dc94fcfd3f", null ],
-    [ "Euler2DRightEigenvectors", "a00440.html#a2e9802c52e7497ece4e65e55c77c7b22", null ]
+    [ "Euler1DSourceFunction", "a00440.html#a23bb10e5b44548d3c27b43d0bb954214", null ],
+    [ "Euler1DSource", "a00440.html#a2b851ab206d30609f55154fa1bc0f787", null ]
 ];

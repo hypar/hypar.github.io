@@ -1,13 +1,10 @@
 var a00534 =
 [
-    [ "NavierStokes3DUpwindRoe", "a00534.html#ae552dc5987df4d65b73885ad2c53c3be", null ],
-    [ "NavierStokes3DUpwindRF", "a00534.html#a29867df9545501108a2ca45af73412c4", null ],
-    [ "NavierStokes3DUpwindLLF", "a00534.html#a069cd17c2f4208472a020803cc37bfcd", null ],
-    [ "NavierStokes3DUpwindRusanov", "a00534.html#ae5fdf536d5df6c578c2fc8993004bd77", null ],
-    [ "NavierStokes3DUpwinddFRoe", "a00534.html#a4c9fdb7f68c353a08b6a62df2bf5cb0f", null ],
-    [ "NavierStokes3DUpwindFdFRoe", "a00534.html#a84e0686244663b7b2b32d06412e6ee1c", null ],
-    [ "NavierStokes3DUpwindRusanovModified", "a00534.html#a1e756d00e4d001db12eddc9fa0d6c87c", null ],
-    [ "NavierStokes3DUpwinddFRusanovModified", "a00534.html#a58999fcedc6a6854a54ef6e0bec7ce75", null ],
-    [ "NavierStokes3DUpwindFdFRusanovModified", "a00534.html#a77405962aa2f594aa143530bced04a28", null ],
-    [ "dummy", "a00534.html#aa2fb15c0a04b9778d8c9592a32a8793d", null ]
+    [ "gpuNavierStokes3DParabolicFunction_Q_kernel", "a00534.html#a6d81cafe72b99e9dfedc17ccfa471a58", null ],
+    [ "gpuNavierStokes3DParabolicFunction_QDeriv_kernel", "a00534.html#aed011bbf771cb730338214036ca8cfde", null ],
+    [ "gpuNavierStokes3DParabolicFunction_Xdir_kernel", "a00534.html#ab58cddae812df829602dd187dd66d609", null ],
+    [ "gpuNavierStokes3DParabolicFunction_Ydir_kernel", "a00534.html#a883e986e6ec1ec4d2a3f4d9f12ed74bc", null ],
+    [ "gpuNavierStokes3DParabolicFunction_Zdir_kernel", "a00534.html#a7a13759038ad4bfdecc12c9f69e3db65", null ],
+    [ "gpuNavierStokes3DParabolicFunction_par_kernel", "a00534.html#ac93d2dd0f138357c465a33a1bbfd7592", null ],
+    [ "gpuNavierStokes3DParabolicFunction", "a00534.html#a8cc7f5c6a830e004704e2bd0c15f247e", null ]
 ];

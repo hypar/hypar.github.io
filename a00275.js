@@ -1,4 +1,4 @@
 var a00275 =
 [
-    [ "BCDirichletU", "a00275.html#aff556c3ed9f4a947436d47c58ea5983e", null ]
+    [ "BandedMatrixDestroy", "a00275.html#a75f8c3de645719ac147311358c3bff73", null ]
 ];

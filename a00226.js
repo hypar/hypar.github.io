@@ -1,8 +1,11 @@
 var a00226 =
 [
-    [ "HyPar", "a00196.html", "a00196" ],
-    [ "_NC_1STAGE_", "a00226.html#a18ee8cd9b4297a259b08aa4cdfe30aa1", null ],
-    [ "_NC_2STAGE_", "a00226.html#a9f4de86b900c9aa5f097c2746e17612a", null ],
-    [ "_NC_1_5STAGE_", "a00226.html#a7bc6f9c42df5610bc5d844ad95c74fb8", null ],
-    [ "_CONS_1STAGE_", "a00226.html#aabd653aa5d489ae2d0d8140290f6f026", null ]
+    [ "PACKAGE", "a00226.html#aca8570fb706c81df371b7f9bc454ae03", null ],
+    [ "PACKAGE_BUGREPORT", "a00226.html#a1d1d2d7f8d2f95b376954d649ab03233", null ],
+    [ "PACKAGE_NAME", "a00226.html#a1c0439e4355794c09b64274849eb0279", null ],
+    [ "PACKAGE_STRING", "a00226.html#ac73e6f903c16eca7710f92e36e1c6fbf", null ],
+    [ "PACKAGE_TARNAME", "a00226.html#af415af6bfede0e8d5453708afe68651c", null ],
+    [ "PACKAGE_URL", "a00226.html#a5c93853116d5a50307b6744f147840aa", null ],
+    [ "PACKAGE_VERSION", "a00226.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0", null ],
+    [ "VERSION", "a00226.html#a1c6d5de492ac61ad29aec7aa9a436bbf", null ]
 ];

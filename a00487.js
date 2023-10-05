@@ -1,5 +1,4 @@
 var a00487 =
 [
-    [ "LinearADRDiffusionG", "a00487.html#a2013dbfa1cd17abc06f400cf55600fcc", null ],
-    [ "LinearADRDiffusionH", "a00487.html#a2e68cf788e97be8c4bf0fec1c3699636", null ]
+    [ "LinearADRAdvection", "a00487.html#a459899fa597c60382818af864366a648", null ]
 ];

@@ -1,5 +1,4 @@
 var a00457 =
 [
-    [ "FPPowerSystemDissipationFunction", "a00457.html#a32f65d36a895cedeeba29b644ac9e99d", null ],
-    [ "FPPowerSystemComputeDiffNumber", "a00457.html#a0baeed235f71eba334249f178f632ac0", null ]
+    [ "FPDoubleWellPrintStep", "a00457.html#a5b51bfceb9555102ac21245741159a0f", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: 1D Linear Diffusion - Sine Wave</title>
+<title>HyPar: 1D Linear Advection - Discontinuous Waves</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,17 +106,29 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">1D Linear Diffusion - Sine Wave </div>  </div>
+<div class="title">1D Linear Advection - Discontinuous Waves </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Location: <b>hypar/Examples/1D/LinearDiffusion/SineWave_PETSc</b> (This directory contains all the input files needed to run this case. If there is a <em>Run.m</em>, run it in MATLAB to quickly set up, run, and visualize the example).</p>
-<p>Governing equations: 1D Linear Diffusion Equation (<a class="el" href="a00204.html" title="Linear Advection-Diffusion-Reaction model. ">linearadr.h</a>)</p>
-<p>Domain: \(0 \le x &lt; 1\), <em>"periodic"</em> (<a class="el" href="a00233.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundary conditions</p>
-<p>Initial solution: \(u\left(x,0\right) = \sin\left(2\pi x\right)\)</p>
+<div class="textblock"><p>Location: <b>hypar/Examples/1D/LinearAdvection/DiscontinuousWaves_PETSc</b> (This directory contains all the input files needed to run this case. If there is a <em>Run.m</em>, run it in MATLAB to quickly set up, run, and visualize the example).</p>
+<p>Governing equations: 1D Linear Advection Equation (<a class="el" href="a00206.html" title="Linear Advection-Diffusion-Reaction model. ">linearadr.h</a>)</p>
+<p>References:</p>
+<ul>
+<li>Ghosh, D., Baeder, J. D., "Compact Reconstruction Schemes with 
+    Weighted ENO Limiting for Hyperbolic Conservation Laws", SIAM Journal on Scientific Computing, 34 (3), 2012, A1678–A1706</li>
+</ul>
+<p>Domain: \(-1 \le x \le 1\), <em>"periodic"</em> (<a class="el" href="a00235.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundary conditions</p>
+<p>Initial solution: </p>
+<p class="formulaDsp">
+\begin{equation} u\left(x,0\right) = \left\{\begin{array}{lc} \exp\left(-\log\left(2\right)\frac{\left(x+7\right)^2}{0.0009}\right) &amp; -0.8\le x \le -0.6 \\ 1 &amp; -0.4\le x \le -0.2 \\ 1 - \left|10\left(x-0.1\right)\right| &amp; 0\le x \le 0.2 \\ \sqrt{1-100\left(x-0.5\right)^2} &amp; 0.4\le x \le 0.6 \\ 0 &amp; {\rm otherwise} \end{array}\right. \end{equation}
+</p>
 <p>Numerical Method:</p>
 <ul>
-<li>Spatial discretization (parabolic): 2nd order (<a class="el" href="a00191.html#ae8bfe856abd743f5af925dc03e708ee3" title="2nd order component-wise interpolation of the 2nd primitive on a uniform grid ">Interp2PrimSecondOrder()</a>), conservative (<a class="el" href="a00314.html#a5e79cc5efd6d3e4c93717a67e0fbf918">ParabolicFunctionCons1Stage()</a>)</li>
-<li>Time integration: PETSc (<a class="el" href="a00260.html#a1a054e1b92ee41a9e38926d18c6628bf" title="Integrate in time with PETSc. ">SolvePETSc()</a>) - <b>Crank-Nicholson</b> (TSCN - <a href="https://petsc.org/release/docs/manualpages/TS/TSCN.html">https://petsc.org/release/docs/manualpages/TS/TSCN.html</a>)</li>
+<li>Spatial discretization (hyperbolic): 5th order CRWENO (<a class="el" href="a00193.html#a33b1e24c12129941b0027a83c543a654" title="5th order CRWENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderCRWENO()</a>)</li>
+<li>Time integration: PETSc (<a class="el" href="a00264.html#a1a054e1b92ee41a9e38926d18c6628bf" title="Integrate in time with PETSc. ">SolvePETSc()</a>)<ul>
+<li>Method class: <b>Runge-Kutta</b> (TSRK - <a href="https://petsc.org/release/docs/manualpages/TS/TSRK.html">https://petsc.org/release/docs/manualpages/TS/TSRK.html</a>)</li>
+<li>Specific method: <b>Dormand-Prince</b> (TSRK5DP - <a href="https://petsc.org/release/docs/manualpages/TS/TSRK5DP.html#TSRK5DP">https://petsc.org/release/docs/manualpages/TS/TSRK5DP.html#TSRK5DP</a>)</li>
+</ul>
+</li>
 </ul>
 <h2>Input files required: </h2>
 <p><b>.petscrc</b> </p>
@@ -130,51 +142,42 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 <div class="line"><span class="preprocessor"></span>-use-petscts</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor"># Final time</span></div>
-<div class="line"><span class="preprocessor"></span>-ts_max_time 10.0</div>
+<div class="line"><span class="preprocessor"></span>-ts_max_time 2.0</div>
 <div class="line"></div>
 <div class="line"># Time step size</div>
-<div class="line">-ts_dt 1.0</div>
+<div class="line">-ts_dt 0.0025</div>
 <div class="line"></div>
 <div class="line"># Maximum number of iterations</div>
-<div class="line">-ts_max_steps 10</div>
+<div class="line">-ts_max_steps 800</div>
 <div class="line"></div>
-<div class="line"><span class="preprocessor"># Time integration scheme type - Crank-Nicholson</span></div>
-<div class="line"><span class="preprocessor"></span>-ts_type cn</div>
+<div class="line"><span class="preprocessor"># Time integration scheme type - explicit RK</span></div>
+<div class="line"><span class="preprocessor"></span>-ts_type rk</div>
+<div class="line"><span class="preprocessor"># RK type - &quot;5dp&quot; (Dormand-Prince method)</span></div>
+<div class="line"><span class="preprocessor"></span>-ts_rk_type 5dp</div>
 <div class="line"></div>
-<div class="line"><span class="preprocessor"># No time-step adaptivity</span></div>
-<div class="line"><span class="preprocessor"></span>-ts_adapt_type none</div>
+<div class="line"><span class="preprocessor"># Local truncation error-based time-step adaptivity</span></div>
+<div class="line"><span class="preprocessor"></span>-ts_adapt_type basic</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor"># Print time step adapter to screen</span></div>
+<div class="line"><span class="preprocessor"></span>-ts_adapt_monitor</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor"># Print time step information to screen</span></div>
 <div class="line"><span class="preprocessor"></span>-ts_monitor</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># For linear problens, tell nonlinear solver (SNES) to only use the linear solver (KSP)</span></div>
-<div class="line"><span class="preprocessor"></span>-snes_type ksponly</div>
-<div class="line"><span class="preprocessor"># Print SNES iteration information to screen</span></div>
-<div class="line"><span class="preprocessor"></span>-snes_monitor</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor"># Linear solver (KSP) type</span></div>
-<div class="line"><span class="preprocessor"></span>-ksp_type gmres</div>
-<div class="line"><span class="preprocessor"># Set relative tolerance</span></div>
-<div class="line"><span class="preprocessor"></span>-ksp_rtol 1e-6</div>
-<div class="line"><span class="preprocessor"># Set absolute tolerance</span></div>
-<div class="line"><span class="preprocessor"></span>-ksp_atol 1e-6</div>
-<div class="line"><span class="preprocessor"># Print KSP iteration information to screen</span></div>
-<div class="line"><span class="preprocessor"></span>-ksp_monitor</div>
 </div><!-- fragment --><p><b>solver.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
 <div class="line">  ndims             1</div>
 <div class="line">  nvars             1</div>
-<div class="line">  size              80</div>
+<div class="line">  size              160</div>
 <div class="line">  iproc             1</div>
 <div class="line">  ghost             3</div>
-<div class="line">  n_iter            200</div>
+<div class="line">  n_iter            800</div>
 <div class="line">  time_scheme       rk</div>
 <div class="line">  time_scheme_type  ssprk3</div>
-<div class="line">  par_space_type    conservative-1stage</div>
-<div class="line">  par_space_scheme  2</div>
-<div class="line">  dt                0.05</div>
-<div class="line">  screen_op_iter    1</div>
-<div class="line">  file_op_iter      2</div>
+<div class="line">  hyp_space_scheme  crweno5</div>
+<div class="line">  dt                0.0025</div>
+<div class="line">  screen_op_iter    10</div>
+<div class="line">  file_op_iter      99999</div>
+<div class="line">  ip_file_type      ascii</div>
 <div class="line">  op_file_format    text</div>
 <div class="line">  op_overwrite      no</div>
 <div class="line">  model             linear-advection-diffusion-reaction</div>
@@ -185,24 +188,45 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 <div class="line">periodic      0    -1     0     0</div>
 </div><!-- fragment --><p><b>physics.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
-<div class="line">  diffusion 0.001</div>
+<div class="line">  advection 1.0</div>
 <div class="line">end</div>
-</div><!-- fragment --><p>To generate <b>initial.inp</b> (initial solution) and <b>exact.inp</b> (exact solution), compile and run the following code in the run directory. </p>
+</div><!-- fragment --><p><b>lusolver.inp</b> (optional) </p>
+<div class="fragment"><div class="line">begin</div>
+<div class="line">  reducedsolvetype  jacobi</div>
+<div class="line">  evaluate_norm     1</div>
+<div class="line">  maxiter           10</div>
+<div class="line">  atol              1e-12</div>
+<div class="line">  rtol              1e-10</div>
+<div class="line">  verbose           0</div>
+<div class="line">end</div>
+</div><!-- fragment --><p><b>weno.inp</b> (optional) </p>
+<div class="fragment"><div class="line">begin</div>
+<div class="line">  mapped        1</div>
+<div class="line">  borges        0</div>
+<div class="line">  yc            0</div>
+<div class="line">  no_limiting   0</div>
+<div class="line">  epsilon       0.000001</div>
+<div class="line">  p             2.0</div>
+<div class="line">  rc            0.3</div>
+<div class="line">  xi            0.001</div>
+<div class="line">end</div>
+</div><!-- fragment --><p>To generate <b>initial.inp</b>, compile and run the following code in the run directory. <b>Note:</b> if the final time is an integer multiple of the time period, the file <b>initial.inp</b> can also be used as the exact solution <b>exact.inp</b> (i.e. create a sym link called <em>exact.inp</em> pointing to <em>initial.inp</em>, or just copy <em>initial.inp</em> to <em>exact.inp</em>). </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"></div>
+<div class="line"><span class="keywordtype">double</span> <a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(<span class="keywordtype">double</span> x)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> (x&lt;0? -x : x);</div>
+<div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00375.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00380.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
 <div class="line">  </div>
-<div class="line">  <span class="keywordtype">double</span> pi = 4.0*atan(1.0);</div>
-<div class="line">    <span class="keywordtype">int</span> NI,ndims,niter;</div>
-<div class="line">  <span class="keywordtype">double</span> nu, dt,final_time;</div>
+<div class="line">    <span class="keywordtype">int</span> NI,ndims;</div>
 <div class="line">  <span class="keywordtype">char</span> ip_file_type[50];</div>
 <div class="line">  strcpy(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>);</div>
-<div class="line">  FILE *in, *out;</div>
-<div class="line"></div>
+<div class="line">  FILE *in;</div>
 <div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;solver.inp\&quot;...\n&quot;</span>);</div>
 <div class="line">  in = fopen(<span class="stringliteral">&quot;solver.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (!in) printf(<span class="stringliteral">&quot;Error: Input file \&quot;solver.inp\&quot; not found. Default values will be used.\n&quot;</span>);</div>
@@ -212,10 +236,8 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 <div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
 <div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
 <div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>))       fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>))   fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NI);</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;dt&quot;</span>))     fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;dt);</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;n_iter&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;niter);</div>
+<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>))             fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
+<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>))         fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NI);</div>
 <div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ip_file_type&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,ip_file_type);</div>
 <div class="line">      }</div>
 <div class="line">    } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
@@ -227,67 +249,39 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 <div class="line">  }</div>
 <div class="line">    printf(<span class="stringliteral">&quot;Grid:\t\t\t%d\n&quot;</span>,NI);</div>
 <div class="line"></div>
-<div class="line">  final_time = (double)niter * dt;</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Final Time:\t\t\t%lf\n&quot;</span>,final_time);</div>
-<div class="line"></div>
-<div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;physics.inp\&quot;...\n&quot;</span>);</div>
-<div class="line">  in = fopen(<span class="stringliteral">&quot;physics.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!in) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Input file \&quot;physics.inp\&quot; not found. Default values will be used.\n&quot;</span>);</div>
-<div class="line">    nu = 1.0;</div>
-<div class="line">  } <span class="keywordflow">else</span> {</div>
-<div class="line">    <span class="keywordtype">char</span> word[500];</div>
-<div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
-<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
-<div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">        <span class="keywordflow">if</span> (!strcmp(word,<span class="stringliteral">&quot;diffusion&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;nu);</div>
-<div class="line">      }</div>
-<div class="line">    } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
-<div class="line">  }</div>
-<div class="line">  fclose(in);</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Diffusion Coeff:\t\t\t%lf\n&quot;</span>,nu);</div>
-<div class="line"></div>
 <div class="line">    <span class="keywordtype">int</span> i;</div>
-<div class="line">    <span class="keywordtype">double</span> dx = 1.0 / ((double)NI);</div>
+<div class="line">    <span class="keywordtype">double</span> dx = 2.0 / ((double)NI);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">double</span> *x, *u;</div>
 <div class="line">    x = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line">    u = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">  <span class="comment">/* set grid */</span></div>
-<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++) x[i] = i*dx;</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* Initial  solution */</span></div>
-<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++) u[i] = sin(2*pi*x[i]);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++){</div>
+<div class="line">        x[i] = -1.0 + i*dx;</div>
+<div class="line">    <span class="keywordflow">if</span>      (x[i] &lt; -0.8)  u[i] = 0.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.6)  u[i] = exp(-log(2.0)*(x[i]+0.7)*(x[i]+0.7)/0.0009);</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.4)  u[i] = 0.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.2)  u[i] = 1.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0  )  u[i] = 0.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.2)  u[i] = 1.0 - <a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(10.0*(x[i]-0.1));</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.4)  u[i] = 0.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.6)  u[i] = sqrt(1.0-100*(x[i]-0.5)*(x[i]-0.5));</div>
+<div class="line">    <span class="keywordflow">else</span>                   u[i] = 0.0;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">  FILE *out;</div>
+<div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (!strcmp(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>)) {</div>
 <div class="line">    printf(<span class="stringliteral">&quot;Writing ASCII initial solution file initial.inp\n&quot;</span>);</div>
-<div class="line">      out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
+<div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,x[i]);</div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u[i]);                       </div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      fclose(out);</div>
+<div class="line">    fclose(out);</div>
 <div class="line">  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((!strcmp(ip_file_type,<span class="stringliteral">&quot;binary&quot;</span>)) || (!strcmp(ip_file_type,<span class="stringliteral">&quot;bin&quot;</span>))) {</div>
 <div class="line">    printf(<span class="stringliteral">&quot;Writing binary initial solution file initial.inp\n&quot;</span>);</div>
 <div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;wb&quot;</span>);</div>
-<div class="line">    fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
-<div class="line">    fwrite(u,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
-<div class="line">    fclose(out);</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">/* Exact solution */</span></div>
-<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++) u[i] = exp(-nu*4*pi*pi*final_time)*sin(2*pi*x[i]);</div>
-<div class="line">  <span class="keywordflow">if</span> (!strcmp(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>)) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Writing ASCII exact solution file exact.inp\n&quot;</span>);</div>
-<div class="line">      out = fopen(<span class="stringliteral">&quot;exact.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,x[i]);</div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u[i]);                       </div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      fclose(out);</div>
-<div class="line">  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((!strcmp(ip_file_type,<span class="stringliteral">&quot;binary&quot;</span>)) || (!strcmp(ip_file_type,<span class="stringliteral">&quot;bin&quot;</span>))) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Writing binary exact solution file exact.inp\n&quot;</span>);</div>
-<div class="line">    out = fopen(<span class="stringliteral">&quot;exact.inp&quot;</span>,<span class="stringliteral">&quot;wb&quot;</span>);</div>
 <div class="line">    fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
 <div class="line">    fwrite(u,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
 <div class="line">    fclose(out);</div>
@@ -299,35 +293,32 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2>Output: </h2>
-<p>After running the code, there should be 6 output files <b>op_00000.dat</b>, <b>op_00001.dat</b>, ... <b>op_00005.dat</b>; the first one is the solution at \(t=0\) and the final one is the solution at \(t=10\). Since <a class="el" href="a00202.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, separate files are written for solutions at each output time. All the files are ASCII text (<a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>text</em> in <b>solver.inp</b>). In these files, the first column is grid index, the second column is x-coordinate, and the third column is the solution.</p>
-<p>Solutions at t=0,2,4,6,8,10: The following figure is obtained by plotting the solution files. </p>
+<p>After running the code, there should be two solution output files <b>op_00000.dat</b> and <b>op_00001.dat</b>; the first one is the initial solution, and the latter is the final solution. Both these files are ASCII text (<a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>text</em> in <b>solver.inp</b>).</p>
+<p>Final solution at t=2.0: The following figure is obtained by plotting <em>op_00000.dat</em> (initial) and <em>op_00001.dat</em> (final). In both these files, the first column is grid index, the second column is x-coordinate, and the third column is the solution. </p>
 <div class="image">
-<img src="Solution_1DLinearDiffSinePETSc.png" alt="Solution_1DLinearDiffSinePETSc.png"/>
+<img src="Solution_1DLinearAdvDiscPETSc.png" alt="Solution_1DLinearAdvDiscPETSc.png"/>
 </div>
-<p>Since the exact solution is available at the final time , the numerical errors are calculated and reported on screen (see below) as well as <b>errors.dat:</b> </p>
-<div class="fragment"><div class="line">  80    1 5.0000000000000003E-02  1.5137204549144645E-04 1.5144589338237947E-04 1.5243229874191237E-04   4.7143999999999998E-02 4.7794999999999997E-02</div>
-</div><!-- fragment --><p> The numbers are: number of grid points (<a class="el" href="a00202.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors (<a class="el" href="a00205.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00202.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), L1, L2, and L-infinity errors (<a class="el" href="a00202.html#aa40f27cb2afa2db0f0468962be8b3679">HyPar::error</a>), solver wall time (seconds) (i.e., not accounting for initialization, and cleaning up), and total wall time.</p>
 <p>Expected screen output: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00202.html">HyPar</a> - Parallel (MPI) version with 1 processes</div>
+<div class="fragment"><div class="line"><a class="code" href="a00204.html">HyPar</a> - Parallel (MPI) version with 1 processes</div>
 <div class="line">Compiled with PETSc time integration.</div>
 <div class="line">Reading solver inputs from file &quot;solver.inp&quot;.</div>
 <div class="line">    No. of dimensions                          : 1</div>
 <div class="line">    No. of variables                           : 1</div>
-<div class="line">    Domain size                                : 80 </div>
+<div class="line">    Domain size                                : 160 </div>
 <div class="line">    Processes along each dimension             : 1 </div>
 <div class="line">    No. of ghosts pts                          : 3</div>
-<div class="line">    No. of iter.                               : 200</div>
+<div class="line">    No. of iter.                               : 800</div>
 <div class="line">    Restart iteration                          : 0</div>
 <div class="line">    Time integration scheme                    : PETSc </div>
-<div class="line">    Spatial discretization scheme (hyperbolic) : 1</div>
+<div class="line">    Spatial discretization scheme (hyperbolic) : crweno5</div>
 <div class="line">    Split hyperbolic flux term?                : no</div>
 <div class="line">    Interpolation type for hyperbolic term     : characteristic</div>
-<div class="line">    Spatial discretization type   (parabolic ) : conservative-1stage</div>
+<div class="line">    Spatial discretization type   (parabolic ) : nonconservative-1stage</div>
 <div class="line">    Spatial discretization scheme (parabolic ) : 2</div>
-<div class="line">    Time Step                                  : 5.000000E-02</div>
+<div class="line">    Time Step                                  : 2.500000E-03</div>
 <div class="line">    Check for conservation                     : no</div>
-<div class="line">    Screen output iterations                   : 1</div>
-<div class="line">    File output iterations                     : 2</div>
+<div class="line">    Screen output iterations                   : 10</div>
+<div class="line">    File output iterations                     : 99999</div>
 <div class="line">    Initial solution file type                 : ascii</div>
 <div class="line">    Initial solution read mode                 : serial</div>
 <div class="line">    Solution file write mode                   : serial</div>
@@ -338,135 +329,548 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 <div class="line">Allocating data arrays.</div>
 <div class="line">Reading array from ASCII file initial.inp (Serial mode).</div>
 <div class="line">Volume integral of the initial solution:</div>
-<div class="line"> 0:  4.9005938196344800E-17</div>
+<div class="line"> 0:  5.1835172499999993E-01</div>
 <div class="line">Reading boundary conditions from &quot;boundary.inp&quot;.</div>
 <div class="line">  Boundary                       periodic:  Along dimension  0 and face +1</div>
 <div class="line">  Boundary                       periodic:  Along dimension  0 and face -1</div>
 <div class="line">2 boundary condition(s) read.</div>
 <div class="line">Initializing solvers.</div>
+<div class="line">Reading WENO parameters from weno.inp.</div>
 <div class="line">Initializing physics. Model = &quot;linear-advection-diffusion-reaction&quot;</div>
 <div class="line">Reading physical model inputs from file &quot;physics.inp&quot;.</div>
 <div class="line">Setting up PETSc time integration... </div>
-<div class="line"><a class="code" href="a00260.html#a1a054e1b92ee41a9e38926d18c6628bf">SolvePETSc</a>(): Problem type is linear.</div>
+<div class="line"><a class="code" href="a00264.html#a1a054e1b92ee41a9e38926d18c6628bf">SolvePETSc</a>(): Problem type is nonlinear.</div>
 <div class="line">** Starting PETSc time integration **</div>
-<div class="line">0 TS dt 1. time 0.</div>
+<div class="line">0 TS dt 0.0025 time 0.</div>
 <div class="line">Writing solution file op_00000.dat.</div>
-<div class="line">    0 SNES Function norm 4.991102475213e-01 </div>
-<div class="line">      0 KSP Residual norm 4.991102475213e-01 </div>
-<div class="line">      1 KSP Residual norm 6.962037308773e-04 </div>
-<div class="line">      2 KSP Residual norm 1.012950664519e-04 </div>
-<div class="line">      3 KSP Residual norm 2.382699479453e-05 </div>
-<div class="line">      4 KSP Residual norm 8.138614230591e-06 </div>
-<div class="line">      5 KSP Residual norm 3.652734236012e-06 </div>
-<div class="line">      6 KSP Residual norm 1.609840186308e-06 </div>
-<div class="line">      7 KSP Residual norm 7.778170596475e-07 </div>
-<div class="line">    1 SNES Function norm 7.778170600692e-07 </div>
-<div class="line">Iteration:      1  Time: 1.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">1 TS dt 1. time 1.</div>
-<div class="line">    0 SNES Function norm 4.797973159676e-01 </div>
-<div class="line">      0 KSP Residual norm 4.797973159676e-01 </div>
-<div class="line">      1 KSP Residual norm 5.747952694550e-04 </div>
-<div class="line">      2 KSP Residual norm 7.833513076437e-05 </div>
-<div class="line">      3 KSP Residual norm 1.587336220931e-05 </div>
-<div class="line">      4 KSP Residual norm 4.761039329140e-06 </div>
-<div class="line">      5 KSP Residual norm 1.517295253640e-06 </div>
-<div class="line">      6 KSP Residual norm 6.546144957077e-07 </div>
-<div class="line">    1 SNES Function norm 6.546144952484e-07 </div>
-<div class="line">Iteration:      2  Time: 2.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">Writing solution file op_00001.dat.</div>
-<div class="line">2 TS dt 1. time 2.</div>
-<div class="line">    0 SNES Function norm 4.612316933851e-01 </div>
-<div class="line">      0 KSP Residual norm 4.612316933851e-01 </div>
-<div class="line">      1 KSP Residual norm 4.760016707446e-04 </div>
-<div class="line">      2 KSP Residual norm 6.149281763580e-05 </div>
-<div class="line">      3 KSP Residual norm 1.114455833715e-05 </div>
-<div class="line">      4 KSP Residual norm 3.343074822310e-06 </div>
-<div class="line">      5 KSP Residual norm 9.229640917063e-07 </div>
-<div class="line">    1 SNES Function norm 9.229640904854e-07 </div>
-<div class="line">Iteration:      3  Time: 3.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">3 TS dt 1. time 3.</div>
-<div class="line">    0 SNES Function norm 4.433844626305e-01 </div>
-<div class="line">      0 KSP Residual norm 4.433844626305e-01 </div>
-<div class="line">      1 KSP Residual norm 3.951724854780e-04 </div>
-<div class="line">      2 KSP Residual norm 4.870300472616e-05 </div>
-<div class="line">      3 KSP Residual norm 8.299367349374e-06 </div>
-<div class="line">      4 KSP Residual norm 2.673156368775e-06 </div>
-<div class="line">      5 KSP Residual norm 7.404350895583e-07 </div>
-<div class="line">    1 SNES Function norm 7.404350894310e-07 </div>
-<div class="line">Iteration:      4  Time: 4.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">Writing solution file op_00002.dat.</div>
-<div class="line">4 TS dt 1. time 4.</div>
-<div class="line">    0 SNES Function norm 4.262278256223e-01 </div>
-<div class="line">      0 KSP Residual norm 4.262278256223e-01 </div>
-<div class="line">      1 KSP Residual norm 3.287185349798e-04 </div>
-<div class="line">      2 KSP Residual norm 3.878782382748e-05 </div>
-<div class="line">      3 KSP Residual norm 6.181508465594e-06 </div>
-<div class="line">      4 KSP Residual norm 2.110463908832e-06 </div>
-<div class="line">      5 KSP Residual norm 5.886855585289e-07 </div>
-<div class="line">    1 SNES Function norm 5.886855576014e-07 </div>
-<div class="line">Iteration:      5  Time: 5.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">5 TS dt 1. time 5.</div>
-<div class="line">    0 SNES Function norm 4.097350599672e-01 </div>
-<div class="line">      0 KSP Residual norm 4.097350599672e-01 </div>
-<div class="line">      1 KSP Residual norm 2.739121699615e-04 </div>
-<div class="line">      2 KSP Residual norm 3.104320623701e-05 </div>
-<div class="line">      3 KSP Residual norm 4.612245458924e-06 </div>
-<div class="line">      4 KSP Residual norm 1.636117384369e-06 </div>
-<div class="line">      5 KSP Residual norm 4.628709620414e-07 </div>
-<div class="line">    1 SNES Function norm 4.628709605356e-07 </div>
-<div class="line">Iteration:      6  Time: 6.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">Writing solution file op_00003.dat.</div>
-<div class="line">6 TS dt 1. time 6.</div>
-<div class="line">    0 SNES Function norm 3.938804773094e-01 </div>
-<div class="line">      0 KSP Residual norm 3.938804773094e-01 </div>
-<div class="line">      1 KSP Residual norm 2.285909636229e-04 </div>
-<div class="line">      2 KSP Residual norm 2.495067888716e-05 </div>
-<div class="line">      3 KSP Residual norm 3.457387164788e-06 </div>
-<div class="line">      4 KSP Residual norm 1.240113460129e-06 </div>
-<div class="line">      5 KSP Residual norm 3.615990116765e-07 </div>
-<div class="line">    1 SNES Function norm 3.615990117171e-07 </div>
-<div class="line">Iteration:      7  Time: 7.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">7 TS dt 1. time 7.</div>
-<div class="line">    0 SNES Function norm 3.786393833109e-01 </div>
-<div class="line">      0 KSP Residual norm 3.786393833109e-01 </div>
-<div class="line">      1 KSP Residual norm 1.910271538593e-04 </div>
-<div class="line">      2 KSP Residual norm 2.012617663398e-05 </div>
-<div class="line">      3 KSP Residual norm 2.615125662104e-06 </div>
-<div class="line">      4 KSP Residual norm 9.189167436275e-07 </div>
-<div class="line">    1 SNES Function norm 9.189167435451e-07 </div>
-<div class="line">Iteration:      8  Time: 8.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">Writing solution file op_00004.dat.</div>
-<div class="line">8 TS dt 1. time 8.</div>
-<div class="line">    0 SNES Function norm 3.639880391862e-01 </div>
-<div class="line">      0 KSP Residual norm 3.639880391862e-01 </div>
-<div class="line">      1 KSP Residual norm 1.600091730000e-04 </div>
-<div class="line">      2 KSP Residual norm 1.630352171399e-05 </div>
-<div class="line">      3 KSP Residual norm 3.031522323873e-06 </div>
-<div class="line">      4 KSP Residual norm 1.236455894571e-06 </div>
-<div class="line">      5 KSP Residual norm 3.333920205313e-07 </div>
-<div class="line">    1 SNES Function norm 3.333920205967e-07 </div>
-<div class="line">Iteration:      9  Time: 9.000E+00  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">9 TS dt 1. time 9.</div>
-<div class="line">    0 SNES Function norm 3.499036247089e-01 </div>
-<div class="line">      0 KSP Residual norm 3.499036247089e-01 </div>
-<div class="line">      1 KSP Residual norm 1.340160943955e-04 </div>
-<div class="line">      2 KSP Residual norm 1.301027023463e-05 </div>
-<div class="line">      3 KSP Residual norm 2.093675619948e-06 </div>
-<div class="line">      4 KSP Residual norm 8.678946259494e-07 </div>
-<div class="line">    1 SNES Function norm 8.678946260196e-07 </div>
-<div class="line">Iteration:     10  Time: 1.000E+01  Max CFL: 0.000E+00  Max Diff. No.: 6.400E+00  </div>
-<div class="line">Writing solution file op_00005.dat.</div>
-<div class="line">10 TS dt 1. time 10.</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   0 accepted t=0          + 2.500e-03 wlte=0.0173 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=5.066e-03 </div>
+<div class="line">1 TS dt 0.00506554 time 0.0025</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   1 accepted t=0.0025     + 5.066e-03 wlte= 0.11 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.088e-03 </div>
+<div class="line">2 TS dt 0.0070876 time 0.00756554</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   2 accepted t=0.00756554 + 7.088e-03 wlte=0.934 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.466e-03 </div>
+<div class="line">3 TS dt 0.00646637 time 0.0146531</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   3 rejected t=0.0146531  + 6.466e-03 wlte= 1.55 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=5.329e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   3 accepted t=0.0146531  + 5.329e-03 wlte=0.688 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=5.169e-03 </div>
+<div class="line">4 TS dt 0.00516911 time 0.019982</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   4 accepted t=0.019982   + 5.169e-03 wlte=0.303 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=5.906e-03 </div>
+<div class="line">5 TS dt 0.00590553 time 0.0251511</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   5 accepted t=0.0251511  + 5.906e-03 wlte=0.284 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.835e-03 </div>
+<div class="line">6 TS dt 0.00683528 time 0.0310566</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   6 rejected t=0.0310566  + 6.835e-03 wlte= 1.02 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.127e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   6 accepted t=0.0310566  + 6.127e-03 wlte=0.588 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.133e-03 </div>
+<div class="line">7 TS dt 0.00613265 time 0.0371834</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   7 accepted t=0.0371834  + 6.133e-03 wlte=0.177 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.803e-03 </div>
+<div class="line">8 TS dt 0.00780327 time 0.0433161</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   8 rejected t=0.0433161  + 7.803e-03 wlte= 1.65 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.352e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   8 accepted t=0.0433161  + 6.352e-03 wlte=0.697 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.144e-03 </div>
+<div class="line">9 TS dt 0.0061439 time 0.0496676</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step   9 accepted t=0.0496676  + 6.144e-03 wlte=0.216 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.515e-03 </div>
+<div class="line">Iteration:     10  Time: 5.581E-02  Max CFL: 6.012E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">10 TS dt 0.00751542 time 0.0558115</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  10 rejected t=0.0558115  + 7.515e-03 wlte= 1.44 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.291e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  10 accepted t=0.0558115  + 6.291e-03 wlte=0.542 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.399e-03 </div>
+<div class="line">11 TS dt 0.00639898 time 0.0621025</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  11 accepted t=0.0621025  + 6.399e-03 wlte=0.365 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.044e-03 </div>
+<div class="line">12 TS dt 0.00704445 time 0.0685015</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  12 rejected t=0.0685015  + 7.044e-03 wlte= 1.19 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.119e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  12 accepted t=0.0685015  + 6.119e-03 wlte=0.463 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.425e-03 </div>
+<div class="line">13 TS dt 0.00642491 time 0.0746205</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  13 accepted t=0.0746205  + 6.425e-03 wlte=0.333 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.203e-03 </div>
+<div class="line">14 TS dt 0.00720298 time 0.0810454</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  14 rejected t=0.0810454  + 7.203e-03 wlte= 1.06 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.413e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  14 accepted t=0.0810454  + 6.413e-03 wlte=0.503 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.623e-03 </div>
+<div class="line">15 TS dt 0.00662328 time 0.0874589</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  15 accepted t=0.0874589  + 6.623e-03 wlte=0.411 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.121e-03 </div>
+<div class="line">16 TS dt 0.00712122 time 0.0940822</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  16 accepted t=0.0940822  + 7.121e-03 wlte=0.802 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.698e-03 </div>
+<div class="line">17 TS dt 0.00669756 time 0.101203</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  17 accepted t=0.101203   + 6.698e-03 wlte= 0.45 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.073e-03 </div>
+<div class="line">18 TS dt 0.00707282 time 0.107901</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  18 accepted t=0.107901   + 7.073e-03 wlte=0.735 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.769e-03 </div>
+<div class="line">19 TS dt 0.00676928 time 0.114974</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  19 accepted t=0.114974   + 6.769e-03 wlte=0.343 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.547e-03 </div>
+<div class="line">Iteration:     20  Time: 1.217E-01  Max CFL: 6.038E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">20 TS dt 0.00754722 time 0.121743</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  20 rejected t=0.121743   + 7.547e-03 wlte= 1.02 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.762e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  20 accepted t=0.121743   + 6.762e-03 wlte=0.613 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.712e-03 </div>
+<div class="line">21 TS dt 0.00671215 time 0.128505</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  21 accepted t=0.128505   + 6.712e-03 wlte=0.276 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.817e-03 </div>
+<div class="line">22 TS dt 0.00781688 time 0.135217</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  22 rejected t=0.135217   + 7.817e-03 wlte= 1.13 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.860e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  22 accepted t=0.135217   + 6.860e-03 wlte=0.592 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=6.857e-03 </div>
+<div class="line">23 TS dt 0.00685712 time 0.142077</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  23 accepted t=0.142077   + 6.857e-03 wlte=  0.3 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.852e-03 </div>
+<div class="line">24 TS dt 0.00785183 time 0.148934</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  24 accepted t=0.148934   + 7.852e-03 wlte=0.851 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.298e-03 </div>
+<div class="line">25 TS dt 0.00729775 time 0.156786</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  25 accepted t=0.156786   + 7.298e-03 wlte=0.456 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.684e-03 </div>
+<div class="line">26 TS dt 0.00768424 time 0.164084</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  26 accepted t=0.164084   + 7.684e-03 wlte=0.593 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.677e-03 </div>
+<div class="line">27 TS dt 0.00767715 time 0.171768</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  27 accepted t=0.171768   + 7.677e-03 wlte=0.839 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.156e-03 </div>
+<div class="line">28 TS dt 0.00715603 time 0.179445</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  28 accepted t=0.179445   + 7.156e-03 wlte=0.551 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.256e-03 </div>
+<div class="line">29 TS dt 0.00725564 time 0.186601</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  29 accepted t=0.186601   + 7.256e-03 wlte=0.347 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.068e-03 </div>
+<div class="line">Iteration:     30  Time: 1.939E-01  Max CFL: 6.455E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">30 TS dt 0.00806816 time 0.193857</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  30 accepted t=0.193857   + 8.068e-03 wlte=0.844 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.511e-03 </div>
+<div class="line">31 TS dt 0.00751101 time 0.201925</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  31 accepted t=0.201925   + 7.511e-03 wlte=0.448 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.936e-03 </div>
+<div class="line">32 TS dt 0.00793625 time 0.209436</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  32 accepted t=0.209436   + 7.936e-03 wlte=0.812 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.446e-03 </div>
+<div class="line">33 TS dt 0.00744619 time 0.217372</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  33 accepted t=0.217372   + 7.446e-03 wlte=0.543 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.572e-03 </div>
+<div class="line">34 TS dt 0.00757198 time 0.224818</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  34 accepted t=0.224818   + 7.572e-03 wlte=0.587 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.580e-03 </div>
+<div class="line">35 TS dt 0.00758033 time 0.23239</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  35 accepted t=0.23239    + 7.580e-03 wlte=0.397 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.208e-03 </div>
+<div class="line">36 TS dt 0.00820772 time 0.239971</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  36 accepted t=0.239971   + 8.208e-03 wlte=0.664 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.016e-03 </div>
+<div class="line">37 TS dt 0.00801625 time 0.248178</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  37 accepted t=0.248178   + 8.016e-03 wlte=0.759 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.624e-03 </div>
+<div class="line">38 TS dt 0.00762404 time 0.256195</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  38 accepted t=0.256195   + 7.624e-03 wlte=0.426 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.137e-03 </div>
+<div class="line">39 TS dt 0.0081367 time 0.263819</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  39 accepted t=0.263819   + 8.137e-03 wlte= 0.61 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.085e-03 </div>
+<div class="line">Iteration:     40  Time: 2.720E-01  Max CFL: 6.468E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">40 TS dt 0.00808472 time 0.271955</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  40 accepted t=0.271955   + 8.085e-03 wlte= 0.56 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.171e-03 </div>
+<div class="line">41 TS dt 0.0081707 time 0.28004</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  41 accepted t=0.28004    + 8.171e-03 wlte=0.826 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.641e-03 </div>
+<div class="line">42 TS dt 0.00764112 time 0.288211</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  42 accepted t=0.288211   + 7.641e-03 wlte=0.473 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.987e-03 </div>
+<div class="line">43 TS dt 0.0079867 time 0.295852</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  43 accepted t=0.295852   + 7.987e-03 wlte=0.582 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.010e-03 </div>
+<div class="line">44 TS dt 0.00801019 time 0.303839</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  44 accepted t=0.303839   + 8.010e-03 wlte= 0.51 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.250e-03 </div>
+<div class="line">45 TS dt 0.0082496 time 0.311849</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  45 accepted t=0.311849   + 8.250e-03 wlte=0.816 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.733e-03 </div>
+<div class="line">46 TS dt 0.00773309 time 0.320098</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  46 accepted t=0.320098   + 7.733e-03 wlte=0.439 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.206e-03 </div>
+<div class="line">47 TS dt 0.00820607 time 0.327832</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  47 accepted t=0.327832   + 8.206e-03 wlte=0.607 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.161e-03 </div>
+<div class="line">48 TS dt 0.00816091 time 0.336038</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  48 accepted t=0.336038   + 8.161e-03 wlte=0.683 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.926e-03 </div>
+<div class="line">49 TS dt 0.00792618 time 0.344199</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  49 accepted t=0.344199   + 7.926e-03 wlte=0.526 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.112e-03 </div>
+<div class="line">Iteration:     50  Time: 3.521E-01  Max CFL: 6.490E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">50 TS dt 0.00811207 time 0.352125</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  50 accepted t=0.352125   + 8.112e-03 wlte=0.513 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.344e-03 </div>
+<div class="line">51 TS dt 0.00834441 time 0.360237</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  51 accepted t=0.360237   + 8.344e-03 wlte= 0.78 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.893e-03 </div>
+<div class="line">52 TS dt 0.00789322 time 0.368581</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  52 accepted t=0.368581   + 7.893e-03 wlte= 0.37 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.667e-03 </div>
+<div class="line">53 TS dt 0.00866719 time 0.376474</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  53 accepted t=0.376474   + 8.667e-03 wlte=0.798 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.161e-03 </div>
+<div class="line">54 TS dt 0.00816118 time 0.385142</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  54 accepted t=0.385142   + 8.161e-03 wlte=0.584 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.180e-03 </div>
+<div class="line">55 TS dt 0.00817959 time 0.393303</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  55 accepted t=0.393303   + 8.180e-03 wlte=0.427 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.728e-03 </div>
+<div class="line">56 TS dt 0.00872808 time 0.401482</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  56 accepted t=0.401482   + 8.728e-03 wlte=0.822 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.169e-03 </div>
+<div class="line">57 TS dt 0.00816921 time 0.41021</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  57 accepted t=0.41021    + 8.169e-03 wlte=0.642 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.033e-03 </div>
+<div class="line">58 TS dt 0.00803318 time 0.41838</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  58 accepted t=0.41838    + 8.033e-03 wlte=0.382 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.766e-03 </div>
+<div class="line">59 TS dt 0.00876572 time 0.426413</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  59 accepted t=0.426413   + 8.766e-03 wlte=0.903 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.052e-03 </div>
+<div class="line">Iteration:     60  Time: 4.352E-01  Max CFL: 6.442E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">60 TS dt 0.00805224 time 0.435179</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  60 accepted t=0.435179   + 8.052e-03 wlte=0.566 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.120e-03 </div>
+<div class="line">61 TS dt 0.00812007 time 0.443231</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  61 accepted t=0.443231   + 8.120e-03 wlte= 0.41 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.733e-03 </div>
+<div class="line">62 TS dt 0.00873303 time 0.451351</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  62 accepted t=0.451351   + 8.733e-03 wlte=0.894 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.038e-03 </div>
+<div class="line">63 TS dt 0.00803796 time 0.460084</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  63 accepted t=0.460084   + 8.038e-03 wlte=0.551 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.150e-03 </div>
+<div class="line">64 TS dt 0.00815048 time 0.468122</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  64 accepted t=0.468122   + 8.150e-03 wlte=0.431 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.681e-03 </div>
+<div class="line">65 TS dt 0.00868096 time 0.476272</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  65 accepted t=0.476272   + 8.681e-03 wlte=0.878 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.019e-03 </div>
+<div class="line">66 TS dt 0.00801895 time 0.484953</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  66 accepted t=0.484953   + 8.019e-03 wlte= 0.51 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.257e-03 </div>
+<div class="line">67 TS dt 0.00825745 time 0.492972</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  67 accepted t=0.492972   + 8.257e-03 wlte=0.463 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.669e-03 </div>
+<div class="line">68 TS dt 0.00866893 time 0.50123</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  68 accepted t=0.50123    + 8.669e-03 wlte=0.868 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.027e-03 </div>
+<div class="line">69 TS dt 0.00802671 time 0.509899</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  69 accepted t=0.509899   + 8.027e-03 wlte=0.479 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.371e-03 </div>
+<div class="line">Iteration:     70  Time: 5.179E-01  Max CFL: 6.697E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">70 TS dt 0.00837118 time 0.517925</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  70 accepted t=0.517925   + 8.371e-03 wlte=0.488 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.698e-03 </div>
+<div class="line">71 TS dt 0.00869775 time 0.526297</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  71 accepted t=0.526297   + 8.698e-03 wlte=0.865 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.058e-03 </div>
+<div class="line">72 TS dt 0.00805792 time 0.534994</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  72 accepted t=0.534994   + 8.058e-03 wlte=0.464 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.457e-03 </div>
+<div class="line">73 TS dt 0.00845685 time 0.543052</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  73 accepted t=0.543052   + 8.457e-03 wlte=0.487 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.789e-03 </div>
+<div class="line">74 TS dt 0.00878873 time 0.551509</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  74 accepted t=0.551509   + 8.789e-03 wlte=0.875 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.123e-03 </div>
+<div class="line">75 TS dt 0.00812314 time 0.560298</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  75 accepted t=0.560298   + 8.123e-03 wlte=0.484 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.454e-03 </div>
+<div class="line">76 TS dt 0.00845402 time 0.568421</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  76 accepted t=0.568421   + 8.454e-03 wlte=0.414 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.077e-03 </div>
+<div class="line">77 TS dt 0.00907666 time 0.576875</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  77 accepted t=0.576875   + 9.077e-03 wlte=0.944 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.263e-03 </div>
+<div class="line">78 TS dt 0.00826346 time 0.585952</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  78 accepted t=0.585952   + 8.263e-03 wlte=0.601 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.235e-03 </div>
+<div class="line">79 TS dt 0.00823498 time 0.594215</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  79 accepted t=0.594215   + 8.235e-03 wlte=0.416 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.833e-03 </div>
+<div class="line">Iteration:     80  Time: 6.025E-01  Max CFL: 7.066E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">80 TS dt 0.00883291 time 0.60245</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  80 accepted t=0.60245    + 8.833e-03 wlte=0.789 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.335e-03 </div>
+<div class="line">81 TS dt 0.00833548 time 0.611283</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  81 accepted t=0.611283   + 8.335e-03 wlte=0.627 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.235e-03 </div>
+<div class="line">82 TS dt 0.00823501 time 0.619618</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  82 accepted t=0.619618   + 8.235e-03 wlte=0.349 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.148e-03 </div>
+<div class="line">83 TS dt 0.00914779 time 0.627853</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  83 accepted t=0.627853   + 9.148e-03 wlte=0.871 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.464e-03 </div>
+<div class="line">84 TS dt 0.00846362 time 0.637001</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  84 accepted t=0.637001   + 8.464e-03 wlte=0.762 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.042e-03 </div>
+<div class="line">85 TS dt 0.00804187 time 0.645465</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  85 accepted t=0.645465   + 8.042e-03 wlte=0.265 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.440e-03 </div>
+<div class="line">86 TS dt 0.00944031 time 0.653507</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  86 accepted t=0.653507   + 9.440e-03 wlte=0.904 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.670e-03 </div>
+<div class="line">87 TS dt 0.00867005 time 0.662947</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  87 accepted t=0.662947   + 8.670e-03 wlte=0.937 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.906e-03 </div>
+<div class="line">88 TS dt 0.00790573 time 0.671617</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  88 accepted t=0.671617   + 7.906e-03 wlte=0.246 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.420e-03 </div>
+<div class="line">89 TS dt 0.00942025 time 0.679523</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  89 accepted t=0.679523   + 9.420e-03 wlte=0.678 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.162e-03 </div>
+<div class="line">Iteration:     90  Time: 6.889E-01  Max CFL: 7.330E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">90 TS dt 0.00916233 time 0.688943</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  90 rejected t=0.688943   + 9.162e-03 wlte= 1.25 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.887e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  90 accepted t=0.688943   + 7.887e-03 wlte=0.499 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.156e-03 </div>
+<div class="line">91 TS dt 0.00815632 time 0.69683</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  91 accepted t=0.69683    + 8.156e-03 wlte=0.297 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.361e-03 </div>
+<div class="line">92 TS dt 0.00936119 time 0.704986</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  92 accepted t=0.704986   + 9.361e-03 wlte=0.626 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.253e-03 </div>
+<div class="line">93 TS dt 0.0092532 time 0.714348</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  93 rejected t=0.714348   + 9.253e-03 wlte= 1.23 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.994e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  93 accepted t=0.714348   + 7.994e-03 wlte=0.516 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.211e-03 </div>
+<div class="line">94 TS dt 0.00821108 time 0.722341</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  94 accepted t=0.722341   + 8.211e-03 wlte=  0.3 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.399e-03 </div>
+<div class="line">95 TS dt 0.00939935 time 0.730552</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  95 accepted t=0.730552   + 9.399e-03 wlte=0.629 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.282e-03 </div>
+<div class="line">96 TS dt 0.00928243 time 0.739952</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  96 rejected t=0.739952   + 9.282e-03 wlte= 1.02 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.318e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  96 accepted t=0.739952   + 8.318e-03 wlte=0.576 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.360e-03 </div>
+<div class="line">97 TS dt 0.00836033 time 0.74827</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  97 accepted t=0.74827    + 8.360e-03 wlte=0.351 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.278e-03 </div>
+<div class="line">98 TS dt 0.00927795 time 0.756631</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  98 accepted t=0.756631   + 9.278e-03 wlte=0.613 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.209e-03 </div>
+<div class="line">99 TS dt 0.00920911 time 0.765908</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step  99 accepted t=0.765908   + 9.209e-03 wlte=0.814 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.637e-03 </div>
+<div class="line">Iteration:    100  Time: 7.751E-01  Max CFL: 6.910E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">100 TS dt 0.0086372 time 0.775118</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 100 accepted t=0.775118   + 8.637e-03 wlte=0.768 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.194e-03 </div>
+<div class="line">101 TS dt 0.00819387 time 0.783755</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 101 accepted t=0.783755   + 8.194e-03 wlte=0.252 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.712e-03 </div>
+<div class="line">102 TS dt 0.00971155 time 0.791949</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 102 accepted t=0.791949   + 9.712e-03 wlte=0.905 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.916e-03 </div>
+<div class="line">103 TS dt 0.00891632 time 0.80166</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 103 accepted t=0.80166    + 8.916e-03 wlte=0.932 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.138e-03 </div>
+<div class="line">104 TS dt 0.00813825 time 0.810577</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 104 accepted t=0.810577   + 8.138e-03 wlte=0.288 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.398e-03 </div>
+<div class="line">105 TS dt 0.00939805 time 0.818715</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 105 accepted t=0.818715   + 9.398e-03 wlte=0.558 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.505e-03 </div>
+<div class="line">106 TS dt 0.00950465 time 0.828113</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 106 rejected t=0.828113   + 9.505e-03 wlte= 1.07 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.440e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 106 accepted t=0.828113   + 8.440e-03 wlte=0.562 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.524e-03 </div>
+<div class="line">107 TS dt 0.00852377 time 0.836553</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 107 accepted t=0.836553   + 8.524e-03 wlte=0.415 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.147e-03 </div>
+<div class="line">108 TS dt 0.00914732 time 0.845076</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 108 accepted t=0.845076   + 9.147e-03 wlte=0.498 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.463e-03 </div>
+<div class="line">109 TS dt 0.00946265 time 0.854224</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 109 accepted t=0.854224   + 9.463e-03 wlte=0.838 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.824e-03 </div>
+<div class="line">Iteration:    110  Time: 8.637E-01  Max CFL: 7.059E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">110 TS dt 0.00882376 time 0.863686</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 110 accepted t=0.863686   + 8.824e-03 wlte=0.889 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.131e-03 </div>
+<div class="line">111 TS dt 0.00813051 time 0.87251</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 111 accepted t=0.87251    + 8.131e-03 wlte=0.242 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.721e-03 </div>
+<div class="line">112 TS dt 0.00972072 time 0.880641</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 112 accepted t=0.880641   + 9.721e-03 wlte=0.728 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.321e-03 </div>
+<div class="line">113 TS dt 0.00932139 time 0.890361</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 113 rejected t=0.890361   + 9.321e-03 wlte= 1.04 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.327e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 113 accepted t=0.890361   + 8.327e-03 wlte=0.535 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.492e-03 </div>
+<div class="line">114 TS dt 0.0084919 time 0.898689</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 114 accepted t=0.898689   + 8.492e-03 wlte=0.362 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.365e-03 </div>
+<div class="line">115 TS dt 0.00936546 time 0.90718</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 115 accepted t=0.90718    + 9.365e-03 wlte=0.532 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.561e-03 </div>
+<div class="line">116 TS dt 0.00956149 time 0.916546</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 116 accepted t=0.916546   + 9.561e-03 wlte=0.958 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.680e-03 </div>
+<div class="line">117 TS dt 0.00867974 time 0.926107</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 117 accepted t=0.926107   + 8.680e-03 wlte=0.677 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.446e-03 </div>
+<div class="line">118 TS dt 0.00844612 time 0.934787</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 118 accepted t=0.934787   + 8.446e-03 wlte=0.275 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.841e-03 </div>
+<div class="line">119 TS dt 0.00984083 time 0.943233</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 119 accepted t=0.943233   + 9.841e-03 wlte= 0.79 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.284e-03 </div>
+<div class="line">Iteration:    120  Time: 9.531E-01  Max CFL: 7.427E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">120 TS dt 0.0092838 time 0.953074</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 120 rejected t=0.953074   + 9.284e-03 wlte=    1 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.350e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 120 accepted t=0.953074   + 8.350e-03 wlte=0.531 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.530e-03 </div>
+<div class="line">121 TS dt 0.00852983 time 0.961424</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 121 accepted t=0.961424   + 8.530e-03 wlte=0.358 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.425e-03 </div>
+<div class="line">122 TS dt 0.00942527 time 0.969954</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 122 accepted t=0.969954   + 9.425e-03 wlte=0.522 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.661e-03 </div>
+<div class="line">123 TS dt 0.00966078 time 0.979379</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 123 accepted t=0.979379   + 9.661e-03 wlte=0.985 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.722e-03 </div>
+<div class="line">124 TS dt 0.00872168 time 0.98904</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 124 accepted t=0.98904    + 8.722e-03 wlte=0.681 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.477e-03 </div>
+<div class="line">125 TS dt 0.00847722 time 0.997762</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 125 accepted t=0.997762   + 8.477e-03 wlte=0.291 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.765e-03 </div>
+<div class="line">126 TS dt 0.00976511 time 1.00624</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 126 accepted t=1.00624    + 9.765e-03 wlte=0.693 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.457e-03 </div>
+<div class="line">127 TS dt 0.00945724 time 1.016</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 127 rejected t=1.016      + 9.457e-03 wlte=  1.1 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.346e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 127 accepted t=1.016      + 8.346e-03 wlte=0.502 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.622e-03 </div>
+<div class="line">128 TS dt 0.0086224 time 1.02435</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 128 accepted t=1.02435    + 8.622e-03 wlte=0.369 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.474e-03 </div>
+<div class="line">129 TS dt 0.00947351 time 1.03297</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 129 accepted t=1.03297    + 9.474e-03 wlte=0.517 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.729e-03 </div>
+<div class="line">Iteration:    130  Time: 1.042E+00  Max CFL: 7.784E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">130 TS dt 0.00972939 time 1.04245</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 130 accepted t=1.04245    + 9.729e-03 wlte=0.935 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.875e-03 </div>
+<div class="line">131 TS dt 0.00887543 time 1.05218</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 131 accepted t=1.05218    + 8.875e-03 wlte=0.775 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.406e-03 </div>
+<div class="line">132 TS dt 0.00840562 time 1.06105</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 132 accepted t=1.06105    + 8.406e-03 wlte=0.291 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.687e-03 </div>
+<div class="line">133 TS dt 0.00968664 time 1.06946</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 133 accepted t=1.06946    + 9.687e-03 wlte=0.589 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.691e-03 </div>
+<div class="line">134 TS dt 0.00969099 time 1.07914</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 134 rejected t=1.07914    + 9.691e-03 wlte= 1.17 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.458e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 134 accepted t=1.07914    + 8.458e-03 wlte=0.489 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.784e-03 </div>
+<div class="line">135 TS dt 0.00878438 time 1.0876</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 135 accepted t=1.0876     + 8.784e-03 wlte=0.425 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.381e-03 </div>
+<div class="line">136 TS dt 0.00938057 time 1.09639</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 136 accepted t=1.09639    + 9.381e-03 wlte=0.468 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.829e-03 </div>
+<div class="line">137 TS dt 0.00982868 time 1.10577</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 137 accepted t=1.10577    + 9.829e-03 wlte=0.861 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.114e-03 </div>
+<div class="line">138 TS dt 0.0091143 time 1.11559</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 138 accepted t=1.11559    + 9.114e-03 wlte=0.949 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.289e-03 </div>
+<div class="line">139 TS dt 0.00828863 time 1.12471</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 139 accepted t=1.12471    + 8.289e-03 wlte=0.288 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.570e-03 </div>
+<div class="line">Iteration:    140  Time: 1.133E+00  Max CFL: 7.656E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">140 TS dt 0.00956985 time 1.133</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 140 accepted t=1.133      + 9.570e-03 wlte=0.501 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.891e-03 </div>
+<div class="line">141 TS dt 0.00989142 time 1.14257</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 141 rejected t=1.14257    + 9.891e-03 wlte= 1.04 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.830e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 141 accepted t=1.14257    + 8.830e-03 wlte=0.528 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.031e-03 </div>
+<div class="line">142 TS dt 0.00903127 time 1.1514</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 142 accepted t=1.1514     + 9.031e-03 wlte=0.636 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.898e-03 </div>
+<div class="line">143 TS dt 0.00889847 time 1.16043</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 143 accepted t=1.16043    + 8.898e-03 wlte=0.307 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.014e-02 </div>
+<div class="line">144 TS dt 0.0101407 time 1.16933</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 144 accepted t=1.16933    + 1.014e-02 wlte=0.851 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.427e-03 </div>
+<div class="line">145 TS dt 0.00942654 time 1.17947</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 145 accepted t=1.17947    + 9.427e-03 wlte=0.824 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.819e-03 </div>
+<div class="line">146 TS dt 0.0088186 time 1.1889</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 146 accepted t=1.1889     + 8.819e-03 wlte=0.471 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.225e-03 </div>
+<div class="line">147 TS dt 0.00922463 time 1.19771</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 147 accepted t=1.19771    + 9.225e-03 wlte=0.381 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.007e-02 </div>
+<div class="line">148 TS dt 0.0100685 time 1.20694</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 148 accepted t=1.20694    + 1.007e-02 wlte=0.798 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.480e-03 </div>
+<div class="line">149 TS dt 0.00948007 time 1.21701</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 149 rejected t=1.21701    + 9.480e-03 wlte= 2.01 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.422e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 149 accepted t=1.21701    + 7.422e-03 wlte=0.278 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.632e-03 </div>
+<div class="line">Iteration:    150  Time: 1.224E+00  Max CFL: 6.906E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">150 TS dt 0.00863224 time 1.22443</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 150 accepted t=1.22443    + 8.632e-03 wlte=0.298 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.898e-03 </div>
+<div class="line">151 TS dt 0.00989822 time 1.23306</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 151 accepted t=1.23306    + 9.898e-03 wlte=0.673 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.641e-03 </div>
+<div class="line">152 TS dt 0.00964132 time 1.24296</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 152 accepted t=1.24296    + 9.641e-03 wlte=0.855 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.952e-03 </div>
+<div class="line">153 TS dt 0.00895247 time 1.2526</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 153 accepted t=1.2526     + 8.952e-03 wlte=0.852 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.320e-03 </div>
+<div class="line">154 TS dt 0.00831964 time 1.26155</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 154 accepted t=1.26155    + 8.320e-03 wlte=0.205 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.028e-02 </div>
+<div class="line">155 TS dt 0.0102844 time 1.26987</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 155 accepted t=1.26987    + 1.028e-02 wlte= 0.89 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.475e-03 </div>
+<div class="line">156 TS dt 0.00947504 time 1.28016</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 156 accepted t=1.28016    + 9.475e-03 wlte= 0.78 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.962e-03 </div>
+<div class="line">157 TS dt 0.0089616 time 1.28963</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 157 accepted t=1.28963    + 8.962e-03 wlte=0.795 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.444e-03 </div>
+<div class="line">158 TS dt 0.00844362 time 1.29859</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 158 accepted t=1.29859    + 8.444e-03 wlte= 0.22 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.029e-02 </div>
+<div class="line">159 TS dt 0.0102896 time 1.30704</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 159 accepted t=1.30704    + 1.029e-02 wlte=0.941 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.373e-03 </div>
+<div class="line">Iteration:    160  Time: 1.317E+00  Max CFL: 7.499E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">160 TS dt 0.00937326 time 1.31733</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 160 accepted t=1.31733    + 9.373e-03 wlte=0.795 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.832e-03 </div>
+<div class="line">161 TS dt 0.00883156 time 1.3267</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 161 accepted t=1.3267     + 8.832e-03 wlte=0.601 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.800e-03 </div>
+<div class="line">162 TS dt 0.00880007 time 1.33553</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 162 accepted t=1.33553    + 8.800e-03 wlte= 0.29 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.015e-02 </div>
+<div class="line">163 TS dt 0.0101469 time 1.34433</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 163 accepted t=1.34433    + 1.015e-02 wlte=0.907 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.312e-03 </div>
+<div class="line">164 TS dt 0.00931206 time 1.35448</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 164 accepted t=1.35448    + 9.312e-03 wlte=0.869 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.620e-03 </div>
+<div class="line">165 TS dt 0.00861964 time 1.36379</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 165 accepted t=1.36379    + 8.620e-03 wlte=0.397 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.330e-03 </div>
+<div class="line">166 TS dt 0.00932992 time 1.37241</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 166 accepted t=1.37241    + 9.330e-03 wlte= 0.39 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.014e-02 </div>
+<div class="line">167 TS dt 0.0101359 time 1.38174</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 167 accepted t=1.38174    + 1.014e-02 wlte=0.887 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.344e-03 </div>
+<div class="line">168 TS dt 0.00934411 time 1.39188</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 168 accepted t=1.39188    + 9.344e-03 wlte=0.781 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.835e-03 </div>
+<div class="line">169 TS dt 0.00883548 time 1.40122</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 169 accepted t=1.40122    + 8.835e-03 wlte= 0.37 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.704e-03 </div>
+<div class="line">Iteration:    170  Time: 1.410E+00  Max CFL: 7.763E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">170 TS dt 0.0097038 time 1.41006</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 170 accepted t=1.41006    + 9.704e-03 wlte=0.445 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.027e-02 </div>
+<div class="line">171 TS dt 0.0102682 time 1.41976</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 171 rejected t=1.41976    + 1.027e-02 wlte= 1.71 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.303e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 171 accepted t=1.41976    + 8.303e-03 wlte=0.352 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.209e-03 </div>
+<div class="line">172 TS dt 0.00920851 time 1.42806</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 172 accepted t=1.42806    + 9.209e-03 wlte=0.724 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.842e-03 </div>
+<div class="line">173 TS dt 0.00884151 time 1.43727</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 173 accepted t=1.43727    + 8.842e-03 wlte=0.279 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.027e-02 </div>
+<div class="line">174 TS dt 0.0102709 time 1.44611</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 174 accepted t=1.44611    + 1.027e-02 wlte= 0.76 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.765e-03 </div>
+<div class="line">175 TS dt 0.00976493 time 1.45638</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 175 accepted t=1.45638    + 9.765e-03 wlte=0.824 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.134e-03 </div>
+<div class="line">176 TS dt 0.00913429 time 1.46615</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 176 accepted t=1.46615    + 9.134e-03 wlte=0.841 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.511e-03 </div>
+<div class="line">177 TS dt 0.00851107 time 1.47528</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 177 accepted t=1.47528    + 8.511e-03 wlte=0.217 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.040e-02 </div>
+<div class="line">178 TS dt 0.010398 time 1.48379</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 178 accepted t=1.48379    + 1.040e-02 wlte=0.798 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.791e-03 </div>
+<div class="line">179 TS dt 0.00979056 time 1.49419</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 179 accepted t=1.49419    + 9.791e-03 wlte=0.766 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.295e-03 </div>
+<div class="line">Iteration:    180  Time: 1.504E+00  Max CFL: 7.436E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">180 TS dt 0.00929463 time 1.50398</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 180 rejected t=1.50398    + 9.295e-03 wlte= 1.14 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.149e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 180 accepted t=1.50398    + 8.149e-03 wlte=0.405 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.787e-03 </div>
+<div class="line">181 TS dt 0.00878743 time 1.51213</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 181 accepted t=1.51213    + 8.787e-03 wlte=0.297 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.008e-02 </div>
+<div class="line">182 TS dt 0.010085 time 1.52092</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 182 accepted t=1.52092    + 1.008e-02 wlte=0.698 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.754e-03 </div>
+<div class="line">183 TS dt 0.00975366 time 1.531</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 183 accepted t=1.531      + 9.754e-03 wlte=0.914 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.939e-03 </div>
+<div class="line">184 TS dt 0.0089385 time 1.54076</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 184 accepted t=1.54076    + 8.939e-03 wlte=0.611 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.878e-03 </div>
+<div class="line">185 TS dt 0.00887828 time 1.5497</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 185 accepted t=1.5497     + 8.878e-03 wlte=0.266 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.042e-02 </div>
+<div class="line">186 TS dt 0.0104173 time 1.55857</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 186 accepted t=1.55857    + 1.042e-02 wlte=0.827 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.739e-03 </div>
+<div class="line">187 TS dt 0.00973947 time 1.56899</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 187 accepted t=1.56899    + 9.739e-03 wlte=0.807 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.149e-03 </div>
+<div class="line">188 TS dt 0.00914899 time 1.57873</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 188 accepted t=1.57873    + 9.149e-03 wlte=0.832 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.542e-03 </div>
+<div class="line">189 TS dt 0.00854214 time 1.58788</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 189 accepted t=1.58788    + 8.542e-03 wlte=0.204 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.057e-02 </div>
+<div class="line">Iteration:    190  Time: 1.596E+00  Max CFL: 8.453E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">190 TS dt 0.0105658 time 1.59642</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 190 accepted t=1.59642    + 1.057e-02 wlte=0.854 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.814e-03 </div>
+<div class="line">191 TS dt 0.00981372 time 1.60699</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 191 accepted t=1.60699    + 9.814e-03 wlte=0.756 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.341e-03 </div>
+<div class="line">192 TS dt 0.00934136 time 1.6168</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 192 rejected t=1.6168     + 9.341e-03 wlte= 1.16 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.162e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 192 accepted t=1.6168     + 8.162e-03 wlte=0.394 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.851e-03 </div>
+<div class="line">193 TS dt 0.00885102 time 1.62496</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 193 accepted t=1.62496    + 8.851e-03 wlte=0.292 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.019e-02 </div>
+<div class="line">194 TS dt 0.0101903 time 1.63381</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 194 accepted t=1.63381    + 1.019e-02 wlte=  0.7 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.850e-03 </div>
+<div class="line">195 TS dt 0.00985004 time 1.644</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 195 accepted t=1.644      + 9.850e-03 wlte=0.898 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.057e-03 </div>
+<div class="line">196 TS dt 0.00905688 time 1.65385</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 196 accepted t=1.65385    + 9.057e-03 wlte=0.675 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.818e-03 </div>
+<div class="line">197 TS dt 0.00881799 time 1.66291</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 197 accepted t=1.66291    + 8.818e-03 wlte=0.235 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.060e-02 </div>
+<div class="line">198 TS dt 0.0106002 time 1.67173</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 198 accepted t=1.67173    + 1.060e-02 wlte=0.826 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.911e-03 </div>
+<div class="line">199 TS dt 0.00991141 time 1.68233</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 199 accepted t=1.68233    + 9.911e-03 wlte= 0.76 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.424e-03 </div>
+<div class="line">Iteration:    200  Time: 1.692E+00  Max CFL: 7.540E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">200 TS dt 0.00942439 time 1.69224</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 200 rejected t=1.69224    + 9.424e-03 wlte= 1.19 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.187e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 200 accepted t=1.69224    + 8.187e-03 wlte= 0.39 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.893e-03 </div>
+<div class="line">201 TS dt 0.00889327 time 1.70043</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 201 accepted t=1.70043    + 8.893e-03 wlte=0.285 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.029e-02 </div>
+<div class="line">202 TS dt 0.0102911 time 1.70932</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 202 accepted t=1.70932    + 1.029e-02 wlte=0.671 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.003e-02 </div>
+<div class="line">203 TS dt 0.0100303 time 1.71961</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 203 accepted t=1.71961    + 1.003e-02 wlte=0.851 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.322e-03 </div>
+<div class="line">204 TS dt 0.0093225 time 1.72964</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 204 accepted t=1.72964    + 9.322e-03 wlte=0.903 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.564e-03 </div>
+<div class="line">205 TS dt 0.00856367 time 1.73897</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 205 accepted t=1.73897    + 8.564e-03 wlte=0.196 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.067e-02 </div>
+<div class="line">206 TS dt 0.010674 time 1.74753</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 206 rejected t=1.74753    + 1.067e-02 wlte= 1.04 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.538e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 206 accepted t=1.74753    + 9.538e-03 wlte=0.481 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.935e-03 </div>
+<div class="line">207 TS dt 0.00993497 time 1.75707</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 207 accepted t=1.75707    + 9.935e-03 wlte=0.977 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.984e-03 </div>
+<div class="line">208 TS dt 0.00898387 time 1.767</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 208 accepted t=1.767      + 8.984e-03 wlte=0.556 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.091e-03 </div>
+<div class="line">209 TS dt 0.0090913 time 1.77599</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 209 accepted t=1.77599    + 9.091e-03 wlte=0.274 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.060e-02 </div>
+<div class="line">Iteration:    210  Time: 1.785E+00  Max CFL: 8.483E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">210 TS dt 0.0106034 time 1.78508</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 210 accepted t=1.78508    + 1.060e-02 wlte=0.789 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.001e-02 </div>
+<div class="line">211 TS dt 0.0100062 time 1.79568</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 211 accepted t=1.79568    + 1.001e-02 wlte=0.717 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.626e-03 </div>
+<div class="line">212 TS dt 0.00962606 time 1.80569</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 212 rejected t=1.80569    + 9.626e-03 wlte= 1.23 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.312e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 212 accepted t=1.80569    + 8.312e-03 wlte=0.403 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.971e-03 </div>
+<div class="line">213 TS dt 0.00897117 time 1.814</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 213 accepted t=1.814      + 8.971e-03 wlte=0.273 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.046e-02 </div>
+<div class="line">214 TS dt 0.0104649 time 1.82297</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 214 accepted t=1.82297    + 1.046e-02 wlte=0.629 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.033e-02 </div>
+<div class="line">215 TS dt 0.0103331 time 1.83343</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 215 accepted t=1.83343    + 1.033e-02 wlte=0.903 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.491e-03 </div>
+<div class="line">216 TS dt 0.00949059 time 1.84377</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 216 rejected t=1.84377    + 9.491e-03 wlte= 1.09 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.392e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 216 accepted t=1.84377    + 8.392e-03 wlte=0.449 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.866e-03 </div>
+<div class="line">217 TS dt 0.00886611 time 1.85216</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 217 accepted t=1.85216    + 8.866e-03 wlte=0.239 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.062e-02 </div>
+<div class="line">218 TS dt 0.0106233 time 1.86103</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 218 accepted t=1.86103    + 1.062e-02 wlte=0.631 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.048e-02 </div>
+<div class="line">219 TS dt 0.0104847 time 1.87165</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 219 accepted t=1.87165    + 1.048e-02 wlte=0.846 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.758e-03 </div>
+<div class="line">Iteration:    220  Time: 1.882E+00  Max CFL: 7.806E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">220 TS dt 0.00975812 time 1.88213</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 220 rejected t=1.88213    + 9.758e-03 wlte= 1.93 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.699e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 220 accepted t=1.88213    + 7.699e-03 wlte=0.329 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.655e-03 </div>
+<div class="line">221 TS dt 0.00865507 time 1.88983</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 221 accepted t=1.88983    + 8.655e-03 wlte=0.227 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.048e-02 </div>
+<div class="line">222 TS dt 0.010478 time 1.89849</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 222 accepted t=1.89849    + 1.048e-02 wlte=0.582 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.051e-02 </div>
+<div class="line">223 TS dt 0.0105096 time 1.90897</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 223 accepted t=1.90897    + 1.051e-02 wlte=0.876 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.713e-03 </div>
+<div class="line">224 TS dt 0.0097132 time 1.91948</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 224 rejected t=1.91948    + 9.713e-03 wlte= 1.35 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.233e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 224 accepted t=1.91948    + 8.233e-03 wlte=0.416 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.828e-03 </div>
+<div class="line">225 TS dt 0.00882834 time 1.92771</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 225 accepted t=1.92771    + 8.828e-03 wlte=0.231 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.065e-02 </div>
+<div class="line">226 TS dt 0.0106515 time 1.93654</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 226 accepted t=1.93654    + 1.065e-02 wlte=0.594 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.064e-02 </div>
+<div class="line">227 TS dt 0.0106389 time 1.94719</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 227 accepted t=1.94719    + 1.064e-02 wlte=0.814 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.978e-03 </div>
+<div class="line">228 TS dt 0.00997804 time 1.95783</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 228 rejected t=1.95783    + 9.978e-03 wlte= 2.68 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=7.373e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 228 accepted t=1.95783    + 7.373e-03 wlte= 0.27 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.624e-03 </div>
+<div class="line">229 TS dt 0.00862432 time 1.9652</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 229 accepted t=1.9652     + 8.624e-03 wlte=0.219 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.052e-02 </div>
+<div class="line">Iteration:    230  Time: 1.974E+00  Max CFL: 8.417E-01  Max Diff. No.: 0.000E+00  </div>
+<div class="line">230 TS dt 0.010521 time 1.97382</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 230 accepted t=1.97382    + 1.052e-02 wlte=0.566 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=1.061e-02 </div>
+<div class="line">231 TS dt 0.0106093 time 1.98434</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 231 accepted t=1.98434    + 1.061e-02 wlte=0.861 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=9.839e-03 </div>
+<div class="line">232 TS dt 0.00983896 time 1.99495</div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 232 rejected t=1.99495    + 9.839e-03 wlte= 1.42 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.255e-03 </div>
+<div class="line">      TSAdapt &#39;basic&#39;: step 232 accepted t=1.99495    + 8.255e-03 wlte=0.413 family=&#39;rk&#39; scheme=0:&#39;5dp&#39; dt=8.866e-03 </div>
+<div class="line">233 TS dt 0.00886643 time 2.00321</div>
 <div class="line">** Completed PETSc time integration **</div>
-<div class="line">Reading array from ASCII file exact.inp (Serial mode).</div>
+<div class="line">Writing solution file op_00001.dat.</div>
 <div class="line">Computed errors:</div>
-<div class="line">  L1         Error           : 1.5137204549144645E-04</div>
-<div class="line">  L2         Error           : 1.5144589338237947E-04</div>
-<div class="line">  Linfinity  Error           : 1.5243229874191237E-04</div>
+<div class="line">  L1         Error           : 0.0000000000000000E+00</div>
+<div class="line">  L2         Error           : 0.0000000000000000E+00</div>
+<div class="line">  Linfinity  Error           : 0.0000000000000000E+00</div>
 <div class="line">Conservation Errors:</div>
 <div class="line">    0.0000000000000000E+00</div>
-<div class="line">Solver runtime (in seconds): 4.7143999999999998E-02</div>
-<div class="line">Total  runtime (in seconds): 4.7794999999999997E-02</div>
+<div class="line">Solver runtime (in seconds): 8.8217500000000004E-01</div>
+<div class="line">Total  runtime (in seconds): 8.8327299999999997E-01</div>
 <div class="line">Deallocating arrays.</div>
 <div class="line">Finished.</div>
 </div><!-- fragment --> </div></div><!-- contents -->

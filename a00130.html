@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: 1D Linear Advection - Discontinuous Waves (Time Windowed DMD)</title>
+<title>HyPar: 1D Linear Advection - Sine Wave</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,62 +106,58 @@ $(document).ready(function(){initNavTree('a00130.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">1D Linear Advection - Discontinuous Waves (Time Windowed DMD) </div>  </div>
+<div class="title">1D Linear Advection - Sine Wave </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>See <a class="el" href="a00010.html">1D Linear Advection - Discontinuous Waves</a> to familiarize yourself with this case.</p>
-<p>Location: <b>hypar/Examples/1D/LinearAdvection/DiscontinuousWaves_libROM_DMD_Train</b> (This directory contains all the input files needed to run this case.)</p>
-<p>Governing equations: 1D Linear Advection Equation (<a class="el" href="a00204.html" title="Linear Advection-Diffusion-Reaction model. ">linearadr.h</a>)</p>
-<p>Reduced Order Modeling: This example trains time-windowed DMD objects and then predicts the solution using the DMDs at the same times that the actual <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solution is written at.</p>
+<div class="textblock"><p>See <a class="el" href="a00006.html">1D Linear Advection - Sine Wave</a> to familiarize yourself with this case.</p>
+<p>Location: <b>hypar/Examples/1D/LinearAdvection/SineWave_libROM_DMD_Train</b> (This directory contains all the input files needed to run this case.)</p>
+<p>Governing equations: 1D Linear Advection Equation (<a class="el" href="a00206.html" title="Linear Advection-Diffusion-Reaction model. ">linearadr.h</a>)</p>
+<p>Reduced Order Modeling: This example trains a DMD object and then predicts the solution using the DMD at the same times that the actual <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solution is written at.</p>
 <p>References:</p>
 <ul>
 <li>Ghosh, D., Baeder, J. D., "Compact Reconstruction Schemes with 
     Weighted ENO Limiting for Hyperbolic Conservation Laws", SIAM Journal on Scientific Computing, 34 (3), 2012, A1678–A1706</li>
 </ul>
-<p>Domain: \(-1 \le x \le 1\), <em>"periodic"</em> (<a class="el" href="a00233.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundary conditions</p>
-<p>Initial solution: </p>
-<p class="formulaDsp">
-\begin{equation} u\left(x,0\right) = \left\{\begin{array}{lc} \exp\left(-\log\left(2\right)\frac{\left(x+7\right)^2}{0.0009}\right) &amp; -0.8\le x \le -0.6 \\ 1 &amp; -0.4\le x \le -0.2 \\ 1 - \left|10\left(x-0.1\right)\right| &amp; 0\le x \le 0.2 \\ \sqrt{1-100\left(x-0.5\right)^2} &amp; 0.4\le x \le 0.6 \\ 0 &amp; {\rm otherwise} \end{array}\right. \end{equation}
-</p>
-<p>Numerical Method:</p>
+<p>Domain: \(0 \le x &lt; 1\), <em>"periodic"</em> (<a class="el" href="a00235.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundary conditions</p>
+<p>Initial solution: \(u\left(x,0\right) = \sin\left(2\pi x\right)\)</p>
+<p>Numerical method:</p>
 <ul>
-<li>Spatial discretization (hyperbolic): 5th order CRWENO (<a class="el" href="a00191.html#a33b1e24c12129941b0027a83c543a654" title="5th order CRWENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderCRWENO()</a>)</li>
-<li>Time integration: SSPRK3 (<a class="el" href="a00265.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00197.html#a97e67bb275d6a2dad40b184579559f82">_RK_SSP3_</a>)</li>
+<li>Spatial discretization (hyperbolic): 5th order CRWENO (<a class="el" href="a00193.html#a33b1e24c12129941b0027a83c543a654" title="5th order CRWENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderCRWENO()</a>)</li>
+<li>Time integration: 3rd order SSP RK3 (<a class="el" href="a00269.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <em>RK_SSP3</em>)</li>
 </ul>
 <p>Reduced Order Modeling:</p>
 <ul>
-<li>Mode: train (<a class="el" href="a00203.html#af323868d7651bdfd2c34ea076cfaceb7">libROMInterface::m_mode</a>, <a class="el" href="a00241.html#a8d7f058ce028038a98a49ad28176390e">_ROM_MODE_TRAIN_</a>)</li>
-<li>Component Mode: monolithic (<a class="el" href="a00203.html#a3686e11d6075a6fd586dca42ab16b214">libROMInterface::m_comp_mode</a>, <a class="el" href="a00241.html#acdb79f8c89bd3e1e867e510b5546fad1">_ROM_COMP_MODE_MONOLITHIC_</a>)</li>
-<li>Type: Dynamic Mode Decomposition (DMD) with time windowing (<a class="el" href="a00203.html#ac18cb5a4597cfb6fb48127fc2156a48d">libROMInterface::m_rom_type</a>)</li>
-<li>Latent subspace dimension: 16 (<a class="el" href="a00192.html#a46716d3f1d496cde83a07bd6706d4da0">DMDROMObject::m_rdim</a>)</li>
-<li>Number of samples per time window: 100 (<a class="el" href="a00192.html#aa98d3c307daac6fc078ab36af24b6020">DMDROMObject::m_num_window_samples</a>)</li>
+<li>Mode: train (<a class="el" href="a00205.html#af323868d7651bdfd2c34ea076cfaceb7">libROMInterface::m_mode</a>, <a class="el" href="a00243.html#a8d7f058ce028038a98a49ad28176390e">_ROM_MODE_TRAIN_</a>)</li>
+<li>Component Mode: monolithic (<a class="el" href="a00205.html#a3686e11d6075a6fd586dca42ab16b214">libROMInterface::m_comp_mode</a>, <a class="el" href="a00243.html#acdb79f8c89bd3e1e867e510b5546fad1">_ROM_COMP_MODE_MONOLITHIC_</a>)</li>
+<li>Type: Dynamic Mode Decomposition (DMD) with time windowing (<a class="el" href="a00205.html#ac18cb5a4597cfb6fb48127fc2156a48d">libROMInterface::m_rom_type</a>)</li>
+<li>Latent subspace dimension: 2 (<a class="el" href="a00194.html#a46716d3f1d496cde83a07bd6706d4da0">DMDROMObject::m_rdim</a>)</li>
 </ul>
 <h2>Input files required: </h2>
 <p><b>librom.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
-<div class="line">  rdim                16</div>
+<div class="line">  rdim                2</div>
 <div class="line">  sampling_frequency  1</div>
 <div class="line">  mode                train</div>
-<div class="line">  dmd_num_win_samples 100</div>
 <div class="line">end</div>
 </div><!-- fragment --><p><b>solver.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
-<div class="line">  ndims             1</div>
-<div class="line">  nvars             1</div>
-<div class="line">  size              160</div>
-<div class="line">  iproc             4</div>
-<div class="line">  ghost             3</div>
-<div class="line">  n_iter            800</div>
-<div class="line">  time_scheme       rk</div>
-<div class="line">  time_scheme_type  ssprk3</div>
-<div class="line">  hyp_space_scheme  crweno5</div>
-<div class="line">  dt                0.0025</div>
-<div class="line">  screen_op_iter    10</div>
-<div class="line">  file_op_iter      16</div>
-<div class="line">  ip_file_type      ascii</div>
-<div class="line">  op_file_format    binary</div>
-<div class="line">  op_overwrite      no</div>
-<div class="line">  model             linear-advection-diffusion-reaction</div>
+<div class="line">  ndims               1</div>
+<div class="line">  nvars               1</div>
+<div class="line">  size                80</div>
+<div class="line">  iproc               4</div>
+<div class="line">  ghost               3</div>
+<div class="line">  n_iter              200</div>
+<div class="line">  time_scheme         rk</div>
+<div class="line">  time_scheme_type    ssprk3</div>
+<div class="line">  hyp_space_scheme    crweno5</div>
+<div class="line">  conservation_check  yes</div>
+<div class="line">  dt                  0.005</div>
+<div class="line">  screen_op_iter      10</div>
+<div class="line">  file_op_iter        20</div>
+<div class="line">  ip_file_type        ascii</div>
+<div class="line">  op_file_format      binary</div>
+<div class="line">  op_overwrite        no</div>
+<div class="line">  model               linear-advection-diffusion-reaction</div>
 <div class="line">end</div>
 </div><!-- fragment --><p><b>boundary.inp</b> </p>
 <div class="fragment"><div class="line">2</div>
@@ -197,13 +193,9 @@ $(document).ready(function(){initNavTree('a00130.html','');});
 <div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">double</span> <a class="code" href="a00243.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(<span class="keywordtype">double</span> x)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> (x&lt;0? -x : x);</div>
-<div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00375.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
-<div class="line">  </div>
+<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00380.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
+<div class="line">  <span class="keywordtype">double</span> pi = 4.0*atan(1.0);</div>
 <div class="line">    <span class="keywordtype">int</span> NI,ndims;</div>
 <div class="line">  <span class="keywordtype">char</span> ip_file_type[50];</div>
 <div class="line">  strcpy(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>);</div>
@@ -231,23 +223,15 @@ $(document).ready(function(){initNavTree('a00130.html','');});
 <div class="line">    printf(<span class="stringliteral">&quot;Grid:\t\t\t%d\n&quot;</span>,NI);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">int</span> i;</div>
-<div class="line">    <span class="keywordtype">double</span> dx = 2.0 / ((double)NI);</div>
+<div class="line">    <span class="keywordtype">double</span> dx = 1.0 / ((double)NI);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">double</span> *x, *u;</div>
 <div class="line">    x = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line">    u = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++){</div>
-<div class="line">        x[i] = -1.0 + i*dx;</div>
-<div class="line">    <span class="keywordflow">if</span>      (x[i] &lt; -0.8)  u[i] = 0.0;</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.6)  u[i] = exp(-log(2.0)*(x[i]+0.7)*(x[i]+0.7)/0.0009);</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.4)  u[i] = 0.0;</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.2)  u[i] = 1.0;</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0  )  u[i] = 0.0;</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.2)  u[i] = 1.0 - <a class="code" href="a00243.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(10.0*(x[i]-0.1));</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.4)  u[i] = 0.0;</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.6)  u[i] = sqrt(1.0-100*(x[i]-0.5)*(x[i]-0.5));</div>
-<div class="line">    <span class="keywordflow">else</span>                   u[i] = 0.0;</div>
+<div class="line">        x[i] = i*dx;</div>
+<div class="line">        u[i] = sin(2*pi*x[i]);</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">  FILE *out;</div>
@@ -276,31 +260,31 @@ $(document).ready(function(){initNavTree('a00130.html','');});
 </div><!-- fragment --><h2>Output: </h2>
 <p>After running the code, there should be the following output files:</p>
 <ul>
-<li>51 output files <b>op_00000.bin</b>, <b>op_00001.bin</b>, ... <b>op_00050.bin</b>; these are the <b><a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a></b> solutions<b></b>.</li>
-<li>51 output files <b>op_rom_00000.bin</b>, <b>op_rom_00001.bin</b>, ... <b>op_rom_00050.bin</b>; these are the <b>predicted</b> solutions from the DMD object(s)<b></b>.</li>
+<li>11 output files <b>op_00000.bin</b>, <b>op_00001.bin</b>, ... <b>op_00010.bin</b>; these are the <b><a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a></b> solutions<b></b>.</li>
+<li>11 output files <b>op_rom_00000.bin</b>, <b>op_rom_00001.bin</b>, ... <b>op_rom_00010.bin</b>; these are the <b>predicted</b> solutions from the DMD object(s)<b></b>.</li>
 </ul>
-<p>The first of each of these file sets is the solution at \(t=0\) and the final one is the solution at \(t=2\). Since <a class="el" href="a00202.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, a separate file is written for solutions at each output time. All the files are binary (<a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>binary</em> in <b>solver.inp</b>).</p>
-<p>The provided Python script (<b>plotSolution.py</b>) can be used to generate plots from the binary files that compare the <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> and DMD solutions. Alternatively, <a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>text</em>, and GNUPlot or something similar can be used to plot the resulting text files.</p>
-<p>The following plot shows the final solution - FOM (full-order model) refers to the <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solution, ROM (reduced-order model) refers to the DMD solution. </p>
+<p>The first of each of these file sets is the solution at \(t=0\) and the final one is the solution at \(t=1\). Since <a class="el" href="a00204.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, a separate file is written for solutions at each output time. All the files are binary (<a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>binary</em> in <b>solver.inp</b>).</p>
+<p>The provided Python script (<b><a class="el" href="a00594.html">plotSolution.py</a></b>) can be used to generate plots from the binary files that compare the <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> and DMD solutions. Alternatively, <a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>text</em>, and GNUPlot or something similar can be used to plot the resulting text files.</p>
+<p>The following plot shows the final solution - FOM (full-order model) refers to the <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solution, ROM (reduced-order model) refers to the DMD solution. </p>
 <div class="image">
-<img src="Solution_1DLinearAdvDisclibROM_DMD.png" alt="Solution_1DLinearAdvDisclibROM_DMD.png"/>
+<img src="Solution_1DLinearAdvSinelibROM_DMD.png" alt="Solution_1DLinearAdvSinelibROM_DMD.png"/>
 </div>
-<p>The L1, L2, and Linf norms of the diff between the <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> and ROM solution at the final time are calculated and reported on screen (see below) as well as <b>pde_rom_diff.dat:</b> </p>
-<div class="fragment"><div class="line"> 160    4 2.5000000000000001E-03  5.7205961033976573E-03 5.1134497956698138E-03 9.1706092284055997E-03   7.9410959999999999E+00 8.1151900000000001E+00</div>
-</div><!-- fragment --><p> The numbers are: number of grid points (<a class="el" href="a00202.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors (<a class="el" href="a00205.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00202.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), L1, L2, and L-infinity norms of the diff (<a class="el" href="a00202.html#aaacee284a041d53cf335ae299d5eb929">HyPar::rom_diff_norms</a>), solver wall time (seconds) (i.e., not accounting for initialization, and cleaning up), and total wall time.</p>
-<p>By default, the code will write the trained DMD object(s) to files in a subdirectory (<a class="el" href="a00192.html#a4a2342bcda8d44940111704f8423f38f">DMDROMObject::m_dirname</a> - default value is "DMD"). If the subdirectory does not exist, the code <b>may</b> <b>not</b> report an error (or give some HDF5 file-writing error); the DMD objects will not be written! If the subdirectory exists, several files will exist after the simulation is complete - they are in a format that is readable by libROM.</p>
+<p>The L1, L2, and Linf norms of the diff between the <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> and ROM solution at the final time are calculated and reported on screen (see below) as well as <b>pde_rom_diff.dat:</b> </p>
+<div class="fragment"><div class="line">  80    4 5.0000000000000001E-03  2.9065523787146478E-07 3.2037250962276641E-07 4.1231337540346448E-07   1.6993039999999999E+00 2.4370970000000001E+00</div>
+</div><!-- fragment --><p> The numbers are: number of grid points (<a class="el" href="a00204.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors (<a class="el" href="a00207.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00204.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), L1, L2, and L-infinity norms of the diff (<a class="el" href="a00204.html#aaacee284a041d53cf335ae299d5eb929">HyPar::rom_diff_norms</a>), solver wall time (seconds) (i.e., not accounting for initialization, and cleaning up), and total wall time.</p>
+<p>By default, the code will write the trained DMD object(s) to files in a subdirectory (<a class="el" href="a00194.html#a4a2342bcda8d44940111704f8423f38f">DMDROMObject::m_dirname</a> - default value is "DMD"). If the subdirectory does not exist, the code <b>may</b> <b>not</b> report an error (or give some HDF5 file-writing error); the DMD objects will not be written! If the subdirectory exists, several files will exist after the simulation is complete - they are in a format that is readable by libROM.</p>
 <p>Expected screen output: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00202.html">HyPar</a> - Parallel (MPI) version with 4 processes</div>
+<div class="fragment"><div class="line"><a class="code" href="a00204.html">HyPar</a> - Parallel (MPI) version with 4 processes</div>
 <div class="line">Compiled with PETSc time integration.</div>
 <div class="line">Allocated simulation <span class="keywordtype">object</span>(s).</div>
 <div class="line">Reading solver inputs from file &quot;solver.inp&quot;.</div>
 <div class="line">  No. of dimensions                          : 1</div>
 <div class="line">  No. of variables                           : 1</div>
-<div class="line">  Domain size                                : 160 </div>
+<div class="line">  Domain size                                : 80 </div>
 <div class="line">  Processes along each dimension             : 4 </div>
-<div class="line">  Exact solution domain size                 : 160 </div>
+<div class="line">  Exact solution domain size                 : 80 </div>
 <div class="line">  No. of ghosts pts                          : 3</div>
-<div class="line">  No. of iter.                               : 800</div>
+<div class="line">  No. of iter.                               : 200</div>
 <div class="line">  Restart iteration                          : 0</div>
 <div class="line">  Time integration scheme                    : rk (ssprk3)</div>
 <div class="line">  Spatial discretization scheme (hyperbolic) : crweno5</div>
@@ -308,10 +292,10 @@ $(document).ready(function(){initNavTree('a00130.html','');});
 <div class="line">  Interpolation type for hyperbolic term     : characteristic</div>
 <div class="line">  Spatial discretization type   (parabolic ) : nonconservative-1stage</div>
 <div class="line">  Spatial discretization scheme (parabolic ) : 2</div>
-<div class="line">  Time Step                                  : 2.500000E-03</div>
-<div class="line">  Check for conservation                     : no</div>
+<div class="line">  Time Step                                  : 5.000000E-03</div>
+<div class="line">  Check for conservation                     : yes</div>
 <div class="line">  Screen output iterations                   : 10</div>
-<div class="line">  File output iterations                     : 16</div>
+<div class="line">  File output iterations                     : 20</div>
 <div class="line">  Initial solution file type                 : ascii</div>
 <div class="line">  Initial solution read mode                 : serial</div>
 <div class="line">  Solution file write mode                   : serial</div>
@@ -321,7 +305,7 @@ $(document).ready(function(){initNavTree('a00130.html','');});
 <div class="line">Partitioning domain and allocating data arrays.</div>
 <div class="line">Reading array from ASCII file initial.inp (Serial mode).</div>
 <div class="line">Volume integral of the initial solution:</div>
-<div class="line"> 0:  5.1835172500000004E-01</div>
+<div class="line"> 0:  -5.5511151231257827E-17</div>
 <div class="line">Reading boundary conditions from boundary.inp.</div>
 <div class="line">  Boundary                       periodic:  Along dimension  0 and face +1</div>
 <div class="line">  Boundary                       periodic:  Along dimension  0 and face -1</div>
@@ -333,344 +317,103 @@ $(document).ready(function(){initNavTree('a00130.html','');});
 <div class="line">Setting up time integration.</div>
 <div class="line">Setting up libROM interface.</div>
 <div class="line">libROM inputs and parameters:</div>
-<div class="line">  reduced model dimensionality:  16</div>
+<div class="line">  reduced model dimensionality:  2</div>
 <div class="line">  sampling frequency:  1</div>
 <div class="line">  mode: train</div>
 <div class="line">  type: DMD</div>
 <div class="line">  save to file: true</div>
-<div class="line">  local vector size: 40</div>
+<div class="line">  local vector size: 20</div>
 <div class="line">libROM DMD inputs:</div>
-<div class="line">  number of samples per window:   100</div>
+<div class="line">  number of samples per window:   2147483647</div>
 <div class="line">  directory name for DMD onjects: DMD</div>
-<div class="line">Solving in time (from 0 to 800 iterations)</div>
+<div class="line">Solving in time (from 0 to 200 iterations)</div>
 <div class="line">Writing solution file op_00000.bin.</div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.000000 (total: 1).</div>
-<div class="line">iter=     10  t=2.500E-02  CFL=2.000E-01  norm=2.2256E-02  wctime: 3.1E-04 (s)  </div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.000000 (total: 1).</div>
+<div class="line">iter=     10  t=5.000E-02  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.2E-04 (s)    cons_err=4.3368E-19</div>
+<div class="line">iter=     20  t=1.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.9E-04 (s)    cons_err=4.3368E-19</div>
 <div class="line">Writing solution file op_00001.bin.</div>
-<div class="line">iter=     20  t=5.000E-02  CFL=2.000E-01  norm=2.1583E-02  wctime: 3.0E-04 (s)  </div>
-<div class="line">iter=     30  t=7.500E-02  CFL=2.000E-01  norm=2.1179E-02  wctime: 2.5E-04 (s)  </div>
+<div class="line">iter=     30  t=1.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.2E-04 (s)    cons_err=2.5587E-17</div>
+<div class="line">iter=     40  t=2.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.2E-04 (s)    cons_err=2.5587E-17</div>
 <div class="line">Writing solution file op_00002.bin.</div>
-<div class="line">iter=     40  t=1.000E-01  CFL=2.000E-01  norm=2.0887E-02  wctime: 2.9E-04 (s)  </div>
+<div class="line">iter=     50  t=2.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.6E-04 (s)    cons_err=2.1684E-18</div>
+<div class="line">iter=     60  t=3.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.8E-04 (s)    cons_err=6.5486E-17</div>
 <div class="line">Writing solution file op_00003.bin.</div>
-<div class="line">iter=     50  t=1.250E-01  CFL=2.000E-01  norm=2.0660E-02  wctime: 2.5E-04 (s)  </div>
-<div class="line">iter=     60  t=1.500E-01  CFL=2.000E-01  norm=2.0475E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">iter=     70  t=3.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.0E-04 (s)    cons_err=8.1098E-17</div>
+<div class="line">iter=     80  t=4.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.1E-04 (s)    cons_err=5.3343E-17</div>
 <div class="line">Writing solution file op_00004.bin.</div>
-<div class="line">iter=     70  t=1.750E-01  CFL=2.000E-01  norm=2.0320E-02  wctime: 2.7E-04 (s)  </div>
-<div class="line">iter=     80  t=2.000E-01  CFL=2.000E-01  norm=2.0187E-02  wctime: 2.5E-04 (s)  </div>
+<div class="line">iter=     90  t=4.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.1E-04 (s)    cons_err=1.6176E-16</div>
+<div class="line">iter=    100  t=5.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.0E-04 (s)    cons_err=6.0715E-17</div>
 <div class="line">Writing solution file op_00005.bin.</div>
-<div class="line">iter=     90  t=2.250E-01  CFL=2.000E-01  norm=2.0071E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">iter=    110  t=5.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.1E-04 (s)    cons_err=4.8139E-17</div>
+<div class="line">iter=    120  t=6.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.8E-04 (s)    cons_err=4.9006E-17</div>
 <div class="line">Writing solution file op_00006.bin.</div>
-<div class="line">iter=    100  t=2.500E-01  CFL=2.000E-01  norm=1.9968E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.250000 (total: 2).</div>
-<div class="line">iter=    110  t=2.750E-01  CFL=2.000E-01  norm=1.9877E-02  wctime: 3.0E-04 (s)  </div>
+<div class="line">iter=    130  t=6.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.0E-04 (s)    cons_err=4.9006E-17</div>
+<div class="line">iter=    140  t=7.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.8E-04 (s)    cons_err=1.0625E-16</div>
 <div class="line">Writing solution file op_00007.bin.</div>
-<div class="line">iter=    120  t=3.000E-01  CFL=2.000E-01  norm=1.9794E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">iter=    150  t=7.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.5E-04 (s)    cons_err=7.6762E-17</div>
+<div class="line">iter=    160  t=8.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.0E-04 (s)    cons_err=8.2399E-18</div>
 <div class="line">Writing solution file op_00008.bin.</div>
-<div class="line">iter=    130  t=3.250E-01  CFL=2.000E-01  norm=1.9719E-02  wctime: 2.9E-04 (s)  </div>
-<div class="line">iter=    140  t=3.500E-01  CFL=2.000E-01  norm=1.9650E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">iter=    170  t=8.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.7E-04 (s)    cons_err=2.1250E-17</div>
+<div class="line">iter=    180  t=9.000E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.7E-04 (s)    cons_err=4.7271E-17</div>
 <div class="line">Writing solution file op_00009.bin.</div>
-<div class="line">iter=    150  t=3.750E-01  CFL=2.000E-01  norm=1.9587E-02  wctime: 2.9E-04 (s)  </div>
-<div class="line">iter=    160  t=4.000E-01  CFL=2.000E-01  norm=1.9522E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">iter=    190  t=9.500E-01  CFL=4.000E-01  norm=2.2213E-02  wctime: 3.0E-04 (s)    cons_err=4.5536E-17</div>
+<div class="line">iter=    200  t=1.000E+00  CFL=4.000E-01  norm=2.2213E-02  wctime: 2.8E-04 (s)    cons_err=1.5699E-16</div>
+<div class="line">Completed time integration (Final time: 1.000000), total wctime: 0.718540 (seconds).</div>
+<div class="line">Reading array from ASCII file exact.inp (Serial mode).</div>
 <div class="line">Writing solution file op_00010.bin.</div>
-<div class="line">iter=    170  t=4.250E-01  CFL=2.000E-01  norm=1.9462E-02  wctime: 2.7E-04 (s)  </div>
-<div class="line">Writing solution file op_00011.bin.</div>
-<div class="line">iter=    180  t=4.500E-01  CFL=2.000E-01  norm=1.9412E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">iter=    190  t=4.750E-01  CFL=2.000E-01  norm=1.9364E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line">Writing solution file op_00012.bin.</div>
-<div class="line">iter=    200  t=5.000E-01  CFL=2.000E-01  norm=1.9319E-02  wctime: 2.5E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.500000 (total: 3).</div>
-<div class="line">Writing solution file op_00013.bin.</div>
-<div class="line">iter=    210  t=5.250E-01  CFL=2.000E-01  norm=1.9276E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">iter=    220  t=5.500E-01  CFL=2.000E-01  norm=1.9235E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line">Writing solution file op_00014.bin.</div>
-<div class="line">iter=    230  t=5.750E-01  CFL=2.000E-01  norm=1.9191E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">iter=    240  t=6.000E-01  CFL=2.000E-01  norm=1.9152E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00015.bin.</div>
-<div class="line">iter=    250  t=6.250E-01  CFL=2.000E-01  norm=1.9117E-02  wctime: 2.5E-04 (s)  </div>
-<div class="line">Writing solution file op_00016.bin.</div>
-<div class="line">iter=    260  t=6.500E-01  CFL=2.000E-01  norm=1.9084E-02  wctime: 2.5E-04 (s)  </div>
-<div class="line">iter=    270  t=6.750E-01  CFL=2.000E-01  norm=1.9052E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line">Writing solution file op_00017.bin.</div>
-<div class="line">iter=    280  t=7.000E-01  CFL=2.000E-01  norm=1.9022E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line">Writing solution file op_00018.bin.</div>
-<div class="line">iter=    290  t=7.250E-01  CFL=2.000E-01  norm=1.8992E-02  wctime: 2.7E-04 (s)  </div>
-<div class="line">iter=    300  t=7.500E-01  CFL=2.000E-01  norm=1.8964E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.750000 (total: 4).</div>
-<div class="line">Writing solution file op_00019.bin.</div>
-<div class="line">iter=    310  t=7.750E-01  CFL=2.000E-01  norm=1.8936E-02  wctime: 2.9E-04 (s)  </div>
-<div class="line">iter=    320  t=8.000E-01  CFL=2.000E-01  norm=1.8910E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00020.bin.</div>
-<div class="line">iter=    330  t=8.250E-01  CFL=2.000E-01  norm=1.8884E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00021.bin.</div>
-<div class="line">iter=    340  t=8.500E-01  CFL=2.000E-01  norm=1.8859E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line">iter=    350  t=8.750E-01  CFL=2.000E-01  norm=1.8835E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00022.bin.</div>
-<div class="line">iter=    360  t=9.000E-01  CFL=2.000E-01  norm=1.8811E-02  wctime: 2.7E-04 (s)  </div>
-<div class="line">Writing solution file op_00023.bin.</div>
-<div class="line">iter=    370  t=9.250E-01  CFL=2.000E-01  norm=1.8788E-02  wctime: 2.7E-04 (s)  </div>
-<div class="line">iter=    380  t=9.500E-01  CFL=2.000E-01  norm=1.8766E-02  wctime: 2.3E-04 (s)  </div>
-<div class="line">Writing solution file op_00024.bin.</div>
-<div class="line">iter=    390  t=9.750E-01  CFL=2.000E-01  norm=1.8745E-02  wctime: 2.7E-04 (s)  </div>
-<div class="line">iter=    400  t=1.000E+00  CFL=2.000E-01  norm=1.8724E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line">Writing solution file op_00025.bin.</div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=1.000000 (total: 5).</div>
-<div class="line">iter=    410  t=1.025E+00  CFL=2.000E-01  norm=1.8704E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00026.bin.</div>
-<div class="line">iter=    420  t=1.050E+00  CFL=2.000E-01  norm=1.8684E-02  wctime: 2.7E-04 (s)  </div>
-<div class="line">iter=    430  t=1.075E+00  CFL=2.000E-01  norm=1.8665E-02  wctime: 2.3E-04 (s)  </div>
-<div class="line">Writing solution file op_00027.bin.</div>
-<div class="line">iter=    440  t=1.100E+00  CFL=2.000E-01  norm=1.8647E-02  wctime: 2.9E-04 (s)  </div>
-<div class="line">Writing solution file op_00028.bin.</div>
-<div class="line">iter=    450  t=1.125E+00  CFL=2.000E-01  norm=1.8628E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">iter=    460  t=1.150E+00  CFL=2.000E-01  norm=1.8610E-02  wctime: 3.0E-04 (s)  </div>
-<div class="line">Writing solution file op_00029.bin.</div>
-<div class="line">iter=    470  t=1.175E+00  CFL=2.000E-01  norm=1.8594E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">iter=    480  t=1.200E+00  CFL=2.000E-01  norm=1.8568E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00030.bin.</div>
-<div class="line">iter=    490  t=1.225E+00  CFL=2.000E-01  norm=1.8549E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00031.bin.</div>
-<div class="line">iter=    500  t=1.250E+00  CFL=2.000E-01  norm=1.8534E-02  wctime: 2.5E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=1.250000 (total: 6).</div>
-<div class="line">iter=    510  t=1.275E+00  CFL=2.000E-01  norm=1.8519E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00032.bin.</div>
-<div class="line">iter=    520  t=1.300E+00  CFL=2.000E-01  norm=1.8504E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00033.bin.</div>
-<div class="line">iter=    530  t=1.325E+00  CFL=2.000E-01  norm=1.8489E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">iter=    540  t=1.350E+00  CFL=2.000E-01  norm=1.8474E-02  wctime: 3.0E-04 (s)  </div>
-<div class="line">Writing solution file op_00034.bin.</div>
-<div class="line">iter=    550  t=1.375E+00  CFL=2.000E-01  norm=1.8460E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">iter=    560  t=1.400E+00  CFL=2.000E-01  norm=1.8438E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00035.bin.</div>
-<div class="line">iter=    570  t=1.425E+00  CFL=2.000E-01  norm=1.8422E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00036.bin.</div>
-<div class="line">iter=    580  t=1.450E+00  CFL=2.000E-01  norm=1.8409E-02  wctime: 3.2E-04 (s)  </div>
-<div class="line">iter=    590  t=1.475E+00  CFL=2.000E-01  norm=1.8396E-02  wctime: 3.0E-04 (s)  </div>
-<div class="line">Writing solution file op_00037.bin.</div>
-<div class="line">iter=    600  t=1.500E+00  CFL=2.000E-01  norm=1.8383E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=1.500000 (total: 7).</div>
-<div class="line">Writing solution file op_00038.bin.</div>
-<div class="line">iter=    610  t=1.525E+00  CFL=2.000E-01  norm=1.8369E-02  wctime: 3.0E-04 (s)  </div>
-<div class="line">iter=    620  t=1.550E+00  CFL=2.000E-01  norm=1.8356E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00039.bin.</div>
-<div class="line">iter=    630  t=1.575E+00  CFL=2.000E-01  norm=1.8343E-02  wctime: 2.7E-04 (s)  </div>
-<div class="line">iter=    640  t=1.600E+00  CFL=2.000E-01  norm=1.8330E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00040.bin.</div>
-<div class="line">iter=    650  t=1.625E+00  CFL=2.000E-01  norm=1.8318E-02  wctime: 2.4E-04 (s)  </div>
-<div class="line">Writing solution file op_00041.bin.</div>
-<div class="line">iter=    660  t=1.650E+00  CFL=2.000E-01  norm=1.8304E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">iter=    670  t=1.675E+00  CFL=2.000E-01  norm=1.8291E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00042.bin.</div>
-<div class="line">iter=    680  t=1.700E+00  CFL=2.000E-01  norm=1.8275E-02  wctime: 3.0E-04 (s)  </div>
-<div class="line">Writing solution file op_00043.bin.</div>
-<div class="line">iter=    690  t=1.725E+00  CFL=2.000E-01  norm=1.8263E-02  wctime: 2.5E-04 (s)  </div>
-<div class="line">iter=    700  t=1.750E+00  CFL=2.000E-01  norm=1.8250E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=1.750000 (total: 8).</div>
-<div class="line">Writing solution file op_00044.bin.</div>
-<div class="line">iter=    710  t=1.775E+00  CFL=2.000E-01  norm=1.8238E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">iter=    720  t=1.800E+00  CFL=2.000E-01  norm=1.8227E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00045.bin.</div>
-<div class="line">iter=    730  t=1.825E+00  CFL=2.000E-01  norm=1.8215E-02  wctime: 2.9E-04 (s)  </div>
-<div class="line">Writing solution file op_00046.bin.</div>
-<div class="line">iter=    740  t=1.850E+00  CFL=2.000E-01  norm=1.8204E-02  wctime: 2.9E-04 (s)  </div>
-<div class="line">iter=    750  t=1.875E+00  CFL=2.000E-01  norm=1.8192E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00047.bin.</div>
-<div class="line">iter=    760  t=1.900E+00  CFL=2.000E-01  norm=1.8181E-02  wctime: 2.6E-04 (s)  </div>
-<div class="line">Writing solution file op_00048.bin.</div>
-<div class="line">iter=    770  t=1.925E+00  CFL=2.000E-01  norm=1.8170E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line">iter=    780  t=1.950E+00  CFL=2.000E-01  norm=1.8159E-02  wctime: 2.8E-04 (s)  </div>
-<div class="line">Writing solution file op_00049.bin.</div>
-<div class="line">iter=    790  t=1.975E+00  CFL=2.000E-01  norm=1.8148E-02  wctime: 3.2E-04 (s)  </div>
-<div class="line">iter=    800  t=2.000E+00  CFL=2.000E-01  norm=1.8137E-02  wctime: 2.9E-04 (s)  </div>
-<div class="line">Completed time integration (Final time: 2.000000), total wctime: 3.850328 (seconds).</div>
-<div class="line">Writing solution file op_00050.bin.</div>
 <div class="line">libROM: Training ROM.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 0 with 101 samples.</div>
-<div class="line">Using 16 basis vectors out of 100.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 1 with 101 samples.</div>
-<div class="line">Using 16 basis vectors out of 100.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 2 with 101 samples.</div>
-<div class="line">Using 16 basis vectors out of 100.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 3 with 101 samples.</div>
-<div class="line">Using 16 basis vectors out of 100.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 4 with 101 samples.</div>
-<div class="line">Using 16 basis vectors out of 100.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 5 with 101 samples.</div>
-<div class="line">Using 16 basis vectors out of 100.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 6 with 101 samples.</div>
-<div class="line">Using 16 basis vectors out of 100.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 7 with 100 samples.</div>
-<div class="line">Using 16 basis vectors out of 99.</div>
-<div class="line">libROM: wallclock time: 0.181797 (seconds).</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 0 with 200 samples.</div>
+<div class="line">Using 2 basis vectors out of 80.</div>
+<div class="line">libROM: wallclock time: 0.059403 (seconds).</div>
 <div class="line">libROM: Predicting solution at time 0.0000e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000599 (seconds).</div>
+<div class="line">libROM:   wallclock time: 0.000077 (seconds).</div>
 <div class="line">Writing solution file op_rom_00000.bin.</div>
-<div class="line">libROM: Predicting solution at time 4.0000e-02 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000528 (seconds).</div>
+<div class="line">libROM: Predicting solution at time 1.0000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000037 (seconds).</div>
 <div class="line">Writing solution file op_rom_00001.bin.</div>
-<div class="line">libROM: Predicting solution at time 8.0000e-02 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000513 (seconds).</div>
-<div class="line">Writing solution file op_rom_00002.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.2000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000544 (seconds).</div>
-<div class="line">Writing solution file op_rom_00003.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.6000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000531 (seconds).</div>
-<div class="line">Writing solution file op_rom_00004.bin.</div>
 <div class="line">libROM: Predicting solution at time 2.0000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000513 (seconds).</div>
-<div class="line">Writing solution file op_rom_00005.bin.</div>
-<div class="line">libROM: Predicting solution at time 2.4000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000494 (seconds).</div>
-<div class="line">Writing solution file op_rom_00006.bin.</div>
-<div class="line">libROM: Predicting solution at time 2.8000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000530 (seconds).</div>
-<div class="line">Writing solution file op_rom_00007.bin.</div>
-<div class="line">libROM: Predicting solution at time 3.2000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000543 (seconds).</div>
-<div class="line">Writing solution file op_rom_00008.bin.</div>
-<div class="line">libROM: Predicting solution at time 3.6000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000516 (seconds).</div>
-<div class="line">Writing solution file op_rom_00009.bin.</div>
+<div class="line">libROM:   wallclock time: 0.000030 (seconds).</div>
+<div class="line">Writing solution file op_rom_00002.bin.</div>
+<div class="line">libROM: Predicting solution at time 3.0000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000031 (seconds).</div>
+<div class="line">Writing solution file op_rom_00003.bin.</div>
 <div class="line">libROM: Predicting solution at time 4.0000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000493 (seconds).</div>
-<div class="line">Writing solution file op_rom_00010.bin.</div>
-<div class="line">libROM: Predicting solution at time 4.4000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000500 (seconds).</div>
-<div class="line">Writing solution file op_rom_00011.bin.</div>
-<div class="line">libROM: Predicting solution at time 4.8000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000555 (seconds).</div>
-<div class="line">Writing solution file op_rom_00012.bin.</div>
-<div class="line">libROM: Predicting solution at time 5.2000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000572 (seconds).</div>
-<div class="line">Writing solution file op_rom_00013.bin.</div>
-<div class="line">libROM: Predicting solution at time 5.6000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000574 (seconds).</div>
-<div class="line">Writing solution file op_rom_00014.bin.</div>
+<div class="line">libROM:   wallclock time: 0.000033 (seconds).</div>
+<div class="line">Writing solution file op_rom_00004.bin.</div>
+<div class="line">libROM: Predicting solution at time 5.0000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000032 (seconds).</div>
+<div class="line">Writing solution file op_rom_00005.bin.</div>
 <div class="line">libROM: Predicting solution at time 6.0000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000568 (seconds).</div>
-<div class="line">Writing solution file op_rom_00015.bin.</div>
-<div class="line">libROM: Predicting solution at time 6.4000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000586 (seconds).</div>
-<div class="line">Writing solution file op_rom_00016.bin.</div>
-<div class="line">libROM: Predicting solution at time 6.8000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000537 (seconds).</div>
-<div class="line">Writing solution file op_rom_00017.bin.</div>
-<div class="line">libROM: Predicting solution at time 7.2000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000500 (seconds).</div>
-<div class="line">Writing solution file op_rom_00018.bin.</div>
-<div class="line">libROM: Predicting solution at time 7.6000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000531 (seconds).</div>
-<div class="line">Writing solution file op_rom_00019.bin.</div>
+<div class="line">libROM:   wallclock time: 0.000030 (seconds).</div>
+<div class="line">Writing solution file op_rom_00006.bin.</div>
+<div class="line">libROM: Predicting solution at time 7.0000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000047 (seconds).</div>
+<div class="line">Writing solution file op_rom_00007.bin.</div>
 <div class="line">libROM: Predicting solution at time 8.0000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000546 (seconds).</div>
-<div class="line">Writing solution file op_rom_00020.bin.</div>
-<div class="line">libROM: Predicting solution at time 8.4000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000525 (seconds).</div>
-<div class="line">Writing solution file op_rom_00021.bin.</div>
-<div class="line">libROM: Predicting solution at time 8.8000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000504 (seconds).</div>
-<div class="line">Writing solution file op_rom_00022.bin.</div>
-<div class="line">libROM: Predicting solution at time 9.2000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000533 (seconds).</div>
-<div class="line">Writing solution file op_rom_00023.bin.</div>
-<div class="line">libROM: Predicting solution at time 9.6000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000519 (seconds).</div>
-<div class="line">Writing solution file op_rom_00024.bin.</div>
+<div class="line">libROM:   wallclock time: 0.000030 (seconds).</div>
+<div class="line">Writing solution file op_rom_00008.bin.</div>
+<div class="line">libROM: Predicting solution at time 9.0000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000030 (seconds).</div>
+<div class="line">Writing solution file op_rom_00009.bin.</div>
 <div class="line">libROM: Predicting solution at time 1.0000e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000518 (seconds).</div>
-<div class="line">Writing solution file op_rom_00025.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.0400e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000544 (seconds).</div>
-<div class="line">Writing solution file op_rom_00026.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.0800e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000525 (seconds).</div>
-<div class="line">Writing solution file op_rom_00027.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.1200e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000531 (seconds).</div>
-<div class="line">Writing solution file op_rom_00028.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.1600e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000515 (seconds).</div>
-<div class="line">Writing solution file op_rom_00029.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.2000e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000556 (seconds).</div>
-<div class="line">Writing solution file op_rom_00030.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.2400e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000502 (seconds).</div>
-<div class="line">Writing solution file op_rom_00031.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.2800e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000501 (seconds).</div>
-<div class="line">Writing solution file op_rom_00032.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.3200e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000596 (seconds).</div>
-<div class="line">Writing solution file op_rom_00033.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.3600e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000532 (seconds).</div>
-<div class="line">Writing solution file op_rom_00034.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.4000e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000520 (seconds).</div>
-<div class="line">Writing solution file op_rom_00035.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.4400e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000570 (seconds).</div>
-<div class="line">Writing solution file op_rom_00036.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.4800e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000552 (seconds).</div>
-<div class="line">Writing solution file op_rom_00037.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.5200e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000548 (seconds).</div>
-<div class="line">Writing solution file op_rom_00038.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.5600e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000544 (seconds).</div>
-<div class="line">Writing solution file op_rom_00039.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.6000e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000484 (seconds).</div>
-<div class="line">Writing solution file op_rom_00040.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.6400e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000554 (seconds).</div>
-<div class="line">Writing solution file op_rom_00041.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.6800e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000564 (seconds).</div>
-<div class="line">Writing solution file op_rom_00042.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.7200e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000486 (seconds).</div>
-<div class="line">Writing solution file op_rom_00043.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.7600e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000545 (seconds).</div>
-<div class="line">Writing solution file op_rom_00044.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.8000e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000535 (seconds).</div>
-<div class="line">Writing solution file op_rom_00045.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.8400e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000519 (seconds).</div>
-<div class="line">Writing solution file op_rom_00046.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.8800e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000491 (seconds).</div>
-<div class="line">Writing solution file op_rom_00047.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.9200e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000516 (seconds).</div>
-<div class="line">Writing solution file op_rom_00048.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.9600e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000553 (seconds).</div>
-<div class="line">Writing solution file op_rom_00049.bin.</div>
-<div class="line">libROM: Predicting solution at time 2.0000e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000527 (seconds).</div>
+<div class="line">libROM:   wallclock time: 0.000029 (seconds).</div>
 <div class="line">libROM:   Calculating diff between PDE and ROM solutions.</div>
-<div class="line">Writing solution file op_rom_00050.bin.</div>
-<div class="line">libROM: total prediction/query wallclock time: 0.027182 (seconds).</div>
-<div class="line"><a class="code" href="a00203.html">libROMInterface</a>::saveROM() - saving ROM objects.</div>
+<div class="line">Writing solution file op_rom_00010.bin.</div>
+<div class="line">libROM: total prediction/query wallclock time: 0.000406 (seconds).</div>
+<div class="line"><a class="code" href="a00205.html">libROMInterface</a>::saveROM() - saving ROM objects.</div>
 <div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0000.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0001.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0002.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0003.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0004.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0005.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0006.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0007.</div>
+<div class="line">Computed errors for domain 0:</div>
+<div class="line">  L1         Error           : 8.1564188969988377E-06</div>
+<div class="line">  L2         Error           : 8.1563255924379997E-06</div>
+<div class="line">  Linfinity  Error           : 8.4640413008374438E-06</div>
+<div class="line">Conservation Errors:</div>
+<div class="line">    1.5699247457590104E-16</div>
 <div class="line">Norms of the diff between ROM and PDE solutions for domain 0:</div>
-<div class="line">  L1         Norm            : 5.7205961033976573E-03</div>
-<div class="line">  L2         Norm            : 5.1134497956698138E-03</div>
-<div class="line">  Linfinity  Norm            : 9.1706092284055997E-03</div>
-<div class="line">Solver runtime (in seconds): 7.9410959999999999E+00</div>
-<div class="line">Total  runtime (in seconds): 8.1151900000000001E+00</div>
+<div class="line">  L1         Norm            : 2.9065523787146478E-07</div>
+<div class="line">  L2         Norm            : 3.2037250962276641E-07</div>
+<div class="line">  Linfinity  Norm            : 4.1231337540346448E-07</div>
+<div class="line">Solver runtime (in seconds): 2.4540210000000000E+00</div>
+<div class="line">Total  runtime (in seconds): 3.2191299999999998E+00</div>
 <div class="line">Deallocating arrays.</div>
 <div class="line">Finished.</div>
 </div><!-- fragment --> </div></div><!-- contents -->

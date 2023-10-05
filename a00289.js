@@ -1,4 +1,5 @@
 var a00289 =
 [
-    [ "BCSubsonicOutflowU", "a00289.html#aea51db89a0a00f1c9b8288f9ebc059c6", null ]
+    [ "BCSlipWallU_dim3_kernel", "a00289.html#a302cf540860d598f71857648e6397dad", null ],
+    [ "gpuBCSlipWallU", "a00289.html#a5e9a6c4a25f7a3c31e533a7251eab935", null ]
 ];

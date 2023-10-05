@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/MPIFunctions/MPIPartition1D.c Source File</title>
+<title>HyPar: src/MPIFunctions/MPIGetFilename.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,29 +112,48 @@ $(document).ready(function(){initNavTree('a00393_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">MPIPartition1D.c</div>  </div>
+<div class="title">MPIGetFilename.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00393.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00248.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="a00393.html#a87127187b566bfa02b692247f9e3c798">   14</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00248.html#af8194ca5a460534fdbe391035a95c69d">MPIPartition1D</a>(</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                    <span class="keywordtype">int</span> nglobal,  </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordtype">int</span> nproc,    </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordtype">int</span> rank      </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                  )</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">int</span> nlocal;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> (nglobal%nproc == 0) nlocal = nglobal/nproc;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">if</span> (rank == nproc-1)  nlocal = nglobal/nproc + nglobal%nproc;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">else</span>                  nlocal = nglobal/nproc;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span>(nlocal);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
-<div class="ttc" id="a00248_html_af8194ca5a460534fdbe391035a95c69d"><div class="ttname"><a href="a00248.html#af8194ca5a460534fdbe391035a95c69d">MPIPartition1D</a></div><div class="ttdeci">int MPIPartition1D(int, int, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00393_source.html#l00014">MPIPartition1D.c:14</a></div></div>
-<div class="ttc" id="a00248_html"><div class="ttname"><a href="a00248.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;mpi.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00233.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00250.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00236.html">common.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="a00393.html#a3bea94d51bdf0cd76ac4a0b0d52a5baa">   19</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00250.html#ad9bc49863d543b6251903e9150c46a9c">MPIGetFilename</a>(</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                      <span class="keywordtype">char</span>  *root,      </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                      <span class="keywordtype">void</span>  *c,         </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                      <span class="keywordtype">char</span>  *filename   </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                   )</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">char</span>  tail[<a class="code" href="a00233.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>]=<span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">int</span>   rank;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span>  MPI_Comm  comm = *((MPI_Comm*)c);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  MPI_Comm_rank(comm,&amp;rank);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor"></span>  rank = 0;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="a00236.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a>(rank,tail,4);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  strcpy(filename,<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  strcat(filename,root);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  strcat(filename,<span class="stringliteral">&quot;.&quot;</span> );</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  strcat(filename,tail);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
+<div class="ttc" id="a00236_html_a3e3ad5aed581d9ae563190c365dadc41"><div class="ttname"><a href="a00236.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a></div><div class="ttdeci">void GetStringFromInteger(int, char *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00300_source.html#l00015">CommonFunctions.c:15</a></div></div>
+<div class="ttc" id="a00250_html"><div class="ttname"><a href="a00250.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="ttc" id="a00233_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00233.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00014">basic.h:14</a></div></div>
+<div class="ttc" id="a00233_html"><div class="ttname"><a href="a00233.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00250_html_ad9bc49863d543b6251903e9150c46a9c"><div class="ttname"><a href="a00250.html#ad9bc49863d543b6251903e9150c46a9c">MPIGetFilename</a></div><div class="ttdeci">void MPIGetFilename(char *, void *, char *)</div><div class="ttdef"><b>Definition:</b> <a href="a00393_source.html#l00019">MPIGetFilename.c:19</a></div></div>
+<div class="ttc" id="a00236_html"><div class="ttname"><a href="a00236.html">common.h</a></div><div class="ttdoc">Some common functions used here and there. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

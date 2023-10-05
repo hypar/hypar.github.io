@@ -1,5 +1,4 @@
 var a00375 =
 [
-    [ "main", "a00375.html#a3c04138a5bfe5d72780bb7e82a18e627", null ],
-    [ "help", "a00375.html#a34adadf9b019a29914b603205eb4d692", null ]
+    [ "WriteText", "a00375.html#afc6009d99921e629e20244374914a806", null ]
 ];

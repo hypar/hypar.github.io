@@ -1,5 +1,4 @@
 var a00573 =
 [
-    [ "ShallowWater2DSourceUpwindLLF", "a00573.html#a12c14b7e0827bc83f1b1cc26f6106de7", null ],
-    [ "ShallowWater2DSourceUpwindRoe", "a00573.html#ae351c73f881dba794dd07de10c8bafa4", null ]
+    [ "ShallowWater2DRoeAverage", "a00573.html#a20a7a78c139fb465f48ebe1a5ed0c9af", null ]
 ];

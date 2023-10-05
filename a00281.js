@@ -1,4 +1,4 @@
 var a00281 =
 [
-    [ "BCPeriodicU", "a00281.html#ae7c327565752b28cc8313423478efc92", null ]
+    [ "BCInitialize", "a00281.html#a633bc0c92f2344b0f033709e47ec6421", null ]
 ];

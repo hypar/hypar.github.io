@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/SparseGrids/SparseGridsOutputSolution.cpp File Reference</title>
+<title>HyPar: src/SparseGrids/SparseGridsCalculateError.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,33 +114,36 @@ $(document).ready(function(){initNavTree('a00618.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SparseGridsOutputSolution.cpp File Reference</div>  </div>
+<div class="title">SparseGridsCalculateError.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Output the solution to file.  
+<p>Calculate errors if an exact solution is provided.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00263_source.html">sparse_grids_simulation.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="a00231_source.html">arrayfunctions.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00247_source.html">mathfunctions_cpp.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00268_source.html">std_vec_ops.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00267_source.html">sparse_grids_simulation.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00618_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5981de613724cb667e98aa872157534e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00618.html#a5981de613724cb667e98aa872157534e">OutputSolution</a> (void *, int)</td></tr>
-<tr class="separator:a5981de613724cb667e98aa872157534e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef6e3464d167cab9e23a9eacb8f62882"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00618.html#aef6e3464d167cab9e23a9eacb8f62882">ExactSolution</a> (void *, void *, double *, char *, int *)</td></tr>
+<tr class="separator:aef6e3464d167cab9e23a9eacb8f62882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Output the solution to file. </p>
+<div class="textblock"><p>Calculate errors if an exact solution is provided. </p>
 <dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh, John Loffeld, Lee Ricketson </dd></dl>
 
-<p>Definition in file <a class="el" href="a00618_source.html">SparseGridsOutputSolution.cpp</a>.</p>
+<p>Definition in file <a class="el" href="a00618_source.html">SparseGridsCalculateError.cpp</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a5981de613724cb667e98aa872157534e"></a>
+<a class="anchor" id="aef6e3464d167cab9e23a9eacb8f62882"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int OutputSolution </td>
+          <td class="memname">int ExactSolution </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>s</em>, </td>
@@ -148,8 +151,26 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nsims</em>&#160;</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>uex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>flag</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -158,146 +179,65 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write out the solution to file </p>
+<p>Read in the exact solution, if available. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>Array of simulation objects of type <a class="el" href="a00218.html#a00667" title="Structure defining a simulation. ">SimulationObject</a> </td></tr>
-    <tr><td class="paramname">nsims</td><td>Number of simulation objects </td></tr>
+    <tr><td class="paramname">s</td><td>Solver object of type <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> </td></tr>
+    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00207.html#a00674" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
+    <tr><td class="paramname">uex</td><td>Array to hold the exact solution, if available </td></tr>
+    <tr><td class="paramname">fname</td><td>Filename root from which to read exact solution </td></tr>
+    <tr><td class="paramname">flag</td><td>Flag to indicate if exact solution was available </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="a00601_source.html#l00026">26</a> of file <a class="el" href="a00601_source.html">OutputSolution.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00218.html#a00667">SimulationObject</a>* simobj = (<a class="code" href="a00218.html#a00667">SimulationObject</a>*) s;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">int</span> ns;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <a class="code" href="a00231.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="a00202.html">HyPar</a>*        solver = &amp;(simobj[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="a00205.html#a00663">MPIVariables</a>* mpi    = &amp;(simobj[ns].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">/* if WriteOutput() is NULL, then return */</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">if</span> (!solver-&gt;<a class="code" href="a00202.html#a9018a1befab4079332620f40375a9661">WriteOutput</a>) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">/* time integration module may have auxiliary arrays to write out, so get them */</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">int</span> NSolutions = 0;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00265.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a>(&amp;NSolutions,NULL,solver,-1,ns); <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span> (NSolutions &gt; 10) NSolutions = 10;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">int</span>  nu;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">char</span> fname_root[<a class="code" href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">char</span> aux_fname_root[<a class="code" href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    strcpy(fname_root, solver-&gt;<a class="code" href="a00202.html#a2f63f9a875bb76e6107cb2e7c725d935">op_fname_root</a>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    strcpy(aux_fname_root, solver-&gt;<a class="code" href="a00202.html#a5d741833915983fdcb695f262a73ae7e">aux_op_fname_root</a>);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">if</span> (nsims &gt; 1) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      <span class="keywordtype">char</span> index[<a class="code" href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <a class="code" href="a00234.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a>(ns, index, (<span class="keywordtype">int</span>)log10(nsims)+1);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      strcat(fname_root, <span class="stringliteral">&quot;_&quot;</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      strcat(fname_root, index);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      strcat(aux_fname_root, <span class="stringliteral">&quot;_&quot;</span>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      strcat(aux_fname_root, index);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">for</span> (nu=0; nu&lt;NSolutions; nu++) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      <span class="keywordtype">double</span>  *uaux = NULL;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      <a class="code" href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00265.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a>(&amp;NSolutions,&amp;uaux,solver,nu,ns); <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <a class="code" href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00239.html#aaf888c739c5200d9c58a7154347069b0">WriteArray</a>(  solver-&gt;<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                        solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                        solver-&gt;<a class="code" href="a00202.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                        solver-&gt;<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                        solver-&gt;<a class="code" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                        solver-&gt;<a class="code" href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                        uaux,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                        solver,</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                        mpi,</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                        aux_fname_root ); <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      aux_fname_root[2]++;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#if defined(HAVE_CUDA)</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"></span>    <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00202.html#ae4ab67b8e83747d09dc53c42e218eb4e">use_gpu</a>) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      <span class="comment">/* Copy values from GPU memory to CPU memory for writing. */</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      <a class="code" href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a>(solver-&gt;<a class="code" href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">x</a>, solver-&gt;<a class="code" href="a00202.html#a12356f3dd3ff93b8a46d248bf1f074e7">gpu_x</a>, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>)*solver-&gt;<a class="code" href="a00202.html#aec1dee03c858e0d3910c40c209890ab0">size_x</a>, <a class="code" href="a00230.html#ad3729453a5f50a2a289e41900432368aa5e83a902b81b823a48c8a81680640e35">gpuMemcpyDeviceToHost</a>);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#ifdef CUDA_VAR_ORDERDING_AOS</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor"></span>      <a class="code" href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a>(  solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>, </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                  solver-&gt;<a class="code" href="a00202.html#ae750cf429003a5174e431a8505bf1dcb">gpu_u</a>, </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                  <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>)*solver-&gt;<a class="code" href="a00202.html#a3a6d36520a0a04118dafe25c0f5e70b1">ndof_cells_wghosts</a>, </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                  <a class="code" href="a00230.html#ad3729453a5f50a2a289e41900432368aa5e83a902b81b823a48c8a81680640e35">gpuMemcpyDeviceToHost</a> );</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span>      <span class="keywordtype">double</span> *h_u = (<span class="keywordtype">double</span> *) malloc(<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>)*solver-&gt;<a class="code" href="a00202.html#a3a6d36520a0a04118dafe25c0f5e70b1">ndof_cells_wghosts</a>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <a class="code" href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a>(h_u, solver-&gt;<a class="code" href="a00202.html#ae750cf429003a5174e431a8505bf1dcb">gpu_u</a>, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>)*solver-&gt;<a class="code" href="a00202.html#a3a6d36520a0a04118dafe25c0f5e70b1">ndof_cells_wghosts</a>, <a class="code" href="a00230.html#ad3729453a5f50a2a289e41900432368aa5e83a902b81b823a48c8a81680640e35">gpuMemcpyDeviceToHost</a>);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>; i++) {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> v=0; v&lt;solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>; v++) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;          solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>[i*solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>+v] = h_u[i+v*solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>];</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      free(h_u);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span>    }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00239.html#aaf888c739c5200d9c58a7154347069b0">WriteArray</a>(  solver-&gt;<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                      solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                      solver-&gt;<a class="code" href="a00202.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>,</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                      solver-&gt;<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                      solver-&gt;<a class="code" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                      solver-&gt;<a class="code" href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                      solver-&gt;<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                      solver,</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                      mpi,</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                      fname_root ); <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="comment">/* increment the index string, if required */</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">if</span> ((!strcmp(solver-&gt;<a class="code" href="a00202.html#a5f89e286a9eaffdb66d966fa6a290d3f">output_mode</a>,<span class="stringliteral">&quot;serial&quot;</span>)) &amp;&amp; (!strcmp(solver-&gt;<a class="code" href="a00202.html#a4e93cb107e180ef982b74cef7726b70f">op_overwrite</a>,<span class="stringliteral">&quot;no&quot;</span>))) {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <a class="code" href="a00312.html#a9fda82ed752188f3af821e2c30f63c21">IncrementFilenameIndex</a>(solver-&gt;<a class="code" href="a00202.html#a0805db42e429173752189696c3c96909">filename_index</a>,solver-&gt;<a class="code" href="a00202.html#af474ca4577de91b658e4399ad0a6d7b3">index_length</a>);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  }</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
-<div class="ttc" id="a00202_html_a3a6d36520a0a04118dafe25c0f5e70b1"><div class="ttname"><a href="a00202.html#a3a6d36520a0a04118dafe25c0f5e70b1">HyPar::ndof_cells_wghosts</a></div><div class="ttdeci">int ndof_cells_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00047">hypar.h:47</a></div></div>
-<div class="ttc" id="a00234_html_a3e3ad5aed581d9ae563190c365dadc41"><div class="ttname"><a href="a00234.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a></div><div class="ttdeci">void GetStringFromInteger(int, char *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00296_source.html#l00015">CommonFunctions.c:15</a></div></div>
-<div class="ttc" id="a00202_html_a9018a1befab4079332620f40375a9661"><div class="ttname"><a href="a00202.html#a9018a1befab4079332620f40375a9661">HyPar::WriteOutput</a></div><div class="ttdeci">int(* WriteOutput)(int, int, int *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00206">hypar.h:206</a></div></div>
-<div class="ttc" id="a00218_html_a00667"><div class="ttname"><a href="a00218.html#a00667">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00023">simulation_object.h:23</a></div></div>
-<div class="ttc" id="a00202_html_ae4ab67b8e83747d09dc53c42e218eb4e"><div class="ttname"><a href="a00202.html#ae4ab67b8e83747d09dc53c42e218eb4e">HyPar::use_gpu</a></div><div class="ttdeci">int use_gpu</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00444">hypar.h:444</a></div></div>
-<div class="ttc" id="a00202_html_aa989ebb755986852177779cdf7bd8c85"><div class="ttname"><a href="a00202.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a></div><div class="ttdeci">int * dim_global</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00033">hypar.h:33</a></div></div>
-<div class="ttc" id="a00231_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00231.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00017">basic.h:17</a></div></div>
-<div class="ttc" id="a00202_html_aec1dee03c858e0d3910c40c209890ab0"><div class="ttname"><a href="a00202.html#aec1dee03c858e0d3910c40c209890ab0">HyPar::size_x</a></div><div class="ttdeci">int size_x</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00048">hypar.h:48</a></div></div>
-<div class="ttc" id="a00202_html_a711aad4cbe735871dd9e91ab575c878b"><div class="ttname"><a href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">HyPar::x</a></div><div class="ttdeci">double * x</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00107">hypar.h:107</a></div></div>
-<div class="ttc" id="a00202_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00202.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00231_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00016">basic.h:16</a></div></div>
-<div class="ttc" id="a00202_html_a5f89e286a9eaffdb66d966fa6a290d3f"><div class="ttname"><a href="a00202.html#a5f89e286a9eaffdb66d966fa6a290d3f">HyPar::output_mode</a></div><div class="ttdeci">char output_mode[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00183">hypar.h:183</a></div></div>
-<div class="ttc" id="a00218_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00025">simulation_object.h:25</a></div></div>
-<div class="ttc" id="a00202_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00037">hypar.h:37</a></div></div>
-<div class="ttc" id="a00202_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00052">hypar.h:52</a></div></div>
-<div class="ttc" id="a00202_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00202.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00042">hypar.h:42</a></div></div>
-<div class="ttc" id="a00231_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00018">basic.h:18</a></div></div>
-<div class="ttc" id="a00202_html_a5d741833915983fdcb695f262a73ae7e"><div class="ttname"><a href="a00202.html#a5d741833915983fdcb695f262a73ae7e">HyPar::aux_op_fname_root</a></div><div class="ttdeci">char aux_op_fname_root[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00203">hypar.h:203</a></div></div>
-<div class="ttc" id="a00230_html_ad3729453a5f50a2a289e41900432368aa5e83a902b81b823a48c8a81680640e35"><div class="ttname"><a href="a00230.html#ad3729453a5f50a2a289e41900432368aa5e83a902b81b823a48c8a81680640e35">gpuMemcpyDeviceToHost</a></div><div class="ttdef"><b>Definition:</b> <a href="a00230_source.html#l00017">arrayfunctions_gpu.h:17</a></div></div>
-<div class="ttc" id="a00202_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00202_html_a12356f3dd3ff93b8a46d248bf1f074e7"><div class="ttname"><a href="a00202.html#a12356f3dd3ff93b8a46d248bf1f074e7">HyPar::gpu_x</a></div><div class="ttdeci">double * gpu_x</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00452">hypar.h:452</a></div></div>
-<div class="ttc" id="a00205_html_a00663"><div class="ttname"><a href="a00205.html#a00663">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00312_html_a9fda82ed752188f3af821e2c30f63c21"><div class="ttname"><a href="a00312.html#a9fda82ed752188f3af821e2c30f63c21">IncrementFilenameIndex</a></div><div class="ttdeci">void IncrementFilenameIndex(char *f, int len)</div><div class="ttdef"><b>Definition:</b> <a href="a00312_source.html#l00046">IncrementFilename.c:46</a></div></div>
-<div class="ttc" id="a00265_html_a9bff7fe5ca4249dd82bfad78a1fa09dd"><div class="ttname"><a href="a00265.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a></div><div class="ttdeci">int TimeGetAuxSolutions(int *, double **, void *, int, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00628_source.html#l00029">TimeGetAuxSolutions.c:29</a></div></div>
-<div class="ttc" id="a00202_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00116">hypar.h:116</a></div></div>
-<div class="ttc" id="a00202_html_ae750cf429003a5174e431a8505bf1dcb"><div class="ttname"><a href="a00202.html#ae750cf429003a5174e431a8505bf1dcb">HyPar::gpu_u</a></div><div class="ttdeci">double * gpu_u</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00454">hypar.h:454</a></div></div>
-<div class="ttc" id="a00202_html_a4e93cb107e180ef982b74cef7726b70f"><div class="ttname"><a href="a00202.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a></div><div class="ttdeci">char op_overwrite[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00191">hypar.h:191</a></div></div>
-<div class="ttc" id="a00231_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00014">basic.h:14</a></div></div>
-<div class="ttc" id="a00239_html_aaf888c739c5200d9c58a7154347069b0"><div class="ttname"><a href="a00239.html#aaf888c739c5200d9c58a7154347069b0">WriteArray</a></div><div class="ttdeci">int WriteArray(int, int, int *, int *, int, double *, double *, void *, void *, char *)</div><div class="ttdef"><b>Definition:</b> <a href="a00366_source.html#l00027">WriteArray.c:27</a></div></div>
-<div class="ttc" id="a00202_html_af474ca4577de91b658e4399ad0a6d7b3"><div class="ttname"><a href="a00202.html#af474ca4577de91b658e4399ad0a6d7b3">HyPar::index_length</a></div><div class="ttdeci">int index_length</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00196">hypar.h:196</a></div></div>
-<div class="ttc" id="a00230_html_ac87405a3a13250d12c0f033f29a47bab"><div class="ttname"><a href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a></div><div class="ttdeci">void gpuMemcpy(void *, const void *, size_t, enum gpuMemcpyKind)</div><div class="ttdef"><b>Definition:</b> <a href="a00270_source.html#l00094">ArrayImplementations_GPU.cu:94</a></div></div>
-<div class="ttc" id="a00202_html_a0805db42e429173752189696c3c96909"><div class="ttname"><a href="a00202.html#a0805db42e429173752189696c3c96909">HyPar::filename_index</a></div><div class="ttdeci">char * filename_index</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00194">hypar.h:194</a></div></div>
-<div class="ttc" id="a00202_html"><div class="ttname"><a href="a00202.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00202_html_a2f63f9a875bb76e6107cb2e7c725d935"><div class="ttname"><a href="a00202.html#a2f63f9a875bb76e6107cb2e7c725d935">HyPar::op_fname_root</a></div><div class="ttdeci">char op_fname_root[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00201">hypar.h:201</a></div></div>
-<div class="ttc" id="a00218_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00218.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00026">simulation_object.h:26</a></div></div>
+<p>Definition at line <a class="el" href="a00314_source.html#l00016">16</a> of file <a class="el" href="a00314_source.html">ExactSolution.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="a00204.html">HyPar</a>  *solver = (<a class="code" href="a00204.html">HyPar</a>*) s;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">int</span> same_size = 1;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;solver-&gt;<a class="code" href="a00204.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; i++) {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00204.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>[i] != solver-&gt;<a class="code" href="a00204.html#a9a4a95bad0d4f4769e5e3cd8798a158a">dim_global_ex</a>[i]) same_size = 0;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  }</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordflow">if</span> (same_size) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="a00241.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a>( solver-&gt;<a class="code" href="a00204.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;               solver-&gt;<a class="code" href="a00204.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;               solver-&gt;<a class="code" href="a00204.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;               solver-&gt;<a class="code" href="a00204.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;               solver-&gt;<a class="code" href="a00204.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;               solver,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;               m,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;               NULL,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;               uex,</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;               fname,</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;               flag);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="a00241.html#ad0eb6700a70a6489148d41a48436da78">ReadArraywInterp</a>( solver-&gt;<a class="code" href="a00204.html#a484873c74138512e41bc50d17b7d955a">ndims</a>,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                      solver-&gt;<a class="code" href="a00204.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                      solver-&gt;<a class="code" href="a00204.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                      solver-&gt;<a class="code" href="a00204.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                      solver-&gt;<a class="code" href="a00204.html#a9a4a95bad0d4f4769e5e3cd8798a158a">dim_global_ex</a>,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                      solver-&gt;<a class="code" href="a00204.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                      solver,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                      m,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                      NULL,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                      uex,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                      fname,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                      flag);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="ttc" id="a00204_html_aa989ebb755986852177779cdf7bd8c85"><div class="ttname"><a href="a00204.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a></div><div class="ttdeci">int * dim_global</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00033">hypar.h:33</a></div></div>
+<div class="ttc" id="a00204_html_a9a4a95bad0d4f4769e5e3cd8798a158a"><div class="ttname"><a href="a00204.html#a9a4a95bad0d4f4769e5e3cd8798a158a">HyPar::dim_global_ex</a></div><div class="ttdeci">int * dim_global_ex</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00075">hypar.h:75</a></div></div>
+<div class="ttc" id="a00204_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00204.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00037">hypar.h:37</a></div></div>
+<div class="ttc" id="a00204_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00204.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00052">hypar.h:52</a></div></div>
+<div class="ttc" id="a00241_html_afaf5b0d6e79b1e8674b397aebcb219dc"><div class="ttname"><a href="a00241.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a></div><div class="ttdeci">int ReadArray(int, int, int *, int *, int, void *, void *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00369_source.html#l00025">ReadArray.c:25</a></div></div>
+<div class="ttc" id="a00204_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00204.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00029">hypar.h:29</a></div></div>
+<div class="ttc" id="a00241_html_ad0eb6700a70a6489148d41a48436da78"><div class="ttname"><a href="a00241.html#ad0eb6700a70a6489148d41a48436da78">ReadArraywInterp</a></div><div class="ttdeci">int ReadArraywInterp(int, int, int *, int *, int *, int, void *, void *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00370_source.html#l00028">ReadArraywInterp.c:28</a></div></div>
+<div class="ttc" id="a00204_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00204.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00026">hypar.h:26</a></div></div>
+<div class="ttc" id="a00204_html"><div class="ttname"><a href="a00204.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00023">hypar.h:23</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

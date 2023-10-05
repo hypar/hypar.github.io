@@ -1,12 +1,5 @@
 var a00548 =
 [
-    [ "Numa3DComputeCFL", "a00548.html#af87b3684a5e37d011b7af3e18eaeedf5", null ],
-    [ "Numa3DFlux", "a00548.html#af65b0aa648b23422047d1d9197212ad5", null ],
-    [ "Numa3DStiffFlux", "a00548.html#a2cbd383fbe6bdc2d785e3b6e3ced2d52", null ],
-    [ "Numa3DSource", "a00548.html#a5dea7df5896808d22303783e333a577c", null ],
-    [ "Numa3DRusanovFlux", "a00548.html#a9358277e880397dd427213488fe25007", null ],
-    [ "Numa3DRusanovLinearFlux", "a00548.html#a74a91140e4e2c6328878fcf5767e02d5", null ],
-    [ "Numa3DCalculateStandardAtmosphere_1", "a00548.html#ac5608220335dd25647841014e67ba10f", null ],
-    [ "Numa3DCalculateStandardAtmosphere_2", "a00548.html#ac16db84618d93d2d70fa177b41daeb45", null ],
-    [ "Numa3DInitialize", "a00548.html#a61a9f390ea68741dff3588fc2c16c9eb", null ]
+    [ "Numa2DRusanovFlux", "a00548.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
+    [ "Numa2DRusanovLinearFlux", "a00548.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
 ];

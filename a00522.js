@@ -1,5 +1,6 @@
 var a00522 =
 [
-    [ "NavierStokes3DIBAdiabatic", "a00522.html#a0f7ac290f54e925b5e5554a69bba5c16", null ],
-    [ "NavierStokes3DIBIsothermal", "a00522.html#a8988fb5737b2ad7f660c21326f2e1049", null ]
+    [ "NavierStokes3DFlux", "a00522.html#ac0c3d11fce67eca952fcb594ff3930cb", null ],
+    [ "NavierStokes3DStiffFlux", "a00522.html#a028bf569168b6ac14cc51c485fd891ce", null ],
+    [ "NavierStokes3DNonStiffFlux", "a00522.html#ae304378ba0faf692ac352fef0deeb961", null ]
 ];

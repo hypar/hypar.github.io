@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/TimeIntegration/TimeGetAuxSolutions.c Source File</title>
+<title>HyPar: src/SparseGrids/SparseGridsOutputSolution.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,56 +112,45 @@ $(document).ready(function(){initNavTree('a00628_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">TimeGetAuxSolutions.c</div>  </div>
+<div class="title">SparseGridsOutputSolution.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00628.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00238.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00265.html">timeintegration.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00267.html">sparse_grids_simulation.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00416.html#a8380e6e16613faacbb632e7d56cd5ebe">OutputSolution</a> (<span class="keywordtype">void</span>*,<span class="keywordtype">int</span>, <span class="keywordtype">double</span>);</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="a00628.html#afb7c0aaa510e236f880899a068bbecca">   29</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00265.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a>(</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                          <span class="keywordtype">int</span>     *N,      </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                          <span class="keywordtype">double</span>  **uaux,  </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                          <span class="keywordtype">void</span>    *s,      </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                          <span class="keywordtype">int</span>     nu,      </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                          <span class="keywordtype">int</span>     ns       </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                       )</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00202.html">HyPar</a>           *solver = (<a class="code" href="a00202.html">HyPar</a>*) s;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00221.html">TimeIntegration</a> *TS     = (<a class="code" href="a00221.html">TimeIntegration</a>*) solver-&gt;<a class="code" href="a00202.html#a1d36fea92472416e32e039b86dea0b18">time_integrator</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  if (nu &gt;= 0) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00202.html#a138e751362d14724df8e6ab27c4a5e55">time_scheme</a>,<a class="code" href="a00197.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      <a class="code" href="a00197.html#a00659">GLMGEEParameters</a> *params = (<a class="code" href="a00197.html#a00659">GLMGEEParameters</a>*) solver-&gt;<a class="code" href="a00202.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      *uaux = (TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[params-&gt;<a class="code" href="a00197.html#acab531abaa74a7e664e3986f2522b33a">r</a>+nu] + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">if</span> (!TS) *N = 0;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keywordflow">if</span> (!strcmp(solver-&gt;<a class="code" href="a00202.html#a138e751362d14724df8e6ab27c4a5e55">time_scheme</a>,<a class="code" href="a00197.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a>)) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="a00197.html#a00659">GLMGEEParameters</a> *params = (<a class="code" href="a00197.html#a00659">GLMGEEParameters</a>*) solver-&gt;<a class="code" href="a00202.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        *N = params-&gt;<a class="code" href="a00197.html#acab531abaa74a7e664e3986f2522b33a">r</a> - 1;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      } <span class="keywordflow">else</span> *N = 0;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
-<div class="ttc" id="a00197_html_aad9619c099daeb3e6b1b7ef9e03e38d8"><div class="ttname"><a href="a00197.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a></div><div class="ttdeci">#define _GLM_GEE_</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00018">timeintegration_struct.h:18</a></div></div>
-<div class="ttc" id="a00221_html"><div class="ttname"><a href="a00221.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00029">timeintegration_struct.h:29</a></div></div>
-<div class="ttc" id="a00238_html"><div class="ttname"><a href="a00238.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00221_html_ae21dee7e1deaf4ff3024c1476230d3b1"><div class="ttname"><a href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">TimeIntegration::U</a></div><div class="ttdeci">double ** U</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00079">timeintegration_struct.h:79</a></div></div>
-<div class="ttc" id="a00221_html_aed62497ac51211784e9bfa2608cc7413"><div class="ttname"><a href="a00221.html#aed62497ac51211784e9bfa2608cc7413">TimeIntegration::u_offsets</a></div><div class="ttdeci">long * u_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00054">timeintegration_struct.h:54</a></div></div>
-<div class="ttc" id="a00197_html_acab531abaa74a7e664e3986f2522b33a"><div class="ttname"><a href="a00197.html#acab531abaa74a7e664e3986f2522b33a">GLMGEEParameters::r</a></div><div class="ttdeci">int r</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00268">timeintegration_struct.h:268</a></div></div>
-<div class="ttc" id="a00202_html_a1d36fea92472416e32e039b86dea0b18"><div class="ttname"><a href="a00202.html#a1d36fea92472416e32e039b86dea0b18">HyPar::time_integrator</a></div><div class="ttdeci">void * time_integrator</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00165">hypar.h:165</a></div></div>
-<div class="ttc" id="a00197_html_a00659"><div class="ttname"><a href="a00197.html#a00659">GLMGEEParameters</a></div><div class="ttdoc">Structure containing the parameters for the General Linear Methods with Global Error Estimators (GLM-...</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00267">timeintegration_struct.h:267</a></div></div>
-<div class="ttc" id="a00202_html_a138e751362d14724df8e6ab27c4a5e55"><div class="ttname"><a href="a00202.html#a138e751362d14724df8e6ab27c4a5e55">HyPar::time_scheme</a></div><div class="ttdeci">char time_scheme[_MAX_STRING_SIZE_]</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00078">hypar.h:78</a></div></div>
-<div class="ttc" id="a00265_html_a9bff7fe5ca4249dd82bfad78a1fa09dd"><div class="ttname"><a href="a00265.html#a9bff7fe5ca4249dd82bfad78a1fa09dd">TimeGetAuxSolutions</a></div><div class="ttdeci">int TimeGetAuxSolutions(int *, double **, void *, int, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00628_source.html#l00029">TimeGetAuxSolutions.c:29</a></div></div>
-<div class="ttc" id="a00265_html"><div class="ttname"><a href="a00265.html">timeintegration.h</a></div><div class="ttdoc">Contains function declarations for time integration. </div></div>
-<div class="ttc" id="a00202_html_adec095311615891040de11341c01a77f"><div class="ttname"><a href="a00202.html#adec095311615891040de11341c01a77f">HyPar::msti</a></div><div class="ttdeci">void * msti</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00361">hypar.h:361</a></div></div>
-<div class="ttc" id="a00202_html"><div class="ttname"><a href="a00202.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00023">hypar.h:23</a></div></div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="a00222.html#ac71f8174fbf5a21dc14c9ad042b86798">   11</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00222.html#ac71f8174fbf5a21dc14c9ad042b86798">SparseGridsSimulation::OutputSolution</a>(<span class="keywordtype">double</span> a_time )</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="comment">/* if asked for, write individual sparse grids solutions */</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="a00222.html#a634b90e62b481c87ad0ba4ee5c5feba4">m_write_sg_solutions</a> == 1) {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ns = 0; ns &lt; <a class="code" href="a00222.html#acd95922d6bb09419fb66435d114cdb5c">m_nsims_sg</a>; ns++) {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="a00222.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[ns].solver.PhysicsOutput) {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="a00222.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[ns].solver.PhysicsOutput( &amp;(<a class="code" href="a00222.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[ns].solver),</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                                            &amp;(<a class="code" href="a00222.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>[ns].mpi),</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                                            a_time );</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;      }</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    }</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="a00222.html#ac71f8174fbf5a21dc14c9ad042b86798">::OutputSolution</a>((<span class="keywordtype">void</span>*)<a class="code" href="a00222.html#afd006361179964b4e2c2cc65526247bd">m_sims_sg</a>.data(), <a class="code" href="a00222.html#acd95922d6bb09419fb66435d114cdb5c">m_nsims_sg</a>, a_time);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  }</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="comment">/* Combine the sparse grids solutions to full grid */</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <a class="code" href="a00222.html#a3854ff631312b4487e4b816b9ffbb8ad">CombinationTechnique</a>(<a class="code" href="a00222.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="comment">/* Write the full grid solution */</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00222.html#ac71f8174fbf5a21dc14c9ad042b86798">::OutputSolution</a>((<span class="keywordtype">void</span>*)<a class="code" href="a00222.html#a41a86f682aa37c28c671759a11a494a8">m_sim_fg</a>, 1, a_time);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="ttc" id="a00222_html_afd006361179964b4e2c2cc65526247bd"><div class="ttname"><a href="a00222.html#afd006361179964b4e2c2cc65526247bd">SparseGridsSimulation::m_sims_sg</a></div><div class="ttdeci">std::vector&lt; SimulationObject &gt; m_sims_sg</div><div class="ttdef"><b>Definition:</b> <a href="a00267_source.html#l00231">sparse_grids_simulation.h:231</a></div></div>
+<div class="ttc" id="a00222_html_acd95922d6bb09419fb66435d114cdb5c"><div class="ttname"><a href="a00222.html#acd95922d6bb09419fb66435d114cdb5c">SparseGridsSimulation::m_nsims_sg</a></div><div class="ttdeci">int m_nsims_sg</div><div class="ttdef"><b>Definition:</b> <a href="a00267_source.html#l00214">sparse_grids_simulation.h:214</a></div></div>
+<div class="ttc" id="a00267_html"><div class="ttname"><a href="a00267.html">sparse_grids_simulation.h</a></div></div>
+<div class="ttc" id="a00222_html_a41a86f682aa37c28c671759a11a494a8"><div class="ttname"><a href="a00222.html#a41a86f682aa37c28c671759a11a494a8">SparseGridsSimulation::m_sim_fg</a></div><div class="ttdeci">SimulationObject * m_sim_fg</div><div class="ttdef"><b>Definition:</b> <a href="a00267_source.html#l00230">sparse_grids_simulation.h:230</a></div></div>
+<div class="ttc" id="a00222_html_a634b90e62b481c87ad0ba4ee5c5feba4"><div class="ttname"><a href="a00222.html#a634b90e62b481c87ad0ba4ee5c5feba4">SparseGridsSimulation::m_write_sg_solutions</a></div><div class="ttdeci">int m_write_sg_solutions</div><div class="ttdef"><b>Definition:</b> <a href="a00267_source.html#l00225">sparse_grids_simulation.h:225</a></div></div>
+<div class="ttc" id="a00416_html_a8380e6e16613faacbb632e7d56cd5ebe"><div class="ttname"><a href="a00416.html#a8380e6e16613faacbb632e7d56cd5ebe">OutputSolution</a></div><div class="ttdeci">int OutputSolution(void *, int, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00611_source.html#l00027">OutputSolution.cpp:27</a></div></div>
+<div class="ttc" id="a00222_html_ac71f8174fbf5a21dc14c9ad042b86798"><div class="ttname"><a href="a00222.html#ac71f8174fbf5a21dc14c9ad042b86798">SparseGridsSimulation::OutputSolution</a></div><div class="ttdeci">void OutputSolution(double)</div><div class="ttdef"><b>Definition:</b> <a href="a00628_source.html#l00011">SparseGridsOutputSolution.cpp:11</a></div></div>
+<div class="ttc" id="a00222_html_a3854ff631312b4487e4b816b9ffbb8ad"><div class="ttname"><a href="a00222.html#a3854ff631312b4487e4b816b9ffbb8ad">SparseGridsSimulation::CombinationTechnique</a></div><div class="ttdeci">void CombinationTechnique(SimulationObject *const)</div><div class="ttdef"><b>Definition:</b> <a href="a00619_source.html#l00023">SparseGridsCombinationTechnique.cpp:23</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

@@ -1,4 +1,4 @@
 var a00426 =
 [
-    [ "Euler1DComputeCFL", "a00426.html#a820145e91372888fca738bcf320495d9", null ]
+    [ "BurgersCleanup", "a00426.html#aa1c99cef648d3cdcf4d6c6f86e60c513", null ]
 ];

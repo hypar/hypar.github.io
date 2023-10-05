@@ -1,5 +1,6 @@
 var a00577 =
 [
-    [ "VlasovAdvectionCoeff", "a00577.html#a58d4d7eb9e93f0e81dd01ce4895d6b3a", null ],
-    [ "VlasovAdvection", "a00577.html#a5abae931957e04e898c1d3873dddce45", null ]
+    [ "ShallowWater2DSourceFunction1", "a00577.html#a4d5b3f3e933170ce53af12d19ba4ef01", null ],
+    [ "ShallowWater2DSourceFunction2", "a00577.html#a5ed617f0405e97ed489c4843d482e692", null ],
+    [ "ShallowWater2DSource", "a00577.html#a40d3a942960d07b188d08a46bec76768", null ]
 ];

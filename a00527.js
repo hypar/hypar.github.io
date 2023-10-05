@@ -1,5 +1,5 @@
 var a00527 =
 [
-    [ "gpuNavierStokes3DModifiedSolution_kernel", "a00527.html#afad4b3c6f27d9b28ede7c825c9221796", null ],
-    [ "gpuNavierStokes3DModifiedSolution", "a00527.html#aeb094a14585f1f1dfe7bee7a4d406107", null ]
+    [ "NavierStokes3DIBAdiabatic", "a00527.html#a0f7ac290f54e925b5e5554a69bba5c16", null ],
+    [ "NavierStokes3DIBIsothermal", "a00527.html#a8988fb5737b2ad7f660c21326f2e1049", null ]
 ];

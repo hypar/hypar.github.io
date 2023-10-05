@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/TimeIntegration/TimeRK.c Source File</title>
+<title>HyPar: src/TimeIntegration/TimeForwardEuler.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,230 +112,80 @@ $(document).ready(function(){initNavTree('a00637_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">TimeRK.c</div>  </div>
+<div class="title">TimeForwardEuler.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00637.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#if defined (HAVE_CUDA)</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="a00230.html">arrayfunctions_gpu.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="a00229.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="a00218.html">simulation_object.h</a>&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00265.html">timeintegration.h</a>&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="a00637.html#ac33a35949863d5fd5ebce0f76164b9ac">   35</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00265.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK</a>(<span class="keywordtype">void</span> *ts )</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="a00221.html">TimeIntegration</a>* TS = (<a class="code" href="a00221.html">TimeIntegration</a>*) ts;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="a00218.html#a00667">SimulationObject</a>* sim = (<a class="code" href="a00218.html#a00667">SimulationObject</a>*) TS-&gt;<a class="code" href="a00221.html#addc618f703eab837da44852e69399e04">simulation</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00197.html#a00652">ExplicitRKParameters</a> *params = (<a class="code" href="a00197.html#a00652">ExplicitRKParameters</a>*) sim[0].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#adec095311615891040de11341c01a77f">msti</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">int</span> ns, stage, i, nsims = TS-&gt;<a class="code" href="a00221.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#if defined(HAVE_CUDA)</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (sim[0].solver.use_gpu) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">/* Calculate stage values */</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">for</span> (stage = 0; stage &lt; params-&gt;nstages; stage++) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keywordtype">double</span> stagetime = TS-&gt;<a class="code" href="a00221.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a> + params-&gt;c[stage]*TS-&gt;<a class="code" href="a00221.html#a03e28be41881b703c836edbfe9b51b17">dt</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;          <a class="code" href="a00230.html#a110a55a49f973e7fe6e12614c157d084">gpuArrayCopy1D</a>(  sim[ns].solver.gpu_u,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                           (TS-&gt;<a class="code" href="a00221.html#ab7487801c6b26c42b4b5ca7e6c882cd2">gpu_U</a> + stage*TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a> + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                           (TS-&gt;<a class="code" href="a00221.html#aaf135d2fee365f4aedd983fe509d19d2">u_sizes</a>[ns])  );</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <span class="keywordflow">for</span> (i = 0; i &lt; stage; i++) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;          <a class="code" href="a00230.html#ab3678ace133a9d91cfb9154d500f0e70">gpuArrayAXPY</a>(  TS-&gt;<a class="code" href="a00221.html#a648149fcc754664772c183c3307b12cb">gpu_Udot</a> + i*TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a>,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                         (TS-&gt;<a class="code" href="a00221.html#a03e28be41881b703c836edbfe9b51b17">dt</a> * params-&gt;A[stage*params-&gt;nstages+i]),</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                         TS-&gt;<a class="code" href="a00221.html#ab7487801c6b26c42b4b5ca7e6c882cd2">gpu_U</a> + stage*TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a>,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                         TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a>  );</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">if</span> (sim[ns].solver.PreStage) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;          fprintf(stderr,<span class="stringliteral">&quot;Call to solver-&gt;PreStage() commented out in TimeRK()!\n&quot;</span>);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;          <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">//          sim[ns].solver.PreStage( stage,</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">//                                   (TS-&gt;gpu_U),</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">//                                   &amp;(sim[ns].solver),</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">//                                   &amp;(sim[ns].mpi),</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">//                                   stagetime ); CHECKERR(ierr);</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;          TS-&gt;<a class="code" href="a00221.html#ab20fed3c34682ab24bd0780ac5bf7478">RHSFunction</a>( (TS-&gt;<a class="code" href="a00221.html#a648149fcc754664772c183c3307b12cb">gpu_Udot</a> + stage*TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a> + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                           (TS-&gt;<a class="code" href="a00221.html#ab7487801c6b26c42b4b5ca7e6c882cd2">gpu_U</a> + stage*TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a> + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                           &amp;(sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>),</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                           &amp;(sim[ns].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>),</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                           stagetime  );</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">if</span> (sim[ns].solver.PostStage) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;          sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a356e3534ee0048e05c5ea3ca091c33d8">PostStage</a>(  (TS-&gt;<a class="code" href="a00221.html#ab7487801c6b26c42b4b5ca7e6c882cd2">gpu_U</a> + stage*TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a> + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                                     &amp;(sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>),</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                                     &amp;(sim[ns].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>),</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                                     stagetime);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <a class="code" href="a00230.html#a87d57be18f4bf913a4d3e8bb9536c0f4">gpuArraySetValue</a>(TS-&gt;<a class="code" href="a00221.html#a49c41416fcbb7a577abf65509e067129">gpu_BoundaryFlux</a> + stage*TS-&gt;<a class="code" href="a00221.html#a92e0e59d9204b59517c378991e8af60b">bf_size_total</a>, TS-&gt;<a class="code" href="a00221.html#a92e0e59d9204b59517c378991e8af60b">bf_size_total</a>, 0.0);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;          <a class="code" href="a00230.html#a110a55a49f973e7fe6e12614c157d084">gpuArrayCopy1D</a>(  sim[ns].solver.StageBoundaryIntegral,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                           (TS-&gt;<a class="code" href="a00221.html#a49c41416fcbb7a577abf65509e067129">gpu_BoundaryFlux</a> + stage*TS-&gt;<a class="code" href="a00221.html#a92e0e59d9204b59517c378991e8af60b">bf_size_total</a> + TS-&gt;<a class="code" href="a00221.html#ad41eb4556b91cef16ce5bf056d2e5b71">bf_offsets</a>[ns]),</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                            TS-&gt;<a class="code" href="a00221.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">bf_sizes</a>[ns]  );</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="comment">/* Step completion */</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">for</span> (stage = 0; stage &lt; params-&gt;nstages; stage++) {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;          <a class="code" href="a00230.html#ab3678ace133a9d91cfb9154d500f0e70">gpuArrayAXPY</a>(  (TS-&gt;<a class="code" href="a00221.html#a648149fcc754664772c183c3307b12cb">gpu_Udot</a> + stage*TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a> + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                          (TS-&gt;<a class="code" href="a00221.html#a03e28be41881b703c836edbfe9b51b17">dt</a> * params-&gt;b[stage]),</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                          (sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#ae750cf429003a5174e431a8505bf1dcb">gpu_u</a>),</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                          (TS-&gt;<a class="code" href="a00221.html#aaf135d2fee365f4aedd983fe509d19d2">u_sizes</a>[ns]) );</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;          <a class="code" href="a00230.html#ab3678ace133a9d91cfb9154d500f0e70">gpuArrayAXPY</a>(  (TS-&gt;<a class="code" href="a00221.html#a49c41416fcbb7a577abf65509e067129">gpu_BoundaryFlux</a> + stage*TS-&gt;<a class="code" href="a00221.html#a92e0e59d9204b59517c378991e8af60b">bf_size_total</a> + TS-&gt;<a class="code" href="a00221.html#ad41eb4556b91cef16ce5bf056d2e5b71">bf_offsets</a>[ns]),</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                          (TS-&gt;<a class="code" href="a00221.html#a03e28be41881b703c836edbfe9b51b17">dt</a> * params-&gt;b[stage]),</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                          (sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a6dfeed442d18083b68fd0f28d5f63fa7">StepBoundaryIntegral</a>),</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                          (TS-&gt;<a class="code" href="a00221.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">bf_sizes</a>[ns]) );</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      }</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    }</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="comment">/* Calculate stage values */</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordflow">for</span> (stage = 0; stage &lt; params-&gt;nstages; stage++) {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      <span class="keywordtype">double</span> stagetime = TS-&gt;<a class="code" href="a00221.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a> + params-&gt;c[stage]*TS-&gt;<a class="code" href="a00221.html#a03e28be41881b703c836edbfe9b51b17">dt</a>;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(  sim[ns].solver.u,</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                        (TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[stage] + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                        (TS-&gt;<a class="code" href="a00221.html#aaf135d2fee365f4aedd983fe509d19d2">u_sizes</a>[ns]) );</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      }</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      <span class="keywordflow">for</span> (i = 0; i &lt; stage; i++) {</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <a class="code" href="a00229.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(  TS-&gt;<a class="code" href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">Udot</a>[i],</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;                      (TS-&gt;<a class="code" href="a00221.html#a03e28be41881b703c836edbfe9b51b17">dt</a> * params-&gt;A[stage*params-&gt;nstages+i]),</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;                      TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[stage],</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;                      TS-&gt;<a class="code" href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">u_size_total</a> );</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      }</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">if</span> (sim[ns].solver.PreStage) {</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;          fprintf(stderr,<span class="stringliteral">&quot;Call to solver-&gt;PreStage() commented out in TimeRK()!\n&quot;</span>);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;          <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="comment">//        sim[ns].solver.PreStage( stage,</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="comment">//                                 (TS-&gt;U),</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <span class="comment">//                                 &amp;(sim[ns].solver),</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="comment">//                                 &amp;(sim[ns].mpi),</span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="comment">//                                 stagetime ); CHECKERR(ierr);</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        }</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      }</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        TS-&gt;<a class="code" href="a00221.html#ab20fed3c34682ab24bd0780ac5bf7478">RHSFunction</a>( (TS-&gt;<a class="code" href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">Udot</a>[stage] + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                         (TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[stage] + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                         &amp;(sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>),</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                         &amp;(sim[ns].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>),</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                         stagetime);</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      }</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  </div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordflow">if</span> (sim[ns].solver.PostStage) {</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;          sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a356e3534ee0048e05c5ea3ca091c33d8">PostStage</a>(  (TS-&gt;<a class="code" href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">U</a>[stage] + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                                     &amp;(sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>),</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                                     &amp;(sim[ns].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>),</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                                     stagetime); <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        }</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      }</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[stage], TS-&gt;<a class="code" href="a00221.html#a92e0e59d9204b59517c378991e8af60b">bf_size_total</a>, 0.0);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <a class="code" href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(  sim[ns].solver.StageBoundaryIntegral,</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                        (TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[stage] + TS-&gt;<a class="code" href="a00221.html#ad41eb4556b91cef16ce5bf056d2e5b71">bf_offsets</a>[ns]),</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                        TS-&gt;<a class="code" href="a00221.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">bf_sizes</a>[ns] );</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      }</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    }</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment">/* Step completion */</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">for</span> (stage = 0; stage &lt; params-&gt;nstages; stage++) {</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      <span class="keywordflow">for</span> (ns = 0; ns &lt; nsims; ns++) {</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <a class="code" href="a00229.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(  (TS-&gt;<a class="code" href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">Udot</a>[stage] + TS-&gt;<a class="code" href="a00221.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns]),</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                      (TS-&gt;<a class="code" href="a00221.html#a03e28be41881b703c836edbfe9b51b17">dt</a> * params-&gt;b[stage]),</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                      (sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>),</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                      (TS-&gt;<a class="code" href="a00221.html#aaf135d2fee365f4aedd983fe509d19d2">u_sizes</a>[ns]) );</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <a class="code" href="a00229.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(  (TS-&gt;<a class="code" href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">BoundaryFlux</a>[stage] + TS-&gt;<a class="code" href="a00221.html#ad41eb4556b91cef16ce5bf056d2e5b71">bf_offsets</a>[ns]),</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;                      (TS-&gt;<a class="code" href="a00221.html#a03e28be41881b703c836edbfe9b51b17">dt</a> * params-&gt;b[stage]),</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                      (sim[ns].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a6dfeed442d18083b68fd0f28d5f63fa7">StepBoundaryIntegral</a>),</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                      (TS-&gt;<a class="code" href="a00221.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">bf_sizes</a>[ns]) );</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;      }</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    }</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor">#if defined(HAVE_CUDA)</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor"></span>  }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="ttc" id="a00202_html_a356e3534ee0048e05c5ea3ca091c33d8"><div class="ttname"><a href="a00202.html#a356e3534ee0048e05c5ea3ca091c33d8">HyPar::PostStage</a></div><div class="ttdeci">int(* PostStage)(double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00331">hypar.h:331</a></div></div>
-<div class="ttc" id="a00229_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00169">arrayfunctions.h:169</a></div></div>
-<div class="ttc" id="a00230_html_a87d57be18f4bf913a4d3e8bb9536c0f4"><div class="ttname"><a href="a00230.html#a87d57be18f4bf913a4d3e8bb9536c0f4">gpuArraySetValue</a></div><div class="ttdeci">void gpuArraySetValue(double *, int, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00270_source.html#l00161">ArrayImplementations_GPU.cu:161</a></div></div>
-<div class="ttc" id="a00230_html"><div class="ttname"><a href="a00230.html">arrayfunctions_gpu.h</a></div><div class="ttdoc">Contains function definitions for common array operations on GPU. </div></div>
-<div class="ttc" id="a00218_html_a00667"><div class="ttname"><a href="a00218.html#a00667">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00023">simulation_object.h:23</a></div></div>
-<div class="ttc" id="a00230_html_ab3678ace133a9d91cfb9154d500f0e70"><div class="ttname"><a href="a00230.html#ab3678ace133a9d91cfb9154d500f0e70">gpuArrayAXPY</a></div><div class="ttdeci">void gpuArrayAXPY(const double *, double, double *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00270_source.html#l00177">ArrayImplementations_GPU.cu:177</a></div></div>
-<div class="ttc" id="a00229_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00229.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00319">arrayfunctions.h:319</a></div></div>
-<div class="ttc" id="a00221_html"><div class="ttname"><a href="a00221.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00029">timeintegration_struct.h:29</a></div></div>
-<div class="ttc" id="a00221_html_ab7487801c6b26c42b4b5ca7e6c882cd2"><div class="ttname"><a href="a00221.html#ab7487801c6b26c42b4b5ca7e6c882cd2">TimeIntegration::gpu_U</a></div><div class="ttdeci">double * gpu_U</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00110">timeintegration_struct.h:110</a></div></div>
-<div class="ttc" id="a00221_html_ab20fed3c34682ab24bd0780ac5bf7478"><div class="ttname"><a href="a00221.html#ab20fed3c34682ab24bd0780ac5bf7478">TimeIntegration::RHSFunction</a></div><div class="ttdeci">int(* RHSFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00098">timeintegration_struct.h:98</a></div></div>
-<div class="ttc" id="a00229_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00229.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00271">arrayfunctions.h:271</a></div></div>
-<div class="ttc" id="a00221_html_a03e28be41881b703c836edbfe9b51b17"><div class="ttname"><a href="a00221.html#a03e28be41881b703c836edbfe9b51b17">TimeIntegration::dt</a></div><div class="ttdeci">double dt</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00039">timeintegration_struct.h:39</a></div></div>
-<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">simulation_object.h</a></div><div class="ttdoc">Simulation object. </div></div>
-<div class="ttc" id="a00221_html_a3d433839a0290dacbbd609e1f60b0b1d"><div class="ttname"><a href="a00221.html#a3d433839a0290dacbbd609e1f60b0b1d">TimeIntegration::Udot</a></div><div class="ttdeci">double ** Udot</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00081">timeintegration_struct.h:81</a></div></div>
-<div class="ttc" id="a00221_html_a49c41416fcbb7a577abf65509e067129"><div class="ttname"><a href="a00221.html#a49c41416fcbb7a577abf65509e067129">TimeIntegration::gpu_BoundaryFlux</a></div><div class="ttdeci">double * gpu_BoundaryFlux</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00115">timeintegration_struct.h:115</a></div></div>
-<div class="ttc" id="a00218_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00025">simulation_object.h:25</a></div></div>
-<div class="ttc" id="a00221_html_a0176063b27790e17e07c9fa1b3fabdb3"><div class="ttname"><a href="a00221.html#a0176063b27790e17e07c9fa1b3fabdb3">TimeIntegration::BoundaryFlux</a></div><div class="ttdeci">double ** BoundaryFlux</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00090">timeintegration_struct.h:90</a></div></div>
-<div class="ttc" id="a00230_html_a110a55a49f973e7fe6e12614c157d084"><div class="ttname"><a href="a00230.html#a110a55a49f973e7fe6e12614c157d084">gpuArrayCopy1D</a></div><div class="ttdeci">void gpuArrayCopy1D(const double *, double *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00270_source.html#l00148">ArrayImplementations_GPU.cu:148</a></div></div>
-<div class="ttc" id="a00221_html_ad41eb4556b91cef16ce5bf056d2e5b71"><div class="ttname"><a href="a00221.html#ad41eb4556b91cef16ce5bf056d2e5b71">TimeIntegration::bf_offsets</a></div><div class="ttdeci">int * bf_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00061">timeintegration_struct.h:61</a></div></div>
-<div class="ttc" id="a00221_html_ae21dee7e1deaf4ff3024c1476230d3b1"><div class="ttname"><a href="a00221.html#ae21dee7e1deaf4ff3024c1476230d3b1">TimeIntegration::U</a></div><div class="ttdeci">double ** U</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00079">timeintegration_struct.h:79</a></div></div>
-<div class="ttc" id="a00221_html_aed62497ac51211784e9bfa2608cc7413"><div class="ttname"><a href="a00221.html#aed62497ac51211784e9bfa2608cc7413">TimeIntegration::u_offsets</a></div><div class="ttdeci">long * u_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00054">timeintegration_struct.h:54</a></div></div>
-<div class="ttc" id="a00231_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00018">basic.h:18</a></div></div>
-<div class="ttc" id="a00221_html_a92e0e59d9204b59517c378991e8af60b"><div class="ttname"><a href="a00221.html#a92e0e59d9204b59517c378991e8af60b">TimeIntegration::bf_size_total</a></div><div class="ttdeci">long bf_size_total</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00076">timeintegration_struct.h:76</a></div></div>
-<div class="ttc" id="a00229_html"><div class="ttname"><a href="a00229.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00197_html_a00652"><div class="ttname"><a href="a00197.html#a00652">ExplicitRKParameters</a></div><div class="ttdoc">Structure containing the parameters for an explicit Runge-Kutta method. </div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00177">timeintegration_struct.h:177</a></div></div>
-<div class="ttc" id="a00221_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00221.html#a9a0e87291e0e8b9c1445e5482e814c92">TimeIntegration::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00050">timeintegration_struct.h:50</a></div></div>
-<div class="ttc" id="a00202_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00116">hypar.h:116</a></div></div>
-<div class="ttc" id="a00202_html_ae750cf429003a5174e431a8505bf1dcb"><div class="ttname"><a href="a00202.html#ae750cf429003a5174e431a8505bf1dcb">HyPar::gpu_u</a></div><div class="ttdeci">double * gpu_u</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00454">hypar.h:454</a></div></div>
-<div class="ttc" id="a00221_html_a28e4e78c0bf258662bef21d26c51fc0b"><div class="ttname"><a href="a00221.html#a28e4e78c0bf258662bef21d26c51fc0b">TimeIntegration::waqt</a></div><div class="ttdeci">double waqt</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00037">timeintegration_struct.h:37</a></div></div>
-<div class="ttc" id="a00221_html_a648149fcc754664772c183c3307b12cb"><div class="ttname"><a href="a00221.html#a648149fcc754664772c183c3307b12cb">TimeIntegration::gpu_Udot</a></div><div class="ttdeci">double * gpu_Udot</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00112">timeintegration_struct.h:112</a></div></div>
-<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00265_html"><div class="ttname"><a href="a00265.html">timeintegration.h</a></div><div class="ttdoc">Contains function declarations for time integration. </div></div>
-<div class="ttc" id="a00221_html_addc618f703eab837da44852e69399e04"><div class="ttname"><a href="a00221.html#addc618f703eab837da44852e69399e04">TimeIntegration::simulation</a></div><div class="ttdeci">void * simulation</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00048">timeintegration_struct.h:48</a></div></div>
-<div class="ttc" id="a00202_html_a6dfeed442d18083b68fd0f28d5f63fa7"><div class="ttname"><a href="a00202.html#a6dfeed442d18083b68fd0f28d5f63fa7">HyPar::StepBoundaryIntegral</a></div><div class="ttdeci">double * StepBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00379">hypar.h:379</a></div></div>
-<div class="ttc" id="a00221_html_aca09cd227ed4fb0d207ea16b0c4d5210"><div class="ttname"><a href="a00221.html#aca09cd227ed4fb0d207ea16b0c4d5210">TimeIntegration::u_size_total</a></div><div class="ttdeci">long u_size_total</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00073">timeintegration_struct.h:73</a></div></div>
-<div class="ttc" id="a00202_html_adec095311615891040de11341c01a77f"><div class="ttname"><a href="a00202.html#adec095311615891040de11341c01a77f">HyPar::msti</a></div><div class="ttdeci">void * msti</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00361">hypar.h:361</a></div></div>
-<div class="ttc" id="a00265_html_aca6ebec6e6998f0c509bb38fa91f3321"><div class="ttname"><a href="a00265.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK</a></div><div class="ttdeci">int TimeRK(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00637_source.html#l00035">TimeRK.c:35</a></div></div>
-<div class="ttc" id="a00221_html_aaf135d2fee365f4aedd983fe509d19d2"><div class="ttname"><a href="a00221.html#aaf135d2fee365f4aedd983fe509d19d2">TimeIntegration::u_sizes</a></div><div class="ttdeci">long * u_sizes</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00057">timeintegration_struct.h:57</a></div></div>
-<div class="ttc" id="a00218_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00218.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00026">simulation_object.h:26</a></div></div>
-<div class="ttc" id="a00221_html_a5b5bc95bd2b8eee821f73cb8427e9c4c"><div class="ttname"><a href="a00221.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">TimeIntegration::bf_sizes</a></div><div class="ttdeci">int * bf_sizes</div><div class="ttdef"><b>Definition:</b> <a href="a00197_source.html#l00064">timeintegration_struct.h:64</a></div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00233.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00220.html">simulation_object.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00269.html">timeintegration.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="a00637.html#aa9ef7eaebda92d180aea9b0ef8186935">   25</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00269.html#a5fe3d9828c6afcbc00cf6fdd940ebe4b">TimeForwardEuler</a>(</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                      <span class="keywordtype">void</span> *ts </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                    )</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00223.html">TimeIntegration</a>* TS = (<a class="code" href="a00223.html">TimeIntegration</a>*) ts;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="a00220.html#a00678">SimulationObject</a>* sim = (<a class="code" href="a00220.html#a00678">SimulationObject</a>*) TS-&gt;<a class="code" href="a00223.html#addc618f703eab837da44852e69399e04">simulation</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">int</span> ns, nsims = TS-&gt;<a class="code" href="a00223.html#a9a0e87291e0e8b9c1445e5482e814c92">nsims</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <a class="code" href="a00233.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  for (ns = 0; ns &lt; nsims; ns++) {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="a00204.html">HyPar</a>* solver = &amp;(sim[ns].<a class="code" href="a00220.html#a523947ce4fa7128c4c767163953253b9">solver</a>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="a00207.html#a00674">MPIVariables</a>* mpi = &amp;(sim[ns].<a class="code" href="a00220.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">double</span>* rhs = TS-&gt;<a class="code" href="a00223.html#ade4650485fe35fd3e12fea272fc80209">rhs</a> + TS-&gt;<a class="code" href="a00223.html#aed62497ac51211784e9bfa2608cc7413">u_offsets</a>[ns];</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="comment">/* Evaluate right-hand side */</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="a00233.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> TS-&gt;<a class="code" href="a00223.html#ab20fed3c34682ab24bd0780ac5bf7478">RHSFunction</a>( rhs,</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                          solver-&gt;<a class="code" href="a00204.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                          solver,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                          mpi,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                          TS-&gt;<a class="code" href="a00223.html#a28e4e78c0bf258662bef21d26c51fc0b">waqt</a>  );   <a class="code" href="a00233.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">/* update solution */</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="a00231.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a>(  rhs,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                  TS-&gt;<a class="code" href="a00223.html#a03e28be41881b703c836edbfe9b51b17">dt</a>,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                  solver-&gt;<a class="code" href="a00204.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                  TS-&gt;<a class="code" href="a00223.html#aaf135d2fee365f4aedd983fe509d19d2">u_sizes</a>[ns] );</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="a00231.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a>( solver-&gt;<a class="code" href="a00204.html#ac3326fc53477d445133072e3f1fe6b59">StageBoundaryIntegral</a>,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                        TS-&gt;<a class="code" href="a00223.html#a03e28be41881b703c836edbfe9b51b17">dt</a>,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                        solver-&gt;<a class="code" href="a00204.html#a6dfeed442d18083b68fd0f28d5f63fa7">StepBoundaryIntegral</a>,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                        TS-&gt;<a class="code" href="a00223.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">bf_sizes</a>[ns] );</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordflow">return</span>(0);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="ttc" id="a00223_html_ab20fed3c34682ab24bd0780ac5bf7478"><div class="ttname"><a href="a00223.html#ab20fed3c34682ab24bd0780ac5bf7478">TimeIntegration::RHSFunction</a></div><div class="ttdeci">int(* RHSFunction)(double *, double *, void *, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00098">timeintegration_struct.h:98</a></div></div>
+<div class="ttc" id="a00269_html_a5fe3d9828c6afcbc00cf6fdd940ebe4b"><div class="ttname"><a href="a00269.html#a5fe3d9828c6afcbc00cf6fdd940ebe4b">TimeForwardEuler</a></div><div class="ttdeci">int TimeForwardEuler(void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00637_source.html#l00025">TimeForwardEuler.c:25</a></div></div>
+<div class="ttc" id="a00204_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00204.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00116">hypar.h:116</a></div></div>
+<div class="ttc" id="a00223_html_a5b5bc95bd2b8eee821f73cb8427e9c4c"><div class="ttname"><a href="a00223.html#a5b5bc95bd2b8eee821f73cb8427e9c4c">TimeIntegration::bf_sizes</a></div><div class="ttdeci">int * bf_sizes</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00064">timeintegration_struct.h:64</a></div></div>
+<div class="ttc" id="a00231_html_a7d97d4914726fa7cca339356dae28473"><div class="ttname"><a href="a00231.html#a7d97d4914726fa7cca339356dae28473">_ArrayScaleCopy1D_</a></div><div class="ttdeci">#define _ArrayScaleCopy1D_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00356">arrayfunctions.h:356</a></div></div>
+<div class="ttc" id="a00220_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00220.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00025">simulation_object.h:25</a></div></div>
+<div class="ttc" id="a00223_html"><div class="ttname"><a href="a00223.html">TimeIntegration</a></div><div class="ttdoc">Structure of variables/parameters and function pointers for time integration. </div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00029">timeintegration_struct.h:29</a></div></div>
+<div class="ttc" id="a00223_html_a9a0e87291e0e8b9c1445e5482e814c92"><div class="ttname"><a href="a00223.html#a9a0e87291e0e8b9c1445e5482e814c92">TimeIntegration::nsims</a></div><div class="ttdeci">int nsims</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00050">timeintegration_struct.h:50</a></div></div>
+<div class="ttc" id="a00204_html_a6dfeed442d18083b68fd0f28d5f63fa7"><div class="ttname"><a href="a00204.html#a6dfeed442d18083b68fd0f28d5f63fa7">HyPar::StepBoundaryIntegral</a></div><div class="ttdeci">double * StepBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00384">hypar.h:384</a></div></div>
+<div class="ttc" id="a00223_html_a28e4e78c0bf258662bef21d26c51fc0b"><div class="ttname"><a href="a00223.html#a28e4e78c0bf258662bef21d26c51fc0b">TimeIntegration::waqt</a></div><div class="ttdeci">double waqt</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00037">timeintegration_struct.h:37</a></div></div>
+<div class="ttc" id="a00223_html_aaf135d2fee365f4aedd983fe509d19d2"><div class="ttname"><a href="a00223.html#aaf135d2fee365f4aedd983fe509d19d2">TimeIntegration::u_sizes</a></div><div class="ttdeci">long * u_sizes</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00057">timeintegration_struct.h:57</a></div></div>
+<div class="ttc" id="a00223_html_a03e28be41881b703c836edbfe9b51b17"><div class="ttname"><a href="a00223.html#a03e28be41881b703c836edbfe9b51b17">TimeIntegration::dt</a></div><div class="ttdeci">double dt</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00039">timeintegration_struct.h:39</a></div></div>
+<div class="ttc" id="a00223_html_aed62497ac51211784e9bfa2608cc7413"><div class="ttname"><a href="a00223.html#aed62497ac51211784e9bfa2608cc7413">TimeIntegration::u_offsets</a></div><div class="ttdeci">long * u_offsets</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00054">timeintegration_struct.h:54</a></div></div>
+<div class="ttc" id="a00220_html"><div class="ttname"><a href="a00220.html">simulation_object.h</a></div><div class="ttdoc">Simulation object. </div></div>
+<div class="ttc" id="a00233_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00233.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00018">basic.h:18</a></div></div>
+<div class="ttc" id="a00223_html_ade4650485fe35fd3e12fea272fc80209"><div class="ttname"><a href="a00223.html#ade4650485fe35fd3e12fea272fc80209">TimeIntegration::rhs</a></div><div class="ttdeci">double * rhs</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00070">timeintegration_struct.h:70</a></div></div>
+<div class="ttc" id="a00223_html_addc618f703eab837da44852e69399e04"><div class="ttname"><a href="a00223.html#addc618f703eab837da44852e69399e04">TimeIntegration::simulation</a></div><div class="ttdeci">void * simulation</div><div class="ttdef"><b>Definition:</b> <a href="a00199_source.html#l00048">timeintegration_struct.h:48</a></div></div>
+<div class="ttc" id="a00204_html_ac3326fc53477d445133072e3f1fe6b59"><div class="ttname"><a href="a00204.html#ac3326fc53477d445133072e3f1fe6b59">HyPar::StageBoundaryIntegral</a></div><div class="ttdeci">double * StageBoundaryIntegral</div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00382">hypar.h:382</a></div></div>
+<div class="ttc" id="a00269_html"><div class="ttname"><a href="a00269.html">timeintegration.h</a></div><div class="ttdoc">Contains function declarations for time integration. </div></div>
+<div class="ttc" id="a00220_html_a00678"><div class="ttname"><a href="a00220.html#a00678">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00023">simulation_object.h:23</a></div></div>
+<div class="ttc" id="a00233_html"><div class="ttname"><a href="a00233.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00220_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00220.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00220_source.html#l00026">simulation_object.h:26</a></div></div>
+<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00233_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00233.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00016">basic.h:16</a></div></div>
+<div class="ttc" id="a00207_html_a00674"><div class="ttname"><a href="a00207.html#a00674">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00231_html_a4cd66304bc41a7751842230af3063b62"><div class="ttname"><a href="a00231.html#a4cd66304bc41a7751842230af3063b62">_ArrayAXPY_</a></div><div class="ttdeci">#define _ArrayAXPY_(x, a, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00271">arrayfunctions.h:271</a></div></div>
+<div class="ttc" id="a00204_html"><div class="ttname"><a href="a00204.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00240_source.html#l00023">hypar.h:23</a></div></div>
+<div class="ttc" id="a00233_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00233.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00233_source.html#l00017">basic.h:17</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

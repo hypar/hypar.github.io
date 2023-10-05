@@ -1,6 +1,5 @@
 var a00218 =
 [
-    [ "mpi", "a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0", null ],
-    [ "solver", "a00218.html#a523947ce4fa7128c4c767163953253b9", null ],
-    [ "is_barebones", "a00218.html#a23988a34071e1a0f0de820a4043a1fc8", null ]
+    [ "operator double *", "a00218.html#aba29af4203ca5f6da80ba25bf163e8f3", null ],
+    [ "operator const double *", "a00218.html#a7adecfeb49b83caf88084768970cbe28", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/HyParFunctions/ParabolicFunctionNC2Stage.c Source File</title>
+<title>HyPar: src/HyParFunctions/IncrementFilename.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,103 +112,74 @@ $(document).ready(function(){initNavTree('a00317_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ParabolicFunctionNC2Stage.c</div>  </div>
+<div class="title">IncrementFilename.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00317.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00229.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00248.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00238.html">hypar.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00598.html#a9f5c8ed9c587aa71c9f75209222ad67c">   40</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00317.html#a153eb91ec9b118a7b8c971facbc8d920">ParabolicFunctionNC2Stage</a>(</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                <span class="keywordtype">double</span>  *par, </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                <span class="keywordtype">double</span>  *u,   </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                <span class="keywordtype">void</span>    *s,   </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                <span class="keywordtype">void</span>    *m,   </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                <span class="keywordtype">double</span>  t     </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                             )</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <a class="code" href="a00202.html">HyPar</a>         *solver = (<a class="code" href="a00202.html">HyPar</a>*)        s;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="a00205.html#a00663">MPIVariables</a>  *mpi    = (<a class="code" href="a00205.html#a00663">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">double</span>        *Func   = solver-&gt;<a class="code" href="a00202.html#aee7ff3b51db01ee6ed4038ff5311ed24">fluxC</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordtype">double</span>        *Deriv1 = solver-&gt;<a class="code" href="a00202.html#af163100a3e0533dbf1868decd5c8201c">Deriv1</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordtype">double</span>        *Deriv2 = solver-&gt;<a class="code" href="a00202.html#a31bc6f5b337e72aa281a1ea5ad5d6832">Deriv2</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordtype">int</span>           d, d1, d2, v, p, done;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordtype">double</span>        dxinv1, dxinv2;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="a00231.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordtype">int</span>     ndims  = solver-&gt;<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordtype">int</span>     nvars  = solver-&gt;<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordtype">int</span>     ghosts = solver-&gt;<a class="code" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">int</span>     *dim   = solver-&gt;<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">double</span>  *dxinv = solver-&gt;<a class="code" href="a00202.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordtype">int</span>     size   = solver-&gt;<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  printf(<span class="stringliteral">&quot;HFunction is defined? = %p\n&quot;</span>, solver-&gt;<a class="code" href="a00202.html#a122bcc1ec2e20b3bc69d169580529021">HFunction</a>);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordflow">if</span> (!solver-&gt;<a class="code" href="a00202.html#a122bcc1ec2e20b3bc69d169580529021">HFunction</a>) <span class="keywordflow">return</span>(0); <span class="comment">/* zero parabolic terms */</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  solver-&gt;<a class="code" href="a00202.html#a6e3288a129bfd334448fbf3089338b69">count_par</a>++;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordtype">int</span> index[ndims];</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(par,size*nvars,0.0);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordflow">for</span> (d1 = 0; d1 &lt; ndims; d1++) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">for</span> (d2 = 0; d2 &lt; ndims; d2++) {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <span class="comment">/* calculate the diffusion function */</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <a class="code" href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00202.html#a122bcc1ec2e20b3bc69d169580529021">HFunction</a>(Func,u,d1,d2,solver,t);                    <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <a class="code" href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00202.html#add4554e1a8a541607b867db7ec38d7a9">FirstDerivativePar</a>(Deriv1,Func  ,d1, 1,solver,mpi);  <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <a class="code" href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> <a class="code" href="a00248.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(ndims,nvars,dim,ghosts,mpi,Deriv1);  <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      <a class="code" href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a> solver-&gt;<a class="code" href="a00202.html#add4554e1a8a541607b867db7ec38d7a9">FirstDerivativePar</a>(Deriv2,Deriv1,d2,-1,solver,mpi);  <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <span class="comment">/* calculate the final term - second derivative of the diffusion function */</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      done = 0; <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index,ndims,0);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      <span class="keywordflow">while</span> (!done) {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="a00229.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,index,ghosts,p);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="a00231.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(d1,index[d1],dim,ghosts,dxinv,dxinv1);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="a00231.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a>(d2,index[d2],dim,ghosts,dxinv,dxinv2);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++) par[nvars*p+v] += (dxinv1*dxinv2 * Deriv2[nvars*p+v]);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <a class="code" href="a00229.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,dim,index,done);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">if</span> (solver-&gt;<a class="code" href="a00202.html#ae83b1b0117b6a805ead2e4728945814c">flag_ib</a>) <a class="code" href="a00229.html#a4208c0f00455cf5113ce470bf641ecdd">_ArrayBlockMultiply_</a>(par,solver-&gt;<a class="code" href="a00202.html#a267ef7e03dbe9dd4440dee2fdf48619a">iblank</a>,size,nvars);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="ttc" id="a00202_html_add4554e1a8a541607b867db7ec38d7a9"><div class="ttname"><a href="a00202.html#add4554e1a8a541607b867db7ec38d7a9">HyPar::FirstDerivativePar</a></div><div class="ttdeci">int(* FirstDerivativePar)(double *, double *, int, int, void *, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00238">hypar.h:238</a></div></div>
-<div class="ttc" id="a00229_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00169">arrayfunctions.h:169</a></div></div>
-<div class="ttc" id="a00248_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00248.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00383_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
-<div class="ttc" id="a00202_html_a122bcc1ec2e20b3bc69d169580529021"><div class="ttname"><a href="a00202.html#a122bcc1ec2e20b3bc69d169580529021">HyPar::HFunction</a></div><div class="ttdeci">int(* HFunction)(double *, double *, int, int, void *, double)</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00308">hypar.h:308</a></div></div>
-<div class="ttc" id="a00229_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00229.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00040">arrayfunctions.h:40</a></div></div>
-<div class="ttc" id="a00202_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00202.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00110">hypar.h:110</a></div></div>
-<div class="ttc" id="a00229_html_a4208c0f00455cf5113ce470bf641ecdd"><div class="ttname"><a href="a00229.html#a4208c0f00455cf5113ce470bf641ecdd">_ArrayBlockMultiply_</a></div><div class="ttdeci">#define _ArrayBlockMultiply_(x, a, n, bs)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00388">arrayfunctions.h:388</a></div></div>
-<div class="ttc" id="a00231_html_a68f50121fb9a7daeaf60e50cdef82ef3"><div class="ttname"><a href="a00231.html#a68f50121fb9a7daeaf60e50cdef82ef3">_DECLARE_IERR_</a></div><div class="ttdeci">#define _DECLARE_IERR_</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00017">basic.h:17</a></div></div>
-<div class="ttc" id="a00202_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00202.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00231_html_ad6ab74942c9de13cf0b4c12eb0d91780"><div class="ttname"><a href="a00231.html#ad6ab74942c9de13cf0b4c12eb0d91780">IERR</a></div><div class="ttdeci">#define IERR</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00016">basic.h:16</a></div></div>
-<div class="ttc" id="a00202_html_a31bc6f5b337e72aa281a1ea5ad5d6832"><div class="ttname"><a href="a00202.html#a31bc6f5b337e72aa281a1ea5ad5d6832">HyPar::Deriv2</a></div><div class="ttdeci">double * Deriv2</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00151">hypar.h:151</a></div></div>
-<div class="ttc" id="a00202_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00037">hypar.h:37</a></div></div>
-<div class="ttc" id="a00238_html"><div class="ttname"><a href="a00238.html">hypar.h</a></div><div class="ttdoc">Contains structure definition for hypar. </div></div>
-<div class="ttc" id="a00202_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00052">hypar.h:52</a></div></div>
-<div class="ttc" id="a00202_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00202.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00042">hypar.h:42</a></div></div>
-<div class="ttc" id="a00231_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00018">basic.h:18</a></div></div>
-<div class="ttc" id="a00229_html"><div class="ttname"><a href="a00229.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00231_html_a9aa9bad8531d6733731a850ccc471a42"><div class="ttname"><a href="a00231.html#a9aa9bad8531d6733731a850ccc471a42">_GetCoordinate_</a></div><div class="ttdeci">#define _GetCoordinate_(dir, i, dim, ghosts, x, coord)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00031">basic.h:31</a></div></div>
-<div class="ttc" id="a00202_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00205_html_a00663"><div class="ttname"><a href="a00205.html#a00663">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00202_html_af163100a3e0533dbf1868decd5c8201c"><div class="ttname"><a href="a00202.html#af163100a3e0533dbf1868decd5c8201c">HyPar::Deriv1</a></div><div class="ttdeci">double * Deriv1</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00151">hypar.h:151</a></div></div>
-<div class="ttc" id="a00202_html_a6e3288a129bfd334448fbf3089338b69"><div class="ttname"><a href="a00202.html#a6e3288a129bfd334448fbf3089338b69">HyPar::count_par</a></div><div class="ttdeci">int count_par</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00413">hypar.h:413</a></div></div>
-<div class="ttc" id="a00202_html_aee7ff3b51db01ee6ed4038ff5311ed24"><div class="ttname"><a href="a00202.html#aee7ff3b51db01ee6ed4038ff5311ed24">HyPar::fluxC</a></div><div class="ttdeci">double * fluxC</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00128">hypar.h:128</a></div></div>
-<div class="ttc" id="a00229_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00229.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00126">arrayfunctions.h:126</a></div></div>
-<div class="ttc" id="a00202_html_ae83b1b0117b6a805ead2e4728945814c"><div class="ttname"><a href="a00202.html#ae83b1b0117b6a805ead2e4728945814c">HyPar::flag_ib</a></div><div class="ttdeci">int flag_ib</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00436">hypar.h:436</a></div></div>
-<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00202_html_a267ef7e03dbe9dd4440dee2fdf48619a"><div class="ttname"><a href="a00202.html#a267ef7e03dbe9dd4440dee2fdf48619a">HyPar::iblank</a></div><div class="ttdeci">double * iblank</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00431">hypar.h:431</a></div></div>
-<div class="ttc" id="a00317_html_a153eb91ec9b118a7b8c971facbc8d920"><div class="ttname"><a href="a00317.html#a153eb91ec9b118a7b8c971facbc8d920">ParabolicFunctionNC2Stage</a></div><div class="ttdeci">int ParabolicFunctionNC2Stage(double *par, double *u, void *s, void *m, double t)</div><div class="ttdef"><b>Definition:</b> <a href="a00317_source.html#l00040">ParabolicFunctionNC2Stage.c:40</a></div></div>
-<div class="ttc" id="a00202_html"><div class="ttname"><a href="a00202.html">HyPar</a></div><div class="ttdoc">Structure containing all solver-specific variables and functions. </div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00023">hypar.h:23</a></div></div>
-<div class="ttc" id="a00248_html"><div class="ttname"><a href="a00248.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//    i.e., the number represented by the string nnnnn is incremented </span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">//    by 1. </span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//*/</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">//void IncrementFilename(char *f /*!&lt; filename */)</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">//{</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">//  if (f[7] == &#39;9&#39;) {</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//    f[7] = &#39;0&#39;;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//    if (f[6] == &#39;9&#39;) {</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//      f[6] = &#39;0&#39;;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//      if (f[5] == &#39;9&#39;) {</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//        f[5] = &#39;0&#39;;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">//        if (f[4] == &#39;9&#39;) {</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">//          f[4] = &#39;0&#39;;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//          if (f[3] == &#39;9&#39;) {</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//            f[3] = &#39;0&#39;;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//            fprintf(stderr,&quot;Warning: file increment hit max limit. Resetting to zero.\n&quot;);</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//          } else {</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//            f[3]++;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//          }</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">//        } else {</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">//          f[4]++;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">//        }</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">//      } else {</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">//        f[5]++;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">//      }</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//    } else {</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">//      f[6]++;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//    }</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//  } else {</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">//    f[7]++;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">//  }</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//}</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a00627.html#a55a796b622e90a00d1cb9164ab40c1c3">   46</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00317.html#a9fda82ed752188f3af821e2c30f63c21">IncrementFilenameIndex</a>(</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                              <span class="keywordtype">char</span> *f,  </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                              <span class="keywordtype">int</span> len   </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                           )</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">for</span> (i=len-1; i&gt;=0; i--) {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">if</span> (f[i] == <span class="charliteral">&#39;9&#39;</span>) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      f[i] = <span class="charliteral">&#39;0&#39;</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <span class="keywordflow">if</span> (!i) fprintf(stderr,<span class="stringliteral">&quot;Warning: file increment hit max limit. Resetting to zero.\n&quot;</span>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      f[i]++;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="a00616.html#abf45c2d1c16e7b6f6f48ffd421c68c7c">   64</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00317.html#ad22799259c966d7dcc526452eaf7e855">ResetFilenameIndex</a>(  <span class="keywordtype">char</span> *f,  </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                          <span class="keywordtype">int</span> len    )</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">if</span> (!f) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordflow">for</span> (i = 0; i &lt; len; i++) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    f[i] = <span class="charliteral">&#39;0&#39;</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
+<div class="ttc" id="a00317_html_ad22799259c966d7dcc526452eaf7e855"><div class="ttname"><a href="a00317.html#ad22799259c966d7dcc526452eaf7e855">ResetFilenameIndex</a></div><div class="ttdeci">void ResetFilenameIndex(char *f, int len)</div><div class="ttdef"><b>Definition:</b> <a href="a00317_source.html#l00064">IncrementFilename.c:64</a></div></div>
+<div class="ttc" id="a00317_html_a9fda82ed752188f3af821e2c30f63c21"><div class="ttname"><a href="a00317.html#a9fda82ed752188f3af821e2c30f63c21">IncrementFilenameIndex</a></div><div class="ttdeci">void IncrementFilenameIndex(char *f, int len)</div><div class="ttdef"><b>Definition:</b> <a href="a00317_source.html#l00046">IncrementFilename.c:46</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

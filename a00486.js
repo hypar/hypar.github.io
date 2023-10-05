@@ -1,4 +1,5 @@
 var a00486 =
 [
-    [ "LinearADRComputeDiffNumber", "a00486.html#aacfc9dbfe043a23f0f169f10e7c041e1", null ]
+    [ "FPPowerSystem3BusDriftFunction", "a00486.html#a96c648e7775486eb94b64ca849329d0e", null ],
+    [ "FPPowerSystem3BusUpwind", "a00486.html#ac1a5f6240ab95ea1019326fb26b76a49", null ]
 ];

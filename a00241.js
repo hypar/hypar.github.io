@@ -1,10 +1,10 @@
 var a00241 =
 [
-    [ "libROMInterface", "a00203.html", "a00203" ],
-    [ "_ROM_MODE_NONE_", "a00241.html#a28e9ddc4d69c4a09fda0f0f39726ba16", null ],
-    [ "_ROM_MODE_TRAIN_", "a00241.html#a8d7f058ce028038a98a49ad28176390e", null ],
-    [ "_ROM_MODE_PREDICT_", "a00241.html#a3035c57e07a432c8274e63259a0d506d", null ],
-    [ "_ROM_MODE_INITIAL_GUESS_", "a00241.html#acc2b61eb7c1bad16328d8f4be63b70f3", null ],
-    [ "_ROM_COMP_MODE_MONOLITHIC_", "a00241.html#acdb79f8c89bd3e1e867e510b5546fad1", null ],
-    [ "_ROM_COMP_MODE_COMPONENTWISE_", "a00241.html#a1923410d66bb4949e32712e539efd296", null ]
+    [ "ReadArray", "a00241.html#afaf5b0d6e79b1e8674b397aebcb219dc", null ],
+    [ "ReadArraywInterp", "a00241.html#ad0eb6700a70a6489148d41a48436da78", null ],
+    [ "WriteArray", "a00241.html#aaf888c739c5200d9c58a7154347069b0", null ],
+    [ "WriteBinary", "a00241.html#a067f454c26d85d6cfb4d7d878b3783c9", null ],
+    [ "WriteText", "a00241.html#a3355a71faf3d87f6715ad627db08ac9e", null ],
+    [ "WriteTecplot2D", "a00241.html#a265b0583afb79edd2f2f5d5087e5c3bf", null ],
+    [ "WriteTecplot3D", "a00241.html#a5bdb048ecc5ae7ab61622e4764f3133e", null ]
 ];

@@ -1,4 +1,4 @@
 var a00557 =
 [
-    [ "ShallowWater1DJacobian", "a00557.html#a3c68cb04c95575701d31731291dade20", null ]
+    [ "ShallowWater1DComputeCFL", "a00557.html#a71431a278135cf3bc23d5a0a393f1c9b", null ]
 ];

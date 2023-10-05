@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/Simulation/InitialSolution.c Source File</title>
+<title>HyPar: src/SecondDerivative/SecondDerivativeSecondOrderNoGhosts.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,212 +112,111 @@ $(document).ready(function(){initNavTree('a00599_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">InitialSolution.c</div>  </div>
+<div class="title">SecondDerivativeSecondOrderNoGhosts.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00599.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">basic.h</a>&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00234.html">common.h</a>&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#if defined(HAVE_CUDA)</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="a00230.html">arrayfunctions_gpu.h</a>&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="a00229.html">arrayfunctions.h</a>&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="a00239.html">io.h</a>&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00248.html">mpivars.h</a>&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00218.html">simulation_object.h</a>&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00320.html#a74a4527b7a6060acc1808d9c945b117f">VolumeIntegral</a>(<span class="keywordtype">double</span>*,<span class="keywordtype">double</span>*,<span class="keywordtype">void</span>*,<span class="keywordtype">void</span>*);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="a00599.html#a21908a4de7bd316f468c85e6d7074760">   25</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00260.html#a23523232e5e6dd7cdec11754be4c21aa">InitialSolution</a> ( <span class="keywordtype">void</span>  *s,   </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                      <span class="keywordtype">int</span>   nsims </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                    )</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="a00218.html#a00667">SimulationObject</a>* simobj = (<a class="code" href="a00218.html#a00667">SimulationObject</a>*) s;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">int</span> n, flag, d, i, offset, ierr;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">for</span> (n = 0; n &lt; nsims; n++) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">int</span> ghosts = simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">char</span> fname_root[<a class="code" href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>] = <span class="stringliteral">&quot;initial&quot;</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">if</span> (nsims &gt; 1) {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      <span class="keywordtype">char</span> index[<a class="code" href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a>];</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      <a class="code" href="a00234.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a>(n, index, (<span class="keywordtype">int</span>)log10(nsims)+1);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      strcat(fname_root, <span class="stringliteral">&quot;_&quot;</span>);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      strcat(fname_root, index);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    ierr = <a class="code" href="a00239.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a>( simobj[n].solver.ndims,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                      simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                      simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aa989ebb755986852177779cdf7bd8c85">dim_global</a>,</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                      simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                      simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                      &amp;(simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>),</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                      &amp;(simobj[n].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>),</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                      simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">x</a>,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                      simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                      fname_root,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                      &amp;flag );</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      fprintf(stderr, <span class="stringliteral">&quot;Error in InitialSolution() on rank %d.\n&quot;</span>,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;              simobj[n].mpi.rank);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keywordflow">return</span> ierr;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span> (!flag) {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      fprintf(stderr,<span class="stringliteral">&quot;Error: initial solution file not found.\n&quot;</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      <span class="keywordflow">return</span>(1);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">/* exchange MPI-boundary values of u between processors */</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="a00248.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a>(  simobj[n].solver.ndims,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                              simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                              simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                              simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">ghosts</a>,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                              &amp;(simobj[n].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>),</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                              simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>  );</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">/* calculate dxinv */</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    offset = 0;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">for</span> (d = 0; d &lt; simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <span class="keywordflow">for</span> (i = 0; i &lt; simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d]; i++) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>[i+offset+ghosts]</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;          = 2.0 / (simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">x</a>[i+1+offset+ghosts]-simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">x</a>[i-1+offset+ghosts]);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      offset += (simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d] + 2*ghosts);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment">/* exchange MPI-boundary values of dxinv between processors */</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    offset = 0;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">for</span> (d = 0; d &lt; simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      ierr = <a class="code" href="a00248.html#ac2f0cce702a9ce439753286ce227c7a2">MPIExchangeBoundaries1D</a>( &amp;(simobj[n].mpi),</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                                      &amp;(simobj[n].solver.dxinv[offset]),</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                                      simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d],</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                                      ghosts,</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                                      d,</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                                      simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a> ); <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        fprintf(stderr, <span class="stringliteral">&quot;Error in InitialSolution() on rank %d.\n&quot;</span>,</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                simobj[n].mpi.rank);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span> ierr;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      offset += (simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>[d] + 2*ghosts);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="comment">/* fill in ghost values of dxinv at physical boundaries by extrapolation */</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    offset = 0;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">for</span> (d = 0; d &lt; simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a484873c74138512e41bc50d17b7d955a">ndims</a>; d++) {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      <span class="keywordtype">double</span> *dxinv = &amp;(simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>[offset]);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <span class="keywordtype">int</span>    *dim = simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">dim_local</a>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      <span class="keywordflow">if</span> (simobj[n].mpi.ip[d] == 0) {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="comment">/* fill left boundary along this dimension */</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">for</span> (i = 0; i &lt; ghosts; i++) dxinv[i] = dxinv[ghosts];</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      <span class="keywordflow">if</span> (simobj[n].mpi.ip[d] == simobj[n].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>.<a class="code" href="a00205.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[d]-1) {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="comment">/* fill right boundary along this dimension */</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">for</span> (i = dim[d]+ghosts; i &lt; dim[d]+2*ghosts; i++) dxinv[i] = dxinv[dim[d]+ghosts-1];</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      offset  += (dim[d] + 2*ghosts);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="comment">/* calculate volume integral of the initial solution */</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    ierr = <a class="code" href="a00320.html#a74a4527b7a6060acc1808d9c945b117f">VolumeIntegral</a>(  simobj[n].solver.VolumeIntegralInitial,</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                            simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                            &amp;(simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>),</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                            &amp;(simobj[n].<a class="code" href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">mpi</a>) ); <a class="code" href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a>(ierr);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">if</span> (ierr) {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      fprintf(stderr, <span class="stringliteral">&quot;Error in InitialSolution() on rank %d.\n&quot;</span>,</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;              simobj[n].mpi.rank);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keywordflow">return</span> ierr;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">if</span> (!simobj[n].mpi.rank) {</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      <span class="keywordflow">if</span> (nsims &gt; 1) printf(<span class="stringliteral">&quot;Volume integral of the initial solution on domain %d:\n&quot;</span>, n);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <span class="keywordflow">else</span>           printf(<span class="stringliteral">&quot;Volume integral of the initial solution:\n&quot;</span>);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      <span class="keywordflow">for</span> (d=0; d&lt;simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>; d++) {</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        printf(<span class="stringliteral">&quot;%2d:  %1.16E\n&quot;</span>,d,simobj[n].solver.VolumeIntegralInitial[d]);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    }</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="comment">/* Set initial total boundary flux integral to zero */</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <a class="code" href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(simobj[n].solver.TotalBoundaryIntegral,simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>,0);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor">#if defined(HAVE_CUDA)</span></div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (simobj[0].solver.use_gpu) {</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; nsims; n++) {</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      <span class="keywordtype">int</span> npoints_local_wghosts = simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a20ee1fd00a220b98513127884a5558cf">npoints_local_wghosts</a>;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      <span class="keywordtype">int</span> nvars                 = simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">nvars</a>;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      <span class="keywordtype">int</span> size_x                = simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aec1dee03c858e0d3910c40c209890ab0">size_x</a>;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <a class="code" href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a>(simobj[n].solver.gpu_x,</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">x</a>, simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aec1dee03c858e0d3910c40c209890ab0">size_x</a>*<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                <a class="code" href="a00230.html#ad3729453a5f50a2a289e41900432368aaa732de921ba541463d795cc30a0e3ade">gpuMemcpyHostToDevice</a>);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      <a class="code" href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a>(simobj[n].solver.gpu_dxinv, simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aa24a4f5e29bd70cbe5a2413be1ea9682">dxinv</a>,</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#aec1dee03c858e0d3910c40c209890ab0">size_x</a>*<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                <a class="code" href="a00230.html#ad3729453a5f50a2a289e41900432368aaa732de921ba541463d795cc30a0e3ade">gpuMemcpyHostToDevice</a>);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor">#ifdef CUDA_VAR_ORDERDING_AOS</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor"></span>      <a class="code" href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a>(simobj[n].solver.gpu_u, </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>,</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a3a6d36520a0a04118dafe25c0f5e70b1">ndof_cells_wghosts</a>*<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                <a class="code" href="a00230.html#ad3729453a5f50a2a289e41900432368aaa732de921ba541463d795cc30a0e3ade">gpuMemcpyHostToDevice</a>);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor"></span>      <span class="keywordtype">double</span> *h_u = (<span class="keywordtype">double</span> *) malloc(simobj[n].solver.ndof_cells_wghosts*<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;npoints_local_wghosts; i++) {</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> v=0; v&lt;nvars; v++) {</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;          h_u[i+v*npoints_local_wghosts] = simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">u</a>[i*nvars+v];</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        }</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      }</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;      <a class="code" href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a>(simobj[n].solver.gpu_u, </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                h_u,</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                simobj[n].<a class="code" href="a00218.html#a523947ce4fa7128c4c767163953253b9">solver</a>.<a class="code" href="a00202.html#a3a6d36520a0a04118dafe25c0f5e70b1">ndof_cells_wghosts</a>*<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                <a class="code" href="a00230.html#ad3729453a5f50a2a289e41900432368aaa732de921ba541463d795cc30a0e3ade">gpuMemcpyHostToDevice</a>);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      free(h_u);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor"></span>    }</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  }</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;}</div>
-<div class="ttc" id="a00260_html_a23523232e5e6dd7cdec11754be4c21aa"><div class="ttname"><a href="a00260.html#a23523232e5e6dd7cdec11754be4c21aa">InitialSolution</a></div><div class="ttdeci">int InitialSolution(void *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00599_source.html#l00025">InitialSolution.c:25</a></div></div>
-<div class="ttc" id="a00229_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00229.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00229_source.html#l00169">arrayfunctions.h:169</a></div></div>
-<div class="ttc" id="a00202_html_a3a6d36520a0a04118dafe25c0f5e70b1"><div class="ttname"><a href="a00202.html#a3a6d36520a0a04118dafe25c0f5e70b1">HyPar::ndof_cells_wghosts</a></div><div class="ttdeci">int ndof_cells_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00047">hypar.h:47</a></div></div>
-<div class="ttc" id="a00248_html_a60ace5964c051fa481e6a1e6f1ef75d7"><div class="ttname"><a href="a00248.html#a60ace5964c051fa481e6a1e6f1ef75d7">MPIExchangeBoundariesnD</a></div><div class="ttdeci">int MPIExchangeBoundariesnD(int, int, int *, int, void *, double *)</div><div class="ttdef"><b>Definition:</b> <a href="a00383_source.html#l00042">MPIExchangeBoundariesnD.c:42</a></div></div>
-<div class="ttc" id="a00239_html"><div class="ttname"><a href="a00239.html">io.h</a></div><div class="ttdoc">Function declarations for file I/O functions. </div></div>
-<div class="ttc" id="a00234_html_a3e3ad5aed581d9ae563190c365dadc41"><div class="ttname"><a href="a00234.html#a3e3ad5aed581d9ae563190c365dadc41">GetStringFromInteger</a></div><div class="ttdeci">void GetStringFromInteger(int, char *, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00296_source.html#l00015">CommonFunctions.c:15</a></div></div>
-<div class="ttc" id="a00230_html"><div class="ttname"><a href="a00230.html">arrayfunctions_gpu.h</a></div><div class="ttdoc">Contains function definitions for common array operations on GPU. </div></div>
-<div class="ttc" id="a00218_html_a00667"><div class="ttname"><a href="a00218.html#a00667">SimulationObject</a></div><div class="ttdoc">Structure defining a simulation. </div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00023">simulation_object.h:23</a></div></div>
-<div class="ttc" id="a00202_html_aa24a4f5e29bd70cbe5a2413be1ea9682"><div class="ttname"><a href="a00202.html#aa24a4f5e29bd70cbe5a2413be1ea9682">HyPar::dxinv</a></div><div class="ttdeci">double * dxinv</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00110">hypar.h:110</a></div></div>
-<div class="ttc" id="a00202_html_aa989ebb755986852177779cdf7bd8c85"><div class="ttname"><a href="a00202.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a></div><div class="ttdeci">int * dim_global</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00033">hypar.h:33</a></div></div>
-<div class="ttc" id="a00239_html_afaf5b0d6e79b1e8674b397aebcb219dc"><div class="ttname"><a href="a00239.html#afaf5b0d6e79b1e8674b397aebcb219dc">ReadArray</a></div><div class="ttdeci">int ReadArray(int, int, int *, int *, int, void *, void *, double *, double *, char *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00364_source.html#l00025">ReadArray.c:25</a></div></div>
-<div class="ttc" id="a00202_html_aec1dee03c858e0d3910c40c209890ab0"><div class="ttname"><a href="a00202.html#aec1dee03c858e0d3910c40c209890ab0">HyPar::size_x</a></div><div class="ttdeci">int size_x</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00048">hypar.h:48</a></div></div>
-<div class="ttc" id="a00202_html_a711aad4cbe735871dd9e91ab575c878b"><div class="ttname"><a href="a00202.html#a711aad4cbe735871dd9e91ab575c878b">HyPar::x</a></div><div class="ttdeci">double * x</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00107">hypar.h:107</a></div></div>
-<div class="ttc" id="a00218_html"><div class="ttname"><a href="a00218.html">simulation_object.h</a></div><div class="ttdoc">Simulation object. </div></div>
-<div class="ttc" id="a00202_html_a484873c74138512e41bc50d17b7d955a"><div class="ttname"><a href="a00202.html#a484873c74138512e41bc50d17b7d955a">HyPar::ndims</a></div><div class="ttdeci">int ndims</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00026">hypar.h:26</a></div></div>
-<div class="ttc" id="a00218_html_a4afd2c7b3eb8fda452474ebdbe71c8c0"><div class="ttname"><a href="a00218.html#a4afd2c7b3eb8fda452474ebdbe71c8c0">SimulationObject::mpi</a></div><div class="ttdeci">MPIVariables mpi</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00025">simulation_object.h:25</a></div></div>
-<div class="ttc" id="a00202_html_a38e0371f331cecbe63a77fa03e202afe"><div class="ttname"><a href="a00202.html#a38e0371f331cecbe63a77fa03e202afe">HyPar::dim_local</a></div><div class="ttdeci">int * dim_local</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00037">hypar.h:37</a></div></div>
-<div class="ttc" id="a00230_html_ad3729453a5f50a2a289e41900432368aaa732de921ba541463d795cc30a0e3ade"><div class="ttname"><a href="a00230.html#ad3729453a5f50a2a289e41900432368aaa732de921ba541463d795cc30a0e3ade">gpuMemcpyHostToDevice</a></div><div class="ttdef"><b>Definition:</b> <a href="a00230_source.html#l00016">arrayfunctions_gpu.h:16</a></div></div>
-<div class="ttc" id="a00202_html_aafc992b5fa79d5a4036024615d03bce6"><div class="ttname"><a href="a00202.html#aafc992b5fa79d5a4036024615d03bce6">HyPar::ghosts</a></div><div class="ttdeci">int ghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00052">hypar.h:52</a></div></div>
-<div class="ttc" id="a00202_html_a20ee1fd00a220b98513127884a5558cf"><div class="ttname"><a href="a00202.html#a20ee1fd00a220b98513127884a5558cf">HyPar::npoints_local_wghosts</a></div><div class="ttdeci">int npoints_local_wghosts</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00042">hypar.h:42</a></div></div>
-<div class="ttc" id="a00231_html_add9cf96ae374934d245a1dc1ab697a42"><div class="ttname"><a href="a00231.html#add9cf96ae374934d245a1dc1ab697a42">CHECKERR</a></div><div class="ttdeci">#define CHECKERR(ierr)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00018">basic.h:18</a></div></div>
-<div class="ttc" id="a00229_html"><div class="ttname"><a href="a00229.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
-<div class="ttc" id="a00234_html"><div class="ttname"><a href="a00234.html">common.h</a></div><div class="ttdoc">Some common functions used here and there. </div></div>
-<div class="ttc" id="a00202_html_ae8f6d2fd6490d3153cb4133bf183a404"><div class="ttname"><a href="a00202.html#ae8f6d2fd6490d3153cb4133bf183a404">HyPar::nvars</a></div><div class="ttdeci">int nvars</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00029">hypar.h:29</a></div></div>
-<div class="ttc" id="a00202_html_a3b6b999a764f1e2ea94bb5f28c7a558c"><div class="ttname"><a href="a00202.html#a3b6b999a764f1e2ea94bb5f28c7a558c">HyPar::u</a></div><div class="ttdeci">double * u</div><div class="ttdef"><b>Definition:</b> <a href="a00238_source.html#l00116">hypar.h:116</a></div></div>
-<div class="ttc" id="a00248_html_ac2f0cce702a9ce439753286ce227c7a2"><div class="ttname"><a href="a00248.html#ac2f0cce702a9ce439753286ce227c7a2">MPIExchangeBoundaries1D</a></div><div class="ttdeci">int MPIExchangeBoundaries1D(void *, double *, int, int, int, int)</div><div class="ttdef"><b>Definition:</b> <a href="a00382_source.html#l00032">MPIExchangeBoundaries1D.c:32</a></div></div>
-<div class="ttc" id="a00320_html_a74a4527b7a6060acc1808d9c945b117f"><div class="ttname"><a href="a00320.html#a74a4527b7a6060acc1808d9c945b117f">VolumeIntegral</a></div><div class="ttdeci">int VolumeIntegral(double *VolumeIntegral, double *u, void *s, void *m)</div><div class="ttdef"><b>Definition:</b> <a href="a00320_source.html#l00014">VolumeIntegral.c:14</a></div></div>
-<div class="ttc" id="a00205_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00205.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00027">mpivars_struct.h:27</a></div></div>
-<div class="ttc" id="a00231_html_a51efea86a4d76d1259893f606b776573"><div class="ttname"><a href="a00231.html#a51efea86a4d76d1259893f606b776573">_MAX_STRING_SIZE_</a></div><div class="ttdeci">#define _MAX_STRING_SIZE_</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00014">basic.h:14</a></div></div>
-<div class="ttc" id="a00230_html_ac87405a3a13250d12c0f033f29a47bab"><div class="ttname"><a href="a00230.html#ac87405a3a13250d12c0f033f29a47bab">gpuMemcpy</a></div><div class="ttdeci">void gpuMemcpy(void *, const void *, size_t, enum gpuMemcpyKind)</div><div class="ttdef"><b>Definition:</b> <a href="a00270_source.html#l00094">ArrayImplementations_GPU.cu:94</a></div></div>
-<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
-<div class="ttc" id="a00218_html_a523947ce4fa7128c4c767163953253b9"><div class="ttname"><a href="a00218.html#a523947ce4fa7128c4c767163953253b9">SimulationObject::solver</a></div><div class="ttdeci">HyPar solver</div><div class="ttdef"><b>Definition:</b> <a href="a00218_source.html#l00026">simulation_object.h:26</a></div></div>
-<div class="ttc" id="a00248_html"><div class="ttname"><a href="a00248.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00233.html">basic.h</a>&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00231.html">arrayfunctions.h</a>&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00263.html">secondderivative.h</a>&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="a00250.html">mpivars.h</a>&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="a00599.html#aef8e1d87c719a4a2a2342213c1721789">   13</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="a00207.html#a00674">MPIVariables</a>  <a class="code" href="a00302.html#aef8e1d87c719a4a2a2342213c1721789">MPIContext</a>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#undef  _MINIMUM_GHOSTS_</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="a00599.html#ab2278b4768059f198821dbf4d1a80389">   19</a></span>&#160;<span class="preprocessor">#define _MINIMUM_GHOSTS_ 1</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a00599.html#a0b191b6131692e1b65bdaa539a92495c">   39</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00263.html#a8f67b1e8070af52f63480661f61751a5">SecondDerivativeSecondOrderCentralNoGhosts</a>( <span class="keywordtype">double</span>*  D2f,   </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                                <span class="keywordtype">double</span>*  f,     </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                                <span class="keywordtype">int</span>     dir,    </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                                <span class="keywordtype">int</span>     ndims,  </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                                <span class="keywordtype">int</span>*    dim,    </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                                                <span class="keywordtype">int</span>     ghosts, </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                                                <span class="keywordtype">int</span>     nvars,  </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                                                <span class="keywordtype">void</span>*   m       )</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="a00207.html#a00674">MPIContext</a>* mpi = (<a class="code" href="a00207.html#a00674">MPIContext</a>*) m;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordtype">int</span> i, v;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordflow">if</span> ((!D2f) || (!f)) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot;Error in SecondDerivativeSecondOrder(): input arrays not allocated.\n&quot;</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">if</span> (ghosts &lt; <a class="code" href="a00599.html#ab2278b4768059f198821dbf4d1a80389">_MINIMUM_GHOSTS_</a>) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    fprintf(stderr, <span class="stringliteral">&quot;Error in SecondDerivativeSecondOrderNoGhosts(): insufficient number of ghosts.\n&quot;</span>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span>(1);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">/* create index and bounds for the outer loop, i.e., to loop over all 1D lines along</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">     dimension &quot;dir&quot;                                                                    */</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordtype">int</span> indexC[ndims], index_outer[ndims], bounds_outer[ndims];</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds_outer,ndims); bounds_outer[dir] =  1;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordtype">int</span> done = 0; <a class="code" href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexC,ndims);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; dim[dir]; i++) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      <span class="keywordtype">int</span> qL, qC, qR;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      indexC[dir] = i-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qL);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      indexC[dir] = i  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qC);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      indexC[dir] = i+1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qR);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++)  D2f[qC*nvars+v] = f[qL*nvars+v]-2*f[qC*nvars+v]+f[qR*nvars+v];</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="a00231.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00207.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[dir] == 0) {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="comment">/* left physical boundary: overwrite the leftmost value with biased finite-difference */</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">int</span> done = 0; <a class="code" href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexC,ndims);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      i = 0;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <span class="keywordtype">int</span> qC, qR, qR2, qR3;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      indexC[dir] = i  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qC);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      indexC[dir] = i+1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qR);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      indexC[dir] = i+2; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qR2);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      indexC[dir] = i+3; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qR3);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++)  D2f[qC*nvars+v] = 2*f[qC*nvars+v]-5*f[qR*nvars+v]+4*f[qR2*nvars+v]-f[qR3*nvars+v];</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <a class="code" href="a00231.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordflow">if</span> (mpi-&gt;<a class="code" href="a00207.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>[dir] == (mpi-&gt;<a class="code" href="a00207.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>[dir]-1)) {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="comment">/* right physical boundary: overwrite the rightmost value with biased finite-difference */</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">int</span> done = 0; <a class="code" href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(index_outer,ndims,0);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">while</span> (!done) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(index_outer,indexC,ndims);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      i = dim[dir]-1;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      <span class="keywordtype">int</span> qL3, qL2, qL, qC;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      indexC[dir] = i-3; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qL3);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      indexC[dir] = i-2; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qL2);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      indexC[dir] = i-1; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qL);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      indexC[dir] = i  ; <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,dim,indexC,ghosts,qC);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      <span class="keywordflow">for</span> (v=0; v&lt;nvars; v++)  D2f[qC*nvars+v] = 2*f[qC*nvars+v]-5*f[qL*nvars+v]+4*f[qL2*nvars+v]-f[qL3*nvars+v];</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <a class="code" href="a00231.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a>(ndims,bounds_outer,index_outer,done);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
+<div class="ttc" id="a00231_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00169">arrayfunctions.h:169</a></div></div>
+<div class="ttc" id="a00231_html_ac5ec1371623f11d03b0f42adaa24acbc"><div class="ttname"><a href="a00231.html#ac5ec1371623f11d03b0f42adaa24acbc">_ArrayIncrementIndex_</a></div><div class="ttdeci">#define _ArrayIncrementIndex_(N, imax, i, done)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00126">arrayfunctions.h:126</a></div></div>
+<div class="ttc" id="a00207_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00207.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00027">mpivars_struct.h:27</a></div></div>
+<div class="ttc" id="a00250_html"><div class="ttname"><a href="a00250.html">mpivars.h</a></div><div class="ttdoc">MPI related function definitions. </div></div>
+<div class="ttc" id="a00263_html_a8f67b1e8070af52f63480661f61751a5"><div class="ttname"><a href="a00263.html#a8f67b1e8070af52f63480661f61751a5">SecondDerivativeSecondOrderCentralNoGhosts</a></div><div class="ttdeci">int SecondDerivativeSecondOrderCentralNoGhosts(double *, double *, int, int, int *, int, int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="a00599_source.html#l00039">SecondDerivativeSecondOrderNoGhosts.c:39</a></div></div>
+<div class="ttc" id="a00231_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00040">arrayfunctions.h:40</a></div></div>
+<div class="ttc" id="a00263_html"><div class="ttname"><a href="a00263.html">secondderivative.h</a></div><div class="ttdoc">Definitions for the functions computing the second derivative. </div></div>
+<div class="ttc" id="a00231_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00319">arrayfunctions.h:319</a></div></div>
+<div class="ttc" id="a00599_html_ab2278b4768059f198821dbf4d1a80389"><div class="ttname"><a href="a00599.html#ab2278b4768059f198821dbf4d1a80389">_MINIMUM_GHOSTS_</a></div><div class="ttdeci">#define _MINIMUM_GHOSTS_</div><div class="ttdef"><b>Definition:</b> <a href="a00599_source.html#l00019">SecondDerivativeSecondOrderNoGhosts.c:19</a></div></div>
+<div class="ttc" id="a00233_html"><div class="ttname"><a href="a00233.html">basic.h</a></div><div class="ttdoc">Some basic definitions and macros. </div></div>
+<div class="ttc" id="a00231_html"><div class="ttname"><a href="a00231.html">arrayfunctions.h</a></div><div class="ttdoc">Contains macros and function definitions for common array operations. </div></div>
+<div class="ttc" id="a00207_html_a00674"><div class="ttname"><a href="a00207.html#a00674">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00302_html_aef8e1d87c719a4a2a2342213c1721789"><div class="ttname"><a href="a00302.html#aef8e1d87c719a4a2a2342213c1721789">MPIContext</a></div><div class="ttdeci">MPIVariables MPIContext</div><div class="ttdef"><b>Definition:</b> <a href="a00302_source.html#l00015">FirstDerivativeFirstOrder.c:15</a></div></div>
+<div class="ttc" id="a00207_html_aa3c28612a64b8a97bde66b720e15c700"><div class="ttname"><a href="a00207.html#aa3c28612a64b8a97bde66b720e15c700">MPIVariables::ip</a></div><div class="ttdeci">int * ip</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00028">mpivars_struct.h:28</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->

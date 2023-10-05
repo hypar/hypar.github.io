@@ -1,4 +1,4 @@
 var a00367 =
 [
-    [ "WriteBinary", "a00367.html#a50ece3698b176f0251f3308300a333bb", null ]
+    [ "WENOFifthOrderInitializeWeights", "a00367.html#a5b5f56dba63b56685e16f1de0431e322", null ]
 ];

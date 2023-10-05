@@ -1,8 +1,4 @@
 var a00384 =
 [
-    [ "gpuFillSendBufLeft_kernel", "a00384.html#abc00260617fe494dba5e4bf9d6d439b7", null ],
-    [ "gpuFillSendBufRight_kernel", "a00384.html#a4c26136ba06f5f6aba9e20a8190aee15", null ],
-    [ "gpuFillRecvBufLeft_kernel", "a00384.html#a689127aaadc4ca6144b753b5791d134f", null ],
-    [ "gpuFillRecvBufRight_kernel", "a00384.html#ac685ab0d0c20997cb44a9a072040e125", null ],
-    [ "gpuMPIExchangeBoundariesnD", "a00384.html#a008cd3b0543afc6eb0fea2e4ca8066ef", null ]
+    [ "TrilinearInterpCoeffs", "a00384.html#a2b2d0a0b7891c994d6956c72dfafb80b", null ]
 ];

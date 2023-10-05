@@ -1,12 +1,10 @@
 var a00214 =
 [
-    [ "bt_type", "a00214.html#a6f84a1093abf57dcbf0406b33f40f766", null ],
-    [ "topo_flag", "a00214.html#a71b5cdadb8aec7421fa05a93ec51c102", null ],
-    [ "g", "a00214.html#ab30c765b9be1b7776c97c899a12a66bb", null ],
-    [ "b", "a00214.html#a9f92e5582bf339a3c95df78b9c684fe0", null ],
-    [ "fhat", "a00214.html#acc808f03e31ad5612b724fe23dea05ab", null ],
-    [ "beta", "a00214.html#a9424343761f8c4f4c1afe8f5b6bf471b", null ],
-    [ "D", "a00214.html#ad8657a5ec76e12f3066fb4b4eb75ace9", null ],
-    [ "upw_choice", "a00214.html#a57894a0f53d5b228bf64053367736bf9", null ],
-    [ "SourceUpwind", "a00214.html#a3cb843ad67e4b14387b7fa21f6d4090b", null ]
+    [ "~ROMObject", "a00214.html#a1ca5b352f7d65880379c7395ff2030f6", null ],
+    [ "projectInitialSolution", "a00214.html#a97ba4f15f37282435146c7ec50c16bc0", null ],
+    [ "takeSample", "a00214.html#ac66edb9999191b64b7d01b6dfc11307d", null ],
+    [ "train", "a00214.html#a5ac207430cbefd5e3dc2492c6cb05d8e", null ],
+    [ "predict", "a00214.html#a64c67d740dccea2f0d065f8a5e97acca", null ],
+    [ "save", "a00214.html#a01e1111152e9d98f152539cabdc9456d", null ],
+    [ "load", "a00214.html#ac392eccc3d2e6319528a151b4e24dafb", null ]
 ];

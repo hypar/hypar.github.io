@@ -1,4 +1,6 @@
 var a00385 =
 [
-    [ "MPIGatherArray1D", "a00385.html#afd93c6a00eeb8b35cd7e709de63f5a20", null ]
+    [ "MPIBroadcast_double", "a00385.html#abbc65b46acccb23940ebf1a8491a2d2c", null ],
+    [ "MPIBroadcast_integer", "a00385.html#a75a83e5c062081d2d56327538afb8955", null ],
+    [ "MPIBroadcast_character", "a00385.html#a202cb3f1e3f6e490a047812cacd5970b", null ]
 ];

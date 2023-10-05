@@ -1,5 +1,4 @@
 var a00491 =
 [
-    [ "LinearADRUpwind", "a00491.html#a2bc2527c84fa0ebf5ef27cf7c4e52bbc", null ],
-    [ "LinearADRCenteredFlux", "a00491.html#abb39556f9cdec82d2cfd95d1681c87c2", null ]
+    [ "LinearADRComputeDiffNumber", "a00491.html#aacfc9dbfe043a23f0f169f10e7c041e1", null ]
 ];

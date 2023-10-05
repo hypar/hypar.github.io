@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: src/MPIFunctions/MPIIOGroups.c File Reference</title>
+<title>HyPar: src/MPIFunctions/MPIExchangeBoundariesnD_GPU.cu File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,129 +114,638 @@ $(document).ready(function(){initNavTree('a00389.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">MPIIOGroups.c File Reference</div>  </div>
+<div class="title">MPIExchangeBoundariesnD_GPU.cu File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Create I/O groups of MPI ranks.  
+<p>Exchange data and fill ghost points for a 1D array.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
-<code>#include &lt;stdlib.h&gt;</code><br/>
-<code>#include &lt;<a class="el" href="a00248_source.html">mpivars.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="a00234_source.html">basic_gpu.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00232_source.html">arrayfunctions_gpu.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="a00250_source.html">mpivars.h</a>&gt;</code><br/>
 </div>
 <p><a href="a00389_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a32033a931111b364a144da26e6a53335"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00389.html#a32033a931111b364a144da26e6a53335">MPICreateIOGroups</a> (void *m)</td></tr>
-<tr class="separator:a32033a931111b364a144da26e6a53335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc00260617fe494dba5e4bf9d6d439b7"><td class="memItemLeft" align="right" valign="top">__global__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00389.html#abc00260617fe494dba5e4bf9d6d439b7">gpuFillSendBufLeft_kernel</a> (int npoints_grid, int npoints_local_wghosts, int d, int ndims, int nvars, int ghosts, int stride, const int *__restrict__ dim, const double *__restrict__ var, double *__restrict__ sendbuf)</td></tr>
+<tr class="separator:abc00260617fe494dba5e4bf9d6d439b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c26136ba06f5f6aba9e20a8190aee15"><td class="memItemLeft" align="right" valign="top">__global__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00389.html#a4c26136ba06f5f6aba9e20a8190aee15">gpuFillSendBufRight_kernel</a> (int npoints_grid, int npoints_local_wghosts, int d, int ndims, int nvars, int ghosts, int stride, const int *__restrict__ dim, const double *__restrict__ var, double *__restrict__ sendbuf)</td></tr>
+<tr class="separator:a4c26136ba06f5f6aba9e20a8190aee15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a689127aaadc4ca6144b753b5791d134f"><td class="memItemLeft" align="right" valign="top">__global__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00389.html#a689127aaadc4ca6144b753b5791d134f">gpuFillRecvBufLeft_kernel</a> (int npoints_grid, int npoints_local_wghosts, int d, int ndims, int nvars, int ghosts, int stride, const int *__restrict__ dim, const double *__restrict__ recvbuf, double *__restrict__ var)</td></tr>
+<tr class="separator:a689127aaadc4ca6144b753b5791d134f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac685ab0d0c20997cb44a9a072040e125"><td class="memItemLeft" align="right" valign="top">__global__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00389.html#ac685ab0d0c20997cb44a9a072040e125">gpuFillRecvBufRight_kernel</a> (int npoints_grid, int npoints_local_wghosts, int d, int ndims, int nvars, int ghosts, int stride, const int *__restrict__ dim, const double *__restrict__ recvbuf, double *__restrict__ var)</td></tr>
+<tr class="separator:ac685ab0d0c20997cb44a9a072040e125"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a008cd3b0543afc6eb0fea2e4ca8066ef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00389.html#a008cd3b0543afc6eb0fea2e4ca8066ef">gpuMPIExchangeBoundariesnD</a> (int ndims, int nvars, const int *__restrict__ dim, int ghosts, void *m, double *__restrict__ var)</td></tr>
+<tr class="separator:a008cd3b0543afc6eb0fea2e4ca8066ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Create I/O groups of MPI ranks. </p>
-<dl class="section author"><dt>Author</dt><dd>Debojyoti Ghosh </dd></dl>
+<div class="textblock"><p>Exchange data and fill ghost points for a 1D array. </p>
+<dl class="section author"><dt>Author</dt><dd>Youngdae Kim </dd></dl>
 
-<p>Definition in file <a class="el" href="a00389_source.html">MPIIOGroups.c</a>.</p>
+<p>Definition in file <a class="el" href="a00389_source.html">MPIExchangeBoundariesnD_GPU.cu</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a32033a931111b364a144da26e6a53335"></a>
+<a class="anchor" id="abc00260617fe494dba5e4bf9d6d439b7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int MPICreateIOGroups </td>
+          <td class="memname">__global__ void gpuFillSendBufLeft_kernel </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>m</em></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>npoints_grid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>npoints_local_wghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ndims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nvars</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int *__restrict__&#160;</td>
+          <td class="paramname"><em>dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double *__restrict__&#160;</td>
+          <td class="paramname"><em>var</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *__restrict__&#160;</td>
+          <td class="paramname"><em>sendbuf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create I/O groups of MPI ranks: A scalable approach to file I/O when running simulations on a large number of processors (&gt;10,000) is partitioning all the MPI ranks into I/O group. Each group has a "leader" that:</p>
-<ul>
-<li>Input - reads the local data of each member rank from the file and sends it to that member.</li>
-<li>Output - gets the local data of each member rank and writes it to a file.</li>
-</ul>
-<p>The number of I/O groups (and hence, the number of I/O ranks reading and writing to files) is specified through <a class="el" href="a00205.html#a297fca986fa3aa27de07a0c746ffaaa8">MPIVariables::N_IORanks</a>. Ideally, this would correspond to the number of I/O nodes available for the total number of compute nodes being used on a HPC platform.</p>
-<p>Two extreme cases are:</p>
-<ul>
-<li>Number of I/O ranks is 1, i.e., just one rank (typically rank 0) is responsible for reading and writing the local data of every rank.</li>
-<li>Number of I/O ranks is equal to the total number of MPI ranks, i.e., each MPI rank reads and writes from and to its own files.</li>
-</ul>
-<p>Neither of the extreme cases are scalable.</p>
-<p>Notes:</p>
-<ul>
-<li>If the total number of MPI ranks (<a class="el" href="a00205.html#ae68326adc3b3862f1162832f70727b06">MPIVariables::nproc</a>) is not an integer multiple of the specified number of I/O groups (<a class="el" href="a00205.html#a297fca986fa3aa27de07a0c746ffaaa8">MPIVariables::N_IORanks</a>), then only 1 rank is used. </li>
-</ul>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">m</td><td>MPI object of type <a class="el" href="a00205.html#a00663" title="Structure of MPI-related variables. ">MPIVariables</a> </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Kernel function for <a class="el" href="a00250.html#aa1ec149b4854b17ec8d09c24f9eb9933">gpuMPIExchangeBoundariesnD()</a> </p>
 
-<p>Definition at line <a class="el" href="a00389_source.html#l00037">37</a> of file <a class="el" href="a00389_source.html">MPIIOGroups.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="a00205.html#a00663">MPIVariables</a> *mpi = (<a class="code" href="a00205.html#a00663">MPIVariables</a>*) m;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">int</span> nproc         = mpi-&gt;<a class="code" href="a00205.html#ae68326adc3b3862f1162832f70727b06">nproc</a>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">int</span> rank          = mpi-&gt;<a class="code" href="a00205.html#a6cfd95afd0afebd625b889fb6e58371c">rank</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">int</span> N_IORanks     = mpi-&gt;<a class="code" href="a00205.html#a297fca986fa3aa27de07a0c746ffaaa8">N_IORanks</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span> GroupSize;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">if</span> (nproc%N_IORanks==0) GroupSize = nproc/N_IORanks;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">if</span> (!rank) {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      printf(<span class="stringliteral">&quot;Note: in MPICreateIOGroups() - Number of &quot;</span>);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      printf(<span class="stringliteral">&quot;ranks (nproc) is not divisible by number &quot;</span>);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      printf(<span class="stringliteral">&quot;of IO ranks (N_IORanks). Readjusting number &quot;</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      printf(<span class="stringliteral">&quot;of IO ranks to fix this.\n&quot;</span>);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    N_IORanks = 1;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span> (!rank) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      printf(<span class="stringliteral">&quot;Number of IO Ranks: %d\n&quot;</span>,N_IORanks);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    GroupSize = nproc;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  mpi-&gt;<a class="code" href="a00205.html#a1654ada98aca560c6cb1dc79bb6576c3">CommGroup</a>  = rank/GroupSize;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  mpi-&gt;<a class="code" href="a00205.html#a1e6b9b6dca494aa45e43214f120e6630">IORank</a>     = mpi-&gt;<a class="code" href="a00205.html#a1654ada98aca560c6cb1dc79bb6576c3">CommGroup</a> * GroupSize;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="comment">/* set flag for whether this rank does file I/O */</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">if</span> (rank == mpi-&gt;<a class="code" href="a00205.html#a1e6b9b6dca494aa45e43214f120e6630">IORank</a>)  mpi-&gt;<a class="code" href="a00205.html#a92096d6b87420d0e71b38c6dc5e10b14">IOParticipant</a> = 1;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">else</span>                      mpi-&gt;<a class="code" href="a00205.html#a92096d6b87420d0e71b38c6dc5e10b14">IOParticipant</a> = 0;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="comment">/* save the first and last process of this group */</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  mpi-&gt;<a class="code" href="a00205.html#aff30abd72b51ad067b03ec6d574973a1">GroupStartRank</a> = mpi-&gt;<a class="code" href="a00205.html#a1e6b9b6dca494aa45e43214f120e6630">IORank</a>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  mpi-&gt;<a class="code" href="a00205.html#ada7c6833a6ee759beee80a693cf86072">GroupEndRank</a>   = (mpi-&gt;<a class="code" href="a00205.html#a1654ada98aca560c6cb1dc79bb6576c3">CommGroup</a>+1)*GroupSize;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="comment">/* create a new communicator with the IO participants */</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordtype">int</span> i,*FileIORanks;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  MPI_Group WorldGroup, IOGroup;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  FileIORanks = (<span class="keywordtype">int</span>*) calloc (N_IORanks,<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordflow">for</span> (i=0; i&lt;N_IORanks; i++) FileIORanks[i] = i*GroupSize;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  MPI_Comm_group(mpi-&gt;<a class="code" href="a00205.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;WorldGroup);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  MPI_Group_incl(WorldGroup,N_IORanks,FileIORanks,&amp;IOGroup);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  MPI_Comm_create(mpi-&gt;<a class="code" href="a00205.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,IOGroup,&amp;mpi-&gt;<a class="code" href="a00205.html#ae297d101be8576bfb36202ebb61085e6">IOWorld</a>);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  MPI_Group_free(&amp;IOGroup);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  MPI_Group_free(&amp;WorldGroup);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  free(FileIORanks);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">return</span>(0);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
-<div class="ttc" id="a00205_html_ae297d101be8576bfb36202ebb61085e6"><div class="ttname"><a href="a00205.html#ae297d101be8576bfb36202ebb61085e6">MPIVariables::IOWorld</a></div><div class="ttdeci">MPI_Comm IOWorld</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00048">mpivars_struct.h:48</a></div></div>
-<div class="ttc" id="a00205_html_ada7c6833a6ee759beee80a693cf86072"><div class="ttname"><a href="a00205.html#ada7c6833a6ee759beee80a693cf86072">MPIVariables::GroupEndRank</a></div><div class="ttdeci">int GroupEndRank</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00046">mpivars_struct.h:46</a></div></div>
-<div class="ttc" id="a00205_html_a297fca986fa3aa27de07a0c746ffaaa8"><div class="ttname"><a href="a00205.html#a297fca986fa3aa27de07a0c746ffaaa8">MPIVariables::N_IORanks</a></div><div class="ttdeci">int N_IORanks</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00041">mpivars_struct.h:41</a></div></div>
-<div class="ttc" id="a00205_html_aff30abd72b51ad067b03ec6d574973a1"><div class="ttname"><a href="a00205.html#aff30abd72b51ad067b03ec6d574973a1">MPIVariables::GroupStartRank</a></div><div class="ttdeci">int GroupStartRank</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00045">mpivars_struct.h:45</a></div></div>
-<div class="ttc" id="a00205_html_a00663"><div class="ttname"><a href="a00205.html#a00663">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00024">mpivars_struct.h:24</a></div></div>
-<div class="ttc" id="a00205_html_a92096d6b87420d0e71b38c6dc5e10b14"><div class="ttname"><a href="a00205.html#a92096d6b87420d0e71b38c6dc5e10b14">MPIVariables::IOParticipant</a></div><div class="ttdeci">int IOParticipant</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00042">mpivars_struct.h:42</a></div></div>
-<div class="ttc" id="a00205_html_ae68326adc3b3862f1162832f70727b06"><div class="ttname"><a href="a00205.html#ae68326adc3b3862f1162832f70727b06">MPIVariables::nproc</a></div><div class="ttdeci">int nproc</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00026">mpivars_struct.h:26</a></div></div>
-<div class="ttc" id="a00205_html_a1654ada98aca560c6cb1dc79bb6576c3"><div class="ttname"><a href="a00205.html#a1654ada98aca560c6cb1dc79bb6576c3">MPIVariables::CommGroup</a></div><div class="ttdeci">int CommGroup</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00043">mpivars_struct.h:43</a></div></div>
-<div class="ttc" id="a00205_html_a6cfd95afd0afebd625b889fb6e58371c"><div class="ttname"><a href="a00205.html#a6cfd95afd0afebd625b889fb6e58371c">MPIVariables::rank</a></div><div class="ttdeci">int rank</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00025">mpivars_struct.h:25</a></div></div>
-<div class="ttc" id="a00205_html_a1e6b9b6dca494aa45e43214f120e6630"><div class="ttname"><a href="a00205.html#a1e6b9b6dca494aa45e43214f120e6630">MPIVariables::IORank</a></div><div class="ttdeci">int IORank</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00044">mpivars_struct.h:44</a></div></div>
-<div class="ttc" id="a00205_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00205.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00205_source.html#l00037">mpivars_struct.h:37</a></div></div>
+<p>Definition at line <a class="el" href="a00389_source.html#l00276">276</a> of file <a class="el" href="a00389_source.html">MPIExchangeBoundariesnD_GPU.cu</a>.</p>
+<div class="fragment"><div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;{</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <span class="keywordtype">int</span> p = blockDim.x * blockIdx.x + threadIdx.x;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <span class="keywordflow">if</span> (p &lt; npoints_grid) {</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="keywordtype">int</span> index[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>], bounds[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>], offset[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>];</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keywordtype">int</span> p1, p2;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,ndims); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <a class="code" href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,0);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <a class="code" href="a00231.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a>(ndims,p,bounds,index,0);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <a class="code" href="a00231.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p1);</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds,index,0,p2);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> v=0; v&lt;nvars; v++) {</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      sendbuf[2*d*stride+nvars*p2+v] = var[p1+v*npoints_local_wghosts];</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    }</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="comment">//_ArrayCopy1D_((var+nvars*p1),(sendbuf+2*d*stride+nvars*p2),nvars);</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  }</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;}</div>
+<div class="ttc" id="a00231_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00169">arrayfunctions.h:169</a></div></div>
+<div class="ttc" id="a00231_html_a03f49e4d44ae8aca85cb04cfe91e4ce4"><div class="ttname"><a href="a00231.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a></div><div class="ttdeci">#define _ArrayIndexnD_(N, index, imax, i, ghost)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00021">arrayfunctions.h:21</a></div></div>
+<div class="ttc" id="a00234_html_a325f45752e1f94bfb044f28f146e05dd"><div class="ttname"><a href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a></div><div class="ttdeci">#define GPU_MAX_NDIMS</div><div class="ttdef"><b>Definition:</b> <a href="a00234_source.html#l00008">basic_gpu.h:8</a></div></div>
+<div class="ttc" id="a00231_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00040">arrayfunctions.h:40</a></div></div>
+<div class="ttc" id="a00231_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00231.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00083">arrayfunctions.h:83</a></div></div>
+<div class="ttc" id="a00231_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00319">arrayfunctions.h:319</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a4c26136ba06f5f6aba9e20a8190aee15"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__global__ void gpuFillSendBufRight_kernel </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>npoints_grid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>npoints_local_wghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ndims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nvars</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int *__restrict__&#160;</td>
+          <td class="paramname"><em>dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double *__restrict__&#160;</td>
+          <td class="paramname"><em>var</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *__restrict__&#160;</td>
+          <td class="paramname"><em>sendbuf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Kernel function for <a class="el" href="a00250.html#aa1ec149b4854b17ec8d09c24f9eb9933">gpuMPIExchangeBoundariesnD()</a> </p>
+
+<p>Definition at line <a class="el" href="a00389_source.html#l00311">311</a> of file <a class="el" href="a00389_source.html">MPIExchangeBoundariesnD_GPU.cu</a>.</p>
+<div class="fragment"><div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;{</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  <span class="keywordtype">int</span> p = blockDim.x * blockIdx.x + threadIdx.x;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  <span class="keywordflow">if</span> (p &lt; npoints_grid) {</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordtype">int</span> index[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>], bounds[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>], offset[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>];</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="keywordtype">int</span> p1, p2;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,ndims); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <a class="code" href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,0); offset[d] = dim[d]-ghosts;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <a class="code" href="a00231.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a>(ndims,p,bounds,index,0);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <a class="code" href="a00231.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p1);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds,index,0,p2);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> v=0; v&lt;nvars; v++) {</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      sendbuf[(2*d+1)*stride+nvars*p2+v] = var[p1+v*npoints_local_wghosts];</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    }</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="comment">//_ArrayCopy1D_((var+nvars*p1),(sendbuf+(2*d+1)*stride+nvars*p2),nvars);</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  }</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;}</div>
+<div class="ttc" id="a00231_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00169">arrayfunctions.h:169</a></div></div>
+<div class="ttc" id="a00231_html_a03f49e4d44ae8aca85cb04cfe91e4ce4"><div class="ttname"><a href="a00231.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a></div><div class="ttdeci">#define _ArrayIndexnD_(N, index, imax, i, ghost)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00021">arrayfunctions.h:21</a></div></div>
+<div class="ttc" id="a00234_html_a325f45752e1f94bfb044f28f146e05dd"><div class="ttname"><a href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a></div><div class="ttdeci">#define GPU_MAX_NDIMS</div><div class="ttdef"><b>Definition:</b> <a href="a00234_source.html#l00008">basic_gpu.h:8</a></div></div>
+<div class="ttc" id="a00231_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00040">arrayfunctions.h:40</a></div></div>
+<div class="ttc" id="a00231_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00231.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00083">arrayfunctions.h:83</a></div></div>
+<div class="ttc" id="a00231_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00319">arrayfunctions.h:319</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a689127aaadc4ca6144b753b5791d134f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__global__ void gpuFillRecvBufLeft_kernel </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>npoints_grid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>npoints_local_wghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ndims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nvars</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int *__restrict__&#160;</td>
+          <td class="paramname"><em>dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double *__restrict__&#160;</td>
+          <td class="paramname"><em>recvbuf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *__restrict__&#160;</td>
+          <td class="paramname"><em>var</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Kernel function for <a class="el" href="a00250.html#aa1ec149b4854b17ec8d09c24f9eb9933">gpuMPIExchangeBoundariesnD()</a> </p>
+
+<p>Definition at line <a class="el" href="a00389_source.html#l00346">346</a> of file <a class="el" href="a00389_source.html">MPIExchangeBoundariesnD_GPU.cu</a>.</p>
+<div class="fragment"><div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;{</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  <span class="keywordtype">int</span> p = blockDim.x * blockIdx.x + threadIdx.x;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  <span class="keywordflow">if</span> (p &lt; npoints_grid) {</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keywordtype">int</span> index[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>], bounds[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>], offset[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>];</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordtype">int</span> p1, p2;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,ndims); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <a class="code" href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,0); offset[d] = -ghosts;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <a class="code" href="a00231.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a>(ndims,p,bounds,index,0);</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <a class="code" href="a00231.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p1);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds,index,0,p2);</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> v=0; v&lt;nvars; v++) {</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      var[p1+v*npoints_local_wghosts] = recvbuf[2*d*stride+nvars*p2+v];</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    }</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="comment">//_ArrayCopy1D_((recvbuf+2*d*stride+nvars*p2),(var+nvars*p1),nvars);</span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;  }</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;  <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;}</div>
+<div class="ttc" id="a00231_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00169">arrayfunctions.h:169</a></div></div>
+<div class="ttc" id="a00231_html_a03f49e4d44ae8aca85cb04cfe91e4ce4"><div class="ttname"><a href="a00231.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a></div><div class="ttdeci">#define _ArrayIndexnD_(N, index, imax, i, ghost)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00021">arrayfunctions.h:21</a></div></div>
+<div class="ttc" id="a00234_html_a325f45752e1f94bfb044f28f146e05dd"><div class="ttname"><a href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a></div><div class="ttdeci">#define GPU_MAX_NDIMS</div><div class="ttdef"><b>Definition:</b> <a href="a00234_source.html#l00008">basic_gpu.h:8</a></div></div>
+<div class="ttc" id="a00231_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00040">arrayfunctions.h:40</a></div></div>
+<div class="ttc" id="a00231_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00231.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00083">arrayfunctions.h:83</a></div></div>
+<div class="ttc" id="a00231_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00319">arrayfunctions.h:319</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ac685ab0d0c20997cb44a9a072040e125"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__global__ void gpuFillRecvBufRight_kernel </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>npoints_grid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>npoints_local_wghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ndims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nvars</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int *__restrict__&#160;</td>
+          <td class="paramname"><em>dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double *__restrict__&#160;</td>
+          <td class="paramname"><em>recvbuf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *__restrict__&#160;</td>
+          <td class="paramname"><em>var</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Kernel function for <a class="el" href="a00250.html#aa1ec149b4854b17ec8d09c24f9eb9933">gpuMPIExchangeBoundariesnD()</a> </p>
+
+<p>Definition at line <a class="el" href="a00389_source.html#l00381">381</a> of file <a class="el" href="a00389_source.html">MPIExchangeBoundariesnD_GPU.cu</a>.</p>
+<div class="fragment"><div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;{</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;  <span class="keywordtype">int</span> p = blockDim.x * blockIdx.x + threadIdx.x;</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  <span class="keywordflow">if</span> (p &lt; npoints_grid) {</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    <span class="keywordtype">int</span> index[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>], bounds[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>], offset[<a class="code" href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a>];</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    <span class="keywordtype">int</span> p1, p2;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(dim,bounds,ndims); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    <a class="code" href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a>(offset,ndims,0); offset[d] = dim[d];</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    <a class="code" href="a00231.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a>(ndims,p,bounds,index,0);</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    <a class="code" href="a00231.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a>(ndims,dim,index,offset,ghosts,p1);</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    <a class="code" href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a>(ndims,bounds,index,0,p2);</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> v=0; v&lt;nvars; v++) {</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;      var[p1+v*npoints_local_wghosts] = recvbuf[(2*d+1)*stride+nvars*p2+v];</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    }</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="comment">//_ArrayCopy1D_((recvbuf+(2*d+1)*stride+nvars*p2),(var+nvars*p1),nvars);</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;  }</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;  <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;}</div>
+<div class="ttc" id="a00231_html_a2b2826031c0cd92495ab351d3e599fc5"><div class="ttname"><a href="a00231.html#a2b2826031c0cd92495ab351d3e599fc5">_ArraySetValue_</a></div><div class="ttdeci">#define _ArraySetValue_(x, size, value)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00169">arrayfunctions.h:169</a></div></div>
+<div class="ttc" id="a00231_html_a03f49e4d44ae8aca85cb04cfe91e4ce4"><div class="ttname"><a href="a00231.html#a03f49e4d44ae8aca85cb04cfe91e4ce4">_ArrayIndexnD_</a></div><div class="ttdeci">#define _ArrayIndexnD_(N, index, imax, i, ghost)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00021">arrayfunctions.h:21</a></div></div>
+<div class="ttc" id="a00234_html_a325f45752e1f94bfb044f28f146e05dd"><div class="ttname"><a href="a00234.html#a325f45752e1f94bfb044f28f146e05dd">GPU_MAX_NDIMS</a></div><div class="ttdeci">#define GPU_MAX_NDIMS</div><div class="ttdef"><b>Definition:</b> <a href="a00234_source.html#l00008">basic_gpu.h:8</a></div></div>
+<div class="ttc" id="a00231_html_afbb862a2fdf5b72b1f9ace42f64b556f"><div class="ttname"><a href="a00231.html#afbb862a2fdf5b72b1f9ace42f64b556f">_ArrayIndex1D_</a></div><div class="ttdeci">#define _ArrayIndex1D_(N, imax, i, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00040">arrayfunctions.h:40</a></div></div>
+<div class="ttc" id="a00231_html_a0739cb538f4d301fad3b45059ddd0738"><div class="ttname"><a href="a00231.html#a0739cb538f4d301fad3b45059ddd0738">_ArrayIndex1DWO_</a></div><div class="ttdeci">#define _ArrayIndex1DWO_(N, imax, i, offset, ghost, index)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00083">arrayfunctions.h:83</a></div></div>
+<div class="ttc" id="a00231_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00319">arrayfunctions.h:319</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a008cd3b0543afc6eb0fea2e4ca8066ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int gpuMPIExchangeBoundariesnD </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ndims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nvars</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int *__restrict__&#160;</td>
+          <td class="paramname"><em>dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ghosts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *__restrict__&#160;</td>
+          <td class="paramname"><em>var</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exchange the data across MPI ranks and fill in ghost points for a 1D array. In a multidimensional simulation, a 1D array is an array of data along one of the spatial dimensions, i.e. its an array storing a variable that varies in only one of the spatial dimension. For example, for a 2D problem on a Cartesian grid (with spatial dimensions x and y), the array of x-coordinates is a 1D array along x, and the array of y-coordinates is a 1D array along y. Thus, the size of the 1D array is equal to the size of the domain along the spatial dimension corresponding to that array.</p>
+<p>Consider a two-dimensional problem, partitioned on 21 MPI ranks as follows: </p>
+<div class="image">
+<img src="mpi_ranks.png" alt="mpi_ranks.png"/>
+</div>
+  and consider rank 9.</p>
+<p>If the argument <em>dir</em> is specified as 0, and thus we are dealing with a 1D array along dimension 0, then</p>
+<ul>
+<li>Rank 9 will exchange data with ranks 8 and 10, and fill in its ghost points.</li>
+</ul>
+<p>If <em>dir</em> is specified as 1, and thus we are dealing with a 1D array along dimension 1, then</p>
+<ul>
+<li>Rank 9 will exchange data with ranks 2 and 16, and fill in its ghost points. </li>
+</ul>
+
+<p>Definition at line <a class="el" href="a00389_source.html#l00435">435</a> of file <a class="el" href="a00389_source.html">MPIExchangeBoundariesnD_GPU.cu</a>.</p>
+<div class="fragment"><div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;{</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor">#ifndef serial</span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;  <a class="code" href="a00207.html#a00674">MPIVariables</a>  *mpi = (<a class="code" href="a00207.html#a00674">MPIVariables</a>*) m;</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;  <span class="keywordtype">int</span>           d;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  <span class="keywordtype">int</span> *ip      = mpi-&gt;<a class="code" href="a00207.html#aa3c28612a64b8a97bde66b720e15c700">ip</a>;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;  <span class="keywordtype">int</span> *iproc   = mpi-&gt;<a class="code" href="a00207.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">iproc</a>;</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;  <span class="keywordtype">int</span> *bcflag  = mpi-&gt;<a class="code" href="a00207.html#af40a5a3066fdb53a47e4627071abc2bc">bcperiodic</a>;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;  <span class="keywordtype">int</span> *cpu_dim = mpi-&gt;<a class="code" href="a00207.html#a4804ff42d9aefc4b70447ff108d984be">cpu_dim</a>;</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;  <span class="keywordtype">int</span> size = 1; <span class="keywordflow">for</span> (d=0; d&lt;ndims; d++) size *= (cpu_dim[d]+2*ghosts);</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;  <span class="keywordtype">int</span> neighbor_rank[2*ndims], nip[ndims], bounds[ndims];</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;  MPI_Request rcvreq[2*ndims], sndreq[2*ndims];</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;  <span class="keywordflow">for</span> (d=0; d&lt;2*ndims; d++) rcvreq[d] = sndreq[d] = MPI_REQUEST_NULL;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;  <span class="comment">/* each process has 2*ndims neighbors (except at non-periodic physical boundaries)  */</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;  <span class="comment">/* calculate the rank of these neighbors (-1 -&gt; none)                               */</span></div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) {</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(ip,nip,ndims);</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    <span class="keywordflow">if</span> (ip[d] == 0) nip[d] = iproc[d]-1;</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    <span class="keywordflow">else</span>            nip[d]--;</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    <span class="keywordflow">if</span> ((ip[d] == 0) &amp;&amp; (!bcflag[d])) neighbor_rank[2*d]   = -1;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    <span class="keywordflow">else</span>                              neighbor_rank[2*d]   = <a class="code" href="a00250.html#a36e2be86c7dc0d9dd088ed2f5842f556">MPIRank1D</a>(ndims,iproc,nip);</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(ip,nip,ndims);</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    <span class="keywordflow">if</span> (ip[d] == (iproc[d]-1)) nip[d] = 0;</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    <span class="keywordflow">else</span>                       nip[d]++;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    <span class="keywordflow">if</span> ((ip[d] == (iproc[d]-1)) &amp;&amp; (!bcflag[d]))  neighbor_rank[2*d+1] = -1;</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;    <span class="keywordflow">else</span>                                          neighbor_rank[2*d+1] = <a class="code" href="a00250.html#a36e2be86c7dc0d9dd088ed2f5842f556">MPIRank1D</a>(ndims,iproc,nip);</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;  }</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;  <span class="comment">/* calculate dimensions of each of the send-receive regions */</span></div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;  <span class="keywordtype">double</span> *sendbuf = mpi-&gt;<a class="code" href="a00207.html#a73c3021159f4b79da5c994d9d71a189c">gpu_sendbuf</a>;</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;  <span class="keywordtype">double</span> *recvbuf = mpi-&gt;<a class="code" href="a00207.html#a359113ba6e1b7430114456decec20cf1">gpu_recvbuf</a>;</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;  <span class="keywordtype">int</span>    stride   = mpi-&gt;<a class="code" href="a00207.html#a4c12bdea025b404c7dd79f368fc03efd">maxbuf</a>;</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;  <span class="keywordtype">int</span>    bufdim[ndims];</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) {</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;    bufdim[d] = 1;</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; ndims; i++) {</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;      <span class="keywordflow">if</span> (i == d) bufdim[d] *= ghosts;</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;      <span class="keywordflow">else</span>        bufdim[d] *= cpu_dim[i];</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;    }</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;  }</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;  <span class="comment">/* post the receive requests */</span></div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) {</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    <span class="keywordflow">if</span> (neighbor_rank[2*d  ] != -1) {</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;      MPI_Irecv(&amp;recvbuf[2*d*stride],bufdim[d]*nvars,MPI_DOUBLE,neighbor_rank[2*d  ],1630,</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;                mpi-&gt;<a class="code" href="a00207.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;rcvreq[2*d]);</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    }</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;    <span class="keywordflow">if</span> (neighbor_rank[2*d+1] != -1) {</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;      MPI_Irecv(&amp;recvbuf[(2*d+1)*stride],bufdim[d]*nvars,MPI_DOUBLE,neighbor_rank[2*d+1],1631,</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;                mpi-&gt;<a class="code" href="a00207.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;rcvreq[2*d+1]);</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    }</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;  }</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;  <span class="comment">/* count number of neighbors and copy data to send buffers */</span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) {</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(cpu_dim,bounds,ndims); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    <span class="keywordflow">if</span> (neighbor_rank[2*d] != -1) {</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;      <span class="keywordtype">int</span> npoints_grid = 1; <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;ndims; i++) npoints_grid *= bounds[i];</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;      <span class="keywordtype">int</span> nblocks = (npoints_grid-1)/<a class="code" href="a00234.html#aceca9611b1e048e233f2d9cc02f70796">GPU_THREADS_PER_BLOCK</a> + 1;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;      gpuFillSendBufLeft_kernel&lt;&lt;&lt;nblocks, GPU_THREADS_PER_BLOCK&gt;&gt;&gt;(</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;        npoints_grid,size,d,ndims,nvars,ghosts,stride,dim,var,sendbuf);</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    }</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;    <span class="keywordflow">if</span> (neighbor_rank[2*d+1] != -1) {</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;      <span class="keywordtype">int</span> npoints_grid = 1; <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;ndims; i++) npoints_grid *= bounds[i];</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;      <span class="keywordtype">int</span> nblocks = (npoints_grid-1)/<a class="code" href="a00234.html#aceca9611b1e048e233f2d9cc02f70796">GPU_THREADS_PER_BLOCK</a> + 1;</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;      gpuFillSendBufRight_kernel&lt;&lt;&lt;nblocks, GPU_THREADS_PER_BLOCK&gt;&gt;&gt;(</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;        npoints_grid,size,d,ndims,nvars,ghosts,stride,dim,var,sendbuf);</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;    }</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;  }</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;  cudaDeviceSynchronize();</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;  <span class="comment">/* send the data */</span></div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) {</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;    <span class="keywordflow">if</span> (neighbor_rank[2*d  ] != -1) {</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;      MPI_Isend(&amp;sendbuf[2*d*stride],bufdim[d]*nvars,MPI_DOUBLE,neighbor_rank[2*d  ],1631,</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;                mpi-&gt;<a class="code" href="a00207.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;sndreq[2*d]);</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    }</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    <span class="keywordflow">if</span> (neighbor_rank[2*d+1] != -1) {</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;      MPI_Isend(&amp;sendbuf[(2*d+1)*stride],bufdim[d]*nvars,MPI_DOUBLE,neighbor_rank[2*d+1],1630,</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;                mpi-&gt;<a class="code" href="a00207.html#adad7a6f85831f3ac84d854b6c80aef43">world</a>,&amp;sndreq[2*d+1]);</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    }</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;  }</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;  <span class="comment">/* Wait till data is done received */</span></div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;  MPI_Waitall(2*ndims,rcvreq,MPI_STATUS_IGNORE);</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;  <span class="comment">/* copy received data to ghost points */</span></div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;  <span class="keywordflow">for</span> (d = 0; d &lt; ndims; d++) {</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;    <a class="code" href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a>(cpu_dim,bounds,ndims); bounds[d] = ghosts;</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;    <span class="keywordflow">if</span> (neighbor_rank[2*d] != -1) {</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;      <span class="keywordtype">int</span> npoints_grid = 1; <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;ndims; i++) npoints_grid *= bounds[i];</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;      <span class="keywordtype">int</span> nblocks = (npoints_grid-1)/<a class="code" href="a00234.html#aceca9611b1e048e233f2d9cc02f70796">GPU_THREADS_PER_BLOCK</a> + 1;</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;      gpuFillRecvBufLeft_kernel&lt;&lt;&lt;nblocks, GPU_THREADS_PER_BLOCK&gt;&gt;&gt;(</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;        npoints_grid,size,d,ndims,nvars,ghosts,stride,dim,recvbuf,var);</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    }</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    <span class="keywordflow">if</span> (neighbor_rank[2*d+1] != -1) {</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;      <span class="keywordtype">int</span> npoints_grid = 1; <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;ndims; i++) npoints_grid *= bounds[i];</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;      <span class="keywordtype">int</span> nblocks = (npoints_grid-1)/<a class="code" href="a00234.html#aceca9611b1e048e233f2d9cc02f70796">GPU_THREADS_PER_BLOCK</a> + 1;</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;      gpuFillRecvBufRight_kernel&lt;&lt;&lt;nblocks, GPU_THREADS_PER_BLOCK&gt;&gt;&gt;(</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;        npoints_grid,size,d,ndims,nvars,ghosts,stride,dim,recvbuf,var);</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;    }</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;  }</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;  cudaDeviceSynchronize();</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;  <span class="comment">/* Wait till send requests are complete before freeing memory */</span></div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;  MPI_Waitall(2*ndims,sndreq,MPI_STATUS_IGNORE);</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;}</div>
+<div class="ttc" id="a00250_html_a36e2be86c7dc0d9dd088ed2f5842f556"><div class="ttname"><a href="a00250.html#a36e2be86c7dc0d9dd088ed2f5842f556">MPIRank1D</a></div><div class="ttdeci">int MPIRank1D(int, int *, int *)</div><div class="ttdef"><b>Definition:</b> <a href="a00401_source.html#l00026">MPIRank1D.c:26</a></div></div>
+<div class="ttc" id="a00207_html_a359113ba6e1b7430114456decec20cf1"><div class="ttname"><a href="a00207.html#a359113ba6e1b7430114456decec20cf1">MPIVariables::gpu_recvbuf</a></div><div class="ttdeci">double * gpu_recvbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00060">mpivars_struct.h:60</a></div></div>
+<div class="ttc" id="a00207_html_a0be0f30a83bc3f3d9f6ee3a36bbf2716"><div class="ttname"><a href="a00207.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a></div><div class="ttdeci">int * iproc</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00027">mpivars_struct.h:27</a></div></div>
+<div class="ttc" id="a00207_html_a73c3021159f4b79da5c994d9d71a189c"><div class="ttname"><a href="a00207.html#a73c3021159f4b79da5c994d9d71a189c">MPIVariables::gpu_sendbuf</a></div><div class="ttdeci">double * gpu_sendbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00060">mpivars_struct.h:60</a></div></div>
+<div class="ttc" id="a00234_html_aceca9611b1e048e233f2d9cc02f70796"><div class="ttname"><a href="a00234.html#aceca9611b1e048e233f2d9cc02f70796">GPU_THREADS_PER_BLOCK</a></div><div class="ttdeci">#define GPU_THREADS_PER_BLOCK</div><div class="ttdef"><b>Definition:</b> <a href="a00234_source.html#l00007">basic_gpu.h:7</a></div></div>
+<div class="ttc" id="a00207_html_af40a5a3066fdb53a47e4627071abc2bc"><div class="ttname"><a href="a00207.html#af40a5a3066fdb53a47e4627071abc2bc">MPIVariables::bcperiodic</a></div><div class="ttdeci">int * bcperiodic</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00031">mpivars_struct.h:31</a></div></div>
+<div class="ttc" id="a00207_html_adad7a6f85831f3ac84d854b6c80aef43"><div class="ttname"><a href="a00207.html#adad7a6f85831f3ac84d854b6c80aef43">MPIVariables::world</a></div><div class="ttdeci">MPI_Comm world</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00037">mpivars_struct.h:37</a></div></div>
+<div class="ttc" id="a00231_html_a89e8330d9e06dd0666c50833628a125c"><div class="ttname"><a href="a00231.html#a89e8330d9e06dd0666c50833628a125c">_ArrayCopy1D_</a></div><div class="ttdeci">#define _ArrayCopy1D_(x, y, size)</div><div class="ttdef"><b>Definition:</b> <a href="a00231_source.html#l00319">arrayfunctions.h:319</a></div></div>
+<div class="ttc" id="a00207_html_a4c12bdea025b404c7dd79f368fc03efd"><div class="ttname"><a href="a00207.html#a4c12bdea025b404c7dd79f368fc03efd">MPIVariables::maxbuf</a></div><div class="ttdeci">int maxbuf</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00053">mpivars_struct.h:53</a></div></div>
+<div class="ttc" id="a00207_html_a4804ff42d9aefc4b70447ff108d984be"><div class="ttname"><a href="a00207.html#a4804ff42d9aefc4b70447ff108d984be">MPIVariables::cpu_dim</a></div><div class="ttdeci">int * cpu_dim</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00059">mpivars_struct.h:59</a></div></div>
+<div class="ttc" id="a00207_html_a00674"><div class="ttname"><a href="a00207.html#a00674">MPIVariables</a></div><div class="ttdoc">Structure of MPI-related variables. </div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00024">mpivars_struct.h:24</a></div></div>
+<div class="ttc" id="a00207_html_aa3c28612a64b8a97bde66b720e15c700"><div class="ttname"><a href="a00207.html#aa3c28612a64b8a97bde66b720e15c700">MPIVariables::ip</a></div><div class="ttdeci">int * ip</div><div class="ttdef"><b>Definition:</b> <a href="a00207_source.html#l00028">mpivars_struct.h:28</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

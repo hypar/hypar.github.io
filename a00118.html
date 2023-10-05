@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: 2D Linear Advection - Sine Wave with Spatially-Varying Advection Speed</title>
+<title>HyPar: 2D Linear Advection - Sine Wave</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,18 +106,18 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">2D Linear Advection - Sine Wave with Spatially-Varying Advection Speed </div>  </div>
+<div class="title">2D Linear Advection - Sine Wave </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Location: <b>hypar/Examples/2D/LinearAdvection/SineWave_NonConstantAdvection_SparseGrids</b> (This directory contains all the input files needed to run this case.)</p>
-<p>Governing equations: 2D Linear Advection Equation (<a class="el" href="a00204.html" title="Linear Advection-Diffusion-Reaction model. ">linearadr.h</a>)</p>
-<p>Domain: \(0 \le x,y &lt; 1\), <em>"periodic"</em> (<a class="el" href="a00233.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundary conditions on all boundaries.</p>
-<p>Initial solution: \(u\left(x,y,0\right) = u_0\left(x,y\right)= \cos\left(4\pi y\right)\)<br/>
- Advection speed: \(a_x\left(x,y\right) = \sin\left(4\pi y\right)\), \(a_y\left(x,y\right) = -\cos\left(4\pi x\right)\)</p>
+<div class="textblock"><p>Location: <b>hypar/Examples/2D/LinearAdvection/SineWave_SparseGrids</b> (This directory contains all the input files needed to run this case.)</p>
+<p>Governing equations: 2D Linear Advection Equation (<a class="el" href="a00206.html" title="Linear Advection-Diffusion-Reaction model. ">linearadr.h</a>)</p>
+<p>Domain: \(0 \le x,y &lt; 1\), <em>"periodic"</em> (<a class="el" href="a00235.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundary conditions on all boundaries.</p>
+<p>Initial solution: \(u\left(x,y,0\right) = u_0\left(x,y\right)= \sin\left(2\pi x\right)\cos\left(2\pi y\right)\)<br/>
+Exact solution: \(u\left(x,y,t\right) = u_0\left(x-a_xt,y-a_yt\right)\).</p>
 <p>Numerical Method:</p>
 <ul>
-<li>Spatial discretization (hyperbolic): 5th order upwind (<a class="el" href="a00191.html#aea7c973ffe0c37bca0703c1bf6175aaa" title="5th order upwind reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderUpwind()</a>)</li>
-<li>Time integration: RK4 (<a class="el" href="a00265.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00197.html#a47de987716954223b3c26bb842b21bf8">_RK_44_</a>)</li>
+<li>Spatial discretization (hyperbolic): 5th order upwind (<a class="el" href="a00193.html#aea7c973ffe0c37bca0703c1bf6175aaa" title="5th order upwind reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderUpwind()</a>)</li>
+<li>Time integration: RK4 (<a class="el" href="a00269.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00199.html#a47de987716954223b3c26bb842b21bf8">_RK_44_</a>)</li>
 </ul>
 <h2>Input files required: </h2>
 <p><b>sparse_grids.inp</b> </p>
@@ -132,20 +132,21 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 <div class="fragment"><div class="line">begin</div>
 <div class="line">    ndims              2</div>
 <div class="line">    nvars              1</div>
-<div class="line">    size               128 128</div>
+<div class="line">    size               256 256</div>
 <div class="line">    ghost              3</div>
 <div class="line">    n_iter             1000</div>
 <div class="line">    restart_iter       0 </div>
 <div class="line">    time_scheme        rk</div>
 <div class="line">    time_scheme_type   44</div>
 <div class="line">    hyp_space_scheme   upw5</div>
+<div class="line">    hyp_flux_split     no</div>
 <div class="line">    hyp_interp_type    components</div>
-<div class="line">    dt                 0.004</div>
+<div class="line">    dt                 0.001</div>
 <div class="line">    conservation_check yes</div>
 <div class="line">    screen_op_iter     50</div>
-<div class="line">    file_op_iter       50</div>
+<div class="line">    file_op_iter       100</div>
 <div class="line">    op_file_format     tecplot2d</div>
-<div class="line">    ip_file_type       binary</div>
+<div class="line">    ip_file_type       ascii</div>
 <div class="line">    input_mode         serial</div>
 <div class="line">    output_mode        serial</div>
 <div class="line">    op_overwrite       no</div>
@@ -153,30 +154,26 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 <div class="line">end</div>
 </div><!-- fragment --><p><b>boundary.inp</b> </p>
 <div class="fragment"><div class="line">4</div>
-<div class="line">periodic   0   1  0 0 0 1 </div>
-<div class="line">periodic   0  -1  0 0 0 1 </div>
-<div class="line">periodic   1   1  0 1 0 0 </div>
-<div class="line">periodic   1  -1  0 1 0 0 </div>
-</div><!-- fragment --><p><b>physics.inp</b> (specifies filename for advection field) </p>
+<div class="line">periodic                      0       1    0.0000000000000000e+00 0.0000000000000000e+00 0.0000000000000000e+00 1.0000000000000000e+00 </div>
+<div class="line">periodic                      0      -1    0.0000000000000000e+00 0.0000000000000000e+00 0.0000000000000000e+00 1.0000000000000000e+00 </div>
+<div class="line">periodic                      1       1    0.0000000000000000e+00 1.0000000000000000e+00 0.0000000000000000e+00 0.0000000000000000e+00 </div>
+<div class="line">periodic                      1      -1    0.0000000000000000e+00 1.0000000000000000e+00 0.0000000000000000e+00 0.0000000000000000e+00 </div>
+</div><!-- fragment --><p><b>physics.inp</b> (specifies \(a_x\) and \(a_y\)) </p>
 <div class="fragment"><div class="line">begin</div>
-<div class="line">    advection_filename advection</div>
+<div class="line">    advection         1.0000000000000000e+00 1.0000000000000000e+00 </div>
 <div class="line">end</div>
-</div><!-- fragment --><p> <b>Note:</b> Do not include the ".inp" extension in the filename above.</p>
-<p>To generate <b>initial.inp</b> and <b>advection.inp</b>, compile and run the following code in the run directory. </p>
+</div><!-- fragment --><p>To generate <b>initial.inp</b> and <b>exact.inp</b>, compile and run the following code in the run directory. (It is the same file as the one used in running a conventional non-sparse-grids simulation). </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"></div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00375.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00380.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>()</div>
 <div class="line">{  </div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">double</span> pi = 4.0*atan(1.0);</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordtype">int</span> NI, NJ, ndims;</div>
-<div class="line">  <span class="keywordtype">char</span> ip_file_type[50];</div>
-<div class="line">  strcpy(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>);</div>
-<div class="line"></div>
+<div class="line">  <span class="keywordtype">double</span> pi = 4.0*atan(1.0);</div>
+<div class="line">    <span class="keywordtype">int</span> NI,NJ,ndims,n_iter;</div>
+<div class="line">  <span class="keywordtype">double</span> tf, dt;</div>
 <div class="line">  FILE *in;</div>
 <div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;solver.inp\&quot;...\n&quot;</span>);</div>
 <div class="line">  in = fopen(<span class="stringliteral">&quot;solver.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
@@ -186,17 +183,15 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 <div class="line">  } <span class="keywordflow">else</span> {</div>
 <div class="line">    <span class="keywordtype">char</span> word[500];</div>
 <div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)) {</div>
-<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)) {</div>
+<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
+<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
 <div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>)) {</div>
-<div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
-<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>)) {</div>
+<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
+<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>)) {</div>
 <div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NI);</div>
 <div class="line">          fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NJ);</div>
-<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ip_file_type&quot;</span>)) {</div>
-<div class="line">          fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,ip_file_type);</div>
-<div class="line">        }</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;n_iter&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;n_iter);</div>
+<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;dt&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;dt);</div>
 <div class="line">      }</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
 <div class="line">      fprintf(stderr,<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
@@ -204,186 +199,153 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">  fclose(in);</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordtype">char</span> adv_filename[500] = <span class="stringliteral">&quot;none&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> flag = 0;</div>
-<div class="line"></div>
-<div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;physics.inp\&quot;...\n&quot;</span>);</div>
-<div class="line">  in = fopen(<span class="stringliteral">&quot;physics.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!in) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Input file \&quot;physics.inp\&quot; not found.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
-<div class="line">  } <span class="keywordflow">else</span> {</div>
-<div class="line">    <span class="keywordtype">char</span> word[500];</div>
-<div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)) {</div>
-<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)) {</div>
-<div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;advection_filename&quot;</span>)) {</div>
-<div class="line">          fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>, adv_filename);</div>
-<div class="line">          flag = 1;</div>
-<div class="line">        }</div>
-<div class="line">      }</div>
-<div class="line">    } <span class="keywordflow">else</span> {</div>
-<div class="line">      printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
-<div class="line">    }</div>
-<div class="line">  }</div>
-<div class="line">  fclose(in);</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">if</span> (flag == 0) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Input \&quot;advection_filename\&quot; not found in physics.inp file.\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
-<div class="line">  }</div>
-<div class="line">  strcat(adv_filename, <span class="stringliteral">&quot;.inp&quot;</span>);</div>
-<div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (ndims != 2) {</div>
 <div class="line">    fprintf(stderr,<span class="stringliteral">&quot;ndims is not 2 in solver.inp. this code is to generate 2D initial conditions\n&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">  }</div>
 <div class="line">    printf(<span class="stringliteral">&quot;Grid: %d, %d\n&quot;</span>,NI,NJ);</div>
 <div class="line"></div>
+<div class="line">  <span class="keywordtype">double</span> ax, ay;</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;physics.inp\&quot;...\n&quot;</span>);</div>
+<div class="line">  in = fopen(<span class="stringliteral">&quot;physics.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (!in) {</div>
+<div class="line">    fprintf(stderr,<span class="stringliteral">&quot;Error: Input file \&quot;physics.inp\&quot; not found.\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span>(0);</div>
+<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">    <span class="keywordtype">char</span> word[500];</div>
+<div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
+<div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
+<div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
+<div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
+<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;advection&quot;</span>)) {</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;ax);</div>
+<div class="line">          fscanf(in,<span class="stringliteral">&quot;%lf&quot;</span>,&amp;ay);</div>
+<div class="line">        } </div>
+<div class="line">      }</div>
+<div class="line">    } <span class="keywordflow">else</span> {</div>
+<div class="line">      fprintf(stderr,<span class="stringliteral">&quot;Error: Illegal format in physics.inp. Crash and burn!\n&quot;</span>);</div>
+<div class="line">      <span class="keywordflow">return</span>(0);</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  fclose(in);</div>
+<div class="line">    printf(<span class="stringliteral">&quot;Advection: %3.1f, %3.1f\n&quot;</span>,ax,ay);</div>
+<div class="line">    </div>
 <div class="line">  <span class="keywordtype">int</span> i,j;</div>
 <div class="line">    <span class="keywordtype">double</span> dx = 1.0 / ((double)NI);</div>
 <div class="line">    <span class="keywordtype">double</span> dy = 1.0 / ((double)NJ);</div>
 <div class="line"></div>
-<div class="line">  <span class="keywordtype">double</span> *x, *y, *u, *a;</div>
+<div class="line">  tf = (double)n_iter * dt;</div>
+<div class="line">  printf(<span class="stringliteral">&quot;dt: %lf, n_iter: %d, Final time: %lf\n&quot;</span>,dt,n_iter,tf);</div>
+<div class="line">    </div>
+<div class="line">  <span class="keywordtype">double</span> *x, *y, *u;</div>
 <div class="line">    x = (<span class="keywordtype">double</span>*) calloc (NI   , <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line">    y = (<span class="keywordtype">double</span>*) calloc (NJ   , <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line">    u = (<span class="keywordtype">double</span>*) calloc (NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    a = (<span class="keywordtype">double</span>*) calloc (ndims*NI*NJ, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line"></div>
+<div class="line">  FILE *out;</div>
 <div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++){</div>
 <div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++){</div>
 <div class="line">        x[i] = i*dx;</div>
 <div class="line">        y[j] = j*dy;</div>
-<div class="line">      <span class="keywordtype">int</span> p = NI*j + i;</div>
-<div class="line"></div>
-<div class="line">          u[p] = cos(4*pi*y[j]);</div>
-<div class="line"></div>
-<div class="line">      a[ndims*p+0] = sin(4*pi*y[j]);</div>
-<div class="line">      a[ndims*p+1] = -cos(4*pi*x[i]);</div>
+<div class="line">      <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">          u[p] = sin(2*pi*(x[i]-ax*tf)) * cos(2*pi*(y[j]-ay*tf));</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
-<div class="line"></div>
-<div class="line">  FILE *out;</div>
-<div class="line">  <span class="keywordflow">if</span> (!strcmp(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>)) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Writing ASCII initial solution file initial.inp\n&quot;</span>);</div>
-<div class="line">      out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,x[i]);</div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,y[j]);</div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
-<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
-<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u[p]);</div>
-<div class="line">      }</div>
+<div class="line">    out = fopen(<span class="stringliteral">&quot;exact.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%1.16e &quot;</span>,x[i]);</div>
+<div class="line">  fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  fprintf(out,<span class="stringliteral">&quot;%1.16e &quot;</span>,y[j]);</div>
+<div class="line">  fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  {</div>
+<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  {</div>
+<div class="line">      <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">      fprintf(out,<span class="stringliteral">&quot;%1.16e &quot;</span>,u[p]);</div>
 <div class="line">    }</div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      fclose(out);</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Writing ASCII advection field file %s\n&quot;</span>, adv_filename);</div>
-<div class="line">      out = fopen(adv_filename,<span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,x[i]);</div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,y[j]);</div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
-<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
-<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,a[ndims*p+0]);</div>
-<div class="line">      }</div>
-<div class="line">    }</div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)    {</div>
-<div class="line">        <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)    {</div>
-<div class="line">        <span class="keywordtype">int</span> p = NJ*i + j;</div>
-<div class="line">        fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,a[ndims*p+1]);</div>
-<div class="line">      }</div>
-<div class="line">    }</div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      fclose(out);</div>
-<div class="line">  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((!strcmp(ip_file_type,<span class="stringliteral">&quot;binary&quot;</span>)) || (!strcmp(ip_file_type,<span class="stringliteral">&quot;bin&quot;</span>))) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Writing binary initial solution file initial.inp\n&quot;</span>);</div>
-<div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;wb&quot;</span>);</div>
-<div class="line">    fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
-<div class="line">    fwrite(y,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NJ,out);</div>
-<div class="line">    fwrite(u,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI*NJ,out);</div>
-<div class="line">    fclose(out);</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Writing binary advection field file %s\n&quot;</span>, adv_filename);</div>
-<div class="line">    out = fopen(adv_filename,<span class="stringliteral">&quot;wb&quot;</span>);</div>
-<div class="line">    fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
-<div class="line">    fwrite(y,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NJ,out);</div>
-<div class="line">    fwrite(a,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),ndims*NI*NJ,out);</div>
-<div class="line">    fclose(out);</div>
 <div class="line">  }</div>
+<div class="line">  fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    fclose(out);</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++){</div>
+<div class="line">    <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++){</div>
+<div class="line">        x[i] = i*dx;</div>
+<div class="line">        y[j] = j*dy;</div>
+<div class="line">      <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">          u[p] = sin(2*pi*x[i]) * cos(2*pi*y[j]);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%1.16e &quot;</span>,x[i]);</div>
+<div class="line">  fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  fprintf(out,<span class="stringliteral">&quot;%1.16e &quot;</span>,y[j]);</div>
+<div class="line">  fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">for</span> (j = 0; j &lt; NJ; j++)  {</div>
+<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  {</div>
+<div class="line">      <span class="keywordtype">int</span> p = NJ*i + j;</div>
+<div class="line">      fprintf(out,<span class="stringliteral">&quot;%1.16e &quot;</span>,u[p]);</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">    fclose(out);</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line">    free(x);</div>
 <div class="line">    free(y);</div>
 <div class="line">    free(u);</div>
-<div class="line">    free(a);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2>Output: </h2>
-<p>Note that <b>iproc</b> does <b>not</b> need to be set for simulations using sparse grids. <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> will automatically calculate the load balanced processor distribution for each sparse grid. If too many processors are specified, then it will return an error.</p>
+<p>Note that <b>iproc</b> does <b>not</b> need to be set for simulations using sparse grids. <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> will automatically calculate the load balanced processor distribution for each sparse grid. If too many processors are specified, then it will return an error.</p>
 <p>After running the code, there should be the following output files:</p>
 <ul>
-<li>op_fg_00000.dat, ..., op_fg_00020.dat: these contain the full grid solution at \(t=0, ..., 4\).</li>
-<li>op_sg_&lt;n&gt;_00000.dat, ..., op_sg_&lt;n&gt;_00020.dat: these contain the solution on each of the sparse grids in the combination technique. These are written out because <b>write_sg_solutions</b> is set to <b>yes</b> in <b>sparse_grids.inp</b> (<a class="el" href="a00220.html#a634b90e62b481c87ad0ba4ee5c5feba4">SparseGridsSimulation::m_write_sg_solutions</a>).</li>
+<li>op_fg_00000.dat, ..., op_fg_00010.dat: these contain the full grid solution at \(t=0, ..., 1\).</li>
+<li>op_sg_&lt;n&gt;_00000.dat, ..., op_sg_&lt;n&gt;_00010.dat: these contain the solution on each of the sparse grids in the combination technique. These are written out because <b>write_sg_solutions</b> is set to <b>yes</b> in <b>sparse_grids.inp</b> (<a class="el" href="a00222.html#a634b90e62b481c87ad0ba4ee5c5feba4">SparseGridsSimulation::m_write_sg_solutions</a>).</li>
 </ul>
-<p><a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>tecplot2d</em> in <b>solver.inp</b>, and thus, all the files are in a format that Tecplot (<a href="http://www.tecplot.com/">http://www.tecplot.com/</a>) or other visualization software supporting the Tecplot format (e.g. VisIt - <a href="https://wci.llnl.gov/simulation/computer-codes/visit/">https://wci.llnl.gov/simulation/computer-codes/visit/</a>) can read. In these files, the first two lines are the Tecplot headers, after which the data is written out as: the first two columns are grid indices, the next two columns are x and y coordinates, and the final column is the solution. <a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>text</em> to get the solution files in plain text format (which can be read in and visualized in MATLAB for example).</p>
+<p>Since <a class="el" href="a00204.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, separate files are written for solutions at each output time.</p>
+<p><a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>tecplot2d</em> in <b>solver.inp</b>, and thus, all the files are in a format that Tecplot (<a href="http://www.tecplot.com/">http://www.tecplot.com/</a>) or other visualization software supporting the Tecplot format (e.g. VisIt - <a href="https://wci.llnl.gov/simulation/computer-codes/visit/">https://wci.llnl.gov/simulation/computer-codes/visit/</a>) can read. In these files, the first two lines are the Tecplot headers, after which the data is written out as: the first two columns are grid indices, the next two columns are x and y coordinates, and the final column is the solution. <a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>text</em> to get the solution files in plain text format (which can be read in and visualized in MATLAB for example).</p>
 <p>The following animation was generated from the full grid solution files that were computed by using the combination technique on the sparse grids: </p>
 <div class="image">
-<img src="Solution_SG_full_2DLinearAdvSine_VaryingAdv.gif" alt="Solution_SG_full_2DLinearAdvSine_VaryingAdv.gif"/>
+<img src="Solution_SG_full_2DLinearAdvSineWave.gif" alt="Solution_SG_full_2DLinearAdvSineWave.gif"/>
 </div>
 <p>The following animations show the solution on some of the sparse grids in the combination technique. The simulation was actually carried out on these grids. Note the different grid sizes. </p>
 <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_0.gif" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_0.gif"/>
+<img src="Solution_SG_sg_2DLinearAdvSineWave_00.gif" alt="Solution_SG_sg_2DLinearAdvSineWave_00.gif"/>
 </div>
  <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_2.gif" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_2.gif"/>
+<img src="Solution_SG_sg_2DLinearAdvSineWave_02.gif" alt="Solution_SG_sg_2DLinearAdvSineWave_02.gif"/>
 </div>
  <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_4.gif" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_4.gif"/>
+<img src="Solution_SG_sg_2DLinearAdvSineWave_04.gif" alt="Solution_SG_sg_2DLinearAdvSineWave_04.gif"/>
 </div>
  <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_6.gif" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_6.gif"/>
+<img src="Solution_SG_sg_2DLinearAdvSineWave_06.gif" alt="Solution_SG_sg_2DLinearAdvSineWave_06.gif"/>
 </div>
  <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_8.gif" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_8.gif"/>
-</div>
-<p>In addition to the usual output files, the linear advection physics module writes out the following files:</p>
-<ul>
-<li><b>advection_field_&lt;n&gt;_00000.dat</b>, ..., <b>advection_field_&lt;n&gt;_00020.dat:</b> These files share the same format as the solution output files <b>op_*</b>.dat and contains the advection field \(a_x\left(x,y\right), a_y\left(x,y\right)\).</li>
-</ul>
-<p>The following figure shows the vector plot of the velocity field on some of the sparse grids: </p>
-<div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_0.png" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_0.png"/>
+<img src="Solution_SG_sg_2DLinearAdvSineWave_08.gif" alt="Solution_SG_sg_2DLinearAdvSineWave_08.gif"/>
 </div>
  <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_2.png" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_2.png"/>
+<img src="Solution_SG_sg_2DLinearAdvSineWave_10.gif" alt="Solution_SG_sg_2DLinearAdvSineWave_10.gif"/>
 </div>
- <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_4.png" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_4.png"/>
-</div>
- <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_6.png" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_6.png"/>
-</div>
- <div class="image">
-<img src="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_8.png" alt="Solution_SG_sg_2DLinearAdvSine_VaryingAdv_8.png"/>
-</div>
-<p>Since <a class="el" href="a00202.html#ac92c34fe456d92c694eacd2231f5a7b1">HyPar::ConservationCheck</a> is set to <em>yes</em> in <b>solver.inp</b>, the code checks for conservation errors for each of the sparse grids and prints it to screen, as well as the files <b>conservation_&lt;n&gt;.dat:</b> </p>
-<div class="fragment"><div class="line"> 128    8    1    1 4.0000000000000001E-03  9.5911234683498936E-17 </div>
-</div><!-- fragment --> <div class="fragment"><div class="line">  32   32    1    1 4.0000000000000001E-03  2.7018318138338770E-16 </div>
-</div><!-- fragment --> <div class="fragment"><div class="line">   8  128    1    1 4.0000000000000001E-03  2.6969529040576923E-17 </div>
-</div><!-- fragment --> <div class="fragment"><div class="line">  32   16    1    1 4.0000000000000001E-03  5.3776427755281020E-17 </div>
-</div><!-- fragment --> <div class="fragment"><div class="line">   8   64    1    1 4.0000000000000001E-03  1.8702487475374951E-17 </div>
-</div><!-- fragment --><p> The numbers are: number of grid points in each dimension (<a class="el" href="a00202.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors in each dimension (<a class="el" href="a00205.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00202.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), and conservation error (<a class="el" href="a00202.html#a965363cd64ce50ae17705dfb285dd0ab">HyPar::ConservationError</a>).</p>
+<p>Since the exact solution is available at the final time, the numerical errors are calculated for the recombined full grid solution and reported on screen (see below) as well as <b>errors_fg.dat:</b> </p>
+<div class="fragment"><div class="line"> 256  256    4    2 1.0000000000000000E-03  6.6712770991120907E-09 6.6224854916894270E-09 6.5881052835337073E-09   7.9280580000000000E+00 8.0077719999999992E+00</div>
+</div><!-- fragment --><p> The numbers are: number of grid points in each dimension (<a class="el" href="a00204.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors in each dimension (<a class="el" href="a00207.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00204.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), L1, L2, and L-infinity errors (<a class="el" href="a00204.html#aa40f27cb2afa2db0f0468962be8b3679">HyPar::error</a>), solver wall time (seconds) (i.e., not accounting for initialization, and cleaning up), and total wall time.</p>
+<p>Since <b>write_sg_errors</b> is set to to <b>yes</b> in <b>sparse_grids.inp</b>, (<a class="el" href="a00222.html#a8ccd402501119573dbadc7d6e96c59a2">SparseGridsSimulation::m_print_sg_errors</a>), the errors are also calculated and reported (on screen and in the files <b>errors_&lt;n&gt;.dat</b> ) for each of the sparse grids. Following are the errors corresponding to the sparse grids whose solutions are shown above. </p>
+<div class="fragment"><div class="line"> 256    8    8    1 1.0000000000000000E-03  2.6376248268419753E-02 2.8005801350198228E-02 3.0125005618614028E-02   7.9280580000000000E+00 8.0077719999999992E+00</div>
+</div><!-- fragment --> <div class="fragment"><div class="line">  64   32    4    2 1.0000000000000000E-03  3.1188933610323924E-05 3.1325082776866859E-05 3.1442226877085825E-05   7.9280580000000000E+00 8.0077719999999992E+00</div>
+</div><!-- fragment --> <div class="fragment"><div class="line">  16  128    1    8 1.0000000000000000E-03  9.3858398574624754E-04 9.5398430307683604E-04 9.7025404063626999E-04   7.9280580000000000E+00 8.0077719999999992E+00</div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> 128    8    8    1 1.0000000000000000E-03  2.6376276362520247E-02 2.8005827869790122E-02 3.0125033666052514E-02   7.9280580000000000E+00 8.0077719999999992E+00</div>
+</div><!-- fragment --> <div class="fragment"><div class="line">  32   32    4    2 1.0000000000000000E-03  6.0472502950969087E-05 6.0642817225478580E-05 6.0975007558252565E-05   7.9280580000000000E+00 8.0077719999999992E+00</div>
+</div><!-- fragment --> <div class="fragment"><div class="line">   8  128    1    8 1.0000000000000000E-03  2.6376276362520334E-02 2.8005827869790150E-02 3.0125033666053219E-02   7.9280580000000000E+00 8.0077719999999992E+00</div>
+</div><!-- fragment --><p>Since <a class="el" href="a00204.html#ac92c34fe456d92c694eacd2231f5a7b1">HyPar::ConservationCheck</a> is set to <em>yes</em> in <b>solver.inp</b>, the code checks for conservation errors for each of the sparse grids and prints it to screen, as well as the files <b>conservation_&lt;n&gt;.dat:</b> </p>
+<div class="fragment"><div class="line"> 256    8    8    1 1.0000000000000000E-03  8.8711445532850645E-17 </div>
+</div><!-- fragment --> <div class="fragment"><div class="line">  64   32    4    2 1.0000000000000000E-03  1.6019087098473328E-17 </div>
+</div><!-- fragment --> <div class="fragment"><div class="line">  16  128    1    8 1.0000000000000000E-03  4.1289891563331751E-17 </div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> 128    8    8    1 1.0000000000000000E-03  3.2768693791839187E-18 </div>
+</div><!-- fragment --> <div class="fragment"><div class="line">  32   32    4    2 1.0000000000000000E-03  5.1228552649940085E-18 </div>
+</div><!-- fragment --> <div class="fragment"><div class="line">   8  128    1    8 1.0000000000000000E-03  1.2109183013947479E-17 </div>
+</div><!-- fragment --><p> The numbers are: number of grid points in each dimension (<a class="el" href="a00204.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors in each dimension (<a class="el" href="a00207.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00204.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), and conservation error (<a class="el" href="a00204.html#a965363cd64ce50ae17705dfb285dd0ab">HyPar::ConservationError</a>).</p>
 <p>Expected screen output: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00202.html">HyPar</a> - Parallel (MPI) version with 1 processes</div>
-<div class="line">Compiled with PETSc time integration.</div>
-<div class="line">-- Sparse Grids <a class="code" href="a00217.html">Simulation</a> --</div>
+<div class="fragment"><div class="line"><a class="code" href="a00204.html">HyPar</a> - Parallel (MPI) version with 8 processes</div>
+<div class="line">-- Sparse Grids <a class="code" href="a00219.html">Simulation</a> --</div>
 <div class="line">Sparse grids inputs:</div>
 <div class="line">  log2 of minimum grid size:  3</div>
 <div class="line">  interpolation order:  6</div>
@@ -392,8 +354,8 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 <div class="line">Reading solver inputs from file &quot;solver.inp&quot;.</div>
 <div class="line">  No. of dimensions                          : 2</div>
 <div class="line">  No. of variables                           : 1</div>
-<div class="line">  Domain size                                : 128 128 </div>
-<div class="line">  Processes along each dimension             : 1 1 </div>
+<div class="line">  Domain size                                : 256 256 </div>
+<div class="line">  Processes along each dimension             : 4 2 </div>
 <div class="line">  No. of ghosts pts                          : 3</div>
 <div class="line">  No. of iter.                               : 1000</div>
 <div class="line">  Restart iteration                          : 0</div>
@@ -403,37 +365,39 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 <div class="line">  Interpolation type for hyperbolic term     : components</div>
 <div class="line">  Spatial discretization type   (parabolic ) : nonconservative-1stage</div>
 <div class="line">  Spatial discretization scheme (parabolic ) : 2</div>
-<div class="line">  Time Step                                  : 4.000000E-03</div>
+<div class="line">  Time Step                                  : 1.000000E-03</div>
 <div class="line">  Check for conservation                     : yes</div>
 <div class="line">  Screen output iterations                   : 50</div>
-<div class="line">  File output iterations                     : 50</div>
-<div class="line">  Initial solution file type                 : binary</div>
+<div class="line">  File output iterations                     : 100</div>
+<div class="line">  Initial solution file type                 : ascii</div>
 <div class="line">  Initial solution read mode                 : serial</div>
 <div class="line">  Solution file write mode                   : serial</div>
 <div class="line">  Solution file format                       : tecplot2d</div>
 <div class="line">  Overwrite solution file                    : no</div>
 <div class="line">  Physical model                             : linear-advection-diffusion-reaction</div>
-<div class="line">Processor distribution for full grid <span class="keywordtype">object</span>:    1   1</div>
+<div class="line">Processor distribution for full grid <span class="keywordtype">object</span>:    4   2</div>
 <div class="line">Initializing sparse grids...</div>
 <div class="line">  Number of spatial dimensions: 2</div>
 <div class="line">  Computing sparse grids dimensions...</div>
-<div class="line">  Number of sparse grid domains in combination technique: 9</div>
+<div class="line">  Number of sparse grid domains in combination technique: 11</div>
 <div class="line">  Computing processor decompositions...</div>
 <div class="line">Sparse Grids: Combination technique grids sizes and coefficients are:-</div>
-<div class="line">    0: dim = (  128     8 ),  coeff = +1.00e+00, iproc = (    1     1 )</div>
-<div class="line">    1: dim = (   64    16 ),  coeff = +1.00e+00, iproc = (    1     1 )</div>
-<div class="line">    2: dim = (   32    32 ),  coeff = +1.00e+00, iproc = (    1     1 )</div>
-<div class="line">    3: dim = (   16    64 ),  coeff = +1.00e+00, iproc = (    1     1 )</div>
-<div class="line">    4: dim = (    8   128 ),  coeff = +1.00e+00, iproc = (    1     1 )</div>
-<div class="line">    5: dim = (   64     8 ),  coeff = -1.00e+00, iproc = (    1     1 )</div>
-<div class="line">    6: dim = (   32    16 ),  coeff = -1.00e+00, iproc = (    1     1 )</div>
-<div class="line">    7: dim = (   16    32 ),  coeff = -1.00e+00, iproc = (    1     1 )</div>
-<div class="line">    8: dim = (    8    64 ),  coeff = -1.00e+00, iproc = (    1     1 )</div>
+<div class="line">    0: dim = (  256     8 ),  coeff = +1.00e+00, iproc = (    8     1 )</div>
+<div class="line">    1: dim = (  128    16 ),  coeff = +1.00e+00, iproc = (    8     1 )</div>
+<div class="line">    2: dim = (   64    32 ),  coeff = +1.00e+00, iproc = (    4     2 )</div>
+<div class="line">    3: dim = (   32    64 ),  coeff = +1.00e+00, iproc = (    2     4 )</div>
+<div class="line">    4: dim = (   16   128 ),  coeff = +1.00e+00, iproc = (    1     8 )</div>
+<div class="line">    5: dim = (    8   256 ),  coeff = +1.00e+00, iproc = (    1     8 )</div>
+<div class="line">    6: dim = (  128     8 ),  coeff = -1.00e+00, iproc = (    8     1 )</div>
+<div class="line">    7: dim = (   64    16 ),  coeff = -1.00e+00, iproc = (    8     1 )</div>
+<div class="line">    8: dim = (   32    32 ),  coeff = -1.00e+00, iproc = (    4     2 )</div>
+<div class="line">    9: dim = (   16    64 ),  coeff = -1.00e+00, iproc = (    1     8 )</div>
+<div class="line">   10: dim = (    8   128 ),  coeff = -1.00e+00, iproc = (    1     8 )</div>
 <div class="line">Allocating data arrays for full grid.</div>
 <div class="line">Partitioning domain and allocating data arrays.</div>
-<div class="line">Reading array from binary file initial.inp (Serial mode).</div>
+<div class="line">Reading array from ASCII file initial.inp (Serial mode).</div>
 <div class="line">Volume integral of the initial solution:</div>
-<div class="line"> 0:  -1.7631837830045516E-17</div>
+<div class="line"> 0:  -3.0357660829594124E-18</div>
 <div class="line">Interpolating grid coordinates to sparse grids domain 0.</div>
 <div class="line">Interpolating grid coordinates to sparse grids domain 1.</div>
 <div class="line">Interpolating grid coordinates to sparse grids domain 2.</div>
@@ -443,6 +407,8 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 <div class="line">Interpolating grid coordinates to sparse grids domain 6.</div>
 <div class="line">Interpolating grid coordinates to sparse grids domain 7.</div>
 <div class="line">Interpolating grid coordinates to sparse grids domain 8.</div>
+<div class="line">Interpolating grid coordinates to sparse grids domain 9.</div>
+<div class="line">Interpolating grid coordinates to sparse grids domain 10.</div>
 <div class="line">Domain 0: Reading boundary conditions from boundary.inp.</div>
 <div class="line">  Boundary                       periodic:  Along dimension  0 and face +1</div>
 <div class="line">  Boundary                       periodic:  Along dimension  0 and face -1</div>
@@ -497,606 +463,394 @@ $(document).ready(function(){initNavTree('a00118.html','');});
 <div class="line">  Boundary                       periodic:  Along dimension  1 and face +1</div>
 <div class="line">  Boundary                       periodic:  Along dimension  1 and face -1</div>
 <div class="line">4 boundary condition(s) read.</div>
+<div class="line">Domain 9: Reading boundary conditions from boundary.inp.</div>
+<div class="line">  Boundary                       periodic:  Along dimension  0 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  0 and face -1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  1 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  1 and face -1</div>
+<div class="line">4 boundary condition(s) read.</div>
+<div class="line">Domain 10: Reading boundary conditions from boundary.inp.</div>
+<div class="line">  Boundary                       periodic:  Along dimension  0 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  0 and face -1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  1 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  1 and face -1</div>
+<div class="line">4 boundary condition(s) read.</div>
 <div class="line">Initializing solvers.</div>
 <div class="line">Initializing physics. Model = &quot;linear-advection-diffusion-reaction&quot;</div>
 <div class="line">Reading physical model inputs from file &quot;physics.inp&quot;.</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
-<div class="line">Domain -1: Initializing physics data for model linear-advection-diffusion-reaction</div>
-<div class="line">Reading array from binary file advection.inp (Serial mode).</div>
 <div class="line">Interpolating initial solution to sparse grids domain 0.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 0:</div>
-<div class="line">     0:  -6.7003694259604174E-17</div>
+<div class="line">     0:  -1.4773948666009507E-17</div>
 <div class="line">Interpolating initial solution to sparse grids domain 1.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 1:</div>
-<div class="line">     0:  9.3740119833096713E-16</div>
+<div class="line">     0:  3.3406979439709605E-18</div>
 <div class="line">Interpolating initial solution to sparse grids domain 2.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 2:</div>
-<div class="line">     0:  2.0057740190981832E-16</div>
+<div class="line">     0:  1.4311468676808659E-17</div>
 <div class="line">Interpolating initial solution to sparse grids domain 3.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 3:</div>
-<div class="line">     0:  -1.0386656812411132E-16</div>
+<div class="line">     0:  -6.9388939039072284E-18</div>
 <div class="line">Interpolating initial solution to sparse grids domain 4.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 4:</div>
-<div class="line">     0:  -7.5894152073985310E-18</div>
+<div class="line">     0:  4.0873574869756263E-18</div>
 <div class="line">Interpolating initial solution to sparse grids domain 5.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 5:</div>
-<div class="line">     0:  1.0191500421363742E-16</div>
+<div class="line">     0:  1.3933691982333241E-18</div>
 <div class="line">Interpolating initial solution to sparse grids domain 6.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 6:</div>
-<div class="line">     0:  -1.2359904766334751E-16</div>
+<div class="line">     0:  -3.3203691532368573E-18</div>
 <div class="line">Interpolating initial solution to sparse grids domain 7.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 7:</div>
-<div class="line">     0:  -1.3010426069826053E-18</div>
+<div class="line">     0:  5.7259427234390703E-18</div>
 <div class="line">Interpolating initial solution to sparse grids domain 8.</div>
 <div class="line">  Volume integral of the initial solution on sparse grids domain 8:</div>
-<div class="line">     0:  -2.7321894746634712E-17</div>
+<div class="line">     0:  -9.9746599868666408E-18</div>
+<div class="line">Interpolating initial solution to sparse grids domain 9.</div>
+<div class="line">  Volume integral of the initial solution on sparse grids domain 9:</div>
+<div class="line">     0:  -8.3009228830921433E-19</div>
+<div class="line">Interpolating initial solution to sparse grids domain 10.</div>
+<div class="line">  Volume integral of the initial solution on sparse grids domain 10:</div>
+<div class="line">     0:  3.7947076036992655E-19</div>
 <div class="line">Setting up time integration.</div>
 <div class="line">Solving in time (from 0 to 1000 iterations)</div>
-<div class="line">Writing solution file advection_field_0_00000.dat.</div>
-<div class="line">Writing solution file advection_field_1_00000.dat.</div>
-<div class="line">Writing solution file advection_field_2_00000.dat.</div>
-<div class="line">Writing solution file advection_field_3_00000.dat.</div>
-<div class="line">Writing solution file advection_field_4_00000.dat.</div>
-<div class="line">Writing solution file advection_field_5_00000.dat.</div>
-<div class="line">Writing solution file advection_field_6_00000.dat.</div>
-<div class="line">Writing solution file advection_field_7_00000.dat.</div>
-<div class="line">Writing solution file advection_field_8_00000.dat.</div>
-<div class="line">Writing solution file op_sg_0_00000.dat.</div>
-<div class="line">Writing solution file op_sg_1_00000.dat.</div>
-<div class="line">Writing solution file op_sg_2_00000.dat.</div>
-<div class="line">Writing solution file op_sg_3_00000.dat.</div>
-<div class="line">Writing solution file op_sg_4_00000.dat.</div>
-<div class="line">Writing solution file op_sg_5_00000.dat.</div>
-<div class="line">Writing solution file op_sg_6_00000.dat.</div>
-<div class="line">Writing solution file op_sg_7_00000.dat.</div>
-<div class="line">Writing solution file op_sg_8_00000.dat.</div>
+<div class="line">Writing solution file op_sg_00_00000.dat.</div>
+<div class="line">Writing solution file op_sg_01_00000.dat.</div>
+<div class="line">Writing solution file op_sg_02_00000.dat.</div>
+<div class="line">Writing solution file op_sg_03_00000.dat.</div>
+<div class="line">Writing solution file op_sg_04_00000.dat.</div>
+<div class="line">Writing solution file op_sg_05_00000.dat.</div>
+<div class="line">Writing solution file op_sg_06_00000.dat.</div>
+<div class="line">Writing solution file op_sg_07_00000.dat.</div>
+<div class="line">Writing solution file op_sg_08_00000.dat.</div>
+<div class="line">Writing solution file op_sg_09_00000.dat.</div>
+<div class="line">Writing solution file op_sg_10_00000.dat.</div>
 <div class="line">Writing solution file op_fg_00000.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:      50,  Time: 2.000e-01</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 2.2241E-02</div>
-<div class="line">  Conservation loss: 1.1032E-15</div>
+<div class="line">Iteration:      50,  Time: 5.000e-02</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4395E-03</div>
+<div class="line">  Conservation loss: 3.1745E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00001.dat.</div>
-<div class="line">Writing solution file advection_field_1_00001.dat.</div>
-<div class="line">Writing solution file advection_field_2_00001.dat.</div>
-<div class="line">Writing solution file advection_field_3_00001.dat.</div>
-<div class="line">Writing solution file advection_field_4_00001.dat.</div>
-<div class="line">Writing solution file advection_field_5_00001.dat.</div>
-<div class="line">Writing solution file advection_field_6_00001.dat.</div>
-<div class="line">Writing solution file advection_field_7_00001.dat.</div>
-<div class="line">Writing solution file advection_field_8_00001.dat.</div>
-<div class="line">Writing solution file op_sg_0_00001.dat.</div>
-<div class="line">Writing solution file op_sg_1_00001.dat.</div>
-<div class="line">Writing solution file op_sg_2_00001.dat.</div>
-<div class="line">Writing solution file op_sg_3_00001.dat.</div>
-<div class="line">Writing solution file op_sg_4_00001.dat.</div>
-<div class="line">Writing solution file op_sg_5_00001.dat.</div>
-<div class="line">Writing solution file op_sg_6_00001.dat.</div>
-<div class="line">Writing solution file op_sg_7_00001.dat.</div>
-<div class="line">Writing solution file op_sg_8_00001.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     100,  Time: 1.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4374E-03</div>
+<div class="line">  Conservation loss: 3.0372E-17</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00001.dat.</div>
+<div class="line">Writing solution file op_sg_01_00001.dat.</div>
+<div class="line">Writing solution file op_sg_02_00001.dat.</div>
+<div class="line">Writing solution file op_sg_03_00001.dat.</div>
+<div class="line">Writing solution file op_sg_04_00001.dat.</div>
+<div class="line">Writing solution file op_sg_05_00001.dat.</div>
+<div class="line">Writing solution file op_sg_06_00001.dat.</div>
+<div class="line">Writing solution file op_sg_07_00001.dat.</div>
+<div class="line">Writing solution file op_sg_08_00001.dat.</div>
+<div class="line">Writing solution file op_sg_09_00001.dat.</div>
+<div class="line">Writing solution file op_sg_10_00001.dat.</div>
 <div class="line">Writing solution file op_fg_00001.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     100,  Time: 4.000e-01</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 1.5906E-02</div>
-<div class="line">  Conservation loss: 1.0999E-15</div>
+<div class="line">Iteration:     150,  Time: 1.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4352E-03</div>
+<div class="line">  Conservation loss: 2.8991E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00002.dat.</div>
-<div class="line">Writing solution file advection_field_1_00002.dat.</div>
-<div class="line">Writing solution file advection_field_2_00002.dat.</div>
-<div class="line">Writing solution file advection_field_3_00002.dat.</div>
-<div class="line">Writing solution file advection_field_4_00002.dat.</div>
-<div class="line">Writing solution file advection_field_5_00002.dat.</div>
-<div class="line">Writing solution file advection_field_6_00002.dat.</div>
-<div class="line">Writing solution file advection_field_7_00002.dat.</div>
-<div class="line">Writing solution file advection_field_8_00002.dat.</div>
-<div class="line">Writing solution file op_sg_0_00002.dat.</div>
-<div class="line">Writing solution file op_sg_1_00002.dat.</div>
-<div class="line">Writing solution file op_sg_2_00002.dat.</div>
-<div class="line">Writing solution file op_sg_3_00002.dat.</div>
-<div class="line">Writing solution file op_sg_4_00002.dat.</div>
-<div class="line">Writing solution file op_sg_5_00002.dat.</div>
-<div class="line">Writing solution file op_sg_6_00002.dat.</div>
-<div class="line">Writing solution file op_sg_7_00002.dat.</div>
-<div class="line">Writing solution file op_sg_8_00002.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     200,  Time: 2.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4330E-03</div>
+<div class="line">  Conservation loss: 5.3338E-17</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00002.dat.</div>
+<div class="line">Writing solution file op_sg_01_00002.dat.</div>
+<div class="line">Writing solution file op_sg_02_00002.dat.</div>
+<div class="line">Writing solution file op_sg_03_00002.dat.</div>
+<div class="line">Writing solution file op_sg_04_00002.dat.</div>
+<div class="line">Writing solution file op_sg_05_00002.dat.</div>
+<div class="line">Writing solution file op_sg_06_00002.dat.</div>
+<div class="line">Writing solution file op_sg_07_00002.dat.</div>
+<div class="line">Writing solution file op_sg_08_00002.dat.</div>
+<div class="line">Writing solution file op_sg_09_00002.dat.</div>
+<div class="line">Writing solution file op_sg_10_00002.dat.</div>
 <div class="line">Writing solution file op_fg_00002.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     150,  Time: 6.000e-01</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 1.0442E-02</div>
-<div class="line">  Conservation loss: 9.5038E-16</div>
+<div class="line">Iteration:     250,  Time: 2.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4309E-03</div>
+<div class="line">  Conservation loss: 3.3490E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00003.dat.</div>
-<div class="line">Writing solution file advection_field_1_00003.dat.</div>
-<div class="line">Writing solution file advection_field_2_00003.dat.</div>
-<div class="line">Writing solution file advection_field_3_00003.dat.</div>
-<div class="line">Writing solution file advection_field_4_00003.dat.</div>
-<div class="line">Writing solution file advection_field_5_00003.dat.</div>
-<div class="line">Writing solution file advection_field_6_00003.dat.</div>
-<div class="line">Writing solution file advection_field_7_00003.dat.</div>
-<div class="line">Writing solution file advection_field_8_00003.dat.</div>
-<div class="line">Writing solution file op_sg_0_00003.dat.</div>
-<div class="line">Writing solution file op_sg_1_00003.dat.</div>
-<div class="line">Writing solution file op_sg_2_00003.dat.</div>
-<div class="line">Writing solution file op_sg_3_00003.dat.</div>
-<div class="line">Writing solution file op_sg_4_00003.dat.</div>
-<div class="line">Writing solution file op_sg_5_00003.dat.</div>
-<div class="line">Writing solution file op_sg_6_00003.dat.</div>
-<div class="line">Writing solution file op_sg_7_00003.dat.</div>
-<div class="line">Writing solution file op_sg_8_00003.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     300,  Time: 3.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4287E-03</div>
+<div class="line">  Conservation loss: 5.3844E-17</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00003.dat.</div>
+<div class="line">Writing solution file op_sg_01_00003.dat.</div>
+<div class="line">Writing solution file op_sg_02_00003.dat.</div>
+<div class="line">Writing solution file op_sg_03_00003.dat.</div>
+<div class="line">Writing solution file op_sg_04_00003.dat.</div>
+<div class="line">Writing solution file op_sg_05_00003.dat.</div>
+<div class="line">Writing solution file op_sg_06_00003.dat.</div>
+<div class="line">Writing solution file op_sg_07_00003.dat.</div>
+<div class="line">Writing solution file op_sg_08_00003.dat.</div>
+<div class="line">Writing solution file op_sg_09_00003.dat.</div>
+<div class="line">Writing solution file op_sg_10_00003.dat.</div>
 <div class="line">Writing solution file op_fg_00003.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     200,  Time: 8.000e-01</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 7.7374E-03</div>
-<div class="line">  Conservation loss: 9.7977E-16</div>
+<div class="line">Iteration:     350,  Time: 3.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4266E-03</div>
+<div class="line">  Conservation loss: 8.3815E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00004.dat.</div>
-<div class="line">Writing solution file advection_field_1_00004.dat.</div>
-<div class="line">Writing solution file advection_field_2_00004.dat.</div>
-<div class="line">Writing solution file advection_field_3_00004.dat.</div>
-<div class="line">Writing solution file advection_field_4_00004.dat.</div>
-<div class="line">Writing solution file advection_field_5_00004.dat.</div>
-<div class="line">Writing solution file advection_field_6_00004.dat.</div>
-<div class="line">Writing solution file advection_field_7_00004.dat.</div>
-<div class="line">Writing solution file advection_field_8_00004.dat.</div>
-<div class="line">Writing solution file op_sg_0_00004.dat.</div>
-<div class="line">Writing solution file op_sg_1_00004.dat.</div>
-<div class="line">Writing solution file op_sg_2_00004.dat.</div>
-<div class="line">Writing solution file op_sg_3_00004.dat.</div>
-<div class="line">Writing solution file op_sg_4_00004.dat.</div>
-<div class="line">Writing solution file op_sg_5_00004.dat.</div>
-<div class="line">Writing solution file op_sg_6_00004.dat.</div>
-<div class="line">Writing solution file op_sg_7_00004.dat.</div>
-<div class="line">Writing solution file op_sg_8_00004.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     400,  Time: 4.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4244E-03</div>
+<div class="line">  Conservation loss: 7.5006E-17</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00004.dat.</div>
+<div class="line">Writing solution file op_sg_01_00004.dat.</div>
+<div class="line">Writing solution file op_sg_02_00004.dat.</div>
+<div class="line">Writing solution file op_sg_03_00004.dat.</div>
+<div class="line">Writing solution file op_sg_04_00004.dat.</div>
+<div class="line">Writing solution file op_sg_05_00004.dat.</div>
+<div class="line">Writing solution file op_sg_06_00004.dat.</div>
+<div class="line">Writing solution file op_sg_07_00004.dat.</div>
+<div class="line">Writing solution file op_sg_08_00004.dat.</div>
+<div class="line">Writing solution file op_sg_09_00004.dat.</div>
+<div class="line">Writing solution file op_sg_10_00004.dat.</div>
 <div class="line">Writing solution file op_fg_00004.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     250,  Time: 1.000e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 6.3623E-03</div>
-<div class="line">  Conservation loss: 1.1215E-15</div>
+<div class="line">Iteration:     450,  Time: 4.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4223E-03</div>
+<div class="line">  Conservation loss: 3.7017E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00005.dat.</div>
-<div class="line">Writing solution file advection_field_1_00005.dat.</div>
-<div class="line">Writing solution file advection_field_2_00005.dat.</div>
-<div class="line">Writing solution file advection_field_3_00005.dat.</div>
-<div class="line">Writing solution file advection_field_4_00005.dat.</div>
-<div class="line">Writing solution file advection_field_5_00005.dat.</div>
-<div class="line">Writing solution file advection_field_6_00005.dat.</div>
-<div class="line">Writing solution file advection_field_7_00005.dat.</div>
-<div class="line">Writing solution file advection_field_8_00005.dat.</div>
-<div class="line">Writing solution file op_sg_0_00005.dat.</div>
-<div class="line">Writing solution file op_sg_1_00005.dat.</div>
-<div class="line">Writing solution file op_sg_2_00005.dat.</div>
-<div class="line">Writing solution file op_sg_3_00005.dat.</div>
-<div class="line">Writing solution file op_sg_4_00005.dat.</div>
-<div class="line">Writing solution file op_sg_5_00005.dat.</div>
-<div class="line">Writing solution file op_sg_6_00005.dat.</div>
-<div class="line">Writing solution file op_sg_7_00005.dat.</div>
-<div class="line">Writing solution file op_sg_8_00005.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     500,  Time: 5.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4202E-03</div>
+<div class="line">  Conservation loss: 8.2794E-17</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00005.dat.</div>
+<div class="line">Writing solution file op_sg_01_00005.dat.</div>
+<div class="line">Writing solution file op_sg_02_00005.dat.</div>
+<div class="line">Writing solution file op_sg_03_00005.dat.</div>
+<div class="line">Writing solution file op_sg_04_00005.dat.</div>
+<div class="line">Writing solution file op_sg_05_00005.dat.</div>
+<div class="line">Writing solution file op_sg_06_00005.dat.</div>
+<div class="line">Writing solution file op_sg_07_00005.dat.</div>
+<div class="line">Writing solution file op_sg_08_00005.dat.</div>
+<div class="line">Writing solution file op_sg_09_00005.dat.</div>
+<div class="line">Writing solution file op_sg_10_00005.dat.</div>
 <div class="line">Writing solution file op_fg_00005.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     300,  Time: 1.200e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 4.6742E-03</div>
-<div class="line">  Conservation loss: 1.0754E-15</div>
+<div class="line">Iteration:     550,  Time: 5.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4180E-03</div>
+<div class="line">  Conservation loss: 6.2312E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00006.dat.</div>
-<div class="line">Writing solution file advection_field_1_00006.dat.</div>
-<div class="line">Writing solution file advection_field_2_00006.dat.</div>
-<div class="line">Writing solution file advection_field_3_00006.dat.</div>
-<div class="line">Writing solution file advection_field_4_00006.dat.</div>
-<div class="line">Writing solution file advection_field_5_00006.dat.</div>
-<div class="line">Writing solution file advection_field_6_00006.dat.</div>
-<div class="line">Writing solution file advection_field_7_00006.dat.</div>
-<div class="line">Writing solution file advection_field_8_00006.dat.</div>
-<div class="line">Writing solution file op_sg_0_00006.dat.</div>
-<div class="line">Writing solution file op_sg_1_00006.dat.</div>
-<div class="line">Writing solution file op_sg_2_00006.dat.</div>
-<div class="line">Writing solution file op_sg_3_00006.dat.</div>
-<div class="line">Writing solution file op_sg_4_00006.dat.</div>
-<div class="line">Writing solution file op_sg_5_00006.dat.</div>
-<div class="line">Writing solution file op_sg_6_00006.dat.</div>
-<div class="line">Writing solution file op_sg_7_00006.dat.</div>
-<div class="line">Writing solution file op_sg_8_00006.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     600,  Time: 6.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4159E-03</div>
+<div class="line">  Conservation loss: 5.7194E-17</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00006.dat.</div>
+<div class="line">Writing solution file op_sg_01_00006.dat.</div>
+<div class="line">Writing solution file op_sg_02_00006.dat.</div>
+<div class="line">Writing solution file op_sg_03_00006.dat.</div>
+<div class="line">Writing solution file op_sg_04_00006.dat.</div>
+<div class="line">Writing solution file op_sg_05_00006.dat.</div>
+<div class="line">Writing solution file op_sg_06_00006.dat.</div>
+<div class="line">Writing solution file op_sg_07_00006.dat.</div>
+<div class="line">Writing solution file op_sg_08_00006.dat.</div>
+<div class="line">Writing solution file op_sg_09_00006.dat.</div>
+<div class="line">Writing solution file op_sg_10_00006.dat.</div>
 <div class="line">Writing solution file op_fg_00006.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     350,  Time: 1.400e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 3.3827E-03</div>
-<div class="line">  Conservation loss: 1.0024E-15</div>
+<div class="line">Iteration:     650,  Time: 6.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4138E-03</div>
+<div class="line">  Conservation loss: 7.9814E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00007.dat.</div>
-<div class="line">Writing solution file advection_field_1_00007.dat.</div>
-<div class="line">Writing solution file advection_field_2_00007.dat.</div>
-<div class="line">Writing solution file advection_field_3_00007.dat.</div>
-<div class="line">Writing solution file advection_field_4_00007.dat.</div>
-<div class="line">Writing solution file advection_field_5_00007.dat.</div>
-<div class="line">Writing solution file advection_field_6_00007.dat.</div>
-<div class="line">Writing solution file advection_field_7_00007.dat.</div>
-<div class="line">Writing solution file advection_field_8_00007.dat.</div>
-<div class="line">Writing solution file op_sg_0_00007.dat.</div>
-<div class="line">Writing solution file op_sg_1_00007.dat.</div>
-<div class="line">Writing solution file op_sg_2_00007.dat.</div>
-<div class="line">Writing solution file op_sg_3_00007.dat.</div>
-<div class="line">Writing solution file op_sg_4_00007.dat.</div>
-<div class="line">Writing solution file op_sg_5_00007.dat.</div>
-<div class="line">Writing solution file op_sg_6_00007.dat.</div>
-<div class="line">Writing solution file op_sg_7_00007.dat.</div>
-<div class="line">Writing solution file op_sg_8_00007.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     700,  Time: 7.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4117E-03</div>
+<div class="line">  Conservation loss: 1.1450E-16</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00007.dat.</div>
+<div class="line">Writing solution file op_sg_01_00007.dat.</div>
+<div class="line">Writing solution file op_sg_02_00007.dat.</div>
+<div class="line">Writing solution file op_sg_03_00007.dat.</div>
+<div class="line">Writing solution file op_sg_04_00007.dat.</div>
+<div class="line">Writing solution file op_sg_05_00007.dat.</div>
+<div class="line">Writing solution file op_sg_06_00007.dat.</div>
+<div class="line">Writing solution file op_sg_07_00007.dat.</div>
+<div class="line">Writing solution file op_sg_08_00007.dat.</div>
+<div class="line">Writing solution file op_sg_09_00007.dat.</div>
+<div class="line">Writing solution file op_sg_10_00007.dat.</div>
 <div class="line">Writing solution file op_fg_00007.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     400,  Time: 1.600e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 2.7570E-03</div>
-<div class="line">  Conservation loss: 1.0048E-15</div>
+<div class="line">Iteration:     750,  Time: 7.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4096E-03</div>
+<div class="line">  Conservation loss: 9.1644E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00008.dat.</div>
-<div class="line">Writing solution file advection_field_1_00008.dat.</div>
-<div class="line">Writing solution file advection_field_2_00008.dat.</div>
-<div class="line">Writing solution file advection_field_3_00008.dat.</div>
-<div class="line">Writing solution file advection_field_4_00008.dat.</div>
-<div class="line">Writing solution file advection_field_5_00008.dat.</div>
-<div class="line">Writing solution file advection_field_6_00008.dat.</div>
-<div class="line">Writing solution file advection_field_7_00008.dat.</div>
-<div class="line">Writing solution file advection_field_8_00008.dat.</div>
-<div class="line">Writing solution file op_sg_0_00008.dat.</div>
-<div class="line">Writing solution file op_sg_1_00008.dat.</div>
-<div class="line">Writing solution file op_sg_2_00008.dat.</div>
-<div class="line">Writing solution file op_sg_3_00008.dat.</div>
-<div class="line">Writing solution file op_sg_4_00008.dat.</div>
-<div class="line">Writing solution file op_sg_5_00008.dat.</div>
-<div class="line">Writing solution file op_sg_6_00008.dat.</div>
-<div class="line">Writing solution file op_sg_7_00008.dat.</div>
-<div class="line">Writing solution file op_sg_8_00008.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     800,  Time: 8.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4075E-03</div>
+<div class="line">  Conservation loss: 1.1078E-16</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00008.dat.</div>
+<div class="line">Writing solution file op_sg_01_00008.dat.</div>
+<div class="line">Writing solution file op_sg_02_00008.dat.</div>
+<div class="line">Writing solution file op_sg_03_00008.dat.</div>
+<div class="line">Writing solution file op_sg_04_00008.dat.</div>
+<div class="line">Writing solution file op_sg_05_00008.dat.</div>
+<div class="line">Writing solution file op_sg_06_00008.dat.</div>
+<div class="line">Writing solution file op_sg_07_00008.dat.</div>
+<div class="line">Writing solution file op_sg_08_00008.dat.</div>
+<div class="line">Writing solution file op_sg_09_00008.dat.</div>
+<div class="line">Writing solution file op_sg_10_00008.dat.</div>
 <div class="line">Writing solution file op_fg_00008.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     450,  Time: 1.800e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 2.1329E-03</div>
-<div class="line">  Conservation loss: 9.1568E-16</div>
+<div class="line">Iteration:     850,  Time: 8.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4054E-03</div>
+<div class="line">  Conservation loss: 9.4853E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00009.dat.</div>
-<div class="line">Writing solution file advection_field_1_00009.dat.</div>
-<div class="line">Writing solution file advection_field_2_00009.dat.</div>
-<div class="line">Writing solution file advection_field_3_00009.dat.</div>
-<div class="line">Writing solution file advection_field_4_00009.dat.</div>
-<div class="line">Writing solution file advection_field_5_00009.dat.</div>
-<div class="line">Writing solution file advection_field_6_00009.dat.</div>
-<div class="line">Writing solution file advection_field_7_00009.dat.</div>
-<div class="line">Writing solution file advection_field_8_00009.dat.</div>
-<div class="line">Writing solution file op_sg_0_00009.dat.</div>
-<div class="line">Writing solution file op_sg_1_00009.dat.</div>
-<div class="line">Writing solution file op_sg_2_00009.dat.</div>
-<div class="line">Writing solution file op_sg_3_00009.dat.</div>
-<div class="line">Writing solution file op_sg_4_00009.dat.</div>
-<div class="line">Writing solution file op_sg_5_00009.dat.</div>
-<div class="line">Writing solution file op_sg_6_00009.dat.</div>
-<div class="line">Writing solution file op_sg_7_00009.dat.</div>
-<div class="line">Writing solution file op_sg_8_00009.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:     900,  Time: 9.000e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4033E-03</div>
+<div class="line">  Conservation loss: 9.8213E-17</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00009.dat.</div>
+<div class="line">Writing solution file op_sg_01_00009.dat.</div>
+<div class="line">Writing solution file op_sg_02_00009.dat.</div>
+<div class="line">Writing solution file op_sg_03_00009.dat.</div>
+<div class="line">Writing solution file op_sg_04_00009.dat.</div>
+<div class="line">Writing solution file op_sg_05_00009.dat.</div>
+<div class="line">Writing solution file op_sg_06_00009.dat.</div>
+<div class="line">Writing solution file op_sg_07_00009.dat.</div>
+<div class="line">Writing solution file op_sg_08_00009.dat.</div>
+<div class="line">Writing solution file op_sg_09_00009.dat.</div>
+<div class="line">Writing solution file op_sg_10_00009.dat.</div>
 <div class="line">Writing solution file op_fg_00009.dat.</div>
 <div class="line">--</div>
-<div class="line">Iteration:     500,  Time: 2.000e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 1.6837E-03</div>
-<div class="line">  Conservation loss: 1.0634E-15</div>
+<div class="line">Iteration:     950,  Time: 9.500e-01</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.4012E-03</div>
+<div class="line">  Conservation loss: 8.7880E-17</div>
 <div class="line">--</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00010.dat.</div>
-<div class="line">Writing solution file advection_field_1_00010.dat.</div>
-<div class="line">Writing solution file advection_field_2_00010.dat.</div>
-<div class="line">Writing solution file advection_field_3_00010.dat.</div>
-<div class="line">Writing solution file advection_field_4_00010.dat.</div>
-<div class="line">Writing solution file advection_field_5_00010.dat.</div>
-<div class="line">Writing solution file advection_field_6_00010.dat.</div>
-<div class="line">Writing solution file advection_field_7_00010.dat.</div>
-<div class="line">Writing solution file advection_field_8_00010.dat.</div>
-<div class="line">Writing solution file op_sg_0_00010.dat.</div>
-<div class="line">Writing solution file op_sg_1_00010.dat.</div>
-<div class="line">Writing solution file op_sg_2_00010.dat.</div>
-<div class="line">Writing solution file op_sg_3_00010.dat.</div>
-<div class="line">Writing solution file op_sg_4_00010.dat.</div>
-<div class="line">Writing solution file op_sg_5_00010.dat.</div>
-<div class="line">Writing solution file op_sg_6_00010.dat.</div>
-<div class="line">Writing solution file op_sg_7_00010.dat.</div>
-<div class="line">Writing solution file op_sg_8_00010.dat.</div>
+<div class="line">--</div>
+<div class="line">Iteration:    1000,  Time: 1.000e+00</div>
+<div class="line">  Max CFL: 1.280E-01,  Max Diff. No.: 0.000E+00,    Norm: 4.3991E-03</div>
+<div class="line">  Conservation loss: 1.0675E-16</div>
+<div class="line">--</div>
+<div class="line"></div>
+<div class="line">Writing solution file op_sg_00_00010.dat.</div>
+<div class="line">Writing solution file op_sg_01_00010.dat.</div>
+<div class="line">Writing solution file op_sg_02_00010.dat.</div>
+<div class="line">Writing solution file op_sg_03_00010.dat.</div>
+<div class="line">Writing solution file op_sg_04_00010.dat.</div>
+<div class="line">Writing solution file op_sg_05_00010.dat.</div>
+<div class="line">Writing solution file op_sg_06_00010.dat.</div>
+<div class="line">Writing solution file op_sg_07_00010.dat.</div>
+<div class="line">Writing solution file op_sg_08_00010.dat.</div>
+<div class="line">Writing solution file op_sg_09_00010.dat.</div>
+<div class="line">Writing solution file op_sg_10_00010.dat.</div>
 <div class="line">Writing solution file op_fg_00010.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     550,  Time: 2.200e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 1.3778E-03</div>
-<div class="line">  Conservation loss: 1.0364E-15</div>
-<div class="line">--</div>
+<div class="line">Completed time integration (Final time: 1.000000).</div>
 <div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00011.dat.</div>
-<div class="line">Writing solution file advection_field_1_00011.dat.</div>
-<div class="line">Writing solution file advection_field_2_00011.dat.</div>
-<div class="line">Writing solution file advection_field_3_00011.dat.</div>
-<div class="line">Writing solution file advection_field_4_00011.dat.</div>
-<div class="line">Writing solution file advection_field_5_00011.dat.</div>
-<div class="line">Writing solution file advection_field_6_00011.dat.</div>
-<div class="line">Writing solution file advection_field_7_00011.dat.</div>
-<div class="line">Writing solution file advection_field_8_00011.dat.</div>
-<div class="line">Writing solution file op_sg_0_00011.dat.</div>
-<div class="line">Writing solution file op_sg_1_00011.dat.</div>
-<div class="line">Writing solution file op_sg_2_00011.dat.</div>
-<div class="line">Writing solution file op_sg_3_00011.dat.</div>
-<div class="line">Writing solution file op_sg_4_00011.dat.</div>
-<div class="line">Writing solution file op_sg_5_00011.dat.</div>
-<div class="line">Writing solution file op_sg_6_00011.dat.</div>
-<div class="line">Writing solution file op_sg_7_00011.dat.</div>
-<div class="line">Writing solution file op_sg_8_00011.dat.</div>
-<div class="line">Writing solution file op_fg_00011.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     600,  Time: 2.400e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 1.0731E-03</div>
-<div class="line">  Conservation loss: 1.1319E-15</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00012.dat.</div>
-<div class="line">Writing solution file advection_field_1_00012.dat.</div>
-<div class="line">Writing solution file advection_field_2_00012.dat.</div>
-<div class="line">Writing solution file advection_field_3_00012.dat.</div>
-<div class="line">Writing solution file advection_field_4_00012.dat.</div>
-<div class="line">Writing solution file advection_field_5_00012.dat.</div>
-<div class="line">Writing solution file advection_field_6_00012.dat.</div>
-<div class="line">Writing solution file advection_field_7_00012.dat.</div>
-<div class="line">Writing solution file advection_field_8_00012.dat.</div>
-<div class="line">Writing solution file op_sg_0_00012.dat.</div>
-<div class="line">Writing solution file op_sg_1_00012.dat.</div>
-<div class="line">Writing solution file op_sg_2_00012.dat.</div>
-<div class="line">Writing solution file op_sg_3_00012.dat.</div>
-<div class="line">Writing solution file op_sg_4_00012.dat.</div>
-<div class="line">Writing solution file op_sg_5_00012.dat.</div>
-<div class="line">Writing solution file op_sg_6_00012.dat.</div>
-<div class="line">Writing solution file op_sg_7_00012.dat.</div>
-<div class="line">Writing solution file op_sg_8_00012.dat.</div>
-<div class="line">Writing solution file op_fg_00012.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     650,  Time: 2.600e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 8.2563E-04</div>
-<div class="line">  Conservation loss: 9.8764E-16</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00013.dat.</div>
-<div class="line">Writing solution file advection_field_1_00013.dat.</div>
-<div class="line">Writing solution file advection_field_2_00013.dat.</div>
-<div class="line">Writing solution file advection_field_3_00013.dat.</div>
-<div class="line">Writing solution file advection_field_4_00013.dat.</div>
-<div class="line">Writing solution file advection_field_5_00013.dat.</div>
-<div class="line">Writing solution file advection_field_6_00013.dat.</div>
-<div class="line">Writing solution file advection_field_7_00013.dat.</div>
-<div class="line">Writing solution file advection_field_8_00013.dat.</div>
-<div class="line">Writing solution file op_sg_0_00013.dat.</div>
-<div class="line">Writing solution file op_sg_1_00013.dat.</div>
-<div class="line">Writing solution file op_sg_2_00013.dat.</div>
-<div class="line">Writing solution file op_sg_3_00013.dat.</div>
-<div class="line">Writing solution file op_sg_4_00013.dat.</div>
-<div class="line">Writing solution file op_sg_5_00013.dat.</div>
-<div class="line">Writing solution file op_sg_6_00013.dat.</div>
-<div class="line">Writing solution file op_sg_7_00013.dat.</div>
-<div class="line">Writing solution file op_sg_8_00013.dat.</div>
-<div class="line">Writing solution file op_fg_00013.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     700,  Time: 2.800e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 6.7015E-04</div>
-<div class="line">  Conservation loss: 1.0517E-15</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00014.dat.</div>
-<div class="line">Writing solution file advection_field_1_00014.dat.</div>
-<div class="line">Writing solution file advection_field_2_00014.dat.</div>
-<div class="line">Writing solution file advection_field_3_00014.dat.</div>
-<div class="line">Writing solution file advection_field_4_00014.dat.</div>
-<div class="line">Writing solution file advection_field_5_00014.dat.</div>
-<div class="line">Writing solution file advection_field_6_00014.dat.</div>
-<div class="line">Writing solution file advection_field_7_00014.dat.</div>
-<div class="line">Writing solution file advection_field_8_00014.dat.</div>
-<div class="line">Writing solution file op_sg_0_00014.dat.</div>
-<div class="line">Writing solution file op_sg_1_00014.dat.</div>
-<div class="line">Writing solution file op_sg_2_00014.dat.</div>
-<div class="line">Writing solution file op_sg_3_00014.dat.</div>
-<div class="line">Writing solution file op_sg_4_00014.dat.</div>
-<div class="line">Writing solution file op_sg_5_00014.dat.</div>
-<div class="line">Writing solution file op_sg_6_00014.dat.</div>
-<div class="line">Writing solution file op_sg_7_00014.dat.</div>
-<div class="line">Writing solution file op_sg_8_00014.dat.</div>
-<div class="line">Writing solution file op_fg_00014.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     750,  Time: 3.000e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 5.5489E-04</div>
-<div class="line">  Conservation loss: 9.8038E-16</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00015.dat.</div>
-<div class="line">Writing solution file advection_field_1_00015.dat.</div>
-<div class="line">Writing solution file advection_field_2_00015.dat.</div>
-<div class="line">Writing solution file advection_field_3_00015.dat.</div>
-<div class="line">Writing solution file advection_field_4_00015.dat.</div>
-<div class="line">Writing solution file advection_field_5_00015.dat.</div>
-<div class="line">Writing solution file advection_field_6_00015.dat.</div>
-<div class="line">Writing solution file advection_field_7_00015.dat.</div>
-<div class="line">Writing solution file advection_field_8_00015.dat.</div>
-<div class="line">Writing solution file op_sg_0_00015.dat.</div>
-<div class="line">Writing solution file op_sg_1_00015.dat.</div>
-<div class="line">Writing solution file op_sg_2_00015.dat.</div>
-<div class="line">Writing solution file op_sg_3_00015.dat.</div>
-<div class="line">Writing solution file op_sg_4_00015.dat.</div>
-<div class="line">Writing solution file op_sg_5_00015.dat.</div>
-<div class="line">Writing solution file op_sg_6_00015.dat.</div>
-<div class="line">Writing solution file op_sg_7_00015.dat.</div>
-<div class="line">Writing solution file op_sg_8_00015.dat.</div>
-<div class="line">Writing solution file op_fg_00015.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     800,  Time: 3.200e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 4.3893E-04</div>
-<div class="line">  Conservation loss: 1.0627E-15</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00016.dat.</div>
-<div class="line">Writing solution file advection_field_1_00016.dat.</div>
-<div class="line">Writing solution file advection_field_2_00016.dat.</div>
-<div class="line">Writing solution file advection_field_3_00016.dat.</div>
-<div class="line">Writing solution file advection_field_4_00016.dat.</div>
-<div class="line">Writing solution file advection_field_5_00016.dat.</div>
-<div class="line">Writing solution file advection_field_6_00016.dat.</div>
-<div class="line">Writing solution file advection_field_7_00016.dat.</div>
-<div class="line">Writing solution file advection_field_8_00016.dat.</div>
-<div class="line">Writing solution file op_sg_0_00016.dat.</div>
-<div class="line">Writing solution file op_sg_1_00016.dat.</div>
-<div class="line">Writing solution file op_sg_2_00016.dat.</div>
-<div class="line">Writing solution file op_sg_3_00016.dat.</div>
-<div class="line">Writing solution file op_sg_4_00016.dat.</div>
-<div class="line">Writing solution file op_sg_5_00016.dat.</div>
-<div class="line">Writing solution file op_sg_6_00016.dat.</div>
-<div class="line">Writing solution file op_sg_7_00016.dat.</div>
-<div class="line">Writing solution file op_sg_8_00016.dat.</div>
-<div class="line">Writing solution file op_fg_00016.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     850,  Time: 3.400e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 3.5386E-04</div>
-<div class="line">  Conservation loss: 9.9935E-16</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00017.dat.</div>
-<div class="line">Writing solution file advection_field_1_00017.dat.</div>
-<div class="line">Writing solution file advection_field_2_00017.dat.</div>
-<div class="line">Writing solution file advection_field_3_00017.dat.</div>
-<div class="line">Writing solution file advection_field_4_00017.dat.</div>
-<div class="line">Writing solution file advection_field_5_00017.dat.</div>
-<div class="line">Writing solution file advection_field_6_00017.dat.</div>
-<div class="line">Writing solution file advection_field_7_00017.dat.</div>
-<div class="line">Writing solution file advection_field_8_00017.dat.</div>
-<div class="line">Writing solution file op_sg_0_00017.dat.</div>
-<div class="line">Writing solution file op_sg_1_00017.dat.</div>
-<div class="line">Writing solution file op_sg_2_00017.dat.</div>
-<div class="line">Writing solution file op_sg_3_00017.dat.</div>
-<div class="line">Writing solution file op_sg_4_00017.dat.</div>
-<div class="line">Writing solution file op_sg_5_00017.dat.</div>
-<div class="line">Writing solution file op_sg_6_00017.dat.</div>
-<div class="line">Writing solution file op_sg_7_00017.dat.</div>
-<div class="line">Writing solution file op_sg_8_00017.dat.</div>
-<div class="line">Writing solution file op_fg_00017.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     900,  Time: 3.600e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 2.9575E-04</div>
-<div class="line">  Conservation loss: 1.1153E-15</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00018.dat.</div>
-<div class="line">Writing solution file advection_field_1_00018.dat.</div>
-<div class="line">Writing solution file advection_field_2_00018.dat.</div>
-<div class="line">Writing solution file advection_field_3_00018.dat.</div>
-<div class="line">Writing solution file advection_field_4_00018.dat.</div>
-<div class="line">Writing solution file advection_field_5_00018.dat.</div>
-<div class="line">Writing solution file advection_field_6_00018.dat.</div>
-<div class="line">Writing solution file advection_field_7_00018.dat.</div>
-<div class="line">Writing solution file advection_field_8_00018.dat.</div>
-<div class="line">Writing solution file op_sg_0_00018.dat.</div>
-<div class="line">Writing solution file op_sg_1_00018.dat.</div>
-<div class="line">Writing solution file op_sg_2_00018.dat.</div>
-<div class="line">Writing solution file op_sg_3_00018.dat.</div>
-<div class="line">Writing solution file op_sg_4_00018.dat.</div>
-<div class="line">Writing solution file op_sg_5_00018.dat.</div>
-<div class="line">Writing solution file op_sg_6_00018.dat.</div>
-<div class="line">Writing solution file op_sg_7_00018.dat.</div>
-<div class="line">Writing solution file op_sg_8_00018.dat.</div>
-<div class="line">Writing solution file op_fg_00018.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:     950,  Time: 3.800e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 2.4308E-04</div>
-<div class="line">  Conservation loss: 9.8256E-16</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00019.dat.</div>
-<div class="line">Writing solution file advection_field_1_00019.dat.</div>
-<div class="line">Writing solution file advection_field_2_00019.dat.</div>
-<div class="line">Writing solution file advection_field_3_00019.dat.</div>
-<div class="line">Writing solution file advection_field_4_00019.dat.</div>
-<div class="line">Writing solution file advection_field_5_00019.dat.</div>
-<div class="line">Writing solution file advection_field_6_00019.dat.</div>
-<div class="line">Writing solution file advection_field_7_00019.dat.</div>
-<div class="line">Writing solution file advection_field_8_00019.dat.</div>
-<div class="line">Writing solution file op_sg_0_00019.dat.</div>
-<div class="line">Writing solution file op_sg_1_00019.dat.</div>
-<div class="line">Writing solution file op_sg_2_00019.dat.</div>
-<div class="line">Writing solution file op_sg_3_00019.dat.</div>
-<div class="line">Writing solution file op_sg_4_00019.dat.</div>
-<div class="line">Writing solution file op_sg_5_00019.dat.</div>
-<div class="line">Writing solution file op_sg_6_00019.dat.</div>
-<div class="line">Writing solution file op_sg_7_00019.dat.</div>
-<div class="line">Writing solution file op_sg_8_00019.dat.</div>
-<div class="line">Writing solution file op_fg_00019.dat.</div>
-<div class="line">--</div>
-<div class="line">Iteration:    1000,  Time: 4.000e+00</div>
-<div class="line">  Max CFL: 3.196E-02,  Max Diff. No.: 0.000E+00,    Norm: 2.0336E-04</div>
-<div class="line">  Conservation loss: 1.0652E-15</div>
-<div class="line">--</div>
-<div class="line"></div>
-<div class="line">Writing solution file advection_field_0_00020.dat.</div>
-<div class="line">Writing solution file advection_field_1_00020.dat.</div>
-<div class="line">Writing solution file advection_field_2_00020.dat.</div>
-<div class="line">Writing solution file advection_field_3_00020.dat.</div>
-<div class="line">Writing solution file advection_field_4_00020.dat.</div>
-<div class="line">Writing solution file advection_field_5_00020.dat.</div>
-<div class="line">Writing solution file advection_field_6_00020.dat.</div>
-<div class="line">Writing solution file advection_field_7_00020.dat.</div>
-<div class="line">Writing solution file advection_field_8_00020.dat.</div>
-<div class="line">Writing solution file op_sg_0_00020.dat.</div>
-<div class="line">Writing solution file op_sg_1_00020.dat.</div>
-<div class="line">Writing solution file op_sg_2_00020.dat.</div>
-<div class="line">Writing solution file op_sg_3_00020.dat.</div>
-<div class="line">Writing solution file op_sg_4_00020.dat.</div>
-<div class="line">Writing solution file op_sg_5_00020.dat.</div>
-<div class="line">Writing solution file op_sg_6_00020.dat.</div>
-<div class="line">Writing solution file op_sg_7_00020.dat.</div>
-<div class="line">Writing solution file op_sg_8_00020.dat.</div>
-<div class="line">Writing solution file op_fg_00020.dat.</div>
-<div class="line">Completed time integration (Final time: 4.000000).</div>
-<div class="line"></div>
+<div class="line">Reading array from ASCII file exact.inp (Serial mode).</div>
+<div class="line">Computed errors for sparse grids domain 0:</div>
+<div class="line">  L1   Error: 2.6376248268419753E-02</div>
+<div class="line">  L2   Error: 2.8005801350198228E-02</div>
+<div class="line">  Linf Error: 3.0125005618614028E-02</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    9.5911234683498936E-17</div>
+<div class="line">    8.8711445532850645E-17</div>
 <div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 1:</div>
+<div class="line">  L1   Error: 9.3858398574626239E-04</div>
+<div class="line">  L2   Error: 9.5398430307685892E-04</div>
+<div class="line">  Linf Error: 9.7025404063649573E-04</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    9.6971042307103517E-16</div>
+<div class="line">    3.8574542162450880E-18</div>
 <div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 2:</div>
+<div class="line">  L1   Error: 3.1188933610323924E-05</div>
+<div class="line">  L2   Error: 3.1325082776866859E-05</div>
+<div class="line">  Linf Error: 3.1442226877085825E-05</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    2.7018318138338770E-16</div>
+<div class="line">    1.6019087098473328E-17</div>
 <div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 3:</div>
+<div class="line">  L1   Error: 3.1188933610474899E-05</div>
+<div class="line">  L2   Error: 3.1325082776993623E-05</div>
+<div class="line">  Linf Error: 3.1442226877197335E-05</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    5.5402731014009277E-17</div>
+<div class="line">    2.9246353602796482E-17</div>
 <div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 4:</div>
+<div class="line">  L1   Error: 9.3858398574624754E-04</div>
+<div class="line">  L2   Error: 9.5398430307683604E-04</div>
+<div class="line">  Linf Error: 9.7025404063626999E-04</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    2.6969529040576923E-17</div>
+<div class="line">    4.1289891563331751E-17</div>
 <div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 5:</div>
+<div class="line">  L1   Error: 2.6376248268419823E-02</div>
+<div class="line">  L2   Error: 2.8005801350198232E-02</div>
+<div class="line">  Linf Error: 3.0125005618614146E-02</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    2.9438799488412659E-16</div>
+<div class="line">    1.2635190474192395E-17</div>
 <div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 6:</div>
+<div class="line">  L1   Error: 2.6376276362520247E-02</div>
+<div class="line">  L2   Error: 2.8005827869790122E-02</div>
+<div class="line">  Linf Error: 3.0125033666052514E-02</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    5.3776427755281020E-17</div>
+<div class="line">    3.2768693791839187E-18</div>
 <div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 7:</div>
+<div class="line">  L1   Error: 9.3950556319721259E-04</div>
+<div class="line">  L2   Error: 9.5489335950862432E-04</div>
+<div class="line">  Linf Error: 9.7117757306017802E-04</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    1.3595895242968226E-16</div>
+<div class="line">    1.8637820149446781E-17</div>
 <div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 8:</div>
+<div class="line">  L1   Error: 6.0472502950969087E-05</div>
+<div class="line">  L2   Error: 6.0642817225478580E-05</div>
+<div class="line">  Linf Error: 6.0975007558252565E-05</div>
 <div class="line">Conservation Errors:</div>
-<div class="line">    1.8702487475374951E-17</div>
+<div class="line">    5.1228552649940085E-18</div>
 <div class="line"></div>
-<div class="line">Solver runtime (in seconds): 2.6698212999999999E+01</div>
-<div class="line">Total  runtime (in seconds): 2.6852226999999999E+01</div>
+<div class="line">Computed errors for sparse grids domain 9:</div>
+<div class="line">  L1   Error: 9.3950556319733619E-04</div>
+<div class="line">  L2   Error: 9.5489335950872754E-04</div>
+<div class="line">  Linf Error: 9.7117757306029089E-04</div>
+<div class="line">Conservation Errors:</div>
+<div class="line">    1.7448878713438587E-18</div>
+<div class="line"></div>
+<div class="line">Computed errors for sparse grids domain 10:</div>
+<div class="line">  L1   Error: 2.6376276362520334E-02</div>
+<div class="line">  L2   Error: 2.8005827869790150E-02</div>
+<div class="line">  Linf Error: 3.0125033666053219E-02</div>
+<div class="line">Conservation Errors:</div>
+<div class="line">    1.2109183013947479E-17</div>
+<div class="line"></div>
+<div class="line">Computed errors for full grid solution:</div>
+<div class="line">  L1   Error: 6.6712770991120907E-09</div>
+<div class="line">  L2   Error: 6.6224854916894270E-09</div>
+<div class="line">  Linf Error: 6.5881052835337073E-09</div>
+<div class="line">Solver runtime (in seconds): 7.9280580000000000E+00</div>
+<div class="line">Total  runtime (in seconds): 8.0077719999999992E+00</div>
 <div class="line">Deallocating arrays.</div>
 <div class="line">Finished.</div>
 </div><!-- fragment --> </div></div><!-- contents -->

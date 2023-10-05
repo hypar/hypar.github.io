@@ -1,5 +1,5 @@
 var a00543 =
 [
-    [ "Numa2DRusanovFlux", "a00543.html#a750ca6c2b55e37b525a4066c1aea2e04", null ],
-    [ "Numa2DRusanovLinearFlux", "a00543.html#aef4ac089e0f667b98fc2306118d7f9c2", null ]
+    [ "Numa2DFlux", "a00543.html#a6a672aa8b32d8ff139204f56c11c725e", null ],
+    [ "Numa2DStiffFlux", "a00543.html#a6c56b9f36babefae799e469d7f9036df", null ]
 ];

@@ -1,9 +1,4 @@
 var a00533 =
 [
-    [ "gpuNavierStokes3DSourceFunction", "a00533.html#aa1eae9459e393d304a4c1ef6823ec8b1", null ],
-    [ "gpuNavierStokes3DSourceUpwind", "a00533.html#aabf78d5773c5d8675bca6669e8609b4a", null ],
-    [ "gpuNavierStokes3DSource_grav_kernel", "a00533.html#a589c65c4aa910f1da21110d656382c9b", null ],
-    [ "gpuNavierStokes3DSourceFunction_kernel", "a00533.html#a7e4e3673e60e59287ab11a0daa4815b3", null ],
-    [ "gpuNavierStokes3DSourceUpwind_kernel", "a00533.html#a00e29bb5aded1230eceaa154b025b63b", null ],
-    [ "gpuNavierStokes3DSource", "a00533.html#af452ebb46f2c393c7a4dbb6919529039", null ]
+    [ "NavierStokes3DParabolicFunction", "a00533.html#a0287cd0f282a3b9d500baef01ae54ca2", null ]
 ];

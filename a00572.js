@@ -1,6 +1,4 @@
 var a00572 =
 [
-    [ "ShallowWater2DSourceFunction1", "a00572.html#a4d5b3f3e933170ce53af12d19ba4ef01", null ],
-    [ "ShallowWater2DSourceFunction2", "a00572.html#a5ed617f0405e97ed489c4843d482e692", null ],
-    [ "ShallowWater2DSource", "a00572.html#a40d3a942960d07b188d08a46bec76768", null ]
+    [ "ShallowWater2DFlux", "a00572.html#a402c3b0d9e533619a23dc5a06a0c0bd3", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: 1D Euler Equations - Sod Shock Tube (Time Windowed DMD)</title>
+<title>HyPar: 1D Linear Advection - Discontinuous Waves (Time Windowed DMD)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,104 +106,122 @@ $(document).ready(function(){initNavTree('a00132.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">1D Euler Equations - Sod Shock Tube (Time Windowed DMD) </div>  </div>
+<div class="title">1D Linear Advection - Discontinuous Waves (Time Windowed DMD) </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>See <a class="el" href="a00016.html">1D Euler Equations - Sod Shock Tube</a> to familiarize yourself with this case.</p>
-<h2>Description: </h2>
-<p>Location: <b>hypar/Examples/1D/Euler1D/SodShockTube_libROM_DMD_Train</b> (This directory contains all the input files needed to run this case.)</p>
-<p>Governing equations: 1D Euler equations (<a class="el" href="a00251.html" title="1D Euler Equations (inviscid, compressible flows) ">euler1d.h</a>)</p>
-<p>Reduced Order Modeling: This example trains a DMD object and then predicts the solution using the DMD at the same times that the actual <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solution is written at.</p>
+<div class="textblock"><p>See <a class="el" href="a00010.html">1D Linear Advection - Discontinuous Waves</a> to familiarize yourself with this case.</p>
+<p>Location: <b>hypar/Examples/1D/LinearAdvection/DiscontinuousWaves_libROM_DMD_Train</b> (This directory contains all the input files needed to run this case.)</p>
+<p>Governing equations: 1D Linear Advection Equation (<a class="el" href="a00206.html" title="Linear Advection-Diffusion-Reaction model. ">linearadr.h</a>)</p>
+<p>Reduced Order Modeling: This example trains time-windowed DMD objects and then predicts the solution using the DMDs at the same times that the actual <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solution is written at.</p>
 <p>References:</p>
 <ul>
-<li>G.A. Sod, "A survey of several finite difference methods 
-    for systems of nonlinear hyperbolic conservation laws," J. Comput. Phys., 27, 1 (1978).</li>
-<li>C. B. Laney, "Computational Gasdynamics", Cambridge University Press, 1998.</li>
+<li>Ghosh, D., Baeder, J. D., "Compact Reconstruction Schemes with 
+    Weighted ENO Limiting for Hyperbolic Conservation Laws", SIAM Journal on Scientific Computing, 34 (3), 2012, A1678–A1706</li>
 </ul>
-<p>Domain: \(0 \le x \le 1.0\), <em>"extrapolate"</em> (<a class="el" href="a00233.html#a53da239cc00a2394faa0637dad4d0a0c">_EXTRAPOLATE_</a>) boundary conditions</p>
-<p>Initial Solution:</p>
-<ul>
-<li>\( 0 \le x &lt; 0.5\): \(\rho = 1, u = 0, p = 1\)</li>
-<li>\( 0.5 \le x \le 1\): \(\rho = 0.125, u = 0, p = 0.1\)</li>
-</ul>
+<p>Domain: \(-1 \le x \le 1\), <em>"periodic"</em> (<a class="el" href="a00235.html#a65ffa4253dee762c65092abcf04ecdee">_PERIODIC_</a>) boundary conditions</p>
+<p>Initial solution: </p>
+<p class="formulaDsp">
+\begin{equation} u\left(x,0\right) = \left\{\begin{array}{lc} \exp\left(-\log\left(2\right)\frac{\left(x+7\right)^2}{0.0009}\right) &amp; -0.8\le x \le -0.6 \\ 1 &amp; -0.4\le x \le -0.2 \\ 1 - \left|10\left(x-0.1\right)\right| &amp; 0\le x \le 0.2 \\ \sqrt{1-100\left(x-0.5\right)^2} &amp; 0.4\le x \le 0.6 \\ 0 &amp; {\rm otherwise} \end{array}\right. \end{equation}
+</p>
 <p>Numerical Method:</p>
 <ul>
-<li>Spatial discretization (hyperbolic): Characteristic-based 5th order WENO (<a class="el" href="a00191.html#abf3b032fdc8c0e84b86909db9e0b93c3" title="5th order WENO reconstruction (characteristic-based) on a uniform grid ">Interp1PrimFifthOrderWENOChar()</a>)</li>
-<li>Time integration: RK4 (<a class="el" href="a00265.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00197.html#a47de987716954223b3c26bb842b21bf8">_RK_44_</a>)</li>
+<li>Spatial discretization (hyperbolic): 5th order CRWENO (<a class="el" href="a00193.html#a33b1e24c12129941b0027a83c543a654" title="5th order CRWENO reconstruction (component-wise) on a uniform grid ">Interp1PrimFifthOrderCRWENO()</a>)</li>
+<li>Time integration: SSPRK3 (<a class="el" href="a00269.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00199.html#a97e67bb275d6a2dad40b184579559f82">_RK_SSP3_</a>)</li>
 </ul>
 <p>Reduced Order Modeling:</p>
 <ul>
-<li>Mode: train (<a class="el" href="a00203.html#af323868d7651bdfd2c34ea076cfaceb7">libROMInterface::m_mode</a>, <a class="el" href="a00241.html#a8d7f058ce028038a98a49ad28176390e">_ROM_MODE_TRAIN_</a>)</li>
-<li>Component Mode: monolithic (<a class="el" href="a00203.html#a3686e11d6075a6fd586dca42ab16b214">libROMInterface::m_comp_mode</a>, <a class="el" href="a00241.html#acdb79f8c89bd3e1e867e510b5546fad1">_ROM_COMP_MODE_MONOLITHIC_</a>)</li>
-<li>Type: Dynamic Mode Decomposition (DMD) with time windowing (<a class="el" href="a00203.html#ac18cb5a4597cfb6fb48127fc2156a48d">libROMInterface::m_rom_type</a>)</li>
-<li>Latent subspace dimension: 8 (<a class="el" href="a00192.html#a46716d3f1d496cde83a07bd6706d4da0">DMDROMObject::m_rdim</a>)</li>
-<li>Number of samples per time window: 40 (<a class="el" href="a00192.html#aa98d3c307daac6fc078ab36af24b6020">DMDROMObject::m_num_window_samples</a>)</li>
+<li>Mode: train (<a class="el" href="a00205.html#af323868d7651bdfd2c34ea076cfaceb7">libROMInterface::m_mode</a>, <a class="el" href="a00243.html#a8d7f058ce028038a98a49ad28176390e">_ROM_MODE_TRAIN_</a>)</li>
+<li>Component Mode: monolithic (<a class="el" href="a00205.html#a3686e11d6075a6fd586dca42ab16b214">libROMInterface::m_comp_mode</a>, <a class="el" href="a00243.html#acdb79f8c89bd3e1e867e510b5546fad1">_ROM_COMP_MODE_MONOLITHIC_</a>)</li>
+<li>Type: Dynamic Mode Decomposition (DMD) with time windowing (<a class="el" href="a00205.html#ac18cb5a4597cfb6fb48127fc2156a48d">libROMInterface::m_rom_type</a>)</li>
+<li>Latent subspace dimension: 16 (<a class="el" href="a00194.html#a46716d3f1d496cde83a07bd6706d4da0">DMDROMObject::m_rdim</a>)</li>
+<li>Number of samples per time window: 100 (<a class="el" href="a00194.html#aa98d3c307daac6fc078ab36af24b6020">DMDROMObject::m_num_window_samples</a>)</li>
 </ul>
 <h2>Input files required: </h2>
 <p><b>librom.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
-<div class="line">  rdim                8</div>
+<div class="line">  rdim                16</div>
 <div class="line">  sampling_frequency  1</div>
 <div class="line">  mode                train</div>
-<div class="line">  dmd_num_win_samples 40</div>
+<div class="line">  dmd_num_win_samples 100</div>
 <div class="line">end</div>
-</div><!-- fragment --><p><b>solver.inp:</b> </p>
+</div><!-- fragment --><p><b>solver.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
 <div class="line">  ndims             1</div>
-<div class="line">  nvars             3</div>
-<div class="line">  size              201</div>
-<div class="line">  iproc             10</div>
+<div class="line">  nvars             1</div>
+<div class="line">  size              160</div>
+<div class="line">  iproc             4</div>
 <div class="line">  ghost             3</div>
-<div class="line">  n_iter            400</div>
+<div class="line">  n_iter            800</div>
 <div class="line">  time_scheme       rk</div>
-<div class="line">  time_scheme_type  44</div>
-<div class="line">  hyp_space_scheme  weno5</div>
-<div class="line">  hyp_interp_type   characteristic</div>
-<div class="line">  dt                0.0005</div>
-<div class="line">  screen_op_iter    1</div>
-<div class="line">  file_op_iter      50</div>
+<div class="line">  time_scheme_type  ssprk3</div>
+<div class="line">  hyp_space_scheme  crweno5</div>
+<div class="line">  dt                0.0025</div>
+<div class="line">  screen_op_iter    10</div>
+<div class="line">  file_op_iter      16</div>
+<div class="line">  ip_file_type      ascii</div>
 <div class="line">  op_file_format    binary</div>
 <div class="line">  op_overwrite      no</div>
-<div class="line">  model             euler1d</div>
+<div class="line">  model             linear-advection-diffusion-reaction</div>
 <div class="line">end</div>
 </div><!-- fragment --><p><b>boundary.inp</b> </p>
 <div class="fragment"><div class="line">2</div>
-<div class="line">extrapolate      0     1     0     0</div>
-<div class="line">extrapolate      0    -1     0     0</div>
+<div class="line">periodic      0     1     0     0</div>
+<div class="line">periodic      0    -1     0     0</div>
 </div><!-- fragment --><p><b>physics.inp</b> </p>
 <div class="fragment"><div class="line">begin</div>
-<div class="line">  gamma       1.4</div>
-<div class="line">  upwinding   rf-<span class="keywordtype">char</span></div>
+<div class="line">  advection 1.0</div>
 <div class="line">end</div>
-</div><!-- fragment --><p>To generate <b>initial.inp</b>, compile and run the following code in the run directory: </p>
+</div><!-- fragment --><p><b>lusolver.inp</b> (optional) </p>
+<div class="fragment"><div class="line">begin</div>
+<div class="line">  reducedsolvetype  jacobi</div>
+<div class="line">  evaluate_norm     1</div>
+<div class="line">  maxiter           10</div>
+<div class="line">  atol              1e-12</div>
+<div class="line">  rtol              1e-10</div>
+<div class="line">  verbose           0</div>
+<div class="line">end</div>
+</div><!-- fragment --><p><b>weno.inp</b> (optional) </p>
+<div class="fragment"><div class="line">begin</div>
+<div class="line">  mapped        1</div>
+<div class="line">  borges        0</div>
+<div class="line">  yc            0</div>
+<div class="line">  no_limiting   0</div>
+<div class="line">  epsilon       0.000001</div>
+<div class="line">  p             2.0</div>
+<div class="line">  rc            0.3</div>
+<div class="line">  xi            0.001</div>
+<div class="line">end</div>
+</div><!-- fragment --><p>To generate <b>initial.inp</b>, compile and run the following code in the run directory. <b>Note:</b> if the final time is an integer multiple of the time period, the file <b>initial.inp</b> can also be used as the exact solution <b>exact.inp</b> (i.e. create a sym link called <em>exact.inp</em> pointing to <em>initial.inp</em>, or just copy <em>initial.inp</em> to <em>exact.inp</em>). </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00375.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
+<div class="line"><span class="keywordtype">double</span> <a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(<span class="keywordtype">double</span> x)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> (x&lt;0? -x : x);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00380.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(){</div>
 <div class="line">  </div>
-<div class="line">    <span class="keywordtype">int</span> NI=101,ndims=1;</div>
-<div class="line">  FILE *in;</div>
+<div class="line">    <span class="keywordtype">int</span> NI,ndims;</div>
 <div class="line">  <span class="keywordtype">char</span> ip_file_type[50];</div>
 <div class="line">  strcpy(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>);</div>
+<div class="line">  FILE *in;</div>
 <div class="line">  printf(<span class="stringliteral">&quot;Reading file \&quot;solver.inp\&quot;...\n&quot;</span>);</div>
 <div class="line">  in = fopen(<span class="stringliteral">&quot;solver.inp&quot;</span>,<span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (!in) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Input file \&quot;solver.inp\&quot; not found. Default values will be used.\n&quot;</span>);</div>
-<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">  <span class="keywordflow">if</span> (!in) printf(<span class="stringliteral">&quot;Error: Input file \&quot;solver.inp\&quot; not found. Default values will be used.\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">else</span> {</div>
 <div class="line">    <span class="keywordtype">char</span> word[500];</div>
 <div class="line">    fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
 <div class="line">    <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;begin&quot;</span>)){</div>
 <div class="line">      <span class="keywordflow">while</span> (strcmp(word, <span class="stringliteral">&quot;end&quot;</span>)){</div>
 <div class="line">        fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,word);</div>
-<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>))     fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
-<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NI);</div>
+<div class="line">        <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ndims&quot;</span>))             fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;ndims);</div>
+<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;size&quot;</span>))         fscanf(in,<span class="stringliteral">&quot;%d&quot;</span>,&amp;NI);</div>
 <div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(word, <span class="stringliteral">&quot;ip_file_type&quot;</span>)) fscanf(in,<span class="stringliteral">&quot;%s&quot;</span>,ip_file_type);</div>
 <div class="line">      }</div>
-<div class="line">    } <span class="keywordflow">else</span> { </div>
-<div class="line">      printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
-<div class="line">    }</div>
+<div class="line">    } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;Error: Illegal format in solver.inp. Crash and burn!\n&quot;</span>);</div>
 <div class="line">  }</div>
 <div class="line">  fclose(in);</div>
 <div class="line">  <span class="keywordflow">if</span> (ndims != 1) {</div>
@@ -213,599 +231,432 @@ $(document).ready(function(){initNavTree('a00132.html','');});
 <div class="line">    printf(<span class="stringliteral">&quot;Grid:\t\t\t%d\n&quot;</span>,NI);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">int</span> i;</div>
-<div class="line">    <span class="keywordtype">double</span> dx = 1.0 / ((double)(NI-1));</div>
+<div class="line">    <span class="keywordtype">double</span> dx = 2.0 / ((double)NI);</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordtype">double</span> *x, *rho,*rhou,*e;</div>
-<div class="line">    x    = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    rho  = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    rhou = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line">    e    = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    <span class="keywordtype">double</span> *x, *u;</div>
+<div class="line">    x = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line">    u = (<span class="keywordtype">double</span>*) calloc (NI, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++){</div>
-<div class="line">        x[i] = i*dx;</div>
-<div class="line">    <span class="keywordtype">double</span> RHO,U,P;</div>
-<div class="line">    <span class="keywordflow">if</span> (x[i] &lt; 0.5) {</div>
-<div class="line">      RHO = 1.0;</div>
-<div class="line">      U   = 0.0;</div>
-<div class="line">      P   = 1.0;</div>
-<div class="line">    } <span class="keywordflow">else</span> {</div>
-<div class="line">      RHO = 0.125;</div>
-<div class="line">      U   = 0;</div>
-<div class="line">      P   = 0.1;</div>
-<div class="line">    }</div>
-<div class="line">    rho[i]  = RHO;</div>
-<div class="line">    rhou[i] = RHO*U;</div>
-<div class="line">    e[i]    = P/0.4 + 0.5*RHO*U*U;</div>
+<div class="line">        x[i] = -1.0 + i*dx;</div>
+<div class="line">    <span class="keywordflow">if</span>      (x[i] &lt; -0.8)  u[i] = 0.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.6)  u[i] = exp(-log(2.0)*(x[i]+0.7)*(x[i]+0.7)/0.0009);</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.4)  u[i] = 0.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt; -0.2)  u[i] = 1.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0  )  u[i] = 0.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.2)  u[i] = 1.0 - <a class="code" href="a00245.html#adf1be5ccbb7a2522b4f3a64043c72880">absolute</a>(10.0*(x[i]-0.1));</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.4)  u[i] = 0.0;</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (x[i] &lt;  0.6)  u[i] = sqrt(1.0-100*(x[i]-0.5)*(x[i]-0.5));</div>
+<div class="line">    <span class="keywordflow">else</span>                   u[i] = 0.0;</div>
 <div class="line">    }</div>
 <div class="line"></div>
+<div class="line">  FILE *out;</div>
+<div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (!strcmp(ip_file_type,<span class="stringliteral">&quot;ascii&quot;</span>)) {</div>
-<div class="line">    FILE *out;</div>
-<div class="line">      out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
+<div class="line">    printf(<span class="stringliteral">&quot;Writing ASCII initial solution file initial.inp\n&quot;</span>);</div>
+<div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,x[i]);</div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,rho[i]);                     </div>
+<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,u[i]);                       </div>
 <div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,rhou[i]);                        </div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; NI; i++)  fprintf(out,<span class="stringliteral">&quot;%lf &quot;</span>,e[i]);                       </div>
-<div class="line">    fprintf(out,<span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line">      fclose(out);</div>
+<div class="line">    fclose(out);</div>
 <div class="line">  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((!strcmp(ip_file_type,<span class="stringliteral">&quot;binary&quot;</span>)) || (!strcmp(ip_file_type,<span class="stringliteral">&quot;bin&quot;</span>))) {</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Error: Writing binary initial solution file not implemented. &quot;</span>);</div>
-<div class="line">    printf(<span class="stringliteral">&quot;Please choose ip_file_type in solver.inp as \&quot;ascii\&quot;.\n&quot;</span>);</div>
+<div class="line">    printf(<span class="stringliteral">&quot;Writing binary initial solution file initial.inp\n&quot;</span>);</div>
+<div class="line">    out = fopen(<span class="stringliteral">&quot;initial.inp&quot;</span>,<span class="stringliteral">&quot;wb&quot;</span>);</div>
+<div class="line">    fwrite(x,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
+<div class="line">    fwrite(u,<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>),NI,out);</div>
+<div class="line">    fclose(out);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">    free(x);</div>
-<div class="line">    free(rho);</div>
-<div class="line">    free(rhou);</div>
-<div class="line">    free(e);</div>
+<div class="line">    free(u);</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2>Output: </h2>
 <p>After running the code, there should be the following output files:</p>
 <ul>
-<li>9 output files <b>op_00000.bin</b>, <b>op_00001.bin</b>, ... <b>op_00008.bin</b>; these are the <b><a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a></b> solutions<b></b>.</li>
-<li>9 output files <b>op_rom_00000.bin</b>, <b>op_rom_00001.bin</b>, ... <b>op_rom_00008.bin</b>; these are the <b>predicted</b> solutions from the DMD object(s)<b></b>.</li>
+<li>51 output files <b>op_00000.bin</b>, <b>op_00001.bin</b>, ... <b>op_00050.bin</b>; these are the <b><a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a></b> solutions<b></b>.</li>
+<li>51 output files <b>op_rom_00000.bin</b>, <b>op_rom_00001.bin</b>, ... <b>op_rom_00050.bin</b>; these are the <b>predicted</b> solutions from the DMD object(s)<b></b>.</li>
 </ul>
-<p>The first of each of these file sets is the solution at \(t=0\) and the final one is the solution at \(t=2\). Since <a class="el" href="a00202.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, a separate file is written for solutions at each output time. All the files are binary (<a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>binary</em> in <b>solver.inp</b>).</p>
-<p>The provided Python script (<b>plotSolution.py</b>) can be used to generate plots from the binary files that compare the <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> and DMD solutions. It will plot the 3 conserved variables - density, momentum, and energy. Alternatively, <a class="el" href="a00202.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>text</em>, and GNUPlot or something similar can be used to plot the resulting text files.</p>
-<p>The following plot shows the final solution (density) - FOM (full-order model) refers to the <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solution, ROM (reduced-order model) refers to the DMD solution. </p>
+<p>The first of each of these file sets is the solution at \(t=0\) and the final one is the solution at \(t=2\). Since <a class="el" href="a00204.html#a4e93cb107e180ef982b74cef7726b70f">HyPar::op_overwrite</a> is set to <em>no</em> in <b>solver.inp</b>, a separate file is written for solutions at each output time. All the files are binary (<a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> is set to <em>binary</em> in <b>solver.inp</b>).</p>
+<p>The provided Python script (<b><a class="el" href="a00594.html">plotSolution.py</a></b>) can be used to generate plots from the binary files that compare the <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> and DMD solutions. Alternatively, <a class="el" href="a00204.html#a51a3b8c19b86e9e1df5be02b05a6613c">HyPar::op_file_format</a> can be set to <em>text</em>, and GNUPlot or something similar can be used to plot the resulting text files.</p>
+<p>The following plot shows the final solution - FOM (full-order model) refers to the <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solution, ROM (reduced-order model) refers to the DMD solution. </p>
 <div class="image">
-<img src="Solution_1DSodShockTubeROM_DMD.png" alt="Solution_1DSodShockTubeROM_DMD.png"/>
+<img src="Solution_1DLinearAdvDisclibROM_DMD.png" alt="Solution_1DLinearAdvDisclibROM_DMD.png"/>
 </div>
-<p>The L1, L2, and Linf norms of the diff between the <a class="el" href="a00202.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> and ROM solution at the final time are calculated and reported on screen (see below) as well as <b>pde_rom_diff.dat:</b> </p>
-<div class="fragment"><div class="line"> 201   10 5.0000000000000001E-04  5.6218372311378950E-04 2.2766977309887507E-03 1.6120671488108019E-02   8.0859740000000002E+00 8.1111880000000003E+00</div>
-</div><!-- fragment --><p> The numbers are: number of grid points (<a class="el" href="a00202.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors (<a class="el" href="a00205.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00202.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), L1, L2, and L-infinity norms of the diff (<a class="el" href="a00202.html#aaacee284a041d53cf335ae299d5eb929">HyPar::rom_diff_norms</a>), solver wall time (seconds) (i.e., not accounting for initialization, and cleaning up), and total wall time.</p>
-<p>By default, the code will write the trained DMD object(s) to files in a subdirectory (<a class="el" href="a00192.html#a4a2342bcda8d44940111704f8423f38f">DMDROMObject::m_dirname</a> - default value is "DMD"). If the subdirectory does not exist, the code <b>may</b> <b>not</b> report an error (or give some HDF5 file-writing error); the DMD objects will not be written! If the subdirectory exists, several files will exist after the simulation is complete - they are in a format that is readable by libROM.</p>
+<p>The L1, L2, and Linf norms of the diff between the <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> and ROM solution at the final time are calculated and reported on screen (see below) as well as <b>pde_rom_diff.dat:</b> </p>
+<div class="fragment"><div class="line"> 160    4 2.5000000000000001E-03  5.7205961033976573E-03 5.1134497956698138E-03 9.1706092284055997E-03   7.9410959999999999E+00 8.1151900000000001E+00</div>
+</div><!-- fragment --><p> The numbers are: number of grid points (<a class="el" href="a00204.html#aa989ebb755986852177779cdf7bd8c85">HyPar::dim_global</a>), number of processors (<a class="el" href="a00207.html#a0be0f30a83bc3f3d9f6ee3a36bbf2716">MPIVariables::iproc</a>), time step size (<a class="el" href="a00204.html#a03e28be41881b703c836edbfe9b51b17">HyPar::dt</a>), L1, L2, and L-infinity norms of the diff (<a class="el" href="a00204.html#aaacee284a041d53cf335ae299d5eb929">HyPar::rom_diff_norms</a>), solver wall time (seconds) (i.e., not accounting for initialization, and cleaning up), and total wall time.</p>
+<p>By default, the code will write the trained DMD object(s) to files in a subdirectory (<a class="el" href="a00194.html#a4a2342bcda8d44940111704f8423f38f">DMDROMObject::m_dirname</a> - default value is "DMD"). If the subdirectory does not exist, the code <b>may</b> <b>not</b> report an error (or give some HDF5 file-writing error); the DMD objects will not be written! If the subdirectory exists, several files will exist after the simulation is complete - they are in a format that is readable by libROM.</p>
 <p>Expected screen output: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00202.html">HyPar</a> - Parallel (MPI) version with 10 processes</div>
+<div class="fragment"><div class="line"><a class="code" href="a00204.html">HyPar</a> - Parallel (MPI) version with 4 processes</div>
 <div class="line">Compiled with PETSc time integration.</div>
 <div class="line">Allocated simulation <span class="keywordtype">object</span>(s).</div>
 <div class="line">Reading solver inputs from file &quot;solver.inp&quot;.</div>
 <div class="line">  No. of dimensions                          : 1</div>
-<div class="line">  No. of variables                           : 3</div>
-<div class="line">  Domain size                                : 201 </div>
-<div class="line">  Processes along each dimension             : 10 </div>
-<div class="line">  Exact solution domain size                 : 201 </div>
+<div class="line">  No. of variables                           : 1</div>
+<div class="line">  Domain size                                : 160 </div>
+<div class="line">  Processes along each dimension             : 4 </div>
+<div class="line">  Exact solution domain size                 : 160 </div>
 <div class="line">  No. of ghosts pts                          : 3</div>
-<div class="line">  No. of iter.                               : 400</div>
+<div class="line">  No. of iter.                               : 800</div>
 <div class="line">  Restart iteration                          : 0</div>
-<div class="line">  Time integration scheme                    : rk (44)</div>
-<div class="line">  Spatial discretization scheme (hyperbolic) : weno5</div>
+<div class="line">  Time integration scheme                    : rk (ssprk3)</div>
+<div class="line">  Spatial discretization scheme (hyperbolic) : crweno5</div>
 <div class="line">  Split hyperbolic flux term?                : no</div>
 <div class="line">  Interpolation type for hyperbolic term     : characteristic</div>
 <div class="line">  Spatial discretization type   (parabolic ) : nonconservative-1stage</div>
 <div class="line">  Spatial discretization scheme (parabolic ) : 2</div>
-<div class="line">  Time Step                                  : 5.000000E-04</div>
+<div class="line">  Time Step                                  : 2.500000E-03</div>
 <div class="line">  Check for conservation                     : no</div>
-<div class="line">  Screen output iterations                   : 1</div>
-<div class="line">  File output iterations                     : 50</div>
+<div class="line">  Screen output iterations                   : 10</div>
+<div class="line">  File output iterations                     : 16</div>
 <div class="line">  Initial solution file type                 : ascii</div>
 <div class="line">  Initial solution read mode                 : serial</div>
 <div class="line">  Solution file write mode                   : serial</div>
 <div class="line">  Solution file format                       : binary</div>
 <div class="line">  Overwrite solution file                    : no</div>
-<div class="line">  Physical model                             : euler1d</div>
+<div class="line">  Physical model                             : linear-advection-diffusion-reaction</div>
 <div class="line">Partitioning domain and allocating data arrays.</div>
 <div class="line">Reading array from ASCII file initial.inp (Serial mode).</div>
 <div class="line">Volume integral of the initial solution:</div>
-<div class="line"> 0:  5.6312499999999999E-01</div>
-<div class="line"> 1:  0.0000000000000000E+00</div>
-<div class="line"> 2:  1.3762500000000000E+00</div>
+<div class="line"> 0:  5.1835172500000004E-01</div>
 <div class="line">Reading boundary conditions from boundary.inp.</div>
-<div class="line">  Boundary                    extrapolate:  Along dimension  0 and face +1</div>
-<div class="line">  Boundary                    extrapolate:  Along dimension  0 and face -1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  0 and face +1</div>
+<div class="line">  Boundary                       periodic:  Along dimension  0 and face -1</div>
 <div class="line">2 boundary condition(s) read.</div>
 <div class="line">Initializing solvers.</div>
 <div class="line">Reading WENO parameters from weno.inp.</div>
-<div class="line">Initializing physics. Model = &quot;euler1d&quot;</div>
+<div class="line">Initializing physics. Model = &quot;linear-advection-diffusion-reaction&quot;</div>
 <div class="line">Reading physical model inputs from file &quot;physics.inp&quot;.</div>
 <div class="line">Setting up time integration.</div>
 <div class="line">Setting up libROM interface.</div>
 <div class="line">libROM inputs and parameters:</div>
-<div class="line">  reduced model dimensionality:  8</div>
+<div class="line">  reduced model dimensionality:  16</div>
 <div class="line">  sampling frequency:  1</div>
 <div class="line">  mode: train</div>
 <div class="line">  type: DMD</div>
 <div class="line">  save to file: true</div>
-<div class="line">  local vector size: 60</div>
+<div class="line">  local vector size: 40</div>
 <div class="line">libROM DMD inputs:</div>
-<div class="line">  number of samples per window:   40</div>
+<div class="line">  number of samples per window:   100</div>
 <div class="line">  directory name for DMD onjects: DMD</div>
-<div class="line">Solving in time (from 0 to 400 iterations)</div>
+<div class="line">Solving in time (from 0 to 800 iterations)</div>
 <div class="line">Writing solution file op_00000.bin.</div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.000000 (total: 1).</div>
-<div class="line">iter=      1  t=5.000E-04  CFL=1.183E-01  norm=1.3928E-02  wctime: 6.1E-04 (s)  </div>
-<div class="line">iter=      2  t=1.000E-03  CFL=1.407E-01  norm=1.3304E-02  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=      3  t=1.500E-03  CFL=1.617E-01  norm=1.2540E-02  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=      4  t=2.000E-03  CFL=1.756E-01  norm=1.1267E-02  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=      5  t=2.500E-03  CFL=1.848E-01  norm=1.0102E-02  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=      6  t=3.000E-03  CFL=1.912E-01  norm=9.2728E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=      7  t=3.500E-03  CFL=1.956E-01  norm=8.8385E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=      8  t=4.000E-03  CFL=1.983E-01  norm=8.8084E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=      9  t=4.500E-03  CFL=1.996E-01  norm=8.6687E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=     10  t=5.000E-03  CFL=1.999E-01  norm=8.4023E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     11  t=5.500E-03  CFL=1.998E-01  norm=8.1570E-03  wctime: 5.1E-04 (s)  </div>
-<div class="line">iter=     12  t=6.000E-03  CFL=2.010E-01  norm=8.0063E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=     13  t=6.500E-03  CFL=2.055E-01  norm=8.0330E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=     14  t=7.000E-03  CFL=2.080E-01  norm=8.0151E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     15  t=7.500E-03  CFL=2.091E-01  norm=7.8389E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=     16  t=8.000E-03  CFL=2.095E-01  norm=7.6569E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     17  t=8.500E-03  CFL=2.094E-01  norm=7.5528E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=     18  t=9.000E-03  CFL=2.088E-01  norm=7.5441E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     19  t=9.500E-03  CFL=2.079E-01  norm=7.6453E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     20  t=1.000E-02  CFL=2.107E-01  norm=7.6219E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     21  t=1.050E-02  CFL=2.124E-01  norm=7.4669E-03  wctime: 5.4E-04 (s)  </div>
-<div class="line">iter=     22  t=1.100E-02  CFL=2.132E-01  norm=7.3193E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=     23  t=1.150E-02  CFL=2.135E-01  norm=7.2489E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=     24  t=1.200E-02  CFL=2.134E-01  norm=7.3010E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=     25  t=1.250E-02  CFL=2.130E-01  norm=7.3878E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     26  t=1.300E-02  CFL=2.123E-01  norm=7.3133E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     27  t=1.350E-02  CFL=2.136E-01  norm=7.1491E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=     28  t=1.400E-02  CFL=2.146E-01  norm=7.0327E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     29  t=1.450E-02  CFL=2.152E-01  norm=7.0047E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     30  t=1.500E-02  CFL=2.154E-01  norm=7.1079E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=     31  t=1.550E-02  CFL=2.154E-01  norm=7.1552E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     32  t=1.600E-02  CFL=2.152E-01  norm=7.0472E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     33  t=1.650E-02  CFL=2.148E-01  norm=6.9057E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     34  t=1.700E-02  CFL=2.156E-01  norm=6.8315E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     35  t=1.750E-02  CFL=2.162E-01  norm=6.8546E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     36  t=1.800E-02  CFL=2.165E-01  norm=6.9765E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=     37  t=1.850E-02  CFL=2.167E-01  norm=6.9766E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     38  t=1.900E-02  CFL=2.167E-01  norm=6.8460E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=     39  t=1.950E-02  CFL=2.166E-01  norm=6.7252E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     40  t=2.000E-02  CFL=2.164E-01  norm=6.6847E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.020000 (total: 2).</div>
-<div class="line">iter=     41  t=2.050E-02  CFL=2.168E-01  norm=6.7577E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     42  t=2.100E-02  CFL=2.172E-01  norm=6.8630E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=     43  t=2.150E-02  CFL=2.174E-01  norm=6.8159E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     44  t=2.200E-02  CFL=2.175E-01  norm=6.6782E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     45  t=2.250E-02  CFL=2.175E-01  norm=6.5853E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=     46  t=2.300E-02  CFL=2.174E-01  norm=6.5785E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     47  t=2.350E-02  CFL=2.174E-01  norm=6.6914E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=     48  t=2.400E-02  CFL=2.177E-01  norm=6.7629E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     49  t=2.450E-02  CFL=2.179E-01  norm=6.6776E-03  wctime: 5.2E-04 (s)  </div>
-<div class="line">iter=     50  t=2.500E-02  CFL=2.180E-01  norm=6.5471E-03  wctime: 4.3E-04 (s)  </div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.000000 (total: 1).</div>
+<div class="line">iter=     10  t=2.500E-02  CFL=2.000E-01  norm=2.2256E-02  wctime: 3.1E-04 (s)  </div>
 <div class="line">Writing solution file op_00001.bin.</div>
-<div class="line">iter=     51  t=2.550E-02  CFL=2.181E-01  norm=6.4832E-03  wctime: 5.3E-04 (s)  </div>
-<div class="line">iter=     52  t=2.600E-02  CFL=2.180E-01  norm=6.5124E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     53  t=2.650E-02  CFL=2.180E-01  norm=6.6413E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     54  t=2.700E-02  CFL=2.180E-01  norm=6.6649E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     55  t=2.750E-02  CFL=2.182E-01  norm=6.5513E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     56  t=2.800E-02  CFL=2.183E-01  norm=6.4377E-03  wctime: 5.2E-04 (s)  </div>
-<div class="line">iter=     57  t=2.850E-02  CFL=2.184E-01  norm=6.4036E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     58  t=2.900E-02  CFL=2.184E-01  norm=6.4767E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=     59  t=2.950E-02  CFL=2.184E-01  norm=6.5974E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     60  t=3.000E-02  CFL=2.183E-01  norm=6.5714E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     61  t=3.050E-02  CFL=2.184E-01  norm=6.4429E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=     62  t=3.100E-02  CFL=2.185E-01  norm=6.3513E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     63  t=3.150E-02  CFL=2.186E-01  norm=6.3443E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     64  t=3.200E-02  CFL=2.187E-01  norm=6.4562E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     65  t=3.250E-02  CFL=2.187E-01  norm=6.5452E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     66  t=3.300E-02  CFL=2.186E-01  norm=6.4750E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     67  t=3.350E-02  CFL=2.186E-01  norm=6.3469E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     68  t=3.400E-02  CFL=2.186E-01  norm=6.2820E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     69  t=3.450E-02  CFL=2.187E-01  norm=6.3082E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     70  t=3.500E-02  CFL=2.188E-01  norm=6.4425E-03  wctime: 5.1E-04 (s)  </div>
-<div class="line">iter=     71  t=3.550E-02  CFL=2.188E-01  norm=6.4853E-03  wctime: 5.1E-04 (s)  </div>
-<div class="line">iter=     72  t=3.600E-02  CFL=2.188E-01  norm=6.3811E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     73  t=3.650E-02  CFL=2.188E-01  norm=6.2647E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     74  t=3.700E-02  CFL=2.188E-01  norm=6.2260E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     75  t=3.750E-02  CFL=2.188E-01  norm=6.2912E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     76  t=3.800E-02  CFL=2.188E-01  norm=6.4219E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     77  t=3.850E-02  CFL=2.188E-01  norm=6.4134E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     78  t=3.900E-02  CFL=2.189E-01  norm=6.2897E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     79  t=3.950E-02  CFL=2.189E-01  norm=6.1938E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     80  t=4.000E-02  CFL=2.189E-01  norm=6.1825E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.040000 (total: 3).</div>
-<div class="line">iter=     81  t=4.050E-02  CFL=2.189E-01  norm=6.2883E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     82  t=4.100E-02  CFL=2.188E-01  norm=6.3926E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=     83  t=4.150E-02  CFL=2.189E-01  norm=6.3366E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     84  t=4.200E-02  CFL=2.189E-01  norm=6.2077E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     85  t=4.250E-02  CFL=2.189E-01  norm=6.1362E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     86  t=4.300E-02  CFL=2.189E-01  norm=6.1543E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=     87  t=4.350E-02  CFL=2.189E-01  norm=6.2873E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=     88  t=4.400E-02  CFL=2.189E-01  norm=6.3486E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     89  t=4.450E-02  CFL=2.189E-01  norm=6.2553E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=     90  t=4.500E-02  CFL=2.189E-01  norm=6.1349E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     91  t=4.550E-02  CFL=2.189E-01  norm=6.0902E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     92  t=4.600E-02  CFL=2.190E-01  norm=6.1452E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=     93  t=4.650E-02  CFL=2.190E-01  norm=6.2833E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     94  t=4.700E-02  CFL=2.190E-01  norm=6.2949E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     95  t=4.750E-02  CFL=2.190E-01  norm=6.1774E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=     96  t=4.800E-02  CFL=2.190E-01  norm=6.0745E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     97  t=4.850E-02  CFL=2.190E-01  norm=6.0558E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     98  t=4.900E-02  CFL=2.190E-01  norm=6.1502E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=     99  t=4.950E-02  CFL=2.190E-01  norm=6.2693E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    100  t=5.000E-02  CFL=2.190E-01  norm=6.2327E-03  wctime: 4.5E-04 (s)  </div>
+<div class="line">iter=     20  t=5.000E-02  CFL=2.000E-01  norm=2.1583E-02  wctime: 3.0E-04 (s)  </div>
+<div class="line">iter=     30  t=7.500E-02  CFL=2.000E-01  norm=2.1179E-02  wctime: 2.5E-04 (s)  </div>
 <div class="line">Writing solution file op_00002.bin.</div>
-<div class="line">iter=    101  t=5.050E-02  CFL=2.190E-01  norm=6.1057E-03  wctime: 5.1E-04 (s)  </div>
-<div class="line">iter=    102  t=5.100E-02  CFL=2.190E-01  norm=6.0269E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    103  t=5.150E-02  CFL=2.190E-01  norm=6.0361E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    104  t=5.200E-02  CFL=2.190E-01  norm=6.1634E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    105  t=5.250E-02  CFL=2.191E-01  norm=6.2457E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    106  t=5.300E-02  CFL=2.191E-01  norm=6.1680E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    107  t=5.350E-02  CFL=2.191E-01  norm=6.0440E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    108  t=5.400E-02  CFL=2.191E-01  norm=5.9906E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    109  t=5.450E-02  CFL=2.191E-01  norm=6.0322E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    110  t=5.500E-02  CFL=2.191E-01  norm=6.1736E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    111  t=5.550E-02  CFL=2.191E-01  norm=6.2092E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    112  t=5.600E-02  CFL=2.191E-01  norm=6.1020E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    113  t=5.650E-02  CFL=2.191E-01  norm=5.9920E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    114  t=5.700E-02  CFL=2.192E-01  norm=5.9645E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    115  t=5.750E-02  CFL=2.192E-01  norm=6.0444E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    116  t=5.800E-02  CFL=2.192E-01  norm=6.1771E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    117  t=5.850E-02  CFL=2.192E-01  norm=6.1633E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    118  t=5.900E-02  CFL=2.192E-01  norm=6.0397E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    119  t=5.950E-02  CFL=2.192E-01  norm=5.9503E-03  wctime: 5.0E-04 (s)  </div>
-<div class="line">iter=    120  t=6.000E-02  CFL=2.192E-01  norm=5.9483E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.060000 (total: 4).</div>
-<div class="line">iter=    121  t=6.050E-02  CFL=2.192E-01  norm=6.0644E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    122  t=6.100E-02  CFL=2.192E-01  norm=6.1675E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    123  t=6.150E-02  CFL=2.193E-01  norm=6.1089E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    124  t=6.200E-02  CFL=2.193E-01  norm=5.9826E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    125  t=6.250E-02  CFL=2.193E-01  norm=5.9186E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    126  t=6.300E-02  CFL=2.193E-01  norm=5.9463E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    127  t=6.350E-02  CFL=2.193E-01  norm=6.0858E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    128  t=6.400E-02  CFL=2.193E-01  norm=6.1458E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    129  t=6.450E-02  CFL=2.193E-01  norm=6.0515E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    130  t=6.500E-02  CFL=2.193E-01  norm=5.9337E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    131  t=6.550E-02  CFL=2.193E-01  norm=5.8951E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    132  t=6.600E-02  CFL=2.193E-01  norm=5.9579E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    133  t=6.650E-02  CFL=2.194E-01  norm=6.0993E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    134  t=6.700E-02  CFL=2.194E-01  norm=6.1110E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    135  t=6.750E-02  CFL=2.193E-01  norm=5.9943E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    136  t=6.800E-02  CFL=2.193E-01  norm=5.8947E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    137  t=6.850E-02  CFL=2.193E-01  norm=5.8818E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    138  t=6.900E-02  CFL=2.194E-01  norm=5.9821E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    139  t=6.950E-02  CFL=2.194E-01  norm=6.1035E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    140  t=7.000E-02  CFL=2.194E-01  norm=6.0676E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    141  t=7.050E-02  CFL=2.194E-01  norm=5.9413E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    142  t=7.100E-02  CFL=2.194E-01  norm=5.8649E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    143  t=7.150E-02  CFL=2.193E-01  norm=5.8786E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    144  t=7.200E-02  CFL=2.193E-01  norm=6.0094E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    145  t=7.250E-02  CFL=2.193E-01  norm=6.0946E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    146  t=7.300E-02  CFL=2.193E-01  norm=6.0186E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    147  t=7.350E-02  CFL=2.193E-01  norm=5.8957E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    148  t=7.400E-02  CFL=2.193E-01  norm=5.8452E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    149  t=7.450E-02  CFL=2.193E-01  norm=5.8903E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    150  t=7.500E-02  CFL=2.193E-01  norm=6.0345E-03  wctime: 4.4E-04 (s)  </div>
+<div class="line">iter=     40  t=1.000E-01  CFL=2.000E-01  norm=2.0887E-02  wctime: 2.9E-04 (s)  </div>
 <div class="line">Writing solution file op_00003.bin.</div>
-<div class="line">iter=    151  t=7.550E-02  CFL=2.193E-01  norm=6.0738E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    152  t=7.600E-02  CFL=2.193E-01  norm=5.9680E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    153  t=7.650E-02  CFL=2.193E-01  norm=5.8580E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    154  t=7.700E-02  CFL=2.193E-01  norm=5.8327E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    155  t=7.750E-02  CFL=2.193E-01  norm=5.9142E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    156  t=7.800E-02  CFL=2.193E-01  norm=6.0506E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    157  t=7.850E-02  CFL=2.193E-01  norm=6.0420E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    158  t=7.900E-02  CFL=2.193E-01  norm=5.9199E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    159  t=7.950E-02  CFL=2.193E-01  norm=5.8307E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    160  t=8.000E-02  CFL=2.193E-01  norm=5.8307E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.080000 (total: 5).</div>
-<div class="line">iter=    161  t=8.050E-02  CFL=2.193E-01  norm=5.9473E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    162  t=8.100E-02  CFL=2.193E-01  norm=6.0559E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    163  t=8.150E-02  CFL=2.193E-01  norm=6.0020E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    164  t=8.200E-02  CFL=2.193E-01  norm=5.8757E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    165  t=8.250E-02  CFL=2.193E-01  norm=5.8111E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    166  t=8.300E-02  CFL=2.193E-01  norm=5.8394E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    167  t=8.350E-02  CFL=2.193E-01  norm=5.9806E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    168  t=8.400E-02  CFL=2.192E-01  norm=6.0481E-03  wctime: 5.4E-04 (s)  </div>
-<div class="line">iter=    169  t=8.450E-02  CFL=2.192E-01  norm=5.9579E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    170  t=8.500E-02  CFL=2.192E-01  norm=5.8393E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    171  t=8.550E-02  CFL=2.192E-01  norm=5.8004E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    172  t=8.600E-02  CFL=2.192E-01  norm=5.8624E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    173  t=8.650E-02  CFL=2.192E-01  norm=6.0078E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    174  t=8.700E-02  CFL=2.192E-01  norm=6.0268E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    175  t=8.750E-02  CFL=2.192E-01  norm=5.9117E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    176  t=8.800E-02  CFL=2.192E-01  norm=5.8099E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    177  t=8.850E-02  CFL=2.192E-01  norm=5.7963E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    178  t=8.900E-02  CFL=2.192E-01  norm=5.8961E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    179  t=8.950E-02  CFL=2.192E-01  norm=6.0244E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    180  t=9.000E-02  CFL=2.192E-01  norm=5.9951E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    181  t=9.050E-02  CFL=2.193E-01  norm=5.8688E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    182  t=9.100E-02  CFL=2.193E-01  norm=5.7901E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    183  t=9.150E-02  CFL=2.193E-01  norm=5.8026E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    184  t=9.200E-02  CFL=2.193E-01  norm=5.9346E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    185  t=9.250E-02  CFL=2.193E-01  norm=6.0270E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    186  t=9.300E-02  CFL=2.193E-01  norm=5.9545E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    187  t=9.350E-02  CFL=2.193E-01  norm=5.8295E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    188  t=9.400E-02  CFL=2.192E-01  norm=5.7767E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    189  t=9.450E-02  CFL=2.193E-01  norm=5.8211E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    190  t=9.500E-02  CFL=2.193E-01  norm=5.9698E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    191  t=9.550E-02  CFL=2.193E-01  norm=6.0156E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    192  t=9.600E-02  CFL=2.193E-01  norm=5.9107E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    193  t=9.650E-02  CFL=2.193E-01  norm=5.7980E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    194  t=9.700E-02  CFL=2.193E-01  norm=5.7708E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    195  t=9.750E-02  CFL=2.193E-01  norm=5.8525E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    196  t=9.800E-02  CFL=2.192E-01  norm=5.9944E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    197  t=9.850E-02  CFL=2.192E-01  norm=5.9890E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    198  t=9.900E-02  CFL=2.192E-01  norm=5.8653E-03  wctime: 4.2E-04 (s)  </div>
-<div class="line">iter=    199  t=9.950E-02  CFL=2.192E-01  norm=5.7735E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    200  t=1.000E-01  CFL=2.192E-01  norm=5.7725E-03  wctime: 4.3E-04 (s)  </div>
+<div class="line">iter=     50  t=1.250E-01  CFL=2.000E-01  norm=2.0660E-02  wctime: 2.5E-04 (s)  </div>
+<div class="line">iter=     60  t=1.500E-01  CFL=2.000E-01  norm=2.0475E-02  wctime: 2.8E-04 (s)  </div>
 <div class="line">Writing solution file op_00004.bin.</div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.100000 (total: 6).</div>
-<div class="line">iter=    201  t=1.005E-01  CFL=2.192E-01  norm=5.8924E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    202  t=1.010E-01  CFL=2.192E-01  norm=6.0060E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    203  t=1.015E-01  CFL=2.192E-01  norm=5.9524E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    204  t=1.020E-01  CFL=2.192E-01  norm=5.8236E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    205  t=1.025E-01  CFL=2.192E-01  norm=5.7570E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    206  t=1.030E-01  CFL=2.192E-01  norm=5.7854E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    207  t=1.035E-01  CFL=2.192E-01  norm=5.9313E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    208  t=1.040E-01  CFL=2.192E-01  norm=6.0005E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    209  t=1.045E-01  CFL=2.192E-01  norm=5.9077E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    210  t=1.050E-01  CFL=2.192E-01  norm=5.7868E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    211  t=1.055E-01  CFL=2.192E-01  norm=5.7472E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    212  t=1.060E-01  CFL=2.192E-01  norm=5.8124E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    213  t=1.065E-01  CFL=2.192E-01  norm=5.9628E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    214  t=1.070E-01  CFL=2.192E-01  norm=5.9801E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    215  t=1.075E-01  CFL=2.192E-01  norm=5.8614E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    216  t=1.080E-01  CFL=2.192E-01  norm=5.7581E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    217  t=1.085E-01  CFL=2.192E-01  norm=5.7446E-03  wctime: 5.2E-04 (s)  </div>
-<div class="line">iter=    218  t=1.090E-01  CFL=2.192E-01  norm=5.8500E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    219  t=1.095E-01  CFL=2.192E-01  norm=5.9799E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    220  t=1.100E-01  CFL=2.192E-01  norm=5.9455E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    221  t=1.105E-01  CFL=2.192E-01  norm=5.8160E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    222  t=1.110E-01  CFL=2.192E-01  norm=5.7377E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    223  t=1.115E-01  CFL=2.192E-01  norm=5.7530E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    224  t=1.120E-01  CFL=2.192E-01  norm=5.8921E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    225  t=1.125E-01  CFL=2.192E-01  norm=5.9819E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    226  t=1.130E-01  CFL=2.192E-01  norm=5.9028E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    227  t=1.135E-01  CFL=2.192E-01  norm=5.7759E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    228  t=1.140E-01  CFL=2.192E-01  norm=5.7244E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    229  t=1.145E-01  CFL=2.192E-01  norm=5.7742E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    230  t=1.150E-01  CFL=2.192E-01  norm=5.9275E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    231  t=1.155E-01  CFL=2.192E-01  norm=5.9664E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    232  t=1.160E-01  CFL=2.192E-01  norm=5.8555E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    233  t=1.165E-01  CFL=2.192E-01  norm=5.7434E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    234  t=1.170E-01  CFL=2.192E-01  norm=5.7192E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    235  t=1.175E-01  CFL=2.192E-01  norm=5.8097E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    236  t=1.180E-01  CFL=2.192E-01  norm=5.9517E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    237  t=1.185E-01  CFL=2.192E-01  norm=5.9368E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    238  t=1.190E-01  CFL=2.192E-01  norm=5.8086E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    239  t=1.195E-01  CFL=2.192E-01  norm=5.7192E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    240  t=1.200E-01  CFL=2.192E-01  norm=5.7226E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.120000 (total: 7).</div>
-<div class="line">iter=    241  t=1.205E-01  CFL=2.192E-01  norm=5.8515E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    242  t=1.210E-01  CFL=2.192E-01  norm=5.9595E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    243  t=1.215E-01  CFL=2.192E-01  norm=5.8960E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    244  t=1.220E-01  CFL=2.192E-01  norm=5.7660E-03  wctime: 5.0E-04 (s)  </div>
-<div class="line">iter=    245  t=1.225E-01  CFL=2.193E-01  norm=5.7038E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    246  t=1.230E-01  CFL=2.193E-01  norm=5.7397E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    247  t=1.235E-01  CFL=2.193E-01  norm=5.8917E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    248  t=1.240E-01  CFL=2.193E-01  norm=5.9509E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    249  t=1.245E-01  CFL=2.193E-01  norm=5.8495E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    250  t=1.250E-01  CFL=2.193E-01  norm=5.7299E-03  wctime: 4.7E-04 (s)  </div>
+<div class="line">iter=     70  t=1.750E-01  CFL=2.000E-01  norm=2.0320E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">iter=     80  t=2.000E-01  CFL=2.000E-01  norm=2.0187E-02  wctime: 2.5E-04 (s)  </div>
 <div class="line">Writing solution file op_00005.bin.</div>
-<div class="line">iter=    251  t=1.255E-01  CFL=2.192E-01  norm=5.6951E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    252  t=1.260E-01  CFL=2.193E-01  norm=5.7704E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    253  t=1.265E-01  CFL=2.193E-01  norm=5.9208E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    254  t=1.270E-01  CFL=2.193E-01  norm=5.9260E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    255  t=1.275E-01  CFL=2.193E-01  norm=5.8021E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    256  t=1.280E-01  CFL=2.193E-01  norm=5.7032E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    257  t=1.285E-01  CFL=2.193E-01  norm=5.6958E-03  wctime: 5.0E-04 (s)  </div>
-<div class="line">iter=    258  t=1.290E-01  CFL=2.193E-01  norm=5.8120E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    259  t=1.295E-01  CFL=2.193E-01  norm=5.9354E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    260  t=1.300E-01  CFL=2.193E-01  norm=5.8887E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    261  t=1.305E-01  CFL=2.192E-01  norm=5.7570E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    262  t=1.310E-01  CFL=2.193E-01  norm=5.6842E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    263  t=1.315E-01  CFL=2.193E-01  norm=5.7073E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    264  t=1.320E-01  CFL=2.193E-01  norm=5.8542E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    265  t=1.325E-01  CFL=2.193E-01  norm=5.9332E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    266  t=1.330E-01  CFL=2.193E-01  norm=5.8441E-03  wctime: 5.3E-04 (s)  </div>
-<div class="line">iter=    267  t=1.335E-01  CFL=2.193E-01  norm=5.7190E-03  wctime: 5.0E-04 (s)  </div>
-<div class="line">iter=    268  t=1.340E-01  CFL=2.193E-01  norm=5.6739E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    269  t=1.345E-01  CFL=2.193E-01  norm=5.7341E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    270  t=1.350E-01  CFL=2.193E-01  norm=5.8887E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    271  t=1.355E-01  CFL=2.192E-01  norm=5.9141E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    272  t=1.360E-01  CFL=2.192E-01  norm=5.7963E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    273  t=1.365E-01  CFL=2.192E-01  norm=5.6885E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    274  t=1.370E-01  CFL=2.193E-01  norm=5.6709E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    275  t=1.375E-01  CFL=2.193E-01  norm=5.7729E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    276  t=1.380E-01  CFL=2.193E-01  norm=5.9096E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    277  t=1.385E-01  CFL=2.193E-01  norm=5.8816E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    278  t=1.390E-01  CFL=2.193E-01  norm=5.7509E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    279  t=1.395E-01  CFL=2.193E-01  norm=5.6678E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    280  t=1.400E-01  CFL=2.192E-01  norm=5.6789E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.140000 (total: 8).</div>
-<div class="line">iter=    281  t=1.405E-01  CFL=2.192E-01  norm=5.8167E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    282  t=1.410E-01  CFL=2.192E-01  norm=5.9140E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    283  t=1.415E-01  CFL=2.192E-01  norm=5.8391E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    284  t=1.420E-01  CFL=2.192E-01  norm=5.7099E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    285  t=1.425E-01  CFL=2.192E-01  norm=5.6546E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    286  t=1.430E-01  CFL=2.192E-01  norm=5.7003E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    287  t=1.435E-01  CFL=2.192E-01  norm=5.8556E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    288  t=1.440E-01  CFL=2.192E-01  norm=5.9019E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    289  t=1.445E-01  CFL=2.192E-01  norm=5.7932E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    290  t=1.450E-01  CFL=2.192E-01  norm=5.6776E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    291  t=1.455E-01  CFL=2.192E-01  norm=5.6496E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    292  t=1.460E-01  CFL=2.192E-01  norm=5.7358E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    293  t=1.465E-01  CFL=2.192E-01  norm=5.8824E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    294  t=1.470E-01  CFL=2.192E-01  norm=5.8743E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    295  t=1.475E-01  CFL=2.192E-01  norm=5.7467E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    296  t=1.480E-01  CFL=2.192E-01  norm=5.6537E-03  wctime: 5.0E-04 (s)  </div>
-<div class="line">iter=    297  t=1.485E-01  CFL=2.192E-01  norm=5.6536E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    298  t=1.490E-01  CFL=2.192E-01  norm=5.7797E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    299  t=1.495E-01  CFL=2.192E-01  norm=5.8944E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    300  t=1.500E-01  CFL=2.192E-01  norm=5.8364E-03  wctime: 4.4E-04 (s)  </div>
+<div class="line">iter=     90  t=2.250E-01  CFL=2.000E-01  norm=2.0071E-02  wctime: 2.8E-04 (s)  </div>
 <div class="line">Writing solution file op_00006.bin.</div>
-<div class="line">iter=    301  t=1.505E-01  CFL=2.192E-01  norm=5.7050E-03  wctime: 5.3E-04 (s)  </div>
-<div class="line">iter=    302  t=1.510E-01  CFL=2.192E-01  norm=5.6387E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    303  t=1.515E-01  CFL=2.192E-01  norm=5.6703E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    304  t=1.520E-01  CFL=2.192E-01  norm=5.8219E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    305  t=1.525E-01  CFL=2.192E-01  norm=5.8890E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    306  t=1.530E-01  CFL=2.192E-01  norm=5.7918E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    307  t=1.535E-01  CFL=2.192E-01  norm=5.6697E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    308  t=1.540E-01  CFL=2.192E-01  norm=5.6314E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    309  t=1.545E-01  CFL=2.192E-01  norm=5.7017E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    310  t=1.550E-01  CFL=2.192E-01  norm=5.8550E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    311  t=1.555E-01  CFL=2.192E-01  norm=5.8685E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    312  t=1.560E-01  CFL=2.192E-01  norm=5.7464E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    313  t=1.565E-01  CFL=2.192E-01  norm=5.6436E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    314  t=1.570E-01  CFL=2.192E-01  norm=5.6324E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    315  t=1.575E-01  CFL=2.192E-01  norm=5.7437E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    316  t=1.580E-01  CFL=2.192E-01  norm=5.8736E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    317  t=1.585E-01  CFL=2.192E-01  norm=5.8348E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    318  t=1.590E-01  CFL=2.192E-01  norm=5.7032E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    319  t=1.595E-01  CFL=2.192E-01  norm=5.6263E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    320  t=1.600E-01  CFL=2.192E-01  norm=5.6448E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.160000 (total: 9).</div>
-<div class="line">iter=    321  t=1.605E-01  CFL=2.192E-01  norm=5.7889E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    322  t=1.610E-01  CFL=2.192E-01  norm=5.8766E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    323  t=1.615E-01  CFL=2.192E-01  norm=5.7937E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    324  t=1.620E-01  CFL=2.192E-01  norm=5.6663E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    325  t=1.625E-01  CFL=2.192E-01  norm=5.6168E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    326  t=1.630E-01  CFL=2.192E-01  norm=5.6709E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    327  t=1.635E-01  CFL=2.192E-01  norm=5.8269E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    328  t=1.640E-01  CFL=2.192E-01  norm=5.8627E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    329  t=1.645E-01  CFL=2.192E-01  norm=5.7490E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    330  t=1.650E-01  CFL=2.193E-01  norm=5.6374E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    331  t=1.655E-01  CFL=2.193E-01  norm=5.6155E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    332  t=1.660E-01  CFL=2.193E-01  norm=5.7106E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    333  t=1.665E-01  CFL=2.193E-01  norm=5.8530E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    334  t=1.670E-01  CFL=2.192E-01  norm=5.8351E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    335  t=1.675E-01  CFL=2.192E-01  norm=5.7055E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    336  t=1.680E-01  CFL=2.192E-01  norm=5.6174E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    337  t=1.685E-01  CFL=2.192E-01  norm=5.6233E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    338  t=1.690E-01  CFL=2.192E-01  norm=5.7561E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    339  t=1.695E-01  CFL=2.193E-01  norm=5.8632E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    340  t=1.700E-01  CFL=2.193E-01  norm=5.7972E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    341  t=1.705E-01  CFL=2.193E-01  norm=5.6665E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    342  t=1.710E-01  CFL=2.193E-01  norm=5.6059E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    343  t=1.715E-01  CFL=2.193E-01  norm=5.6447E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    344  t=1.720E-01  CFL=2.193E-01  norm=5.7991E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    345  t=1.725E-01  CFL=2.192E-01  norm=5.8571E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    346  t=1.730E-01  CFL=2.192E-01  norm=5.7542E-03  wctime: 5.0E-04 (s)  </div>
-<div class="line">iter=    347  t=1.735E-01  CFL=2.192E-01  norm=5.6347E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    348  t=1.740E-01  CFL=2.192E-01  norm=5.6015E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    349  t=1.745E-01  CFL=2.193E-01  norm=5.6796E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    350  t=1.750E-01  CFL=2.193E-01  norm=5.8311E-03  wctime: 4.3E-04 (s)  </div>
+<div class="line">iter=    100  t=2.500E-01  CFL=2.000E-01  norm=1.9968E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.250000 (total: 2).</div>
+<div class="line">iter=    110  t=2.750E-01  CFL=2.000E-01  norm=1.9877E-02  wctime: 3.0E-04 (s)  </div>
 <div class="line">Writing solution file op_00007.bin.</div>
-<div class="line">iter=    351  t=1.755E-01  CFL=2.193E-01  norm=5.8354E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    352  t=1.760E-01  CFL=2.193E-01  norm=5.7104E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    353  t=1.765E-01  CFL=2.193E-01  norm=5.6119E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    354  t=1.770E-01  CFL=2.193E-01  norm=5.6061E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    355  t=1.775E-01  CFL=2.193E-01  norm=5.7247E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    356  t=1.780E-01  CFL=2.192E-01  norm=5.8490E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    357  t=1.785E-01  CFL=2.192E-01  norm=5.8017E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    358  t=1.790E-01  CFL=2.192E-01  norm=5.6695E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    359  t=1.795E-01  CFL=2.192E-01  norm=5.5972E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    360  t=1.800E-01  CFL=2.193E-01  norm=5.6217E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line"><a class="code" href="a00192.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.180000 (total: 10).</div>
-<div class="line">iter=    361  t=1.805E-01  CFL=2.193E-01  norm=5.7703E-03  wctime: 5.1E-04 (s)  </div>
-<div class="line">iter=    362  t=1.810E-01  CFL=2.193E-01  norm=5.8501E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    363  t=1.815E-01  CFL=2.193E-01  norm=5.7607E-03  wctime: 5.0E-04 (s)  </div>
-<div class="line">iter=    364  t=1.820E-01  CFL=2.193E-01  norm=5.6350E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    365  t=1.825E-01  CFL=2.193E-01  norm=5.5905E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    366  t=1.830E-01  CFL=2.192E-01  norm=5.6519E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    367  t=1.835E-01  CFL=2.192E-01  norm=5.8082E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    368  t=1.840E-01  CFL=2.192E-01  norm=5.8348E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    369  t=1.845E-01  CFL=2.192E-01  norm=5.7168E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    370  t=1.850E-01  CFL=2.192E-01  norm=5.6084E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    371  t=1.855E-01  CFL=2.193E-01  norm=5.5912E-03  wctime: 5.3E-04 (s)  </div>
-<div class="line">iter=    372  t=1.860E-01  CFL=2.193E-01  norm=5.6940E-03  wctime: 5.9E-04 (s)  </div>
-<div class="line">iter=    373  t=1.865E-01  CFL=2.193E-01  norm=5.8326E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    374  t=1.870E-01  CFL=2.193E-01  norm=5.8058E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    375  t=1.875E-01  CFL=2.193E-01  norm=5.6746E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    376  t=1.880E-01  CFL=2.193E-01  norm=5.5909E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    377  t=1.885E-01  CFL=2.192E-01  norm=5.6023E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    378  t=1.890E-01  CFL=2.192E-01  norm=5.7411E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    379  t=1.895E-01  CFL=2.192E-01  norm=5.8409E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    380  t=1.900E-01  CFL=2.192E-01  norm=5.7671E-03  wctime: 4.8E-04 (s)  </div>
-<div class="line">iter=    381  t=1.905E-01  CFL=2.192E-01  norm=5.6370E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    382  t=1.910E-01  CFL=2.193E-01  norm=5.5809E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    383  t=1.915E-01  CFL=2.193E-01  norm=5.6266E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    384  t=1.920E-01  CFL=2.193E-01  norm=5.7833E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    385  t=1.925E-01  CFL=2.193E-01  norm=5.8324E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    386  t=1.930E-01  CFL=2.193E-01  norm=5.7241E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    387  t=1.935E-01  CFL=2.192E-01  norm=5.6073E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    388  t=1.940E-01  CFL=2.192E-01  norm=5.5788E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    389  t=1.945E-01  CFL=2.192E-01  norm=5.6648E-03  wctime: 4.6E-04 (s)  </div>
-<div class="line">iter=    390  t=1.950E-01  CFL=2.192E-01  norm=5.8138E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    391  t=1.955E-01  CFL=2.192E-01  norm=5.8084E-03  wctime: 4.9E-04 (s)  </div>
-<div class="line">iter=    392  t=1.960E-01  CFL=2.193E-01  norm=5.6805E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    393  t=1.965E-01  CFL=2.193E-01  norm=5.5859E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    394  t=1.970E-01  CFL=2.193E-01  norm=5.5852E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    395  t=1.975E-01  CFL=2.193E-01  norm=5.7113E-03  wctime: 4.4E-04 (s)  </div>
-<div class="line">iter=    396  t=1.980E-01  CFL=2.193E-01  norm=5.8292E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    397  t=1.985E-01  CFL=2.193E-01  norm=5.7732E-03  wctime: 4.5E-04 (s)  </div>
-<div class="line">iter=    398  t=1.990E-01  CFL=2.192E-01  norm=5.6408E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">iter=    399  t=1.995E-01  CFL=2.192E-01  norm=5.5732E-03  wctime: 4.3E-04 (s)  </div>
-<div class="line">iter=    400  t=2.000E-01  CFL=2.192E-01  norm=5.6040E-03  wctime: 4.7E-04 (s)  </div>
-<div class="line">Completed time integration (Final time: 0.200000), total wctime: 0.860301 (seconds).</div>
+<div class="line">iter=    120  t=3.000E-01  CFL=2.000E-01  norm=1.9794E-02  wctime: 2.6E-04 (s)  </div>
 <div class="line">Writing solution file op_00008.bin.</div>
+<div class="line">iter=    130  t=3.250E-01  CFL=2.000E-01  norm=1.9719E-02  wctime: 2.9E-04 (s)  </div>
+<div class="line">iter=    140  t=3.500E-01  CFL=2.000E-01  norm=1.9650E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">Writing solution file op_00009.bin.</div>
+<div class="line">iter=    150  t=3.750E-01  CFL=2.000E-01  norm=1.9587E-02  wctime: 2.9E-04 (s)  </div>
+<div class="line">iter=    160  t=4.000E-01  CFL=2.000E-01  norm=1.9522E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00010.bin.</div>
+<div class="line">iter=    170  t=4.250E-01  CFL=2.000E-01  norm=1.9462E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">Writing solution file op_00011.bin.</div>
+<div class="line">iter=    180  t=4.500E-01  CFL=2.000E-01  norm=1.9412E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">iter=    190  t=4.750E-01  CFL=2.000E-01  norm=1.9364E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">Writing solution file op_00012.bin.</div>
+<div class="line">iter=    200  t=5.000E-01  CFL=2.000E-01  norm=1.9319E-02  wctime: 2.5E-04 (s)  </div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.500000 (total: 3).</div>
+<div class="line">Writing solution file op_00013.bin.</div>
+<div class="line">iter=    210  t=5.250E-01  CFL=2.000E-01  norm=1.9276E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">iter=    220  t=5.500E-01  CFL=2.000E-01  norm=1.9235E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">Writing solution file op_00014.bin.</div>
+<div class="line">iter=    230  t=5.750E-01  CFL=2.000E-01  norm=1.9191E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">iter=    240  t=6.000E-01  CFL=2.000E-01  norm=1.9152E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00015.bin.</div>
+<div class="line">iter=    250  t=6.250E-01  CFL=2.000E-01  norm=1.9117E-02  wctime: 2.5E-04 (s)  </div>
+<div class="line">Writing solution file op_00016.bin.</div>
+<div class="line">iter=    260  t=6.500E-01  CFL=2.000E-01  norm=1.9084E-02  wctime: 2.5E-04 (s)  </div>
+<div class="line">iter=    270  t=6.750E-01  CFL=2.000E-01  norm=1.9052E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">Writing solution file op_00017.bin.</div>
+<div class="line">iter=    280  t=7.000E-01  CFL=2.000E-01  norm=1.9022E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">Writing solution file op_00018.bin.</div>
+<div class="line">iter=    290  t=7.250E-01  CFL=2.000E-01  norm=1.8992E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">iter=    300  t=7.500E-01  CFL=2.000E-01  norm=1.8964E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=0.750000 (total: 4).</div>
+<div class="line">Writing solution file op_00019.bin.</div>
+<div class="line">iter=    310  t=7.750E-01  CFL=2.000E-01  norm=1.8936E-02  wctime: 2.9E-04 (s)  </div>
+<div class="line">iter=    320  t=8.000E-01  CFL=2.000E-01  norm=1.8910E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00020.bin.</div>
+<div class="line">iter=    330  t=8.250E-01  CFL=2.000E-01  norm=1.8884E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00021.bin.</div>
+<div class="line">iter=    340  t=8.500E-01  CFL=2.000E-01  norm=1.8859E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">iter=    350  t=8.750E-01  CFL=2.000E-01  norm=1.8835E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00022.bin.</div>
+<div class="line">iter=    360  t=9.000E-01  CFL=2.000E-01  norm=1.8811E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">Writing solution file op_00023.bin.</div>
+<div class="line">iter=    370  t=9.250E-01  CFL=2.000E-01  norm=1.8788E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">iter=    380  t=9.500E-01  CFL=2.000E-01  norm=1.8766E-02  wctime: 2.3E-04 (s)  </div>
+<div class="line">Writing solution file op_00024.bin.</div>
+<div class="line">iter=    390  t=9.750E-01  CFL=2.000E-01  norm=1.8745E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">iter=    400  t=1.000E+00  CFL=2.000E-01  norm=1.8724E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">Writing solution file op_00025.bin.</div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=1.000000 (total: 5).</div>
+<div class="line">iter=    410  t=1.025E+00  CFL=2.000E-01  norm=1.8704E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00026.bin.</div>
+<div class="line">iter=    420  t=1.050E+00  CFL=2.000E-01  norm=1.8684E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">iter=    430  t=1.075E+00  CFL=2.000E-01  norm=1.8665E-02  wctime: 2.3E-04 (s)  </div>
+<div class="line">Writing solution file op_00027.bin.</div>
+<div class="line">iter=    440  t=1.100E+00  CFL=2.000E-01  norm=1.8647E-02  wctime: 2.9E-04 (s)  </div>
+<div class="line">Writing solution file op_00028.bin.</div>
+<div class="line">iter=    450  t=1.125E+00  CFL=2.000E-01  norm=1.8628E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">iter=    460  t=1.150E+00  CFL=2.000E-01  norm=1.8610E-02  wctime: 3.0E-04 (s)  </div>
+<div class="line">Writing solution file op_00029.bin.</div>
+<div class="line">iter=    470  t=1.175E+00  CFL=2.000E-01  norm=1.8594E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">iter=    480  t=1.200E+00  CFL=2.000E-01  norm=1.8568E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00030.bin.</div>
+<div class="line">iter=    490  t=1.225E+00  CFL=2.000E-01  norm=1.8549E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00031.bin.</div>
+<div class="line">iter=    500  t=1.250E+00  CFL=2.000E-01  norm=1.8534E-02  wctime: 2.5E-04 (s)  </div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=1.250000 (total: 6).</div>
+<div class="line">iter=    510  t=1.275E+00  CFL=2.000E-01  norm=1.8519E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00032.bin.</div>
+<div class="line">iter=    520  t=1.300E+00  CFL=2.000E-01  norm=1.8504E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00033.bin.</div>
+<div class="line">iter=    530  t=1.325E+00  CFL=2.000E-01  norm=1.8489E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">iter=    540  t=1.350E+00  CFL=2.000E-01  norm=1.8474E-02  wctime: 3.0E-04 (s)  </div>
+<div class="line">Writing solution file op_00034.bin.</div>
+<div class="line">iter=    550  t=1.375E+00  CFL=2.000E-01  norm=1.8460E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">iter=    560  t=1.400E+00  CFL=2.000E-01  norm=1.8438E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00035.bin.</div>
+<div class="line">iter=    570  t=1.425E+00  CFL=2.000E-01  norm=1.8422E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00036.bin.</div>
+<div class="line">iter=    580  t=1.450E+00  CFL=2.000E-01  norm=1.8409E-02  wctime: 3.2E-04 (s)  </div>
+<div class="line">iter=    590  t=1.475E+00  CFL=2.000E-01  norm=1.8396E-02  wctime: 3.0E-04 (s)  </div>
+<div class="line">Writing solution file op_00037.bin.</div>
+<div class="line">iter=    600  t=1.500E+00  CFL=2.000E-01  norm=1.8383E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=1.500000 (total: 7).</div>
+<div class="line">Writing solution file op_00038.bin.</div>
+<div class="line">iter=    610  t=1.525E+00  CFL=2.000E-01  norm=1.8369E-02  wctime: 3.0E-04 (s)  </div>
+<div class="line">iter=    620  t=1.550E+00  CFL=2.000E-01  norm=1.8356E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00039.bin.</div>
+<div class="line">iter=    630  t=1.575E+00  CFL=2.000E-01  norm=1.8343E-02  wctime: 2.7E-04 (s)  </div>
+<div class="line">iter=    640  t=1.600E+00  CFL=2.000E-01  norm=1.8330E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00040.bin.</div>
+<div class="line">iter=    650  t=1.625E+00  CFL=2.000E-01  norm=1.8318E-02  wctime: 2.4E-04 (s)  </div>
+<div class="line">Writing solution file op_00041.bin.</div>
+<div class="line">iter=    660  t=1.650E+00  CFL=2.000E-01  norm=1.8304E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">iter=    670  t=1.675E+00  CFL=2.000E-01  norm=1.8291E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00042.bin.</div>
+<div class="line">iter=    680  t=1.700E+00  CFL=2.000E-01  norm=1.8275E-02  wctime: 3.0E-04 (s)  </div>
+<div class="line">Writing solution file op_00043.bin.</div>
+<div class="line">iter=    690  t=1.725E+00  CFL=2.000E-01  norm=1.8263E-02  wctime: 2.5E-04 (s)  </div>
+<div class="line">iter=    700  t=1.750E+00  CFL=2.000E-01  norm=1.8250E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line"><a class="code" href="a00194.html">DMDROMObject</a>::takeSample() - creating new DMD <span class="keywordtype">object</span>, t=1.750000 (total: 8).</div>
+<div class="line">Writing solution file op_00044.bin.</div>
+<div class="line">iter=    710  t=1.775E+00  CFL=2.000E-01  norm=1.8238E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">iter=    720  t=1.800E+00  CFL=2.000E-01  norm=1.8227E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00045.bin.</div>
+<div class="line">iter=    730  t=1.825E+00  CFL=2.000E-01  norm=1.8215E-02  wctime: 2.9E-04 (s)  </div>
+<div class="line">Writing solution file op_00046.bin.</div>
+<div class="line">iter=    740  t=1.850E+00  CFL=2.000E-01  norm=1.8204E-02  wctime: 2.9E-04 (s)  </div>
+<div class="line">iter=    750  t=1.875E+00  CFL=2.000E-01  norm=1.8192E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00047.bin.</div>
+<div class="line">iter=    760  t=1.900E+00  CFL=2.000E-01  norm=1.8181E-02  wctime: 2.6E-04 (s)  </div>
+<div class="line">Writing solution file op_00048.bin.</div>
+<div class="line">iter=    770  t=1.925E+00  CFL=2.000E-01  norm=1.8170E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">iter=    780  t=1.950E+00  CFL=2.000E-01  norm=1.8159E-02  wctime: 2.8E-04 (s)  </div>
+<div class="line">Writing solution file op_00049.bin.</div>
+<div class="line">iter=    790  t=1.975E+00  CFL=2.000E-01  norm=1.8148E-02  wctime: 3.2E-04 (s)  </div>
+<div class="line">iter=    800  t=2.000E+00  CFL=2.000E-01  norm=1.8137E-02  wctime: 2.9E-04 (s)  </div>
+<div class="line">Completed time integration (Final time: 2.000000), total wctime: 3.850328 (seconds).</div>
+<div class="line">Writing solution file op_00050.bin.</div>
 <div class="line">libROM: Training ROM.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 0 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 1 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 2 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 3 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 4 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 5 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 6 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 7 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 8 with 41 samples.</div>
-<div class="line">Using 8 basis vectors out of 40.</div>
-<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 9 with 40 samples.</div>
-<div class="line">Using 8 basis vectors out of 39.</div>
-<div class="line">libROM: wallclock time: 0.130851 (seconds).</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 0 with 101 samples.</div>
+<div class="line">Using 16 basis vectors out of 100.</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 1 with 101 samples.</div>
+<div class="line">Using 16 basis vectors out of 100.</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 2 with 101 samples.</div>
+<div class="line">Using 16 basis vectors out of 100.</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 3 with 101 samples.</div>
+<div class="line">Using 16 basis vectors out of 100.</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 4 with 101 samples.</div>
+<div class="line">Using 16 basis vectors out of 100.</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 5 with 101 samples.</div>
+<div class="line">Using 16 basis vectors out of 100.</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 6 with 101 samples.</div>
+<div class="line">Using 16 basis vectors out of 100.</div>
+<div class="line">DMDRomObject::train() - training DMD <span class="keywordtype">object</span> 7 with 100 samples.</div>
+<div class="line">Using 16 basis vectors out of 99.</div>
+<div class="line">libROM: wallclock time: 0.181797 (seconds).</div>
 <div class="line">libROM: Predicting solution at time 0.0000e+00 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000330 (seconds).</div>
+<div class="line">libROM:   wallclock time: 0.000599 (seconds).</div>
 <div class="line">Writing solution file op_rom_00000.bin.</div>
-<div class="line">libROM: Predicting solution at time 2.5000e-02 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000290 (seconds).</div>
+<div class="line">libROM: Predicting solution at time 4.0000e-02 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000528 (seconds).</div>
 <div class="line">Writing solution file op_rom_00001.bin.</div>
-<div class="line">libROM: Predicting solution at time 5.0000e-02 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000291 (seconds).</div>
+<div class="line">libROM: Predicting solution at time 8.0000e-02 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000513 (seconds).</div>
 <div class="line">Writing solution file op_rom_00002.bin.</div>
-<div class="line">libROM: Predicting solution at time 7.5000e-02 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000278 (seconds).</div>
+<div class="line">libROM: Predicting solution at time 1.2000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000544 (seconds).</div>
 <div class="line">Writing solution file op_rom_00003.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.0000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000260 (seconds).</div>
+<div class="line">libROM: Predicting solution at time 1.6000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000531 (seconds).</div>
 <div class="line">Writing solution file op_rom_00004.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.2500e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000313 (seconds).</div>
-<div class="line">Writing solution file op_rom_00005.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.5000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000433 (seconds).</div>
-<div class="line">Writing solution file op_rom_00006.bin.</div>
-<div class="line">libROM: Predicting solution at time 1.7500e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000276 (seconds).</div>
-<div class="line">Writing solution file op_rom_00007.bin.</div>
 <div class="line">libROM: Predicting solution at time 2.0000e-01 using ROM.</div>
-<div class="line">libROM:   wallclock time: 0.000296 (seconds).</div>
-<div class="line">libROM:   Calculating diff between PDE and ROM solutions.</div>
+<div class="line">libROM:   wallclock time: 0.000513 (seconds).</div>
+<div class="line">Writing solution file op_rom_00005.bin.</div>
+<div class="line">libROM: Predicting solution at time 2.4000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000494 (seconds).</div>
+<div class="line">Writing solution file op_rom_00006.bin.</div>
+<div class="line">libROM: Predicting solution at time 2.8000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000530 (seconds).</div>
+<div class="line">Writing solution file op_rom_00007.bin.</div>
+<div class="line">libROM: Predicting solution at time 3.2000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000543 (seconds).</div>
 <div class="line">Writing solution file op_rom_00008.bin.</div>
-<div class="line">libROM: total prediction/query wallclock time: 0.002767 (seconds).</div>
-<div class="line"><a class="code" href="a00203.html">libROMInterface</a>::saveROM() - saving ROM objects.</div>
+<div class="line">libROM: Predicting solution at time 3.6000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000516 (seconds).</div>
+<div class="line">Writing solution file op_rom_00009.bin.</div>
+<div class="line">libROM: Predicting solution at time 4.0000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000493 (seconds).</div>
+<div class="line">Writing solution file op_rom_00010.bin.</div>
+<div class="line">libROM: Predicting solution at time 4.4000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000500 (seconds).</div>
+<div class="line">Writing solution file op_rom_00011.bin.</div>
+<div class="line">libROM: Predicting solution at time 4.8000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000555 (seconds).</div>
+<div class="line">Writing solution file op_rom_00012.bin.</div>
+<div class="line">libROM: Predicting solution at time 5.2000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000572 (seconds).</div>
+<div class="line">Writing solution file op_rom_00013.bin.</div>
+<div class="line">libROM: Predicting solution at time 5.6000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000574 (seconds).</div>
+<div class="line">Writing solution file op_rom_00014.bin.</div>
+<div class="line">libROM: Predicting solution at time 6.0000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000568 (seconds).</div>
+<div class="line">Writing solution file op_rom_00015.bin.</div>
+<div class="line">libROM: Predicting solution at time 6.4000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000586 (seconds).</div>
+<div class="line">Writing solution file op_rom_00016.bin.</div>
+<div class="line">libROM: Predicting solution at time 6.8000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000537 (seconds).</div>
+<div class="line">Writing solution file op_rom_00017.bin.</div>
+<div class="line">libROM: Predicting solution at time 7.2000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000500 (seconds).</div>
+<div class="line">Writing solution file op_rom_00018.bin.</div>
+<div class="line">libROM: Predicting solution at time 7.6000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000531 (seconds).</div>
+<div class="line">Writing solution file op_rom_00019.bin.</div>
+<div class="line">libROM: Predicting solution at time 8.0000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000546 (seconds).</div>
+<div class="line">Writing solution file op_rom_00020.bin.</div>
+<div class="line">libROM: Predicting solution at time 8.4000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000525 (seconds).</div>
+<div class="line">Writing solution file op_rom_00021.bin.</div>
+<div class="line">libROM: Predicting solution at time 8.8000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000504 (seconds).</div>
+<div class="line">Writing solution file op_rom_00022.bin.</div>
+<div class="line">libROM: Predicting solution at time 9.2000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000533 (seconds).</div>
+<div class="line">Writing solution file op_rom_00023.bin.</div>
+<div class="line">libROM: Predicting solution at time 9.6000e-01 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000519 (seconds).</div>
+<div class="line">Writing solution file op_rom_00024.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.0000e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000518 (seconds).</div>
+<div class="line">Writing solution file op_rom_00025.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.0400e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000544 (seconds).</div>
+<div class="line">Writing solution file op_rom_00026.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.0800e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000525 (seconds).</div>
+<div class="line">Writing solution file op_rom_00027.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.1200e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000531 (seconds).</div>
+<div class="line">Writing solution file op_rom_00028.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.1600e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000515 (seconds).</div>
+<div class="line">Writing solution file op_rom_00029.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.2000e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000556 (seconds).</div>
+<div class="line">Writing solution file op_rom_00030.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.2400e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000502 (seconds).</div>
+<div class="line">Writing solution file op_rom_00031.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.2800e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000501 (seconds).</div>
+<div class="line">Writing solution file op_rom_00032.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.3200e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000596 (seconds).</div>
+<div class="line">Writing solution file op_rom_00033.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.3600e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000532 (seconds).</div>
+<div class="line">Writing solution file op_rom_00034.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.4000e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000520 (seconds).</div>
+<div class="line">Writing solution file op_rom_00035.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.4400e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000570 (seconds).</div>
+<div class="line">Writing solution file op_rom_00036.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.4800e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000552 (seconds).</div>
+<div class="line">Writing solution file op_rom_00037.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.5200e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000548 (seconds).</div>
+<div class="line">Writing solution file op_rom_00038.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.5600e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000544 (seconds).</div>
+<div class="line">Writing solution file op_rom_00039.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.6000e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000484 (seconds).</div>
+<div class="line">Writing solution file op_rom_00040.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.6400e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000554 (seconds).</div>
+<div class="line">Writing solution file op_rom_00041.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.6800e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000564 (seconds).</div>
+<div class="line">Writing solution file op_rom_00042.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.7200e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000486 (seconds).</div>
+<div class="line">Writing solution file op_rom_00043.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.7600e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000545 (seconds).</div>
+<div class="line">Writing solution file op_rom_00044.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.8000e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000535 (seconds).</div>
+<div class="line">Writing solution file op_rom_00045.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.8400e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000519 (seconds).</div>
+<div class="line">Writing solution file op_rom_00046.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.8800e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000491 (seconds).</div>
+<div class="line">Writing solution file op_rom_00047.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.9200e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000516 (seconds).</div>
+<div class="line">Writing solution file op_rom_00048.bin.</div>
+<div class="line">libROM: Predicting solution at time 1.9600e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000553 (seconds).</div>
+<div class="line">Writing solution file op_rom_00049.bin.</div>
+<div class="line">libROM: Predicting solution at time 2.0000e+00 using ROM.</div>
+<div class="line">libROM:   wallclock time: 0.000527 (seconds).</div>
+<div class="line">libROM:   Calculating diff between PDE and ROM solutions.</div>
+<div class="line">Writing solution file op_rom_00050.bin.</div>
+<div class="line">libROM: total prediction/query wallclock time: 0.027182 (seconds).</div>
+<div class="line"><a class="code" href="a00205.html">libROMInterface</a>::saveROM() - saving ROM objects.</div>
 <div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0000.</div>
 <div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0001.</div>
 <div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0002.</div>
@@ -814,14 +665,12 @@ $(document).ready(function(){initNavTree('a00132.html','');});
 <div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0005.</div>
 <div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0006.</div>
 <div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0007.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0008.</div>
-<div class="line">  Saving DMD <span class="keywordtype">object</span> with filename root DMD/dmdobj_0009.</div>
 <div class="line">Norms of the diff between ROM and PDE solutions for domain 0:</div>
-<div class="line">  L1         Norm            : 5.6218372311378950E-04</div>
-<div class="line">  L2         Norm            : 2.2766977309887507E-03</div>
-<div class="line">  Linfinity  Norm            : 1.6120671488108019E-02</div>
-<div class="line">Solver runtime (in seconds): 8.0859740000000002E+00</div>
-<div class="line">Total  runtime (in seconds): 8.1111880000000003E+00</div>
+<div class="line">  L1         Norm            : 5.7205961033976573E-03</div>
+<div class="line">  L2         Norm            : 5.1134497956698138E-03</div>
+<div class="line">  Linfinity  Norm            : 9.1706092284055997E-03</div>
+<div class="line">Solver runtime (in seconds): 7.9410959999999999E+00</div>
+<div class="line">Total  runtime (in seconds): 8.1151900000000001E+00</div>
 <div class="line">Deallocating arrays.</div>
 <div class="line">Finished.</div>
 </div><!-- fragment --> </div></div><!-- contents -->

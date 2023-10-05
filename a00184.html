@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>HyPar: License</title>
+<title>HyPar: Numerical Method</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,13 +106,142 @@ $(document).ready(function(){initNavTree('a00184.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">License </div>  </div>
+<div class="title">Numerical Method </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Copyright (c) 2015 Debojyoti Ghosh</p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. </p>
+<div class="textblock"><p><a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> solves the following partial differential equation (PDE) using a conservative finite-difference algorithm on a Cartesian grid. </p>
+<p class="formulaDsp">
+\begin{equation} \frac {\partial {\bf u}} {\partial t} = {\bf F}_{\rm hyp}\left({\bf u}\right) + {\bf F}_{\rm par}\left({\bf u}\right) + {\bf F}_{\rm sou}\left({\bf u}\right) \end{equation}
+</p>
+<p> where \({\bf F}_{\rm hyp}\) is the hyperbolic term, \({\bf F}_{\rm par}\) is the parabolic term, and \({\bf F}_{\rm sou}\) is the source term. Each of these is discretized in space as described below (in the section "Spatial Discretization"), to obtain the following semi-discrete ordinary differential equation (ODE) in time: </p>
+<p class="formulaDsp">
+\begin{equation} \frac {d {\bf u}} {d t} = \hat{\bf F}_{\rm hyp}\left({\bf u}\right) + \hat{\bf F}_{\rm par}\left({\bf u}\right) + \hat{\bf F}_{\rm sou}\left({\bf u}\right) \end{equation}
+</p>
+<p> where \(\hat{\left(\cdot\right)}\) represents the spatially discretized terms. The governing PDE can be of any space dimension.</p>
+<h1><a class="anchor" id="spatial_discretization"></a>
+Spatial Discretization</h1>
+<h2>Hyperbolic term </h2>
+<p>The hyperbolic term is of the following form: </p>
+<p class="formulaDsp">
+\begin{equation} {\bf F}_{\rm hyp}\left({\bf u}\right) = -\sum_{d=0}^{D-1} \frac{\partial {\bf f}_d\left({\bf u}\right)}{\partial x_d} \end{equation}
+</p>
+<p> and is discretized as: </p>
+<p class="formulaDsp">
+\begin{equation} {\bf F}_{\rm hyp}\left({\bf u}\right) \approx - \sum_{d=0}^{D-1} \frac{1}{\Delta x_d} \left[ \hat{\bf f}_{d,j+1/2} - \hat{\bf f}_{d,j-1/2} \right] \end{equation}
+</p>
+<p> where \(d\) is the spatial dimension, \(D\) is the total number of spatial dimensions, \(j\) denotes the grid index along \(d\). This is implemented in <a class="el" href="a00315.html#a0096c47175c007dbe805b34129835b84">HyperbolicFunction()</a>.</p>
+<p>The numerical approximation \(\hat{\bf f}_{d,j+1/2}\) of the primitive of the flux \({\bf f}_d\left({\bf u}\right)\) at the grid interfaces \(j+1/2\) is expressed as </p>
+<p class="formulaDsp">
+\begin{equation} \hat{\bf f}_{d,j+1/2} = \mathcal{U}\left(\hat{\bf f}^L_{d,j+1/2},\hat{\bf f}^R_{d,j+1/2},\hat{\bf u}^L_{d,j+1/2},\hat{\bf u}^R_{d,j+1/2}\right) \end{equation}
+</p>
+<p> where \(\mathcal{U}\) is an upwinding function. <a class="el" href="a00204.html#a7eb68b9643feb74bd49f3a171b66eef1">HyPar::Upwind</a> points to the physical model-specific upwinding function that implements \(\mathcal{U}\), and is set by the initialization function of a specific physical model (for example <a class="el" href="a00253.html#a2143f7f3c03f53cf752a344a613fe429">Euler1DInitialize()</a>). The physical model is specified by setting <a class="el" href="a00204.html#ad3fe4b266b398f3a7567ac1b241d99a2">HyPar::model</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00264.html#a31fac45bcc0a8e9dd578cc1d8515d173">ReadInputs()</a>).</p>
+<p>\(\hat{\bf f}^{L,R}_{d,j+1/2}\) are the left- and right-biased numerically interpolated values of the primitive of the flux \({\bf f}_d\left({\bf u}\right)\) at the grid interfaces and are computed using <a class="el" href="a00204.html#a17e1cfc7de4fe33c6ee88f2cc42883e7">HyPar::InterpolateInterfacesHyp</a>. They are initialized in <a class="el" href="a00264.html#ad3f393b89ecd5a544c52e1099722337a">InitializeSolvers()</a> based on the value of <a class="el" href="a00204.html#ad29846eeb9c83b329a8d7c1fe69d46b2">HyPar::spatial_scheme_hyp</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00264.html#a31fac45bcc0a8e9dd578cc1d8515d173">ReadInputs()</a>). See <a class="el" href="a00193.html" title="Definitions for the functions computing the interpolated value of the primitive at the cell interface...">interpolation.h</a> for all the spatial discretization schemes implemented.</p>
+<p><a class="el" href="a00204.html#aa245f8c9e6af37e47c5867dccbbc208b">HyPar::HyperbolicFunction</a> points to <a class="el" href="a00315.html#a0096c47175c007dbe805b34129835b84">HyperbolicFunction()</a>.</p>
+<h2>Parabolic term </h2>
+<p>The parabolic term can take two different forms as described below:-</p>
+<p><b>No</b> <b>cross-derivatives</b>: In this form, the parabolic term is of the following form: </p>
+<p class="formulaDsp">
+\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) = \sum_{d=0}^{D-1} \frac {\partial^2 {\bf g}_d\left({\bf u}\right)} {\partial x_d^2} \end{equation}
+</p>
+<p> where \(d\) is the spatial dimension, and \(D\) is the total number of spatial dimensions. If the parabolic function is in this form, then the physical model must specify <a class="el" href="a00204.html#ad8f03ca8c9fd6e1e235203495e8f2173">HyPar::GFunction</a> which must point to the function that computes \({\bf g}_d\left({\bf u}\right)\). In this case, the spatial discretization is carried out in one of two ways:-</p>
+<ul>
+<li>Conservative discretization, implemented in <a class="el" href="a00319.html#a5e79cc5efd6d3e4c93717a67e0fbf918">ParabolicFunctionCons1Stage()</a> and invoked by setting <a class="el" href="a00204.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00240.html#aabd653aa5d489ae2d0d8140290f6f026">_CONS_1STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
+\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \hat{\bf g}_{d,j+1/2} - \hat{\bf g}_{d,j-1/2} \right] \end{equation}
+</p>
+ where \(j\) denotes the grid index along \(d\). \(\hat{\bf g}_{d,j+1/2}\) is the numerical approximation to the second primitive of \({\bf g}_d\left({\bf u}\right)\) and is computed using <a class="el" href="a00204.html#a13a0f9420009a55a3689f407a2c8efea">HyPar::InterpolateInterfacesPar</a>.</li>
+<li>Non-conservative, 1-Stage discretization, implemented in <a class="el" href="a00321.html#a2faa78314e07ca739b7652ceb22ef083">ParabolicFunctionNC1Stage()</a> and invoked by setting <a class="el" href="a00204.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00240.html#a18ee8cd9b4297a259b08aa4cdfe30aa1">_NC_1STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
+\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \mathcal{L}_d\left({\bf g}_d\right) \right] \end{equation}
+</p>
+ where \(\mathcal{L}\) represents the finite-difference Laplacian operator, and is computed using <a class="el" href="a00204.html#a4b350316573a1d93caf01c5f1d43a45f">HyPar::SecondDerivativePar</a>.</li>
+</ul>
+<p><b>With</b> <b>cross-derivatives</b>: In this form, the parabolic term is of the following form: </p>
+<p class="formulaDsp">
+\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) = \sum_{d1=0}^{D-1}\sum_{d2=0}^{D-1} \frac {\partial^2 h_{d1,d2}\left({\bf u}\right)} {\partial x_{d1} \partial x_{d2}} \end{equation}
+</p>
+<p> where \(d1,d2\) are spatial dimensions, \(D\) is the total number of spatial dimensions. If the parabolic function is in this form, then the physical model must specify <a class="el" href="a00204.html#a122bcc1ec2e20b3bc69d169580529021">HyPar::HFunction</a> which must point to the function that computes \({\bf h}_{d1,d2}\left({\bf u}\right)\). In this case, the spatial discretization is carried out in one of two ways:-</p>
+<ul>
+<li>Non-conservative 2-stage discretization, implemented in <a class="el" href="a00322.html#a153eb91ec9b118a7b8c971facbc8d920">ParabolicFunctionNC2Stage()</a> and invoked by setting <a class="el" href="a00204.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00240.html#a9f4de86b900c9aa5f097c2746e17612a">_NC_2STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
+\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d1=0}^{D-1}\sum_{d2=0}^{D-1} \frac {1}{\Delta x_{d1} \Delta x_{d2}} \left[ \mathcal{D}_{d1}\left(\mathcal{D}_{d2}\left({\bf g}_d\right)\right) \right] \end{equation}
+</p>
+ where \(\mathcal{D}_d\) denotes the finite-difference first derivative operator along spatial dimension \(d\), and is computed using <a class="el" href="a00204.html#add4554e1a8a541607b867db7ec38d7a9">HyPar::FirstDerivativePar</a>.</li>
+<li>Non-conservative, "1.5-Stage" discretization, implemented in <a class="el" href="a00320.html#af9331a439bf243524c027eba50fdbbfd">ParabolicFunctionNC1_5Stage()</a> and invoked by setting <a class="el" href="a00204.html#ad45d57b33d578bf602574a221bf53d93">HyPar::spatial_type_par</a> to <a class="el" href="a00240.html#a7bc6f9c42df5610bc5d844ad95c74fb8">_NC_1_5STAGE_</a>: The parabolic term is discretized as <p class="formulaDsp">
+\begin{equation} {\bf F}_{\rm par}\left({\bf u}\right) \approx \sum_{d1=0}^{D-1}\sum_{d2=0,d2 \ne d1}^{D-1} \frac {1}{\Delta x_{d1} \Delta x_{d2}} \left[ \mathcal{D}_{d1}\left(\mathcal{D}_{d2}\left({\bf g}_d\right)\right) \right] + \sum_{d=0}^{D-1} \frac {1}{\Delta x_d^2} \left[ \mathcal{L}_d\left({\bf g}_d\right) \right] \end{equation}
+</p>
+ where \(\mathcal{D}_d\) denotes the finite-difference first derivative operator along spatial dimension \(d\) (computed using <a class="el" href="a00204.html#add4554e1a8a541607b867db7ec38d7a9">HyPar::FirstDerivativePar</a>). and \(\mathcal{L}\) represents the finite-difference Laplacian operator (computed using <a class="el" href="a00204.html#a4b350316573a1d93caf01c5f1d43a45f">HyPar::SecondDerivativePar</a>).</li>
+</ul>
+<p>The function pointers <a class="el" href="a00204.html#a13a0f9420009a55a3689f407a2c8efea">HyPar::InterpolateInterfacesPar</a>, <a class="el" href="a00204.html#a4b350316573a1d93caf01c5f1d43a45f">HyPar::SecondDerivativePar</a>, and <a class="el" href="a00204.html#add4554e1a8a541607b867db7ec38d7a9">HyPar::FirstDerivativePar</a> are set in <a class="el" href="a00264.html#ad3f393b89ecd5a544c52e1099722337a">InitializeSolvers()</a> based on the value of <a class="el" href="a00204.html#a170f2f6cc8ac86b78fcb376c2392e290">HyPar::spatial_scheme_par</a> (read from <em>"solver.inp"</em> in <a class="el" href="a00264.html#a31fac45bcc0a8e9dd578cc1d8515d173">ReadInputs()</a>). See <a class="el" href="a00193.html" title="Definitions for the functions computing the interpolated value of the primitive at the cell interface...">interpolation.h</a>, <a class="el" href="a00239.html" title="Definitions for the functions computing the first derivative. ">firstderivative.h</a>, and <a class="el" href="a00263.html" title="Definitions for the functions computing the second derivative. ">secondderivative.h</a> for the spatial disretization methods implemented.</p>
+<p>Depending on which of the above forms are used, <a class="el" href="a00204.html#a75e8be4ea8c1ae2e99fc1e802e69a573">HyPar::ParabolicFunction</a> points to either of <a class="el" href="a00319.html#a5e79cc5efd6d3e4c93717a67e0fbf918">ParabolicFunctionCons1Stage()</a>, <a class="el" href="a00321.html#a2faa78314e07ca739b7652ceb22ef083">ParabolicFunctionNC1Stage()</a>, <a class="el" href="a00322.html#a153eb91ec9b118a7b8c971facbc8d920">ParabolicFunctionNC2Stage()</a>, or <a class="el" href="a00320.html#af9331a439bf243524c027eba50fdbbfd">ParabolicFunctionNC1_5Stage()</a> (set in <a class="el" href="a00264.html#ad3f393b89ecd5a544c52e1099722337a">InitializeSolvers()</a>).</p>
+<h2>Source term </h2>
+<p><a class="el" href="a00204.html#a662e256e081a2b74f971d02c747892b8">HyPar::SourceFunction</a> points to <a class="el" href="a00324.html#a930d3b66826111c93dc222f5f6382744">SourceFunction()</a>. There is no discretization involved in general, and this function just calls the physical model-specific source function to which <a class="el" href="a00204.html#a1685cd0c6b8c413bdbbe86d8f4475c58">HyPar::SFunction</a> points.</p>
+<h1><a class="anchor" id="time_integration"></a>
+Time Integration</h1>
+<h2>Native Time Integrators </h2>
+<p>The semi-discrete ODE is integrated in time using explicit multi-stage time integration methods. The ODE can be written as: </p>
+<p class="formulaDsp">
+\begin{equation} \frac {d {\bf u}} {d t} = {\bf F}\left({\bf u}\right) \end{equation}
+</p>
+<p> where </p>
+<p class="formulaDsp">
+\begin{equation} {\bf F}\left({\bf u}\right) = \hat{\bf F}_{\rm hyp}\left({\bf u}\right) + \hat{\bf F}_{\rm par}\left({\bf u}\right) + \hat{\bf F}_{\rm sou}\left({\bf u}\right) \end{equation}
+</p>
+<p> The following explicit time integration methods are implemented in <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> (see <a class="el" href="a00269.html" title="Contains function declarations for time integration. ">timeintegration.h</a>):</p>
+<ul>
+<li>Forward Euler - <a class="el" href="a00269.html#a5fe3d9828c6afcbc00cf6fdd940ebe4b">TimeForwardEuler()</a>, <a class="el" href="a00199.html#af9b1e641532cff8859c5c5a8377f5feb">_FORWARD_EULER_</a></li>
+<li>Explicit Runge-Kutta - <a class="el" href="a00269.html#aca6ebec6e6998f0c509bb38fa91f3321">TimeRK()</a>, <a class="el" href="a00199.html#a50d4bf1e7e4825cc062fca99a770e5ce">_RK_</a></li>
+<li>Explicit General Linear Methods with Global Error Estimation - <a class="el" href="a00269.html#a7b76988ab950d39d505042dc1f09b875">TimeGLMGEE()</a>, <a class="el" href="a00199.html#aad9619c099daeb3e6b1b7ef9e03e38d8">_GLM_GEE_</a></li>
+</ul>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00264.html#a7347183ec04d39b43cf35d1fe68ace4d">Solve()</a></dd></dl>
+<h2>PETSc Time Integrators </h2>
+<p>If compiled with PETSc (<a href="https://petsc.org/release/">https://petsc.org/release/</a>), <a class="el" href="a00204.html" title="Structure containing all solver-specific variables and functions. ">HyPar</a> can use all the time integration methods and features implemented in the <b>TS</b> module of PETSc. See the following for relevant documentation of PETSc time integrators:</p>
+<ul>
+<li><a href="https://petsc.org/release/docs/manualpages/TS/index.html">https://petsc.org/release/docs/manualpages/TS/index.html</a></li>
+<li><a href="https://petsc.org/release/src/ts/examples/tutorials/index.html">https://petsc.org/release/src/ts/examples/tutorials/index.html</a></li>
+<li><a href="https://petsc.org/release/docs/manual.pdf">https://petsc.org/release/docs/manual.pdf</a> (Chapter 6: Scalable ODE and DAE Solvers)</li>
+</ul>
+<p>In addition to explicit time integration, the semi-discrete ODE can be solved using</p>
+<ul>
+<li><b>Implicit</b> <b>methods</b> (Eg. backward Euler (TSBEULER - <a href="https://petsc.org/release/docs/manualpages/TS/TSBEULER.html">https://petsc.org/release/docs/manualpages/TS/TSBEULER.html</a>), Crank-Nicholson (TSCN - <a href="https://petsc.org/release/docs/manualpages/TS/TSCN.html#TSCN">https://petsc.org/release/docs/manualpages/TS/TSCN.html#TSCN</a>), \(\theta\)-method (TSTHETA - <a href="https://petsc.org/release/docs/manualpages/TS/TSTHETA.html#TSTHETA">https://petsc.org/release/docs/manualpages/TS/TSTHETA.html#TSTHETA</a>), etc.)</li>
+<li><b>Semi-implicit (IMEX) methods</b> (TSARKIMEX - <a href="https://petsc.org/release/docs/manualpages/TS/TSARKIMEX.html">https://petsc.org/release/docs/manualpages/TS/TSARKIMEX.html</a>)</li>
+</ul>
+<p>Implementation: see <a class="el" href="a00252.html">petscinterface.h</a> and <a class="el" href="a00264.html#a1a054e1b92ee41a9e38926d18c6628bf" title="Integrate in time with PETSc. ">SolvePETSc()</a>.</p>
+<p><b>Implicit</b> and <b>IMEX</b> time integration:</p>
+<ul>
+<li>The Jacobian-free approach is used to compute the Jacobian of the implicit term (i.e., the action of the Jacobian on a vector is approximated using a directional derivative). Use the flag <b>-jfnk_epsilon &lt;value&gt;</b> to specify the parameter \(\epsilon\) for the directional derivative computation (default: \(10^{-6}\)). See <a class="el" href="a00252.html#a4edf057726501be3e8fe54e16fafe07b">PetscJacobianFunctionIMEX_JFNK()</a>, <a class="el" href="a00252.html#a68f5a93a79d56fcb964224f649af4ac9">PetscJacobianFunction_JFNK()</a>.</li>
+<li>A preconditioner can only be used for physical models that define the Jacobian (<a class="el" href="a00204.html#a528a3cd1723c061f3e8dfa6ffe1f5012">HyPar::JFunction</a>) (for example, LinearADRJacobian(), <a class="el" href="a00436.html#ac7c99a6d1d0a2d211e784f6e4453d421">Euler1DJacobian()</a>, <a class="el" href="a00505.html#a03a81aa87fb633f004f8289803054ef8">NavierStokes2DJacobian()</a>, <a class="el" href="a00528.html#a6076aead78081b94885913dc51bad714">NavierStokes3DJacobian()</a>, etc). The flag <b>-with_pc</b> should be specified to use a preconditioner.</li>
+</ul>
+<p><b>IMEX Time Integration</b>: For implicit-explicit (IMEX) time integration, the semi-discrete ODE can be written as follows: </p>
+<p class="formulaDsp">
+\begin{equation} \frac {d {\bf u}} {d t} = {\bf F}\left({\bf u}\right) + {\bf G}\left({\bf u}\right) \end{equation}
+</p>
+<p> where \({\bf F}\left({\bf u}\right)\) is integrated explicitly in time and \({\bf G}\left({\bf u}\right)\) is integrated implicitly in time. The following flags (specified in the command line or in the <b>.petscrc</b> file) can be used to specify which of the hyperbolic, parabolic, or source terms are treated explicitly, and which are treated implicitly.</p>
+<table class="doxtable">
+<tr>
+<th>Term </th><th>Explicit </th><th>Implicit  </th></tr>
+<tr>
+<td>Hyperbolic \(\hat{\bf F}_{\rm hyp}\left({\bf u}\right)\) </td><td>-hyperbolic_explicit </td><td>-hyperbolic_implicit </td></tr>
+<tr>
+<td>Parabolic \(\hat{\bf F}_{\rm par}\left({\bf u}\right)\) </td><td>-parabolic_explicit </td><td>-parabolic_implicit </td></tr>
+<tr>
+<td>Source \(\hat{\bf F}_{\rm sou}\left({\bf u}\right)\) </td><td>-source_explicit </td><td>-source_implicit </td></tr>
+</table>
+<ul>
+<li><p class="startli">If contradictory flags are specified, i.e., </p>
+<pre class="fragment">  -parabolic_explicit -parabolic_implicit
+</pre><p class="startli">the flag specifying implicit treatment takes precedence.</p>
+</li>
+<li>In addition, if a partitioning of the hyperbolic flux is defined and is being used (<a class="el" href="a00204.html#a5bed0cb9665daad89f4377c4f7609df4">HyPar::SplitHyperbolicFlux</a>), i.e, <p class="formulaDsp">
+\begin{equation} \hat{\bf F}_{\rm hyp}\left({\bf u}\right) = \left[\hat{\bf F}_{\rm hyp}\left({\bf u}\right) - \delta\hat{\bf F}_{\rm hyp}\left({\bf u}\right)\right] + \delta\hat{\bf F}_{\rm hyp}\left({\bf u}\right) \end{equation}
+</p>
+ the following flags can be used to specify which of these two terms are treated explicitly and which are treated implicitly.</li>
+</ul>
+<table class="doxtable">
+<tr>
+<th>Term </th><th>Explicit </th><th>Implicit  </th></tr>
+<tr>
+<td>\(\left[\hat{\bf F}_{\rm hyp}\left({\bf u}\right) - \delta\hat{\bf F}_{\rm hyp}\left({\bf u}\right)\right]\) </td><td>-hyperbolic_f_explicit </td><td>-hyperbolic_f_implicit </td></tr>
+<tr>
+<td>\(\delta\hat{\bf F}_{\rm hyp}\left({\bf u}\right)\) </td><td>-hyperbolic_df_explicit </td><td>-hyperbolic_df_implicit </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- Start of StatCounter Code for Default Guide -->
